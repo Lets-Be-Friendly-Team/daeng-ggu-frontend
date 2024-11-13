@@ -13,11 +13,7 @@ import pluginQuery from '@tanstack/eslint-plugin-query';
 export default tseslint.config(
   { ignores: ['dist'] },
   {
-    extends: [
-      js.configs.recommended,
-      ...tseslint.configs.recommended,
-      ...pluginQuery.configs['flat/recommended'],
-    ],
+    extends: [js.configs.recommended, ...tseslint.configs.recommended, ...pluginQuery.configs['flat/recommended']],
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
       ecmaVersion: 2020,
@@ -29,11 +25,11 @@ export default tseslint.config(
       },
     },
     plugins: {
-      'jsx-a11y': eslintPluginJsxA11y,
-      'no-relative-import-paths': noRelativeImportPaths,
       react,
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
+      'jsx-a11y': eslintPluginJsxA11y,
+      'no-relative-import-paths': noRelativeImportPaths,
       prettier: prettierPlugin,
     },
     rules: {
