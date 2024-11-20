@@ -1,5 +1,9 @@
 # 내 강아지를 위한 프리미엄 서비스, 댕꾸 🐾
 
+
+![Frame 259](https://github.com/user-attachments/assets/66a7933d-b412-4c6e-a37f-d1438e161332)
+
+
 ## Members
 
 <table align="center" style="width: 100%; table-layout: fixed;">
