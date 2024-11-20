@@ -69,21 +69,21 @@
 ### 1. 로그인 및 회원가입 시스템
 
 
-<span style="background-color: #f7ddbe">💡 카카오 소셜로그인</span>
+<h4 style="background-color: #f7ddbe">💡 카카오 소셜로그인</h4>
 
 ![login (로그인)](https://github.com/user-attachments/assets/3dc9e6d2-564a-4e4e-83bb-291a330adb0d)
 
-<span style="background-color: #f7ddbe">💡 보호자 회원가입 및 반려견 등록</span>
+<h4 style="background-color: #f7ddbe">💡 보호자 회원가입 및 반려견 등록</h4>
 
 ![Group 86](https://github.com/user-attachments/assets/a79f6772-e4f8-4485-a59b-9245f2a3d61a)
 
 
 ### 프로필 관리 시스템
-<span style="background-color: #f7ddbe">💡 보호자 회원</span>
+<h4 style="background-color: #f7ddbe">💡 보호자 회원</h4>
 
 ![Group 84 (2)](https://github.com/user-attachments/assets/f5766f8a-501c-4dea-8877-a1149a021b63)
 
-<span style="background-color: #f7ddbe">💡 디자이너 회원</span>
+<h4 style="background-color: #f7ddbe">💡 디자이너 회원</h4>
 
 ![Group 85 (2)](https://github.com/user-attachments/assets/dc48f6ef-6132-4721-bfa3-65a70a4e3669)
 
