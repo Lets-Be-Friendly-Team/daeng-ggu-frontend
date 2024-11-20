@@ -64,5 +64,49 @@
 
 ### 댕꾸 - 댕댕이 꾸미기 (프리미엄 강아지 미용 중계 서비스)
 
+## 기능 소개
+
+### 1. 로그인 및 회원가입 시스템
+
+
+#### 카카오 소셜로그인
+
+![login (로그인)](https://github.com/user-attachments/assets/3dc9e6d2-564a-4e4e-83bb-291a330adb0d)
+
+
+#### 보호자 회원가입 및 반려견 등록
+
+![Group 86](https://github.com/user-attachments/assets/a79f6772-e4f8-4485-a59b-9245f2a3d61a)
+
+
+### + 반려견 등록
+
+![Group 84 (3)](https://github.com/user-attachments/assets/88af3ba3-b80e-4b7e-b30e-d73fbfb50190)
+
+
+
+### 프로필 관리 시스템
+
+#### 보호자 회원
+
+![Group 84 (2)](https://github.com/user-attachments/assets/f5766f8a-501c-4dea-8877-a1149a021b63)
+
+#### 디자이너 회원
+
+![Group 85 (2)](https://github.com/user-attachments/assets/dc48f6ef-6132-4721-bfa3-65a70a4e3669)
+
+### 디자이너 회원
+
+
+
+
+
+
+
+
+
+
+
+
 
 
