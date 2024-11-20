@@ -2,7 +2,7 @@
 
 ## Members
 
-<table align="center">
+<table align="center" style="width: 100%; table-layout: fixed;">
   <tr align="center">
     <td>고은진</td>
     <td>김현정</td>
@@ -11,20 +11,28 @@
   </tr>
   <tr>
     <td align="center">
-        <a href="https://github.com/rhdmswls12"><img src="https://avatars.githubusercontent.com/u/71330240?v=4" width="150px" alt="고은진"/><br /></a>
-     </td>
-     <td align="center">
-        <a href="https://github.com/hyeonjeongk"><img src="https://avatars.githubusercontent.com/u/49943501?v=4" width="150px" alt="김현정"/><br /></a>
-     </td>
-     <td align="center">
-         <a href="https://github.com/Hellol77"><img src="https://avatars.githubusercontent.com/u/76903801?v=4" width="150px" alt="원동현"/><br /></a>
-     </td>
-     <td align="center">
-        <a href="https://github.com/rhdmswls12"><img src="https://avatars.githubusercontent.com/u/88637228?v=4" width="150px" alt="조용주"/><br /></a>
-     </td>
-
-  <tr>
+        <a href="https://github.com/rhdmswls12">
+          <img src="https://avatars.githubusercontent.com/u/71330240?v=4" width="100px" alt="고은진"/><br />
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/hyeonjeongk">
+          <img src="https://avatars.githubusercontent.com/u/49943501?v=4" width="100px" alt="김현정"/><br />
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/Hellol77">
+          <img src="https://avatars.githubusercontent.com/u/76903801?v=4" width="100px" alt="원동현"/><br />
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/rhdmswls12">
+          <img src="https://avatars.githubusercontent.com/u/88637228?v=4" width="100px" alt="조용주"/><br />
+        </a>
+    </td>
+  </tr>
 </table>
+
 
 ## Teck Stack
 
