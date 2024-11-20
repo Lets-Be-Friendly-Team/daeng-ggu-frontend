@@ -1,51 +1,43 @@
-# React + TypeScript + Vite
+# 내 강아지를 위한 프리미엄 서비스, 댕꾸 🐾
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Members
 
-Currently, two official plugins are available:
+<table align="center">
+  <tr align="center">
+    <td>고은진</td>
+    <td>김현정</td>
+    <td>원동현</td>
+    <td>조용주</td>
+  </tr>
+  <tr>
+    <td align="center">
+        <a href="https://github.com/rhdmswls12"><img src="https://avatars.githubusercontent.com/u/71330240?v=4" width="150px" alt="고은진"/><br /></a>
+     </td>
+     <td align="center">
+        <a href="https://github.com/hyeonjeongk"><img src="https://avatars.githubusercontent.com/u/49943501?v=4" width="150px" alt="김현정"/><br /></a>
+     </td>
+     <td align="center">
+         <a href="https://github.com/Hellol77"><img src="https://avatars.githubusercontent.com/u/76903801?v=4" width="150px" alt="원동현"/><br /></a>
+     </td>
+     <td align="center">
+        <a href="https://github.com/rhdmswls12"><img src="https://avatars.githubusercontent.com/u/88637228?v=4" width="150px" alt="조용주"/><br /></a>
+     </td>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+  <tr>
+</table>
 
-## Expanding the ESLint configuration
+## Teck Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+**메인**
 
-- Configure the top-level `parserOptions` property like this:
+<div align="left">
+<img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=TypeScript&logoColor=white">
+<img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=white">
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
-```
+**상태관리**
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+<img src="https://img.shields.io/badge/zustand-000000?style=for-the-badge&logo=zustand&logoColor=white">
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react';
+**스타일링**
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-});
-```
-# vite-react-ts-setting
+<img src="https://img.shields.io/badge/styledcomponents-DB7093?style=for-the-badge&logo=styledcomponents&logoColor=white">
