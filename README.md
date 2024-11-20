@@ -98,6 +98,10 @@
 
 ![Group 86](https://github.com/user-attachments/assets/a79f6772-e4f8-4485-a59b-9245f2a3d61a)
 
+<h4 style="background-color: #f7ddbe">💡 디자이너 회원가입 및 프로필 작성</h4>
+
+![Group 85 (2)](https://github.com/user-attachments/assets/dc48f6ef-6132-4721-bfa3-65a70a4e3669)
+
 
 ### 프로필 관리 시스템
 <h4 style="background-color: #f7ddbe">💡 보호자 회원</h4>
@@ -106,10 +110,12 @@
 
 <h4 style="background-color: #f7ddbe">💡 디자이너 회원</h4>
 
-![Group 85 (2)](https://github.com/user-attachments/assets/dc48f6ef-6132-4721-bfa3-65a70a4e3669)
+![image](https://github.com/user-attachments/assets/79e06400-89fe-4ca2-bbdc-aaf6c1bb6030)
+
 
 ### 견적 요청
 
+![image](https://github.com/user-attachments/assets/bc6d68b7-5813-47db-96ce-1e3ee078c8ec)
 
 
 
