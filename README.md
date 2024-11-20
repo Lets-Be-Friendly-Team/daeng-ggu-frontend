@@ -1,8 +1,14 @@
 # 내 강아지를 위한 프리미엄 서비스, 댕꾸 🐾
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/66a7933d-b412-4c6e-a37f-d1438e161332" alt="Frame 259">
+  <img src="https://github.com/user-attachments/assets/56c07856-03e8-4a2d-b82d-2dfb8ba65b6f" alt="Frame 259">
 </div>
+
+
+
+
+
+
 
 ## Members
 
