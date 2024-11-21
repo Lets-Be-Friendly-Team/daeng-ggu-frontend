@@ -6,67 +6,68 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
+  font-size: 62.5%; /* 1rem = 10px */
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
 body {
+  width: 100%;
+  height: 100vh;
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
+  padding: 0;
+  min-width: 32rem;
   min-height: 100vh;
+  overflow-x: hidden;
+  justify-content: flex-start;
+  align-items: center;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
+@layer base {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    --primary: rgba(255, 104, 66, 100%);
+    --secondary: rgba(255, 239, 232, 100%);
+    --black: rgba(21, 29, 36, 100%);
+    --white: rgba(255, 255, 255, 100%);
+    --gray50: rgba(242, 244, 245, 100%);
+    --gray100: rgba(218, 221, 225, 100%);
+    --gray200: rgba(194, 199, 205, 100%);
+    --gray300: rgba(170, 177, 185, 100%);
+    --gray400: rgba(148, 156, 165, 100%);
+    --gray500: rgba(148, 156, 165, 100%);
+    --gray600: rgba(106, 116, 124, 100%);
+    --gray700: rgba(87, 95, 103, 100%);
+    --gray800: rgba(69, 76, 83, 100%);
+    --gray900: rgba(52, 58, 63, 100%);
   }
-  a:hover {
-    color: #747bff;
+  .dark {
+    --primary: rgba(255, 104, 66, 100%);
+    --secondary: rgba(255, 239, 232, 100%);
+    --black: rgba(253, 253, 253, 100%);
+    --white: rgba(21, 29, 36, 100%);
+    --gray50: rgba(52, 58, 63, 100%);
+    --gray100: rgba(69, 76, 83, 100%);
+    --gray200: rgba(87, 95, 103, 100%);
+    --gray300: rgba(106, 116, 124, 100%);
+    --gray400: rgba(148, 156, 165, 100%);
+    --gray500: rgba(148, 156, 165, 100%);
+    --gray600: rgba(170, 177, 185, 100%);
+    --gray700: rgba(194, 199, 205, 100%);
+    --gray800: rgba(218, 221, 225, 100%);
+    --gray900: rgba(242, 244, 245, 100%);
   }
-  button {
-    background-color: #f9f9f9;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
   }
 }

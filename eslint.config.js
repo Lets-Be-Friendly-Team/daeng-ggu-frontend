@@ -9,6 +9,7 @@ import prettierPlugin from 'eslint-plugin-prettier';
 import eslintPluginJsxA11y from 'eslint-plugin-jsx-a11y';
 import noRelativeImportPaths from 'eslint-plugin-no-relative-import-paths';
 import pluginQuery from '@tanstack/eslint-plugin-query';
+import simpleImportSort from 'eslint-plugin-simple-import-sort';
 
 export default tseslint.config(
   { ignores: ['dist'] },
@@ -31,6 +32,7 @@ export default tseslint.config(
       'jsx-a11y': eslintPluginJsxA11y,
       'no-relative-import-paths': noRelativeImportPaths,
       prettier: prettierPlugin,
+      'simple-import-sort': simpleImportSort,
     },
     rules: {
       ...js.configs.recommended.rules,
@@ -65,6 +67,26 @@ export default tseslint.config(
       'react/no-unknown-property': 'off',
       // // 정의한 props 중에 빠진게 있는지 체크 (NextPage 등 일부 추상화 컴포넌트에서 복잡해지므로 기본은 off)
       'react/prop-types': 'off',
+      // // import 순서 정의
+      'simple-import-sort/imports': [
+        'error',
+        {
+          groups: [
+            // Packages `react` related packages come first.
+            ['^react', '^@?\\w'],
+            // Internal packages.
+            ['^(@|components)(/.*|$)'],
+            // Side effect imports.
+            ['^\\u0000'],
+            // Parent imports. Put `..` last.
+            ['^\\.\\.(?!/?$)', '^\\.\\./?$'],
+            // Other relative imports. Put same-folder imports and `.` last.
+            ['^\\./(?=.*/)(?!/?$)', '^\\.(?!/?$)', '^\\./?$'],
+            // Style imports.
+            ['^.+\\.?(css)$'],
+          ],
+        },
+      ],
     },
   },
   eslintConfigPrettier,
