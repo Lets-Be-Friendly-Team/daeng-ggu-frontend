@@ -10,15 +10,15 @@ interface ITabProps {
 }
 
 const CategoryTab = ({ tabs, activeIndex }: ITabProps) => {
-  const [indicatorOffset, setIndicatorOffset] = useState(0);
+  const [indicatorOffset, setIndicatorOffset] = useState(0); // 하단 border 위치
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (containerRef.current) {
-      const buttons = containerRef.current.children;
+      const buttons = containerRef.current.children; // 버튼 요소 가져오기
       if (buttons[activeIndex]) {
         const button = buttons[activeIndex] as HTMLElement;
-        setIndicatorOffset(button.offsetLeft);
+        setIndicatorOffset(button.offsetLeft); // 활성화된 버튼의 x 위치
       }
     }
   }, [activeIndex]);
