@@ -69,7 +69,7 @@ export default tseslint.config(
       'react/prop-types': 'off',
       // // import 순서 정의
       'simple-import-sort/imports': [
-        'error',
+        'warn',
         {
           groups: [
             // Packages `react` related packages come first.

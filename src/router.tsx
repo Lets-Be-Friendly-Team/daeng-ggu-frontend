@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 
 import { MainPage } from '@/pages/MainPage';
+import Request from '@/pages/Request/Request.tsx';
 
 import App from './App';
 
@@ -13,6 +14,17 @@ export const router = createBrowserRouter([
         <App />
       </Suspense>
     ),
-    children: [{ index: true, path: '/', element: <MainPage /> }],
+    children: [
+      {
+        index: true,
+        path: '/',
+        element: <MainPage />,
+      },
+      {
+        index: true,
+        path: '/request',
+        element: <Request />,
+      },
+    ],
   },
 ]);
