@@ -9,6 +9,10 @@ export default {
         md: '0.8rem',
         lg: '1.2rem',
       },
+      fontFamily: {
+        pretendard: ['Pretendard', 'sans-serif'],
+        'pretendard-variable': ['Pretendard-Variable', 'sans-serif'],
+      },
       fontSize: {
         h1: ['2.4rem', { lineHeight: '3rem' }], // 24px font size, 30px line height
         h2: ['2rem', { lineHeight: '2.6rem' }], // 20px font size, 26px line height
