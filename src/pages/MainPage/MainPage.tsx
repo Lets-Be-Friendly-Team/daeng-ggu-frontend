@@ -5,8 +5,9 @@ import CategoryTab from '@/components/_common/categoryTab';
 const MainPage = () => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const tabs = [
-    { label: '예약내역', onClick: () => setActiveIndex(0) },
-    { label: '미용완료', onClick: () => setActiveIndex(1) },
+    { label: '반려견', onClick: () => setActiveIndex(0) },
+    { label: '리뷰', onClick: () => setActiveIndex(1) },
+    { label: '찜한 목록', onClick: () => setActiveIndex(2) },
   ];
   return (
     <div>
