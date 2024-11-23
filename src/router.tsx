@@ -1,15 +1,17 @@
+// router.jsx
 import { Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 
+import TestWrapper from '@/components/_common/Layout/TestWrapper.tsx';
 import { MainPage } from '@/pages/MainPage';
-import Request from '@/pages/Request/Request.tsx';
-import Test from '@/pages/Request/Test.tsx';
+import Request from '@/pages/Request/Request';
+import Test from '@/pages/Request/Test';
 
 import App from './App';
 
 export const router = createBrowserRouter([
   {
-    path: '',
+    path: '/',
     element: (
       <Suspense>
         <App />
@@ -18,18 +20,21 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        path: '/',
         element: <MainPage />,
       },
       {
-        index: true,
-        path: '/test',
-        element: <Test />,
-      },
-      {
-        index: true,
-        path: '/request',
-        element: <Request />,
+        path: 'test',
+        element: <TestWrapper />,
+        children: [
+          {
+            index: true,
+            element: <Test />,
+          },
+          {
+            path: 'request',
+            element: <Request />,
+          },
+        ],
       },
     ],
   },

@@ -3,20 +3,39 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Progress } from '@/components/_common/progress.tsx';
 
+import ProfileButton from './ProfileButton'; // Import the ProfileButton component
+
 const Request = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  let previousPath = '';
+
+  const dummyData = [
+    {
+      petId: 1,
+      petName: '포돌이',
+      petImgUrl: 'https://via.placeholder.com/100',
+      isRequested: true,
+    },
+    {
+      petId: 2,
+      petName: '장미',
+      petImgUrl: 'https://via.placeholder.com/100',
+      isRequested: false,
+    },
+  ];
 
   useEffect(() => {
-    previousPath = location.state?.from || '';
+    const previousPath = location.state?.from || '';
 
-    //이전 페이지에 대한 유효성 검사
     if (previousPath !== '/test') {
       alert(previousPath);
       navigate('/', { replace: true });
     }
   }, [location, navigate]);
+
+  const handleProfileClick = (petId: number) => {
+    alert(`You clicked on pet with ID: ${petId}`);
+  };
 
   const input = '테수트테수트';
   const initialStep = 4;
@@ -27,6 +46,17 @@ const Request = () => {
       <div className='mt-3'>
         <div className='ml-4 mr-4'>
           <Progress value={initialStep} text={input} maxStep={steps.length} />
+        </div>
+        <div className='flex h-[300px] flex-wrap items-center justify-center gap-4'>
+          {dummyData.map((pet) => (
+            <ProfileButton
+              key={pet.petId}
+              petName={pet.petName}
+              petImgUrl={pet.petImgUrl}
+              isRequested={pet.isRequested}
+              onClick={() => handleProfileClick(pet.petId)}
+            />
+          ))}
         </div>
       </div>
     </div>
