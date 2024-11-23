@@ -1,9 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { Progress } from '@/components/_common/progress.tsx';
-
-import ProfileButton from './ProfileButton'; // Import the ProfileButton component
+import StepByStep from '@/pages/Request/StepByStep.tsx';
 
 const Request = () => {
   const navigate = useNavigate();
@@ -22,43 +20,30 @@ const Request = () => {
       petImgUrl: 'https://via.placeholder.com/100',
       isRequested: false,
     },
+    {
+      petId: 3,
+      petName: '장군이',
+      petImgUrl: 'https://via.placeholder.com/100',
+      isRequested: false,
+    },
   ];
 
   useEffect(() => {
     const previousPath = location.state?.from || '';
 
     if (previousPath !== '/test') {
-      alert(previousPath);
-      navigate('/', { replace: true });
+      alert(`ㄴㄴ ${previousPath || 'unknown'}`);
+      setTimeout(() => navigate('/', { replace: true }), 0);
     }
   }, [location, navigate]);
 
-  const handleProfileClick = (petId: number) => {
-    alert(`You clicked on pet with ID: ${petId}`);
+  const handleProfileSelect = (petId: number) => {
+    console.log(petId);
   };
-
-  const input = '테수트테수트';
-  const initialStep = 4;
-  const steps = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   return (
     <div className='h-full w-full'>
-      <div className='mt-3'>
-        <div className='ml-4 mr-4'>
-          <Progress value={initialStep} text={input} maxStep={steps.length} />
-        </div>
-        <div className='flex h-[300px] flex-wrap items-center justify-center gap-4'>
-          {dummyData.map((pet) => (
-            <ProfileButton
-              key={pet.petId}
-              petName={pet.petName}
-              petImgUrl={pet.petImgUrl}
-              isRequested={pet.isRequested}
-              onClick={() => handleProfileClick(pet.petId)}
-            />
-          ))}
-        </div>
-      </div>
+      <StepByStep stepCount={8} profileData={dummyData} onProfileSelect={handleProfileSelect} />
     </div>
   );
 };

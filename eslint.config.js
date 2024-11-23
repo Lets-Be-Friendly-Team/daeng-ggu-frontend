@@ -54,6 +54,7 @@ export default tseslint.config(
           elements: ['img'],
         },
       ],
+      "no-unused-vars": ["error", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }],
       'jsx-a11y/aria-props': 'warn',
       // // 유효한 aria-* 상태/값만 사용
       'jsx-a11y/aria-proptypes': 'warn',

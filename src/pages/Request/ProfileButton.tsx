@@ -11,7 +11,7 @@ const ProfileButton: React.FC<ProfileButtonProps> = ({ petName, petImgUrl, isReq
   return (
     <button
       onClick={onClick}
-      className='relative flex h-32 w-32 flex-col items-center justify-center rounded-lg border bg-gray-100 p-2 shadow-md hover:bg-gray-200'
+      className='relative flex h-32 w-32 flex-col items-center justify-center rounded-lg border bg-gray-100 p-2 shadow-md hover:bg-secondary'
     >
       {isRequested && (
         <div className='absolute left-0 top-0 flex h-full w-full items-center justify-center bg-opacity-50 font-bold text-white'>

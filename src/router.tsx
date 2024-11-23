@@ -2,12 +2,13 @@
 import { Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 
-import TestWrapper from '@/components/_common/Layout/TestWrapper.tsx';
 import { MainPage } from '@/pages/MainPage';
 import Request from '@/pages/Request/Request';
 import Test from '@/pages/Request/Test';
 
 import App from './App';
+
+import '@/styles/sequenceAnimation.css';
 
 export const router = createBrowserRouter([
   {
@@ -24,7 +25,6 @@ export const router = createBrowserRouter([
       },
       {
         path: 'test',
-        element: <TestWrapper />,
         children: [
           {
             index: true,
