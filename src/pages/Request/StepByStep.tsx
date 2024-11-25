@@ -69,9 +69,21 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData, onProfi
     setTimeout(() => nextStep(), 0);
   };
 
+  // Updated handlePrevStep function
   const handlePrevStep = () => {
-    setDirection('backward');
-    setTimeout(() => prevStep(), 0);
+    if (currentStep === 5 && showRegionSelector) {
+      // Hide the RegionSelector
+      setShowRegionSelector(false);
+      // Optionally, reset the region selection
+      setRegionSelection({ area: '', subArea: '' });
+      // Navigate to the previous step
+      setDirection('backward');
+      setTimeout(() => prevStep(), 0);
+    } else {
+      // Navigate to the previous step normally
+      setDirection('backward');
+      setTimeout(() => prevStep(), 0);
+    }
   };
 
   useEffect(() => {
@@ -289,7 +301,7 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData, onProfi
       />
 
       <div
-        className='relative mt-6 w-full overflow-hidden transition-all duration-300'
+        className='relative mt-6 min-h-[400px] w-full overflow-hidden transition-all duration-300'
         style={{ height: containerHeight ? `${containerHeight}px` : 'auto' }}
       >
         <TransitionGroup component={null}>
