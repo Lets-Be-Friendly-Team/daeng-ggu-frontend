@@ -227,7 +227,7 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData, onProfi
           <div
             key={option}
             ref={option === '무관' && currentStep === 5 ? neutralButtonRef : undefined}
-            className={`flex h-auto w-[260px] cursor-pointer flex-col items-start gap-2 rounded-md border p-4 font-bold transition-all duration-300 ease-in-out ${
+            className={`flex h-auto w-[260px] cursor-pointer flex-col items-start gap-2 rounded-md border p-6 font-bold transition-all duration-300 ease-in-out ${
               selectedOptions[currentStep] === option ? 'border-primary bg-secondary' : 'border-gray-400'
             } ${option === '무관' && showRegionSelector ? 'pointer-events-none opacity-50' : ''}`}
             onClick={() => {
@@ -241,6 +241,8 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData, onProfi
                   neutralButtonRef.current.style.display = 'none';
                 }
                 setShowRegionSelector(true);
+              } else if (currentStep === 9 && option === '지금 작성할게요.') {
+                console.log('hi');
               } else {
                 handleNextStep();
               }
@@ -273,7 +275,7 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData, onProfi
                 >
                   <textarea
                     rows={6}
-                    className='mt-2 h-[200px] w-full rounded-md border border-primary p-2 text-gray-700 focus:border-primary focus:outline-none'
+                    className='mt-2 h-[200px] w-full rounded-md border border-primary p-2 text-gray-700 scrollbar-hide focus:border-primary focus:outline-none'
                     placeholder='내용을 작성해주세요.'
                   />
                   <button
