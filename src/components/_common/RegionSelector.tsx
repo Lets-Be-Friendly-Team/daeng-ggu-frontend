@@ -1,4 +1,3 @@
-// RegionSelector.tsx
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import areasData from '@/data/areas.json';
@@ -62,17 +61,18 @@ const RegionSelector: React.FC<RegionSelectorProps> = ({ onSelectionChange }) =>
   }, []);
 
   return (
-    <div className='mx-auto w-full max-w-md space-y-6'>
-      {/* Area Selector */}
+    <div className='mx-auto w-full max-w-md space-y-6 p-4'>
       <div className='w-[260px]' ref={areaRef}>
         <button
           type='button'
           onClick={() => setIsAreaOpen((prev) => !prev)}
-          className='flex h-[48px] w-full items-center justify-between rounded-lg border border-gray-300 bg-white px-4 py-2 text-left shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500'
+          className={`flex h-[48px] w-full items-center justify-between rounded-md border border-primary px-4 py-2 text-left text-sub_h2 shadow-sm focus:outline-none focus:ring-1 focus:ring-primary ${
+            isAreaOpen ? 'bg-secondary text-primary' : 'bg-white text-black'
+          }`}
         >
-          <span>{selectedArea || '지역을 선택해주세요'}</span>
+          <span className={`${selectedArea ? 'text-primary' : ''}`}>{selectedArea || '지역을 선택해주세요'}</span>
           <svg
-            className={`h-5 w-5 transition-transform duration-200 ${isAreaOpen ? 'rotate-180 transform' : ''}`}
+            className={`h-5 w-5 transition-transform duration-200 ${isAreaOpen ? 'rotate-180 transform' : ''} ${selectedArea ? 'text-primary' : ''}`}
             xmlns='http://www.w3.org/2000/svg'
             fill='none'
             viewBox='0 0 24 24'
@@ -83,21 +83,21 @@ const RegionSelector: React.FC<RegionSelectorProps> = ({ onSelectionChange }) =>
         </button>
 
         {isAreaOpen && (
-          <ul className='absolute z-10 mt-1 max-h-60 w-[260px] overflow-auto rounded-lg border border-gray-300 bg-white shadow-lg'>
+          <ul className='absolute z-10 mt-2 max-h-60 w-[260px] overflow-auto rounded-md border border-gray-300 bg-white text-sub_h2 shadow-lg scrollbar-hide'>
             {areas.map((area) => (
               <li key={area.name}>
                 <button
                   type='button'
                   onClick={() => handleAreaChange(area.name)}
-                  className={`flex w-full items-center px-4 py-2 text-left hover:bg-blue-100 ${
-                    selectedArea === area.name ? 'bg-blue-100' : ''
+                  className={`flex w-full items-center px-4 py-2 text-left hover:bg-secondary ${
+                    selectedArea === area.name ? 'bg-secondary' : ''
                   }`}
                 >
-                  <span
-                    className={`mr-3 inline-block h-4 w-4 rounded-full border-2 ${
-                      selectedArea === area.name ? 'border-blue-600 bg-blue-600' : 'border-gray-400'
-                    }`}
-                  ></span>
+                  <span className='relative mr-3 inline-block h-5 w-5 rounded-full border-2 border-primary'>
+                    {selectedArea === area.name && (
+                      <span className='absolute inset-0 m-auto h-2 w-2 rounded-full bg-primary'></span>
+                    )}
+                  </span>
                   {area.name}
                 </button>
               </li>
@@ -106,13 +106,14 @@ const RegionSelector: React.FC<RegionSelectorProps> = ({ onSelectionChange }) =>
         )}
       </div>
 
-      {/* SubArea Selector */}
       {selectedArea && (
         <div className='relative' ref={subAreaRef}>
           <button
             type='button'
             onClick={() => setIsSubAreaOpen((prev) => !prev)}
-            className='flex h-[48px] w-[260px] items-center justify-between rounded-lg border border-gray-300 bg-white px-4 py-2 text-left shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500'
+            className={`flex h-[48px] w-[260px] items-center justify-between rounded-md border border-primary px-4 py-2 text-left text-sub_h2 shadow-sm focus:outline-none focus:ring-1 focus:ring-primary ${
+              isSubAreaOpen ? 'bg-secondary text-primary' : 'bg-white text-black'
+            }`}
           >
             <span>{selectedSubArea || '시,군,구를 선택해주세요'}</span>
             <svg
@@ -127,19 +128,19 @@ const RegionSelector: React.FC<RegionSelectorProps> = ({ onSelectionChange }) =>
           </button>
 
           {isSubAreaOpen && (
-            <ul className='absolute z-10 mt-1 max-h-60 w-[260px] overflow-auto rounded-lg border border-gray-300 bg-white shadow-lg'>
+            <ul className='absolute z-10 mt-1 max-h-60 w-[260px] overflow-auto rounded-md border border-primary bg-white text-sub_h2 shadow-lg scrollbar-hide'>
               {subAreas.map((subArea) => (
                 <li key={subArea}>
                   <button
                     type='button'
                     onClick={() => handleSubAreaChange(subArea)}
-                    className={`flex items-center px-4 py-2 text-left hover:bg-green-100 ${
-                      selectedSubArea === subArea ? 'bg-green-100' : ''
+                    className={`flex w-full items-center px-4 py-2 text-left hover:bg-secondary ${
+                      selectedSubArea === subArea ? 'bg-secondary' : ''
                     }`}
                   >
                     <span
                       className={`mr-3 inline-block h-4 w-4 rounded-full border-2 ${
-                        selectedSubArea === subArea ? 'border-green-600 bg-green-600' : 'border-gray-400'
+                        selectedSubArea === subArea ? 'border-secondary bg-secondary' : 'border-gray-400'
                       }`}
                     ></span>
                     {subArea}

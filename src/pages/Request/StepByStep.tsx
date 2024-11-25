@@ -72,15 +72,11 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData, onProfi
   // Updated handlePrevStep function
   const handlePrevStep = () => {
     if (currentStep === 5 && showRegionSelector) {
-      // Hide the RegionSelector
       setShowRegionSelector(false);
-      // Optionally, reset the region selection
       setRegionSelection({ area: '', subArea: '' });
-      // Navigate to the previous step
       setDirection('backward');
       setTimeout(() => prevStep(), 0);
     } else {
-      // Navigate to the previous step normally
       setDirection('backward');
       setTimeout(() => prevStep(), 0);
     }
@@ -135,7 +131,6 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData, onProfi
 
   const renderStepOne = () => (
     <div className='flex flex-col items-center pt-10'>
-      <h2 className='mb-6 text-lg font-semibold'>미용을 받을 반려견을 선택 해주세요.</h2>
       <div className='grid grid-cols-2 gap-4'>
         {profileData.map((profile) => (
           <ProfileButton
@@ -187,7 +182,7 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData, onProfi
             </div>
 
             <button
-              className='hover:bg-primary-dark mt-6 h-[48px] w-[260px] rounded border border-primary bg-secondary px-4 py-2 text-primary'
+              className='hover:bg-primary-dark mt-6 h-[48px] w-[260px] rounded border border-primary bg-secondary px-4 py-2 text-body2 text-primary'
               onClick={() => {
                 if (window.confirm('프로필 수정할 경우 다시 견적서를 요청 해야해요. 진행하시겠어요?')) {
                   console.log('Profile editing confirmed');
@@ -200,7 +195,7 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData, onProfi
             </button>
 
             <button
-              className='hover:bg-primary-dark mt-6 h-[48px] w-[260px] rounded border border-primary bg-secondary px-4 py-2 text-primary'
+              className='hover:bg-primary-dark mt-6 h-[48px] w-[260px] rounded border border-primary bg-secondary px-4 py-2 text-body2 text-primary'
               onClick={handleNextStep}
             >
               다음 단계로 가기
@@ -232,7 +227,7 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData, onProfi
           <div
             key={option}
             ref={option === '무관' && currentStep === 5 ? neutralButtonRef : undefined}
-            className={`flex h-[48px] w-[260px] cursor-pointer items-center gap-4 rounded-md border p-6 font-bold transition-all duration-300 ease-in-out ${
+            className={`flex h-auto w-[260px] cursor-pointer flex-col items-start gap-2 rounded-md border p-4 font-bold transition-all duration-300 ease-in-out ${
               selectedOptions[currentStep] === option ? 'border-primary bg-secondary' : 'border-gray-400'
             } ${option === '무관' && showRegionSelector ? 'pointer-events-none opacity-50' : ''}`}
             onClick={() => {
@@ -251,29 +246,54 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData, onProfi
               }
             }}
           >
-            <RadioGroupItem
-              value={option}
-              className='pointer-events-none flex h-[16px] w-[16px] items-center justify-center rounded-full border border-gray-400 text-gray-400 data-[state=checked]:border-primary data-[state=checked]:text-primary'
-            >
-              <span className='h-[6px] w-[6px] rounded-full bg-gray-400 data-[state=checked]:bg-primary' />
-            </RadioGroupItem>
-            <label
-              className={`cursor-pointer text-sub_h2 transition-all duration-300 ease-in-out ${
-                selectedOptions[currentStep] === option ? 'text-primary' : 'text-gray-700'
-              }`}
-            >
-              {option}
-            </label>
+            <div className='flex items-center gap-2'>
+              <RadioGroupItem
+                value={option}
+                className='pointer-events-none flex h-[16px] w-[16px] items-center justify-center rounded-full border border-gray-400 text-gray-400 data-[state=checked]:border-primary data-[state=checked]:text-primary'
+              >
+                <span className='h-[6px] w-[6px] rounded-full bg-gray-400 data-[state=checked]:bg-primary' />
+              </RadioGroupItem>
+              <label
+                className={`cursor-pointer text-sub_h2 transition-all duration-300 ease-in-out ${
+                  selectedOptions[currentStep] === option ? 'text-primary' : 'text-gray-700'
+                }`}
+              >
+                {option}
+              </label>
+            </div>
+
+            {currentStep === 9 &&
+              selectedOptions[currentStep] === '지금 작성할게요.' &&
+              option === '지금 작성할게요.' && (
+                <div
+                  className='w-full overflow-hidden transition-all duration-300 ease-in-out'
+                  style={{
+                    height: 'auto',
+                  }}
+                >
+                  <textarea
+                    rows={6}
+                    className='mt-2 h-[200px] w-full rounded-md border border-primary p-2 text-gray-700 focus:border-primary focus:outline-none'
+                    placeholder='내용을 작성해주세요.'
+                  />
+                  <button
+                    className='hover:bg-primary-dark mt-6 h-[48px] w-full rounded border border-primary bg-secondary px-4 py-2 text-body2 text-primary'
+                    onClick={handleNextStep}
+                  >
+                    다음 단계로
+                  </button>
+                </div>
+              )}
           </div>
         ))}
       </RadioGroup>
 
       {showRegionSelector && (
-        <div className='mt-4'>
+        <div>
           <RegionSelector
             onSelectionChange={(selection) => {
               setRegionSelection(selection);
-              console.log(`Selected Region: Area - ${selection.area}, SubArea - ${selection.subArea}`);
+              console.log(`시 ${selection.area}, 구,군 - ${selection.subArea}`);
               setShowRegionSelector(false);
               if (neutralButtonRef.current) {
                 neutralButtonRef.current.classList.remove('pointer-events-none', 'opacity-50');
