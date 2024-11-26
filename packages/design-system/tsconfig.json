@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true,
+    "emitDeclarationOnly": false,
+    "strict": true,
+    "rootDir": ".",
+    "outDir": "./dist"
+  },
+  "extends": "@daeng-ggu/typescript-config/base.json",
+  "include": ["./**/*.ts", "./**/*.tsx", "./**/*.d.ts", "./**/*.json"],
+  "exclude": ["node_modules"]
+}
