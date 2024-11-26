@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import CategoryTab from '@/components/_common/categoryTab';
+import CategoryTab from '@/components/_common/CategoryTab/CategoryTab';
 
 const MainPage = () => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
