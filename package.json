@@ -9,7 +9,8 @@
     "postinstall": "husky",
     "prepack": "pinst --disable",
     "postpack": "pinst --enable",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "turbo:dry-run": "turbo run build --dry-run=json > turbo.json"
   },
   "lint-staged": {
     "**/*": [
