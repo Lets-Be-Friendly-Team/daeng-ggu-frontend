@@ -6,7 +6,7 @@ interface BorderedContainerProps {
 
 const BorderContainer: React.FC<BorderedContainerProps> = ({ children }) => {
   return (
-    <div className="py-6 px-6 rounded-lg w-full bg-secondary">
+    <div className="py-6 px-6 rounded-lg w-full min-w-[300px] bg-secondary">
       {children}
     </div>
   );
