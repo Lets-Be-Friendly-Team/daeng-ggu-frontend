@@ -42,9 +42,10 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], on
   const [selectedPet, setSelectedPet] = useState<number | null>(null);
   const [selectedOptions, setSelectedOptions] = useState<{ [key: number]: string }>({});
   const [containerHeight, setContainerHeight] = useState<number | null>(null);
+  const [isDynamicHeight, setIsDynamicHeight] = useState<boolean>(false); // New state for dynamic height
 
   const [showRegionSelector, setShowRegionSelector] = useState<boolean>(false);
-  const [, setRegionSelection] = useState<{ area: string; subArea: string }>({
+  const [regionSelection, setRegionSelection] = useState<{ area: string; subArea: string }>({
     area: '',
     subArea: '',
   });
@@ -89,6 +90,16 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], on
       setContainerHeight(activeRef.current.offsetHeight);
     }
   }, [currentStep, showRegionSelector]);
+
+  // Callback to enable dynamic height
+  const handleEnableDynamicHeight = () => {
+    setIsDynamicHeight(true);
+  };
+
+  // Optional: Callback to disable dynamic height
+  const handleDisableDynamicHeight = () => {
+    setIsDynamicHeight(false);
+  };
 
   const stepData: StepData[] = [
     {
@@ -193,116 +204,129 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], on
   };
 
   const renderOtherSteps = () => {
-
     if (currentStep === 10) {
       return (
         <RequestReview
           selectedPet={selectedPet}
-          selectedOptions={selectedOptions}
+          selectedOptions={{
+            ...selectedOptions,
+            5: selectedOptions[5] === '무관' ? '무관' : regionSelection ? `${regionSelection.area}, ${regionSelection.subArea}` : '지역 선택하기',
+          }}
           profileData={profileData}
+          stepData={stepData}
+          onOptionChange={(step, newOption) => {
+            setSelectedOptions((prev) => ({
+              ...prev,
+              [step]: newOption,
+            }));
+          }}
+          onEnableDynamicHeight={handleEnableDynamicHeight} // Pass the callback
+          onDisableDynamicHeight={handleDisableDynamicHeight} // Optional: Reset dynamic height
         />
       );
     }
 
     return (
-    <div className='pt-8 text-center'>
-      <RadioGroup
-        className='flex flex-col items-center gap-4'
-        value={selectedOptions[currentStep] || ''}
-        onValueChange={(value: string) => {
-          setSelectedOptions((prev) => ({
-            ...prev,
-            [currentStep]: value,
-          }));
-          if (!(currentStep === 5 && value === '지역 선택하기')) {
-            handleNextStep();
-          }
-        }}
-      >
-        {currentStepData?.options.map((option) => (
-          <div
-            key={option}
-            ref={option === '무관' && currentStep === 5 ? neutralButtonRef : undefined}
-            className={`flex h-auto w-[260px] cursor-pointer flex-col items-start gap-2 rounded-md border p-6 font-bold transition-all duration-300 ease-in-out ${
-              selectedOptions[currentStep] === option ? 'border-primary bg-secondary' : 'border-gray-400'
-            } ${option === '무관' && showRegionSelector ? 'pointer-events-none opacity-50' : ''}`}
-            onClick={() => {
-              setSelectedOptions((prev) => ({
-                ...prev,
-                [currentStep]: option,
-              }));
-              if (currentStep === 5 && option === '지역 선택하기') {
-                if (neutralButtonRef.current) {
-                  neutralButtonRef.current.classList.add('pointer-events-none', 'opacity-50');
-                  neutralButtonRef.current.style.display = 'none';
-                }
-                setShowRegionSelector(true);
-              } else if (currentStep === 9 && option === '지금 작성할게요.') {
-                console.log('hi');
-              } else {
-                handleNextStep();
-              }
-            }}
-          >
-            <div className='flex items-center gap-2'>
-              <RadioGroupItem
-                value={option}
-                className='pointer-events-none flex h-[16px] w-[16px] items-center justify-center rounded-full border border-gray-400 text-gray-400 data-[state=checked]:border-primary data-[state=checked]:text-primary'
-              >
-                <span className='h-[6px] w-[6px] rounded-full bg-gray-400 data-[state=checked]:bg-primary' />
-              </RadioGroupItem>
-              <label
-                className={`cursor-pointer text-sub_h2 transition-all duration-300 ease-in-out ${
-                  selectedOptions[currentStep] === option ? 'text-primary' : 'text-gray-700'
-                }`}
-              >
-                {option}
-              </label>
-            </div>
-
-            {currentStep === 9 &&
-              selectedOptions[currentStep] === '지금 작성할게요.' &&
-              option === '지금 작성할게요.' && (
-                <div
-                  className='w-full overflow-hidden transition-all duration-300 ease-in-out'
-                  style={{
-                    height: 'auto',
-                  }}
-                >
-                  <textarea
-                    rows={6}
-                    className='scrollbar-hide mt-2 max-h-[160px] min-h-[40px] w-full rounded-md border border-primary p-2 text-gray-700 focus:border-primary focus:outline-none'
-                    placeholder='내용을 작성해주세요.'
-                  />
-                  <button
-                    className='hover:bg-primary-dark mt-6 h-[48px] w-full rounded border border-primary bg-secondary px-4 py-2 text-body2 text-primary'
-                    onClick={handleNextStep}
-                  >
-                    다음 단계로
-                  </button>
-                </div>
-              )}
-          </div>
-        ))}
-      </RadioGroup>
-
-      {showRegionSelector && (
-        <div>
-          <RegionSelector
-            onSelectionChange={(selection: { area: string; subArea: string }) => {
-              setRegionSelection(selection);
-              console.log(`시 ${selection.area}, 구,군 - ${selection.subArea}`);
-              setShowRegionSelector(false);
-              if (neutralButtonRef.current) {
-                neutralButtonRef.current.classList.remove('pointer-events-none', 'opacity-50');
-              }
+      <div className='pt-8 text-center'>
+        <RadioGroup
+          className='flex flex-col items-center gap-4'
+          value={selectedOptions[currentStep] || ''}
+          onValueChange={(value: string) => {
+            setSelectedOptions((prev) => ({
+              ...prev,
+              [currentStep]: value,
+            }));
+            if (!(currentStep === 5 && value === '지역 선택하기')) {
               handleNextStep();
-            }}
-          />
-        </div>
-      )}
-    </div>
-  )};
+            }
+          }}
+        >
+          {currentStepData?.options.map((option) => (
+            <div
+              key={option}
+              ref={option === '무관' && currentStep === 5 ? neutralButtonRef : undefined}
+              className={`flex h-auto w-[260px] cursor-pointer flex-col items-start gap-2 rounded-md border p-6 font-bold transition-all duration-300 ease-in-out ${
+                selectedOptions[currentStep] === option ? 'border-primary bg-secondary' : 'border-gray-400'
+              } ${option === '무관' && showRegionSelector ? 'pointer-events-none opacity-50' : ''}`}
+              onClick={() => {
+                setSelectedOptions((prev) => ({
+                  ...prev,
+                  [currentStep]: option,
+                }));
+                if (currentStep === 5 && option === '지역 선택하기') {
+                  if (neutralButtonRef.current) {
+                    neutralButtonRef.current.classList.add('pointer-events-none', 'opacity-50');
+                    neutralButtonRef.current.style.display = 'none';
+                  }
+                  setShowRegionSelector(true);
+                } else if (currentStep === 9 && option === '지금 작성할게요.') {
+                  console.log('hi');
+                } else {
+                  handleNextStep();
+                }
+              }}
+            >
+              <div className='flex items-center gap-2'>
+                <RadioGroupItem
+                  value={option}
+                  size={0.8}
+                  className='pointer-events-none flex h-[16px] w-[16px] items-center justify-center rounded-full border border-gray-400 text-gray-400 data-[state=checked]:border-primary data-[state=checked]:text-primary'
+                >
+                  <span className='h-[6px] w-[6px] rounded-full bg-gray-400 data-[state=checked]:bg-primary' />
+                </RadioGroupItem>
+                <label
+                  className={`cursor-pointer text-sub_h2 transition-all duration-300 ease-in-out ${
+                    selectedOptions[currentStep] === option ? 'text-primary' : 'text-gray-700'
+                  }`}
+                >
+                  {option}
+                </label>
+              </div>
+
+              {currentStep === 9 &&
+                selectedOptions[currentStep] === '지금 작성할게요.' &&
+                option === '지금 작성할게요.' && (
+                  <div
+                    className='w-full overflow-hidden transition-all duration-300 ease-in-out'
+                    style={{
+                      height: 'auto',
+                    }}
+                  >
+                    <textarea
+                      rows={6}
+                      className='scrollbar-hide mt-2 max-h-[160px] min-h-[40px] w-full rounded-md border border-primary p-2 text-gray-700 focus:border-primary focus:outline-none'
+                      placeholder='내용을 작성해주세요.'
+                    />
+                    <button
+                      className='hover:bg-primary-dark mt-6 h-[48px] w-full rounded border border-primary bg-secondary px-4 py-2 text-body2 text-primary'
+                      onClick={handleNextStep}
+                    >
+                      다음 단계로
+                    </button>
+                  </div>
+                )}
+            </div>
+          ))}
+        </RadioGroup>
+
+        {showRegionSelector && (
+          <div>
+            <RegionSelector
+              onSelectionChange={(selection: { area: string; subArea: string }) => {
+                setRegionSelection(selection);
+                console.log(`시 ${selection.area}, 구,군 - ${selection.subArea}`);
+                setShowRegionSelector(false);
+                if (neutralButtonRef.current) {
+                  neutralButtonRef.current.classList.remove('pointer-events-none', 'opacity-50');
+                }
+                handleNextStep();
+              }}
+            />
+          </div>
+        )}
+      </div>
+    );
+  };
 
   return (
     <div className='flex h-full w-full flex-col items-center justify-center p-4'>
@@ -314,15 +338,24 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], on
             ? '미용을 받을 반려견을 선택 해주세요.'
             : currentStep === 2
               ? '반려견 프로필 확인'
-              : currentStep == 10
+              : currentStep === 10
                 ? '예약 확인 해주세요'
                 : currentStepData?.title || ''
         }
       />
 
       <div
-        className='relative mt-6 min-h-[400px] w-full overflow-hidden transition-all duration-300'
-        style={{ height: containerHeight ? `${containerHeight}px` : 'auto' }}
+        className='relative mt-6 w-full overflow-hidden transition-all duration-300'
+        style={{
+          height:
+            currentStep === 10
+              ? isDynamicHeight
+                ? 'auto' // Allow dynamic expansion when enabled
+                : containerHeight
+                  ? `${containerHeight}px`
+                  : 'auto'
+              : '400px', // Fixed height for other steps
+        }}
       >
         <TransitionGroup component={null}>
           <CSSTransition
@@ -332,7 +365,11 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], on
             classNames={direction === 'forward' ? 'slide-forward' : 'slide-backward'}
           >
             <div ref={getNodeRef(currentStep)}>
-              {currentStep === 1 ? renderStepOne() : currentStep === 2 ? renderStepTwo() : renderOtherSteps()}
+              {currentStep === 1
+                ? renderStepOne()
+                : currentStep === 2
+                  ? renderStepTwo()
+                  : renderOtherSteps()}
             </div>
           </CSSTransition>
         </TransitionGroup>

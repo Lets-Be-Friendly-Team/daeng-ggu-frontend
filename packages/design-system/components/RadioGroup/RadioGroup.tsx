@@ -14,8 +14,9 @@ RadioGroup.displayName = RadioGroupPrimitive.Root.displayName;
 
 const RadioGroupItem = React.forwardRef<
   React.ElementRef<typeof RadioGroupPrimitive.Item>,
-  React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Item>
->(({ className, ...props }, ref) => {
+  React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Item> & { size?: number }
+>(({ className, size = 4, ...props }, ref) => {
+  const circleSize = `${size}rem`; // Adjust size dynamically based on the `size` prop
   return (
     <RadioGroupPrimitive.Item
       ref={ref}
@@ -26,7 +27,10 @@ const RadioGroupItem = React.forwardRef<
       {...props}
     >
       <RadioGroupPrimitive.Indicator className='flex items-center justify-center'>
-        <Circle className='h-3 w-4 fill-current text-current' />
+        <Circle
+          className='fill-current text-current'
+          style={{ height: circleSize, width: circleSize }}
+        />
       </RadioGroupPrimitive.Indicator>
     </RadioGroupPrimitive.Item>
   );
