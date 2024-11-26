@@ -1,23 +1,20 @@
-import React, { ChangeEvent } from 'react';
+import { ChangeEvent, FC, useState } from 'react';
 
-export type InputValue = string | number | ReadonlyArray<string>;
-export type InputChangeEvent = ChangeEvent<HTMLInputElement>;
+export type TextChangeEvent = ChangeEvent<HTMLTextAreaElement>;
 
 interface Props {
   label?: string;
-  type?: string;
   id?: string;
   name?: string;
   placeholder?: string;
-  value?: InputValue;
+  value?: string;
   width?: string;
   height?: string;
-  onChange?: (_ev: InputChangeEvent) => void;
+  onChange?: (_ev: TextChangeEvent) => void;
+  maxLength?: number;
 }
-
-const Input: React.FC<Props> = ({
+const TextArea: FC<Props> = ({
   label = '',
-  type = 'text',
   id = '',
   name = '',
   placeholder = '',
@@ -25,17 +22,16 @@ const Input: React.FC<Props> = ({
   width = '',
   height = '',
   onChange,
+  maxLength,
 }) => {
-  // const [inputValue, setInputValue] = useState<InputValue>(value);
-
-  const changeHandler = (_ev: InputChangeEvent) => {
+  const [inputCount, setInputCount] = useState(0);
+  const changeHandler = (_ev: TextChangeEvent) => {
     if (onChange) {
       onChange(_ev);
+      setInputCount(_ev.target.value.length);
     }
   };
 
-  // const widthClass = width ? `w-${width}` : `w-full`;
-  // const heigthClass = height ? `h-[${height}]` : `h-auto`;
   return (
     <div>
       {label && (
@@ -43,17 +39,20 @@ const Input: React.FC<Props> = ({
           {label}
         </label>
       )}
-      <input
-        type={type}
+      <textarea
         id={id}
         name={name}
         placeholder={placeholder}
         value={value}
         onChange={changeHandler}
+        maxLength={maxLength}
         style={{ width: width || '100%', height: height || 'auto' }}
         className='rounded-md bg-gray-50 px-[1.6rem] py-4 text-body3 focus:outline-none focus:ring-1 focus:ring-inset focus:ring-gray-500'
-      ></input>
+      ></textarea>
+      <div>
+        {inputCount}/{maxLength}자
+      </div>
     </div>
   );
 };
-export default Input;
+export default TextArea;

@@ -9,6 +9,7 @@ import Test from '@/pages/Request/Test';
 import App from './App';
 
 import '@/styles/sequenceAnimation.css';
+import InputTest from './pages/InputTest/InputTest';
 
 export const router = createBrowserRouter([
   {
@@ -33,6 +34,15 @@ export const router = createBrowserRouter([
           {
             path: 'request',
             element: <Request />,
+          },
+        ],
+      },
+      {
+        path: 'input/test',
+        children: [
+          {
+            index: true,
+            element: <InputTest />,
           },
         ],
       },
