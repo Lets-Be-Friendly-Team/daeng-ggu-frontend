@@ -1,6 +1,5 @@
 import { Outlet } from 'react-router';
-
-import Layout from '@/components/_common/Layout';
+import { Layout } from '@daeng-ggu/design-system';
 
 function App() {
   return (
