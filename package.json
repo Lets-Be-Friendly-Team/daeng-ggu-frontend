@@ -28,7 +28,7 @@
     "typescript-eslint": "^8.15.0"
   },
   "name": "daeng-ggu-frontend",
-  "packageManager": "yarn@4.1.1",
+  "packageManager": "yarn@4.5.3",
   "workspaces": [
     "apps/*",
     "packages/*"
