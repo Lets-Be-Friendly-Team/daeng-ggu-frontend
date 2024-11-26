@@ -275,7 +275,7 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData, onProfi
                 >
                   <textarea
                     rows={6}
-                    className='mt-2 h-[200px] w-full rounded-md border border-primary p-2 text-gray-700 scrollbar-hide focus:border-primary focus:outline-none'
+                    className='mt-2 h-[160px] w-full rounded-md border border-primary p-2 text-gray-700 scrollbar-hide focus:border-primary focus:outline-none'
                     placeholder='내용을 작성해주세요.'
                   />
                   <button
