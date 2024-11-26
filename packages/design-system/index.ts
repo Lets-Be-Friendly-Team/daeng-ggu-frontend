@@ -11,6 +11,8 @@ import BackIcon from './components/Icons/BackIcon';
 import BellAlertIcon from './components/Icons/BellAlertIcon';
 import BellIcon from './components/Icons/BellIcon';
 import CloseIcon from './components/Icons/CloseIcon';
+import TextArea from './components/TextArea/TextArea';
+
 export {
   CategoryTab,
   Progress,
@@ -19,6 +21,7 @@ export {
   RadioGroup,
   RadioGroupItem,
   DropdownMenu,
+  TextArea,
   Header,
   Layout,
   MiniButton,
