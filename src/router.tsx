@@ -1,18 +1,41 @@
+// router.jsx
 import { Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 
 import { MainPage } from '@/pages/MainPage';
+import Request from '@/pages/Request/Request';
+import Test from '@/pages/Request/Test';
 
 import App from './App';
 
+import '@/styles/sequenceAnimation.css';
+
 export const router = createBrowserRouter([
   {
-    path: '',
+    path: '/',
     element: (
       <Suspense>
         <App />
       </Suspense>
     ),
-    children: [{ index: true, path: '/', element: <MainPage /> }],
+    children: [
+      {
+        index: true,
+        element: <MainPage />,
+      },
+      {
+        path: 'test',
+        children: [
+          {
+            index: true,
+            element: <Test />,
+          },
+          {
+            path: 'request',
+            element: <Request />,
+          },
+        ],
+      },
+    ],
   },
 ]);

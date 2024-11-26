@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.slide-forward-enter {
+    @apply absolute w-full transform translate-x-full;
+}
+.slide-forward-enter-active {
+    @apply transform translate-x-0 transition-transform duration-500 ease-in-out;
+}
+.slide-forward-exit {
+    @apply absolute w-full transform translate-x-0;
+}
+.slide-forward-exit-active {
+    @apply transform -translate-x-full transition-transform duration-500 ease-in-out;
+}
+
+.slide-backward-enter {
+    @apply absolute w-full transform -translate-x-full;
+}
+.slide-backward-enter-active {
+    @apply transform translate-x-0 transition-transform duration-500 ease-in-out;
+}
+.slide-backward-exit {
+    @apply absolute w-full transform translate-x-0;
+}
+.slide-backward-exit-active {
+    @apply transform translate-x-full transition-transform duration-500 ease-in-out;
+}
