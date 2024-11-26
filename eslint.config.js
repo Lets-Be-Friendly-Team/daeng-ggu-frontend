@@ -47,6 +47,8 @@ export default tseslint.config(
         'warn',
         { allowSameFolder: true, rootDir: 'src', prefix: '@' },
       ],
+      // '_'로 시작하는 매개변수 무시
+      'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
       // 유효한 aria-* 속성만 사용
       'jsx-a11y/alt-text': [
         'warn',

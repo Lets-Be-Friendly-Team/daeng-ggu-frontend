@@ -24,7 +24,8 @@ export default {
         body1: ['1.6rem', { lineHeight: '2.2rem' }], // 16px font size, 22px line height
         body2: ['1.4rem', { lineHeight: '2rem' }], // 14px font size, 20px line height
         body3: ['1.2rem', { lineHeight: '1.6rem' }], // 12px font size, 16px line height
-        iconCaption: ['1rem', { lineHeight: '1.4rem' }], // 10px font size, 14px line height      },
+        caption: ['1rem', { lineHeight: '1.4rem' }], // 10px font size, 14px line height
+        iconCaption: ['0.8rem', { lineHeight: '1.2rem' }], // 8px font size, 12px line height      },
       },
       colors: {
         white: 'rgba(var(--white))',
