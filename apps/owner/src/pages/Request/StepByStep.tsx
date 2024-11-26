@@ -9,6 +9,7 @@ import ProfileViewer from '@/pages/Request/ProfileViewer'; // Import the new com
 import { useStepStore } from '@/stores/useStepStore';
 
 import '@/styles/sequenceAnimation.css';
+import RequestReview from '@/pages/Request/RequestReview';
 
 interface StepData {
   step: number;
@@ -70,7 +71,6 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], on
     setTimeout(() => nextStep(), 0);
   };
 
-  // Updated handlePrevStep function
   const handlePrevStep = () => {
     if (currentStep === 5 && showRegionSelector) {
       setShowRegionSelector(false);
@@ -148,36 +148,63 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], on
 
   const renderStepTwo = () => {
     const petProfile = profileData.find((profile) => profile.petId === selectedPet);
+
     return (
-      <ProfileViewer
-        profile={
-          petProfile || {
-            petId: 0,
-            petName: 'Unknown',
-            petImgUrl: '',
-            petImgName: 'No Image',
-            breed: 'Unknown',
-            birthDate: 'N/A',
-            gender: 'N/A',
-            isNeutered: false,
-            weight: 0,
-            isRequested: false,
-            specialNotes: '',
+      <div className="flex flex-col items-center pt-10">
+        <ProfileViewer
+          profile={
+            petProfile || {
+              petId: 0,
+              petName: 'Unknown',
+              petImgUrl: '',
+              petImgName: 'No Image',
+              breed: 'Unknown',
+              birthDate: 'N/A',
+              gender: 'N/A',
+              isNeutered: false,
+              weight: 0,
+              isRequested: false,
+              specialNotes: '',
+            }
           }
-        }
-        onEditProfile={() => {
-          if (window.confirm('프로필 수정할 경우 다시 견적서를 요청 해야해요. 진행하시겠어요?')) {
-            console.log('Profile editing confirmed');
-          } else {
-            console.log('Profile editing canceled');
-          }
-        }}
-        onNextStep={handleNextStep}
-      />
+        />
+
+        <button
+          className="hover:bg-primary-dark mt-6 h-[48px] w-[260px] rounded border border-primary bg-secondary px-4 py-2 text-body2 text-primary"
+          onClick={() => {
+            if (window.confirm('프로필을 수정하면 견적서를 다시 요청해야 합니다. 진행하시겠습니까?')) {
+              console.log('Profile editing confirmed');
+            } else {
+              console.log('Profile editing canceled');
+            }
+          }}
+        >
+          프로필 수정하기
+        </button>
+
+        <button
+          className="hover:bg-primary-dark mt-6 h-[48px] w-[260px] rounded border border-primary bg-secondary px-4 py-2 text-body2 text-primary"
+          onClick={handleNextStep}
+        >
+          다음 단계로 가기
+        </button>
+      </div>
     );
   };
 
-  const renderOtherSteps = () => (
+  const renderOtherSteps = () => {
+
+    if (currentStep === 10) {
+      return (
+        <RequestReview
+          selectedPet={selectedPet}
+          selectedOptions={selectedOptions}
+          profileData={profileData}
+        />
+      );
+    }
+
+    return (
     <div className='pt-8 text-center'>
       <RadioGroup
         className='flex flex-col items-center gap-4'
@@ -275,7 +302,7 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], on
         </div>
       )}
     </div>
-  );
+  )};
 
   return (
     <div className='flex h-full w-full flex-col items-center justify-center p-4'>
