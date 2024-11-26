@@ -83,7 +83,7 @@ const RegionSelector: React.FC<RegionSelectorProps> = ({ onSelectionChange }: Re
         </button>
 
         {isAreaOpen && (
-          <ul className='scrollbar-hide absolute z-10 mt-2 max-h-60 w-[260px] overflow-auto rounded-md border border-gray-300 bg-white text-sub_h2 shadow-lg'>
+          <ul className='absolute z-10 mt-2 max-h-60 w-[260px] overflow-auto rounded-md border border-gray-300 bg-white text-sub_h2 shadow-lg scrollbar-hide'>
             {areas.map((area) => (
               <li key={area.name}>
                 <button
@@ -128,7 +128,7 @@ const RegionSelector: React.FC<RegionSelectorProps> = ({ onSelectionChange }: Re
           </button>
 
           {isSubAreaOpen && (
-            <ul className='scrollbar-hide absolute z-10 mt-1 max-h-60 w-[260px] overflow-auto rounded-md border border-primary bg-white text-sub_h2 shadow-lg'>
+            <ul className='absolute z-10 mt-1 max-h-60 w-[260px] overflow-auto rounded-md border border-primary bg-white text-sub_h2 shadow-lg scrollbar-hide'>
               {subAreas.map((subArea) => (
                 <li key={subArea}>
                   <button

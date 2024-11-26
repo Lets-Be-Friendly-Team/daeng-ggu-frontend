@@ -6,7 +6,11 @@
     "emitDeclarationOnly": false,
     "strict": true,
     "rootDir": ".",
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"]
+    }
   },
   "extends": "@daeng-ggu/typescript-config/base.json",
   "include": ["./**/*.ts", "./**/*.tsx", "./**/*.d.ts", "./**/*.json"],
