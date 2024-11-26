@@ -1,3 +1,5 @@
+// components/StepByStep.tsx
+
 import React, { useEffect, useRef, useState } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
@@ -5,6 +7,7 @@ import { Progress } from '@/components/_common/progress.tsx';
 import { RadioGroup, RadioGroupItem } from '@/components/_common/radio-group.tsx';
 import RegionSelector from '@/components/_common/RegionSelector';
 import ProfileButton from '@/pages/Request/ProfileButton';
+import ProfileViewer from '@/pages/Request/ProfileViewer'; // Import the new component
 import { useStepStore } from '@/stores/useStepStore';
 
 import '@/styles/sequenceAnimation.css';
@@ -35,7 +38,7 @@ interface StepByStepProps {
   onProfileSelect: (_petId: number) => void;
 }
 
-const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData, onProfileSelect }) => {
+const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], onProfileSelect }) => {
   const { currentStep, nextStep, prevStep, setDirection, direction } = useStepStore();
   const [selectedPet, setSelectedPet] = useState<number | null>(null);
   const [selectedOptions, setSelectedOptions] = useState<{ [key: number]: string }>({});
@@ -148,63 +151,31 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData, onProfi
   const renderStepTwo = () => {
     const petProfile = profileData.find((profile) => profile.petId === selectedPet);
     return (
-      <div className='flex flex-col items-center pt-10'>
-        {petProfile ? (
-          <>
-            <div className='rounded-[8px] border border-primary p-6'>
-              <div className='flex items-center'>
-                <img
-                  src={petProfile.petImgUrl}
-                  alt={petProfile.petName}
-                  className='mb-4 h-32 w-32 rounded-full border border-gray-300'
-                />
-                <div className='ml-6 grid grid-cols-2 gap-x-4 gap-y-2'>
-                  <p className='text-sm text-gray-600'>
-                    이름: <span className='text-primary'>{petProfile.petName}</span>
-                  </p>
-                  <p className='text-sm text-gray-600'>
-                    견종: <span className='text-primary'>{petProfile.breed}</span>
-                  </p>
-                  <p className='text-sm text-gray-600'>
-                    몸무게: <span className='text-primary'>{petProfile.weight}kg</span>
-                  </p>
-                  <p className='text-sm text-gray-600'>
-                    성별: <span className='text-primary'>{petProfile.gender === 'male' ? '수컷' : '암컷'}</span>
-                  </p>
-                  <p className='text-sm text-gray-600'>
-                    중성화 여부: <span className='text-primary'>{petProfile.isNeutered ? '예' : '아니오'}</span>
-                  </p>
-                  <p className='text-sm text-gray-600'>
-                    출생일: <span className='text-primary'>{petProfile.birthDate}</span>
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <button
-              className='hover:bg-primary-dark mt-6 h-[48px] w-[260px] rounded border border-primary bg-secondary px-4 py-2 text-body2 text-primary'
-              onClick={() => {
-                if (window.confirm('프로필 수정할 경우 다시 견적서를 요청 해야해요. 진행하시겠어요?')) {
-                  console.log('Profile editing confirmed');
-                } else {
-                  console.log('Profile editing canceled');
-                }
-              }}
-            >
-              프로필 수정하기
-            </button>
-
-            <button
-              className='hover:bg-primary-dark mt-6 h-[48px] w-[260px] rounded border border-primary bg-secondary px-4 py-2 text-body2 text-primary'
-              onClick={handleNextStep}
-            >
-              다음 단계로 가기
-            </button>
-          </>
-        ) : (
-          <p>선택한 반려견 정보를 찾을 수 없습니다.</p>
-        )}
-      </div>
+      <ProfileViewer
+        profile={
+          petProfile || {
+            petId: 0,
+            petName: 'Unknown',
+            petImgUrl: '',
+            petImgName: 'No Image',
+            breed: 'Unknown',
+            birthDate: 'N/A',
+            gender: 'N/A',
+            isNeutered: false,
+            weight: 0,
+            isRequested: false,
+            specialNotes: '',
+          }
+        }
+        onEditProfile={() => {
+          if (window.confirm('프로필 수정할 경우 다시 견적서를 요청 해야해요. 진행하시겠어요?')) {
+            console.log('Profile editing confirmed');
+          } else {
+            console.log('Profile editing canceled');
+          }
+        }}
+        onNextStep={handleNextStep}
+      />
     );
   };
 
@@ -275,7 +246,7 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData, onProfi
                 >
                   <textarea
                     rows={6}
-                    className='mt-2 h-[160px] w-full rounded-md border border-primary p-2 text-gray-700 scrollbar-hide focus:border-primary focus:outline-none'
+                    className='mt-2 max-h-[160px] min-h-[40px] w-full rounded-md border border-primary p-2 text-gray-700 scrollbar-hide focus:border-primary focus:outline-none'
                     placeholder='내용을 작성해주세요.'
                   />
                   <button
@@ -318,7 +289,9 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData, onProfi
             ? '미용을 받을 반려견을 선택 해주세요.'
             : currentStep === 2
               ? '반려견 프로필 확인'
-              : currentStepData?.title || ''
+              : currentStep == 10
+                ? '예약 확인 해주세요'
+                : currentStepData?.title || ''
         }
       />
 
