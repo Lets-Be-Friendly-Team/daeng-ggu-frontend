@@ -85,7 +85,6 @@ const StepByStep: React.FC<StepByStepProps> = ({
     setTimeout(() => nextStep(), 0);
   };
   const handleNextStep = () => {
-    // Add validation for the textarea input on step 9
     if (
       currentStep === 9 &&
       selectedOptions[currentStep] === '지금 작성할게요.' &&
