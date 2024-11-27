@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CategoryTab, Input } from '@daeng-ggu/design-system';
+import { CategoryTab, Header, Input } from '@daeng-ggu/design-system';
 
 const MainPage = () => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
@@ -11,7 +11,7 @@ const MainPage = () => {
   return (
     <div>
       <div className='text-xl font-bold'>MainPagee</div>
-
+      <Header />
       <div className='font-pretendard-variable text-xl'>
         <Input />
         <CategoryTab tabs={tabs} activeIndex={activeIndex} />
