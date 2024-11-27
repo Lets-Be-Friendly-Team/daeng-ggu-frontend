@@ -346,11 +346,11 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], on
           height:
             currentStep === 10
               ? isDynamicHeight
-                ? 'auto' // Allow dynamic expansion when enabled
+                ? 'auto'
                 : containerHeight
                   ? `${containerHeight}px`
                   : 'auto'
-              : '400px', // Fixed height for other steps
+              : '400px',
         }}
       >
         <TransitionGroup component={null}>
