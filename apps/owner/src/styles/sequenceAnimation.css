@@ -41,3 +41,25 @@
 .slide-up-exit-active {
     @apply transform translate-y-full opacity-0 transition-transform transition-opacity duration-500 ease-in-out;
 }
+
+
+
+.transition-transform {
+    transition: transform 0.3s ease-in-out;
+}
+
+.transform {
+    transform: translateX(0);
+}
+
+.translate-x-0 {
+    transform: translateX(0);
+}
+
+.-translate-x-full {
+    transform: translateX(-100%);
+}
+
+.translate-x-full {
+    transform: translateX(100%);
+}
