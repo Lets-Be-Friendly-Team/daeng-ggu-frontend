@@ -22,6 +22,7 @@ import TypeTwoButton from './components/TypeTwoButton/TypeTwoButton';
 import TypeOneButton from './components/TypeOneButton/TypeOneButton';
 
 import TextArea from './components/TextArea/TextArea';
+import SearchBar from './components/SearchBar/SearchBar';
 
 export {
   CategoryTab,
@@ -32,6 +33,7 @@ export {
   RadioGroupItem,
   DropdownMenu,
   TextArea,
+  SearchBar,
   Header,
   MiniButton,
   BackIcon,
