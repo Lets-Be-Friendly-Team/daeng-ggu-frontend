@@ -7,6 +7,10 @@ import { RadioGroup, RadioGroupItem } from './components/RadioGroup/RadioGroup';
 import { DropdownMenu } from './components/Dropdown-menu/Dropdown-menu';
 import MiniButton from './components/Buttons/MiniButton';
 import Header from './components/Header/Header';
+import BackIcon from './components/Icons/BackIcon';
+import BellAlertIcon from './components/Icons/BellAlertIcon';
+import BellIcon from './components/Icons/BellIcon';
+import CloseIcon from './components/Icons/CloseIcon';
 export {
   CategoryTab,
   Progress,
@@ -18,4 +22,8 @@ export {
   Header,
   Layout,
   MiniButton,
+  BackIcon,
+  BellAlertIcon,
+  BellIcon,
+  CloseIcon,
 };
