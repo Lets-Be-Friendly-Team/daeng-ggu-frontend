@@ -13,6 +13,7 @@ import BellAlertIcon from './components/Icons/BellAlertIcon';
 import BellIcon from './components/Icons/BellIcon';
 import CloseIcon from './components/Icons/CloseIcon';
 import UserProfileImage from './components/ProfileImage/UserProfileImage';
+import TypeTwoButton from './components/TypeTwoButton/TypeTwoButton';
 
 
 export {
@@ -35,4 +36,5 @@ export {
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
+  TypeTwoButton
 };

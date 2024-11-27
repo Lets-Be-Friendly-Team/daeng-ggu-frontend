@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import { Progress, RadioGroup, RadioGroupItem, RegionSelector } from '@daeng-ggu/design-system';
+import { Progress, RadioGroup, RadioGroupItem, RegionSelector, TypeTwoButton} from '@daeng-ggu/design-system';
 
 import ProfileButton from '@/pages/Request/ProfileButton';
 import ProfileViewer from '@/pages/Request/ProfileViewer'; // Import the new component
@@ -187,10 +187,9 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], on
             }
           />
         </div>
-
-
-        <button
-          className="hover:bg-primary-dark mt-6 h-[48px] w-[260px] rounded border border-primary bg-secondary px-4 py-2 text-body2 text-primary"
+        <TypeTwoButton
+          text="프로필 수정하기"
+          color="bg-secondary"
           onClick={() => {
             if (window.confirm('프로필을 수정하면 견적서를 다시 요청해야 합니다. 진행하시겠습니까?')) {
               console.log('Profile editing confirmed');
@@ -198,16 +197,9 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], on
               console.log('Profile editing canceled');
             }
           }}
-        >
-          프로필 수정하기
-        </button>
+        />
 
-        <button
-          className="hover:bg-primary-dark mt-6 h-[48px] w-[260px] rounded border border-primary bg-secondary px-4 py-2 text-body2 text-primary"
-          onClick={handleNextStep}
-        >
-          다음 단계로 가기
-        </button>
+        <TypeTwoButton text='다음 단계로 가기' color='bg-secondary' onClick={handleNextStep} />
       </div>
     );
   };
@@ -306,12 +298,7 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], on
                       className='scrollbar-hide mt-2 max-h-[160px] min-h-[40px] w-full rounded-md border border-primary p-2 text-gray-700 focus:border-primary focus:outline-none'
                       placeholder='내용을 작성해주세요.'
                     />
-                    <button
-                      className='hover:bg-primary-dark mt-6 h-[48px] w-full rounded border border-primary bg-secondary px-4 py-2 text-body2 text-primary'
-                      onClick={handleNextStep}
-                    >
-                      다음 단계로
-                    </button>
+                    <TypeTwoButton text='다음 단계로 가기' color='bg-secondary' onClick={handleNextStep} />
                   </div>
                 )}
             </div>
