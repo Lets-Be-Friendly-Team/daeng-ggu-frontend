@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import StepByStep from '@/pages/Request/StepByStep.tsx';
+import React from 'react';
 
-const Request = () => {
+const Status = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -23,7 +23,8 @@ const Request = () => {
       isRequested: true,
       customerName: '김철수',
       phone: '010-1234-5678',
-      address: '서울시 강남구 테헤란로 123 포돌빌딩 1304호',
+      address: '서울시 강남구 테헤란로 123 포돌빌딩 1304호'
+
     },
     {
       petId: 2,
@@ -40,7 +41,7 @@ const Request = () => {
       isRequested: false,
       customerName: '이영희',
       phone: '010-9876-5432',
-      address: '부산시 해운대구 해운대로 456 ㅇ노ㅓ오빌딩 1233호',
+      address: '부산시 해운대구 해운대로 456 ㅇ노ㅓ오빌딩 1233호'
     },
     {
       petId: 3,
@@ -57,9 +58,10 @@ const Request = () => {
       isRequested: false,
       customerName: '박민수',
       phone: '010-5555-6789',
-      address: '대전시 유성구 대학로 789 아이스 빌딩 1239호',
-    },
+      address: '대전시 유성구 대학로 789 아이스 빌딩 1239호'
+    }
   ];
+
 
   useEffect(() => {
     const previousPath = location.state?.from || '';
@@ -70,15 +72,12 @@ const Request = () => {
     }
   }, [location, navigate]);
 
-  const handleProfileSelect = (petId: number) => {
-    console.log(petId);
-  };
 
   return (
     <div className='h-full max-w-[480px]'>
-      <StepByStep stepCount={10} profileData={dummyData} onProfileSelect={handleProfileSelect} />
+      hello
     </div>
   );
 };
 
-export default Request;
+export default Status;

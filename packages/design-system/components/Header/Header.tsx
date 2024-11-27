@@ -10,7 +10,7 @@ interface IHeaderProps {
 }
 const Header = ({ mode, title, onClick }: IHeaderProps) => {
   return (
-    <div className='flex h-[50px] w-screen items-center justify-center bg-white'>
+    <div className='flex h-[50px] items-center justify-center bg-white'>
       {mode === 'main' && (
         <div className='flex h-auto w-full items-center justify-between px-5 py-4'>
           <img src={textLogoImage} alt='logo image' className='h-[22px] w-[41px]' onClick={onClick} />
@@ -19,7 +19,9 @@ const Header = ({ mode, title, onClick }: IHeaderProps) => {
       )}
       {mode === 'back' && (
         <div className='flex h-auto w-full items-center px-5 py-4'>
-          <BackIcon className='mr-auto h-5 w-5' />
+          <button onClick={onClick}>
+            <BackIcon className='mr-auto h-5 w-5' />
+          </button>
           <div className='flex-1 text-center text-sub_h2'>{title}</div>
         </div>
       )}

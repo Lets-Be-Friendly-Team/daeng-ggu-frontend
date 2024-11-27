@@ -204,12 +204,6 @@ const RequestReview: React.FC<RequestReviewProps> = ({
           </div>
         </div>
       </div>
-      <button
-        className='mt-4 rounded bg-blue-500 px-6 py-2 font-bold text-white hover:bg-blue-600'
-        onClick={() => alert('예약이 완료되었습니다!')}
-      >
-        예약 완료
-      </button>
     </div>
   );
 };
