@@ -12,6 +12,7 @@ import BellAlertIcon from './components/Icons/BellAlertIcon';
 import BellIcon from './components/Icons/BellIcon';
 import CloseIcon from './components/Icons/CloseIcon';
 import TextArea from './components/TextArea/TextArea';
+import SearchBar from './components/SearchBar/SearchBar';
 
 export {
   CategoryTab,
@@ -22,6 +23,7 @@ export {
   RadioGroupItem,
   DropdownMenu,
   TextArea,
+  SearchBar,
   Header,
   Layout,
   MiniButton,

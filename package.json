@@ -33,5 +33,8 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "tailwind-merge": "^2.5.5"
+  }
 }
