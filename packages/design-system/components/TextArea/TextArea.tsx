@@ -60,9 +60,9 @@ const TextArea: FC<Props> = ({
     }
   };
 
-  const bgClass = bgColor ? `bg-${bgColor}` : `bg-gray-50`;
-  const bwClass = borderWidth ? `border-[${borderWidth}]` : '';
-  const bcClass = borderColor ? `border-${borderColor}` : '';
+  const bgClass = bgColor ? `${bgColor}` : `bg-gray-50`;
+  const bwClass = borderWidth ? `${borderWidth}` : '';
+  const bcClass = borderColor ? `${borderColor}` : '';
 
   return (
     <div className='flex flex-col'>
