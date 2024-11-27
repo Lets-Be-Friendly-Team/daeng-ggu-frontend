@@ -33,7 +33,7 @@ const TextArea: FC<Props> = ({
   };
 
   return (
-    <div>
+    <div className='flex flex-col'>
       {label && (
         <label htmlFor={id} className='mb-[0.4rem] block text-body3 font-semibold text-gray-800'>
           {label}
@@ -47,11 +47,14 @@ const TextArea: FC<Props> = ({
         onChange={changeHandler}
         maxLength={maxLength}
         style={{ width: width || '100%', height: height || 'auto' }}
-        className='rounded-md bg-gray-50 px-[1.6rem] py-4 text-body3 focus:outline-none focus:ring-1 focus:ring-inset focus:ring-gray-500'
+        className='resize-none rounded-md bg-gray-50 px-[1.6rem] py-4 text-body3 focus:outline-none focus:ring-1 focus:ring-inset focus:ring-gray-500'
       ></textarea>
-      <div>
-        {inputCount}/{maxLength}자
-      </div>
+      {maxLength && (
+        <div className='ml-auto mt-[0.4rem] text-caption'>
+          <span className='font-semibold text-gray-800'>{inputCount}</span>
+          <span className='text-gray-600'>/{maxLength}자</span>
+        </div>
+      )}
     </div>
   );
 };
