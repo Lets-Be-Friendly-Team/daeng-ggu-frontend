@@ -2,10 +2,17 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import { Progress, RadioGroup, RadioGroupItem, RegionSelector, TypeTwoButton, TypeOneButton} from '@daeng-ggu/design-system';
+import {
+  Progress,
+  RadioGroup,
+  RadioGroupItem,
+  RegionSelector,
+  TypeTwoButton,
+  TypeOneButton,
+} from '@daeng-ggu/design-system';
 
 import ProfileButton from '@/pages/Request/ProfileButton';
-import ProfileViewer from '@/pages/Request/ProfileViewer'; // Import the new component
+import ProfileViewer from '@/pages/Request/ProfileViewer';
 import { useStepStore } from '@/stores/useStepStore';
 
 import '@/styles/sequenceAnimation.css';
@@ -41,18 +48,25 @@ interface StepByStepProps {
   onProfileSelect: (_petId: number) => void;
 }
 
-const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], onProfileSelect }) => {
+const StepByStep: React.FC<StepByStepProps> = ({
+                                                 stepCount,
+                                                 profileData = [],
+                                                 onProfileSelect,
+                                               }) => {
   const { currentStep, nextStep, prevStep, setDirection, direction } = useStepStore();
   const [selectedPet, setSelectedPet] = useState<number | null>(null);
   const [selectedOptions, setSelectedOptions] = useState<{ [key: number]: string }>({});
   const [containerHeight, setContainerHeight] = useState<number | null>(null);
-  const [isDynamicHeight, setIsDynamicHeight] = useState<boolean>(false); // New state for dynamic height
+  const [isDynamicHeight, setIsDynamicHeight] = useState<boolean>(false);
 
   const [showRegionSelector, setShowRegionSelector] = useState<boolean>(false);
   const [regionSelection, setRegionSelection] = useState<{ area: string; subArea: string }>({
     area: '',
     subArea: '',
   });
+
+  // New state variable to store the user's input from the textarea
+  const [userInput, setUserInput] = useState<string>('');
 
   const nodeRefs = useRef<Record<number, React.RefObject<HTMLDivElement>>>({});
   const neutralButtonRef = useRef<HTMLDivElement | null>(null);
@@ -72,6 +86,15 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], on
   };
 
   const handleNextStep = () => {
+    // Add validation for the textarea input on step 9
+    if (
+      currentStep === 9 &&
+      selectedOptions[currentStep] === '지금 작성할게요.' &&
+      !userInput.trim()
+    ) {
+      alert('내용을 작성해주세요.');
+      return;
+    }
     setDirection('forward');
     setTimeout(() => nextStep(), 0);
   };
@@ -107,7 +130,7 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], on
     {
       step: 3,
       title: '원하시는 서비스를 선택 해주세요.',
-      options: ['목욕', '풀케어 서비스','전체미용', '부분미용', '위생미용', '스파'],
+      options: ['목욕', '풀케어 서비스', '전체미용', '부분미용', '위생미용', '스파'],
     },
     {
       step: 4,
@@ -137,7 +160,7 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], on
     {
       step: 9,
       title: '서비스 관련 문의사항을 남겨주세요.',
-      options: ['따로 논의 할게요', '지금 작성할게요.'],
+      options: ['따로 논의할께요', '지금 작성할게요.'],
     },
   ];
 
@@ -163,7 +186,7 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], on
     const petProfile = profileData.find((profile) => profile.petId === selectedPet);
 
     return (
-      <div className="flex flex-col items-center pt-10">
+      <div className='flex flex-col items-center pt-10'>
         <div className='rounded-[8px] border border-primary'>
           <ProfileViewer
             profile={
@@ -188,10 +211,14 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], on
           />
         </div>
         <TypeTwoButton
-          text="프로필 수정하기"
-          color="bg-secondary"
+          text='프로필 수정하기'
+          color='bg-secondary'
           onClick={() => {
-            if (window.confirm('프로필을 수정하면 견적서를 다시 요청해야 합니다. 진행하시겠습니까?')) {
+            if (
+              window.confirm(
+                '프로필을 수정하면 견적서를 다시 요청해야 합니다. 진행하시겠습니까?'
+              )
+            ) {
               console.log('Profile editing confirmed');
             } else {
               console.log('Profile editing canceled');
@@ -211,7 +238,12 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], on
           selectedPet={selectedPet}
           selectedOptions={{
             ...selectedOptions,
-            5: selectedOptions[5] === '무관' ? '무관' : regionSelection ? `${regionSelection.area}, ${regionSelection.subArea}` : '지역 선택하기',
+            5:
+              selectedOptions[5] === '무관'
+                ? '무관'
+                : regionSelection
+                  ? `${regionSelection.area}, ${regionSelection.subArea}`
+                  : '지역 선택하기',
           }}
           profileData={profileData}
           stepData={stepData}
@@ -221,8 +253,9 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], on
               [step]: newOption,
             }));
           }}
-          onEnableDynamicHeight={handleEnableDynamicHeight} // Pass the callback
-          onDisableDynamicHeight={handleDisableDynamicHeight} // Optional: Reset dynamic height
+          onEnableDynamicHeight={handleEnableDynamicHeight}
+          onDisableDynamicHeight={handleDisableDynamicHeight}
+          userInput={userInput} // Pass the userInput prop here
         />
       );
     }
@@ -237,6 +270,10 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], on
               ...prev,
               [currentStep]: value,
             }));
+            // Clear userInput if selection changes
+            if (currentStep === 9 && value !== '지금 작성할게요.') {
+              setUserInput('');
+            }
             if (!(currentStep === 5 && value === '지역 선택하기')) {
               handleNextStep();
             }
@@ -247,8 +284,12 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], on
               key={option}
               ref={option === '무관' && currentStep === 5 ? neutralButtonRef : undefined}
               className={`flex h-auto w-[260px] cursor-pointer flex-col items-start gap-2 rounded-md border p-6 font-bold transition-all duration-300 ease-in-out ${
-                selectedOptions[currentStep] === option ? 'border-primary bg-secondary' : 'border-gray-400'
-              } ${option === '무관' && showRegionSelector ? 'pointer-events-none opacity-50' : ''}`}
+                selectedOptions[currentStep] === option
+                  ? 'border-primary bg-secondary'
+                  : 'border-gray-400'
+              } ${
+                option === '무관' && showRegionSelector ? 'pointer-events-none opacity-50' : ''
+              }`}
               onClick={() => {
                 setSelectedOptions((prev) => ({
                   ...prev,
@@ -261,7 +302,7 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], on
                   }
                   setShowRegionSelector(true);
                 } else if (currentStep === 9 && option === '지금 작성할게요.') {
-                  console.log('hi');
+                  // Do nothing to allow textarea to appear
                 } else {
                   handleNextStep();
                 }
@@ -297,8 +338,14 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], on
                       rows={6}
                       className='scrollbar-hide mt-2 max-h-[160px] min-h-[40px] w-full rounded-md border border-primary p-2 text-gray-700 focus:border-primary focus:outline-none'
                       placeholder='내용을 작성해주세요.'
+                      value={userInput}
+                      onChange={(e) => setUserInput(e.target.value)}
                     />
-                    <TypeTwoButton text='다음 단계로 가기' color='bg-secondary' onClick={handleNextStep} />
+                    <TypeTwoButton
+                      text='다음 단계로 가기'
+                      color='bg-secondary'
+                      onClick={handleNextStep}
+                    />
                   </div>
                 )}
             </div>
@@ -376,12 +423,11 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], on
         <TypeOneButton
           text={currentStep === 10 ? '예약하기' : '이전'}
           onClick={handlePrevStep}
-          color="bg-secondary"
+          color='bg-secondary'
         />
       )}
     </div>
-
-          );
-        };
+  );
+};
 
 export default StepByStep;

@@ -18,7 +18,7 @@ const TypeOneButton: React.FC<StickyButtonProps> = ({
         ? 'text-primary'
         : 'text-black';
   return (
-    <div className="absolute bottom-0 w-full">
+    <div className="absolute bottom-0 w-full max-w-[480px]">
       <button
         className={`w-full min-h-[60px] text-sub_h1 px-4 py-2 ${color} ${textColor}`}
         onClick={onClick}
