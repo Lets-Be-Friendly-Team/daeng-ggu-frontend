@@ -1,3 +1,5 @@
+// components/RequestReview.tsx
+
 import React, { useState } from 'react';
 import ProfileViewer from '@/pages/Request/ProfileViewer';
 import { BorderContainer } from '@daeng-ggu/design-system';
@@ -34,7 +36,7 @@ interface RequestReviewProps {
   onOptionChange: (step: number, newOption: string) => void;
   onEnableDynamicHeight: () => void;
   onDisableDynamicHeight?: () => void;
-  userInput?: string;
+  userInput: string; // Ensure userInput is defined
 }
 
 // Function to calculate costs
@@ -77,7 +79,7 @@ const RequestReview: React.FC<RequestReviewProps> = ({
                                                        onOptionChange,
                                                        onEnableDynamicHeight,
                                                        onDisableDynamicHeight,
-                                                       userInput = '',
+                                                       userInput,
                                                      }) => {
   const [editingStep, setEditingStep] = useState<number | null>(null);
   const selectedProfile = profileData.find((profile) => profile.petId === selectedPet);
@@ -140,30 +142,38 @@ const RequestReview: React.FC<RequestReviewProps> = ({
                             {options.map((option) => (
                               <label key={option} className='flex cursor-pointer items-center gap-2'>
                                 <RadioGroupItem value={option} size={0.5} />
-                                <span className='text-sub_h3 font-bold text-gray-800'>{option}</span>
+                                <span className='text-sub_h3 font-bold text-gray-800'>
+                                  {option}
+                                </span>
                               </label>
                             ))}
                           </RadioGroup>
-                          <button className='mt-2 text-sm text-gray-500 underline' onClick={handleCancelEdit}>
+                          <button
+                            className='mt-2 text-sm text-gray-500 underline'
+                            onClick={handleCancelEdit}
+                          >
                             취소
                           </button>
                         </div>
                       ) : (
                         <span className='flex items-center'>
-                          <p className='text-sub_h3 font-bold text-gray-800'>
-                            {step === 9 && selectedOptions[step] === '지금 작성할게요.' ? (
-                              <p className='text-sub_h3 font-bold text-gray-800'>
-                                {userInput || '작성된 내용이 없습니다.'}
-                              </p>
-                            ) : (
-                              <p className='text-sub_h3 font-bold text-gray-800'>
-                                {selectedOptions[step] || '선택되지 않음'}
-                              </p>
-                            )}
-                          </p>
+                          {step === 9 && selectedOptions[step] === '지금 작성할게요.' ? (
+                            <p className='text-sub_h3 font-bold text-gray-800'>
+                              {userInput || '작성된 내용이 없습니다.'}
+                            </p>
+                          ) : (
+                            <p className='text-sub_h3 font-bold text-gray-800'>
+                              {selectedOptions[step] || '선택되지 않음'}
+                            </p>
+                          )}
                           {step !== 5 && step !== 9 && (
                             <button className='p-2' onClick={() => handleEdit(step)}>
-                              <img src={editIcon} alt='Edit' className='h-6 w-6' style={{ cursor: 'pointer' }} />
+                              <img
+                                src={editIcon}
+                                alt='Edit'
+                                className='h-6 w-6'
+                                style={{ cursor: 'pointer' }}
+                              />
                             </button>
                           )}
                         </span>
@@ -178,11 +188,15 @@ const RequestReview: React.FC<RequestReviewProps> = ({
             </div>
             <BorderContainer>
               <div className='flex-col items-start p-2 text-gray-800'>
-                <p className='text-sub_h2 font-bold'>{selectedProfile ? selectedProfile.customerName : '정보 없음'}</p>
+                <p className='text-sub_h2 font-bold'>
+                  {selectedProfile ? selectedProfile.customerName : '정보 없음'}
+                </p>
                 <p className='text-body3 font-bold text-gray-800'>
                   {selectedProfile ? selectedProfile.phone : '정보 없음'}
                 </p>
-                <p className='pt-1 text-caption'>{selectedProfile ? selectedProfile.address : '정보 없음'}</p>
+                <p className='pt-1 text-caption'>
+                  {selectedProfile ? selectedProfile.address : '정보 없음'}
+                </p>
               </div>
             </BorderContainer>
             <div className='mt-6 items-start'>
