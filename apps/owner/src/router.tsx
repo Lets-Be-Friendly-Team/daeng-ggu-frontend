@@ -1,5 +1,5 @@
 // router.jsx
-import { Suspense } from 'react';
+import React, { Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 
 import { MainPage } from '@/pages/MainPage';
@@ -11,6 +11,7 @@ import App from './App';
 import '@/styles/sequenceAnimation.css';
 import Status from '@/pages/Status/Status.tsx';
 import InputTest from '@/pages/InputTest/InputTest';
+import { InputAddress } from '@daeng-ggu/design-system';
 
 export const router = createBrowserRouter([
   {
@@ -48,6 +49,15 @@ export const router = createBrowserRouter([
           {
             index: true,
             element: <InputTest />,
+          },
+        ],
+      },
+      {
+        path: 'address',
+        children: [
+          {
+            path: 'test',
+            element: <InputAddress />,
           },
         ],
       },

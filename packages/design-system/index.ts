@@ -1,3 +1,4 @@
+import { Import } from 'lucide-react';
 import Avatar from './components/Avatar/Avatar';
 import BorderContainer from './components/BorderContainer/BorderContainer';
 import MiniButton from './components/Buttons/MiniButton';
@@ -23,6 +24,7 @@ import SearchBar from './components/SearchBar/SearchBar';
 import TextArea from './components/TextArea/TextArea';
 import TypeOneButton from './components/TypeOneButton/TypeOneButton';
 import TypeTwoButton from './components/TypeTwoButton/TypeTwoButton';
+import InputAddress from './components/InputAddress/InputAddress';
 
 export {
   CategoryTab,
@@ -49,4 +51,5 @@ export {
   TypeTwoButton,
   TypeOneButton,
   Avatar,
+  InputAddress,
 };
