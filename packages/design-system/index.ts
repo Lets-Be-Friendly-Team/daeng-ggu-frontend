@@ -14,7 +14,7 @@ import BellIcon from './components/Icons/BellIcon';
 import CloseIcon from './components/Icons/CloseIcon';
 import UserProfileImage from './components/ProfileImage/UserProfileImage';
 import TypeTwoButton from './components/TypeTwoButton/TypeTwoButton';
-
+import TypeOneButton from './components/TypeOneButton/TypeOneButton';
 
 export {
   CategoryTab,
@@ -36,5 +36,6 @@ export {
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-  TypeTwoButton
+  TypeTwoButton,
+  TypeOneButton,
 };

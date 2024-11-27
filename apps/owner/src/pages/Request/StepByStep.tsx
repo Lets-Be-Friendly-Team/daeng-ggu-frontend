@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import { Progress, RadioGroup, RadioGroupItem, RegionSelector, TypeTwoButton} from '@daeng-ggu/design-system';
+import { Progress, RadioGroup, RadioGroupItem, RegionSelector, TypeTwoButton, TypeOneButton} from '@daeng-ggu/design-system';
 
 import ProfileButton from '@/pages/Request/ProfileButton';
 import ProfileViewer from '@/pages/Request/ProfileViewer'; // Import the new component
@@ -107,7 +107,7 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], on
     {
       step: 3,
       title: '원하시는 서비스를 선택 해주세요.',
-      options: ['목욕', '전체미용', '부분미용', '위생미용', '스파'],
+      options: ['목욕', '풀케어 서비스','전체미용', '부분미용', '위생미용', '스파'],
     },
     {
       step: 4,
@@ -325,61 +325,63 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], on
   };
 
   return (
-    <div className='flex h-full w-full flex-col items-center justify-center p-4'>
-      <Progress
-        value={currentStep}
-        maxStep={stepCount}
-        text={
-          currentStep === 1
-            ? '미용을 받을 반려견을 선택 해주세요.'
-            : currentStep === 2
-              ? '반려견 프로필 확인'
-              : currentStep === 10
-                ? '예약 확인 해주세요'
-                : currentStepData?.title || ''
-        }
-      />
+    <div>
+      <div className='flex h-full w-full flex-col items-center justify-center p-4'>
+        <Progress
+          value={currentStep}
+          maxStep={stepCount}
+          text={
+            currentStep === 1
+              ? '미용을 받을 반려견을 선택 해주세요.'
+              : currentStep === 2
+                ? '반려견 프로필 확인'
+                : currentStep === 10
+                  ? '예약 확인 해주세요'
+                  : currentStepData?.title || ''
+          }
+        />
 
-      <div
-        className='relative mt-6 w-full overflow-hidden transition-all duration-300'
-        style={{
-          height:
-            currentStep === 10
-              ? isDynamicHeight
-                ? 'auto'
-                : containerHeight
-                  ? `${containerHeight}px`
-                  : 'auto'
-              : '400px',
-        }}
-      >
-        <TransitionGroup component={null}>
-          <CSSTransition
-            key={currentStep}
-            nodeRef={getNodeRef(currentStep)}
-            timeout={500}
-            classNames={direction === 'forward' ? 'slide-forward' : 'slide-backward'}
-          >
-            <div ref={getNodeRef(currentStep)}>
-              {currentStep === 1
-                ? renderStepOne()
-                : currentStep === 2
-                  ? renderStepTwo()
-                  : renderOtherSteps()}
-            </div>
-          </CSSTransition>
-        </TransitionGroup>
+        <div
+          className='relative mt-6 w-full overflow-hidden transition-all duration-300'
+          style={{
+            height:
+              currentStep === 10
+                ? isDynamicHeight
+                  ? 'auto'
+                  : containerHeight
+                    ? `${containerHeight}px`
+                    : 'auto'
+                : '400px',
+          }}
+        >
+          <TransitionGroup component={null}>
+            <CSSTransition
+              key={currentStep}
+              nodeRef={getNodeRef(currentStep)}
+              timeout={500}
+              classNames={direction === 'forward' ? 'slide-forward' : 'slide-backward'}
+            >
+              <div ref={getNodeRef(currentStep)}>
+                {currentStep === 1
+                  ? renderStepOne()
+                  : currentStep === 2
+                    ? renderStepTwo()
+                    : renderOtherSteps()}
+              </div>
+            </CSSTransition>
+          </TransitionGroup>
+        </div>
       </div>
-
-      <div className='mt-8 flex gap-4'>
-        {currentStep > 1 && (
-          <button className='rounded bg-gray-300 px-4 py-2' onClick={handlePrevStep}>
-            이전
-          </button>
-        )}
-      </div>
+      {currentStep > 1 && (
+        <TypeOneButton
+          text={currentStep === 10 ? '예약하기' : '이전'}
+          onClick={handlePrevStep}
+          color="bg-secondary"
+        />
+      )}
     </div>
-  );
-};
+
+          );
+        };
 
 export default StepByStep;

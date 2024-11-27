@@ -34,6 +34,7 @@ interface RequestReviewProps {
   onOptionChange: (step: number, newOption: string) => void;
   onEnableDynamicHeight: () => void;
   onDisableDynamicHeight?: () => void;
+  userInput?: string;
 }
 
 // Function to calculate costs
@@ -76,6 +77,7 @@ const RequestReview: React.FC<RequestReviewProps> = ({
                                                        onOptionChange,
                                                        onEnableDynamicHeight,
                                                        onDisableDynamicHeight,
+                                                       userInput = '',
                                                      }) => {
   const [editingStep, setEditingStep] = useState<number | null>(null);
   const selectedProfile = profileData.find((profile) => profile.petId === selectedPet);
@@ -149,11 +151,19 @@ const RequestReview: React.FC<RequestReviewProps> = ({
                       ) : (
                         <span className='flex items-center'>
                           <p className='text-sub_h3 font-bold text-gray-800'>
-                            {selectedOptions[step] || '선택되지 않음'}
+                            {step === 9 && selectedOptions[step] === '지금 작성할게요.' ? (
+                              <p className='text-sub_h3 font-bold text-gray-800'>
+                                {userInput || '작성된 내용이 없습니다.'}
+                              </p>
+                            ) : (
+                              <p className='text-sub_h3 font-bold text-gray-800'>
+                                {selectedOptions[step] || '선택되지 않음'}
+                              </p>
+                            )}
                           </p>
                           {step !== 5 && step !== 9 && (
                             <button className='p-2' onClick={() => handleEdit(step)}>
-                              <img src={editIcon} alt='Edit' className='h-4 w-4' style={{ cursor: 'pointer' }} />
+                              <img src={editIcon} alt='Edit' className='h-6 w-6' style={{ cursor: 'pointer' }} />
                             </button>
                           )}
                         </span>
