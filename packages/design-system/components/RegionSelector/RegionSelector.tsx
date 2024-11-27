@@ -26,7 +26,6 @@ const RegionSelector: React.FC<RegionSelectorProps> = ({ onSelectionChange }: Re
     setSelectedArea(area);
     setSelectedSubArea('');
     setIsAreaOpen(false);
-    // Do not call onSelectionChange here to maintain original logic
   }, []);
 
   const handleSubAreaChange = useCallback(
