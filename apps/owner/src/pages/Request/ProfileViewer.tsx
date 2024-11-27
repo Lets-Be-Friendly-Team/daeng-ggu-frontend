@@ -32,7 +32,7 @@ const ProfileViewer: React.FC<ProfileViewerProps> = ({
   const { petImgUrl, petName, breed, weight, gender, isNeutered, birthDate } = profile;
 
   return (
-      <div className="rounded-[8px] border border-primary p-6 bg-white min-w-[250px] flex justify-center">
+      <div className="rounded-[8px] border-primary p-6 bg-white min-w-[250px] flex justify-center">
         <div className="flex items-center">
           <img
             src={petImgUrl || 'https://via.placeholder.com/100'}

@@ -27,8 +27,12 @@ interface ProfileData {
   gender: string;
   isNeutered: boolean;
   weight: number;
+  dogType: string;
   isRequested: boolean;
   specialNotes?: string;
+  customerName: string;
+  phone: string;
+  address: string;
 }
 
 interface StepByStepProps {
@@ -91,12 +95,10 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], on
     }
   }, [currentStep, showRegionSelector]);
 
-  // Callback to enable dynamic height
   const handleEnableDynamicHeight = () => {
     setIsDynamicHeight(true);
   };
 
-  // Optional: Callback to disable dynamic height
   const handleDisableDynamicHeight = () => {
     setIsDynamicHeight(false);
   };
@@ -162,23 +164,30 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], on
 
     return (
       <div className="flex flex-col items-center pt-10">
-        <ProfileViewer
-          profile={
-            petProfile || {
-              petId: 0,
-              petName: 'Unknown',
-              petImgUrl: '',
-              petImgName: 'No Image',
-              breed: 'Unknown',
-              birthDate: 'N/A',
-              gender: 'N/A',
-              isNeutered: false,
-              weight: 0,
-              isRequested: false,
-              specialNotes: '',
+        <div className='rounded-[8px] border border-primary'>
+          <ProfileViewer
+            profile={
+              petProfile || {
+                petId: 0,
+                petName: 'Unknown',
+                petImgUrl: '',
+                petImgName: 'No Image',
+                breed: 'Unknown',
+                birthDate: 'N/A',
+                gender: 'N/A',
+                isNeutered: false,
+                weight: 0,
+                dogType: '',
+                isRequested: false,
+                specialNotes: '',
+                customerName: '',
+                phone: '',
+                address: '',
+              }
             }
-          }
-        />
+          />
+        </div>
+
 
         <button
           className="hover:bg-primary-dark mt-6 h-[48px] w-[260px] rounded border border-primary bg-secondary px-4 py-2 text-body2 text-primary"
