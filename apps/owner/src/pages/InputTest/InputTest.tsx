@@ -15,7 +15,7 @@ const InputTest = () => {
     setTextVal(ev.target.value);
   };
   return (
-    <div>
+    <div className='p-8'>
       <Input
         type='number'
         label='인풋 테스트'
@@ -25,15 +25,18 @@ const InputTest = () => {
         onChange={handleChange}
         placeholder='테스트 값을 입력해주세요'
       />
-      <br />
+      <hr className='my-4' />
       <Input width='50%' height='5rem' placeholder='label없고 크기조절한 인풋창' />
+      <hr className='my-4' />
+
       <TextArea
-        label='인풋 테스트'
+        label='TextArea 테스트'
         id='test'
         name='test'
         value={textVal}
         onChange={handleTextChange}
         placeholder='테스트 값을 입력해주세요'
+        height='6rem'
         maxLength={200}
       />
     </div>
