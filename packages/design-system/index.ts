@@ -7,5 +7,6 @@ import { RadioGroup, RadioGroupItem } from './components/RadioGroup/RadioGroup';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from './components/Dropdown-menu/Dropdown-menu';
 import BorderContainer from './components/BorderContainer/BorderContainer';
 import TypeTwoButton from './components/TypeTwoButton/TypeTwoButton';
+import TypeOneButton from './components/TypeOneButton/TypeOneButton';
 
-export { CategoryTab, Progress, Input, RegionSelector, RadioGroup, RadioGroupItem, DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, Layout, BorderContainer,TypeTwoButton};
+export { CategoryTab, Progress, Input, RegionSelector, RadioGroup, RadioGroupItem, DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, Layout, BorderContainer,TypeTwoButton, TypeOneButton};
