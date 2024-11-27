@@ -9,6 +9,7 @@ import Test from '@/pages/Request/Test';
 import App from './App';
 
 import '@/styles/sequenceAnimation.css';
+import Status from '@/pages/Status/Status.tsx';
 
 export const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ export const router = createBrowserRouter([
           {
             path: 'request',
             element: <Request />,
+          },
+          {
+            path: 'status',
+            element: <Status />,
           },
         ],
       },

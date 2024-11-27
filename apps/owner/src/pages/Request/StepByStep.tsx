@@ -8,7 +8,7 @@ import {
   RadioGroupItem,
   RegionSelector,
   TypeTwoButton,
-  TypeOneButton,
+  TypeOneButton, Header,
 } from '@daeng-ggu/design-system';
 
 import ProfileButton from '@/pages/Request/ProfileButton';
@@ -270,7 +270,6 @@ const StepByStep: React.FC<StepByStepProps> = ({
               ...prev,
               [currentStep]: value,
             }));
-            // Clear userInput if selection changes
             if (currentStep === 9 && value !== '지금 작성할게요.') {
               setUserInput('');
             }
@@ -373,6 +372,9 @@ const StepByStep: React.FC<StepByStepProps> = ({
 
   return (
     <div>
+      <div className='max-w-[480px]'>
+        <Header mode='back' title='견적 요청하기' onClick={currentStep === 1 ? undefined : handlePrevStep} />
+      </div>
       <div className='flex h-full w-full flex-col items-center justify-center p-4'>
         <Progress
           value={currentStep}
@@ -399,6 +401,9 @@ const StepByStep: React.FC<StepByStepProps> = ({
                     ? `${containerHeight}px`
                     : 'auto'
                 : '400px',
+            marginBottom:
+              currentStep === 10
+                ? '60px' : ''
           }}
         >
           <TransitionGroup component={null}>
@@ -419,13 +424,20 @@ const StepByStep: React.FC<StepByStepProps> = ({
           </TransitionGroup>
         </div>
       </div>
-      {currentStep > 1 && (
-        <TypeOneButton
-          text={currentStep === 10 ? '예약하기' : '이전'}
-          onClick={handlePrevStep}
-          color='bg-secondary'
-        />
-      )}
+      <div className='button-container'>
+        <CSSTransition
+          in={currentStep === 10}
+          timeout={500}
+          classNames='slide-up'
+          unmountOnExit
+        >
+          <TypeOneButton
+            text={'예약하기'}
+            onClick={handlePrevStep}
+            color='bg-secondary'
+          />
+        </CSSTransition>
+      </div>
     </div>
   );
 };
