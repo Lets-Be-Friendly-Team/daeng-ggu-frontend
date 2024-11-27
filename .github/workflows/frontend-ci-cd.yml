@@ -37,7 +37,6 @@ jobs:
               - apps/guardian/**
             all:
               - apps/**
-
       - name: Print filter outputs
         run: |
           echo "Owner changed: ${{ steps.filter.outputs.owner }}"
