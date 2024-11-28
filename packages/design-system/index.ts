@@ -20,6 +20,7 @@ import CloseIcon from './components/Icons/CloseIcon';
 import UserProfileImage from './components/ProfileImage/UserProfileImage';
 import TypeTwoButton from './components/TypeTwoButton/TypeTwoButton';
 import TypeOneButton from './components/TypeOneButton/TypeOneButton';
+import Avatar from './components/Avatar/Avatar';
 
 import TextArea from './components/TextArea/TextArea';
 import SearchBar from './components/SearchBar/SearchBar';
@@ -48,4 +49,5 @@ export {
   DropdownMenuItem,
   TypeTwoButton,
   TypeOneButton,
+  Avatar,
 };
