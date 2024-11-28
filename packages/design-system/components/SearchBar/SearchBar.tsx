@@ -1,4 +1,4 @@
-import { FC, ChangeEvent } from 'react';
+import { ChangeEvent, FC } from 'react';
 
 import MySearchIcon from '../Icons/MySearchIcon';
 
