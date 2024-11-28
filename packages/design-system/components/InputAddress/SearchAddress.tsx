@@ -1,3 +1,4 @@
+/* 주소 검색용 팝업창 (daum api 사용) */
 import React from 'react';
 import DaumPostcode, { Address } from 'react-daum-postcode';
 import getAddress from '../../utils/getAddress';
