@@ -11,7 +11,10 @@ interface Props {
   width?: string;
   height?: string;
   onChange?: (_ev: TextChangeEvent) => void;
-  maxLength?: number;
+  maxLength?: number; // 글자수 제한
+  bgColor?: string; // 배경 색상
+  borderWidth?: string; // 테두리 굵기
+  borderColor?: string; // 테두리 색상
 }
 const TextArea: FC<Props> = ({
   label = '',
@@ -23,6 +26,9 @@ const TextArea: FC<Props> = ({
   height = '',
   onChange,
   maxLength,
+  bgColor = '',
+  borderWidth = '',
+  borderColor = '',
 }) => {
   const [inputCount, setInputCount] = useState(0);
   const changeHandler = (_ev: TextChangeEvent) => {
@@ -32,6 +38,10 @@ const TextArea: FC<Props> = ({
     }
   };
 
+  const bgClass = bgColor ? `bg-${bgColor}` : `bg-gray-50`;
+  const bwClass = borderWidth ? `border-[${borderWidth}]` : '';
+  const bcClass = borderColor ? `border-${borderColor}` : '';
+
   return (
     <div className='flex flex-col'>
       {label && (
@@ -39,20 +49,32 @@ const TextArea: FC<Props> = ({
           {label}
         </label>
       )}
-      <textarea
-        id={id}
-        name={name}
-        placeholder={placeholder}
-        value={value}
-        onChange={changeHandler}
-        maxLength={maxLength}
-        style={{ width: width || '100%', height: height || 'auto' }}
-        className='resize-none rounded-md bg-gray-50 px-[1.6rem] py-4 text-body3 focus:outline-none focus:ring-1 focus:ring-inset focus:ring-gray-500'
-      ></textarea>
+      <div
+        className={`${bgClass} ${bcClass} ${bwClass} rounded-md px-[1.6rem] py-4 focus:outline-none focus:ring-1 focus:ring-inset focus:ring-gray-500`}
+      >
+        <textarea
+          id={id}
+          name={name}
+          placeholder={placeholder}
+          value={value}
+          onChange={changeHandler}
+          maxLength={maxLength}
+          style={{ width: width || '100%', height: height || 'auto' }}
+          className={`${bgClass} max-h-20 resize-none overflow-y-auto text-body3 focus:outline-none [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 [&::-webkit-scrollbar]:w-2`}
+        ></textarea>
+      </div>
       {maxLength && (
         <div className='ml-auto mt-[0.4rem] text-caption'>
-          <span className='font-semibold text-gray-800'>{inputCount}</span>
-          <span className='text-gray-600'>/{maxLength}자</span>
+          {inputCount >= maxLength ? (
+            <span className='font-semibold text-primary'>
+              {inputCount}/{maxLength}자
+            </span>
+          ) : (
+            <>
+              <span className='font-semibold text-gray-800'>{inputCount}</span>
+              <span className='text-gray-600'>/{maxLength}자</span>
+            </>
+          )}
         </div>
       )}
     </div>
