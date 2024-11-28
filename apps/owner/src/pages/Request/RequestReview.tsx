@@ -109,7 +109,7 @@ const RequestReview: React.FC<RequestReviewProps> = ({
         <div className='w-full'>
           {selectedProfile ? (
             <div className='mb-6'>
-              <BorderContainer>
+              <BorderContainer innerPadding='p-3'>
                 <ProfileViewer profile={selectedProfile} />
               </BorderContainer>
             </div>
@@ -121,7 +121,7 @@ const RequestReview: React.FC<RequestReviewProps> = ({
             <div className='items-start'>
               <h2 className='mb-4 text-h3 font-bold text-gray-800'>요청 상세</h2>
             </div>
-            <BorderContainer>
+            <BorderContainer innerPadding='p-3'>
               <ul className='ml-5'>
                 {stepData.map(({ step, title, options }) => (
                   <li key={step} className='flex flex-col gap-2 pb-5'>
@@ -177,7 +177,7 @@ const RequestReview: React.FC<RequestReviewProps> = ({
             <div className='mt-6 items-start'>
               <h2 className='mb-4 text-h3 font-bold text-gray-800'>댕송지 정보</h2>
             </div>
-            <BorderContainer>
+            <BorderContainer innerPadding='p-3'>
               <div className='flex-col items-start p-2 text-gray-800'>
                 <p className='text-sub_h2 font-bold'>{selectedProfile ? selectedProfile.customerName : '정보 없음'}</p>
                 <p className='text-body3 font-bold text-gray-800'>
@@ -189,7 +189,7 @@ const RequestReview: React.FC<RequestReviewProps> = ({
             <div className='mt-6 items-start'>
               <h2 className='mb-4 text-h3 font-bold text-gray-800'>결제 정보</h2>
             </div>
-            <BorderContainer>
+            <BorderContainer innerPadding='p-3'>
               <div className='flex-col items-start p-2 text-gray-800'>
                 <div className='mb-2 flex justify-between'>
                   <span>댕동비({selectedProfile ? selectedProfile.dogType : '정보 없음'})</span>
@@ -204,12 +204,6 @@ const RequestReview: React.FC<RequestReviewProps> = ({
           </div>
         </div>
       </div>
-      <button
-        className='mt-4 rounded bg-blue-500 px-6 py-2 font-bold text-white hover:bg-blue-600'
-        onClick={() => alert('예약이 완료되었습니다!')}
-      >
-        예약 완료
-      </button>
     </div>
   );
 };

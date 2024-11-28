@@ -75,7 +75,7 @@ const Request = () => {
   };
 
   return (
-    <div className='h-full w-full'>
+    <div className='h-full max-w-[480px]'>
       <StepByStep stepCount={10} profileData={dummyData} onProfileSelect={handleProfileSelect} />
     </div>
   );

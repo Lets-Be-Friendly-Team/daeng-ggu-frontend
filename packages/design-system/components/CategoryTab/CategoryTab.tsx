@@ -1,50 +1,102 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 interface ITab {
   label: string;
-  onClick: () => void;
-}
-interface ITabProps {
-  tabs: ITab[];
-  activeIndex: number;
+  content: React.ReactNode;
 }
 
-const CategoryTab = ({ tabs, activeIndex }: ITabProps) => {
-  const [indicatorOffset, setIndicatorOffset] = useState(0); // 하단 border 위치
+interface CategoryTabProps {
+  tabs: ITab[];
+}
+
+/*
+* 카테고리 이제 차일드로 가지고 있는 컴포넌트에 대해서 스타일 같이 적용됨
+* 그냥 라벨하고 컴포넌트 추가
+* 근데 변수명 왜 ITab?
+* 적용 예시
+* interface LocationState {
+  from?: string;
+}
+
+const Status: React.FC = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const tabs = [
+    {
+      label: '완료된 견적',
+      content: <CompletedRequest />,
+    },
+    {
+      label: '요청중인 견적',
+      content: <PendingRequest />,
+    },
+  ];
+
+  return (
+    <div className='h-full max-w-[480px]'>
+      <div className='max-w-[480px]'>
+        <Header mode='main' title='견적 조회하기' />
+        <CategoryTab tabs={tabs} />
+      </div>
+    </div>
+  );
+};
+**/
+
+const CategoryTab: React.FC<CategoryTabProps> = ({ tabs }) => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [indicatorOffset, setIndicatorOffset] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (containerRef.current) {
-      const buttons = containerRef.current.children; // 버튼 요소 가져오기
-      if (buttons[activeIndex]) {
-        const button = buttons[activeIndex] as HTMLElement;
-        setIndicatorOffset(button.offsetLeft); // 활성화된 버튼의 x 위치
+      const buttons = containerRef.current.children;
+      const buttonElements = Array.from(buttons) as HTMLElement[];
+
+      if (buttonElements[activeIndex]) {
+        const button = buttonElements[activeIndex];
+        setIndicatorOffset(button.offsetLeft);
       }
     }
   }, [activeIndex]);
 
   return (
-    <div className='flex h-[60px] flex-col justify-center'>
-      <div ref={containerRef} className='relative flex justify-between px-[40px] align-middle'>
-        {tabs.map((tab, index) => (
-          <div
-            key={index}
-            className={`flex h-[33px] w-[80px] justify-center py-[8px] text-sub_h2 ${
-              activeIndex === index ? 'text-primary' : 'text-gray-300'
-            }`}
-            onClick={tab.onClick}
-          >
-            {tab.label}
-          </div>
-        ))}
+    <div>
+      <div className='flex h-[60px] flex-col justify-center'>
+        <div ref={containerRef} className='relative flex justify-between px-[40px] align-middle'>
+          {tabs.map((tab, index) => (
+            <div
+              key={index}
+              className={`flex h-[33px] w-[80px] justify-center py-[8px] cursor-pointer text-sub_h2 ${
+                activeIndex === index ? 'text-primary' : 'text-gray-600'
+              }`}
+              onClick={() => setActiveIndex(index)}
+            >
+              {tab.label}
+            </div>
+          ))}
 
+          <div
+            className='absolute bottom-0 h-[2px] bg-primary transition-all duration-300 ease-in-out'
+            style={{
+              width: '80px',
+              left: `${indicatorOffset}px`,
+            }}
+          ></div>
+        </div>
+      </div>
+
+      <div className='relative overflow-hidden'>
         <div
-          className='absolute bottom-0 h-[2px] bg-primary transition-all duration-300 ease-in-out'
-          style={{
-            width: '80px',
-            left: `${indicatorOffset}px`,
-          }}
-        ></div>
+          className='flex transition-transform duration-300 ease-in-out'
+          style={{ transform: `translateX(-${activeIndex * 100}%)` }}
+        >
+          {tabs.map((tab, index) => (
+            <div key={index} className='w-full flex-shrink-0'>
+              {tab.content}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

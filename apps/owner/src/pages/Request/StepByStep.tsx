@@ -1,4 +1,4 @@
-// components/StepByStep.tsx
+// Updated StepByStep.tsx
 
 import React, { useEffect, useRef, useState } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
@@ -7,16 +7,17 @@ import {
   RadioGroup,
   RadioGroupItem,
   RegionSelector,
-  TypeOneButton,
   TypeTwoButton,
+  TypeOneButton,
+  Header,
 } from '@daeng-ggu/design-system';
 
 import ProfileButton from '@/pages/Request/ProfileButton';
 import ProfileViewer from '@/pages/Request/ProfileViewer';
-import RequestReview from '@/pages/Request/RequestReview';
 import { useStepStore } from '@/stores/useStepStore';
 
 import '@/styles/sequenceAnimation.css';
+import RequestReview from '@/pages/Request/RequestReview';
 
 interface StepData {
   step: number;
@@ -48,7 +49,11 @@ interface StepByStepProps {
   onProfileSelect: (_petId: number) => void;
 }
 
-const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], onProfileSelect }) => {
+const StepByStep: React.FC<StepByStepProps> = ({
+                                                 stepCount,
+                                                 profileData = [],
+                                                 onProfileSelect,
+                                               }) => {
   const { currentStep, nextStep, prevStep, setDirection, direction } = useStepStore();
   const [selectedPet, setSelectedPet] = useState<number | null>(null);
   const [selectedOptions, setSelectedOptions] = useState<{ [key: number]: string }>({});
@@ -61,11 +66,15 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], on
     subArea: '',
   });
 
-  // New state variable to store the user's input from the textarea
   const [userInput, setUserInput] = useState<string>('');
+
+  // State variables for date selection in Step 6
+  const [showDateSelector, setShowDateSelector] = useState<boolean>(false);
+  const [dateSelection, setDateSelection] = useState<string[]>([]);
 
   const nodeRefs = useRef<Record<number, React.RefObject<HTMLDivElement>>>({});
   const neutralButtonRef = useRef<HTMLDivElement | null>(null);
+  const buttonRef = useRef<HTMLDivElement>(null);
 
   const getNodeRef = (key: number): React.RefObject<HTMLDivElement> => {
     if (!nodeRefs.current[key]) {
@@ -81,9 +90,11 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], on
     setTimeout(() => nextStep(), 0);
   };
   const handleNextStep = () => {
-    // Add validation for the textarea input on step 9
-    if (currentStep === 9 && selectedOptions[currentStep] === '지금 작성할게요.' && !userInput.trim()) {
-      alert('내용을 작성해주세요.');
+    if (
+      currentStep === 9 &&
+      selectedOptions[currentStep] === '지금 작성할게요.' &&
+      !userInput.trim()
+    ) {
       return;
     }
     setDirection('forward');
@@ -94,6 +105,11 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], on
     if (currentStep === 5 && showRegionSelector) {
       setShowRegionSelector(false);
       setRegionSelection({ area: '', subArea: '' });
+      setDirection('backward');
+      setTimeout(() => prevStep(), 0);
+    } else if (currentStep === 6 && showDateSelector) {
+      setShowDateSelector(false);
+      setDateSelection([]);
       setDirection('backward');
       setTimeout(() => prevStep(), 0);
     } else {
@@ -107,7 +123,7 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], on
     if (activeRef && activeRef.current) {
       setContainerHeight(activeRef.current.offsetHeight);
     }
-  }, [currentStep, showRegionSelector]);
+  }, [currentStep, showRegionSelector, showDateSelector]);
 
   const handleEnableDynamicHeight = () => {
     setIsDynamicHeight(true);
@@ -205,7 +221,9 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], on
           text='프로필 수정하기'
           color='bg-secondary'
           onClick={() => {
-            if (window.confirm('프로필을 수정하면 견적서를 다시 요청해야 합니다. 진행하시겠습니까?')) {
+            if (
+              window.confirm('프로필을 수정하면 견적서를 다시 요청해야 합니다. 진행하시겠습니까?')
+            ) {
               console.log('Profile editing confirmed');
             } else {
               console.log('Profile editing canceled');
@@ -231,6 +249,12 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], on
                 : regionSelection
                   ? `${regionSelection.area}, ${regionSelection.subArea}`
                   : '지역 선택하기',
+            6:
+              selectedOptions[6] === '무관'
+                ? '무관'
+                : dateSelection.length > 0
+                  ? dateSelection.join(', ')
+                  : '날짜 선택하기',
           }}
           profileData={profileData}
           stepData={stepData}
@@ -242,7 +266,7 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], on
           }}
           onEnableDynamicHeight={handleEnableDynamicHeight}
           onDisableDynamicHeight={handleDisableDynamicHeight}
-          userInput={userInput} // Pass the userInput prop here
+          userInput={userInput}
         />
       );
     }
@@ -257,11 +281,15 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], on
               ...prev,
               [currentStep]: value,
             }));
-            // Clear userInput if selection changes
             if (currentStep === 9 && value !== '지금 작성할게요.') {
               setUserInput('');
             }
-            if (!(currentStep === 5 && value === '지역 선택하기')) {
+            if (
+              !(
+                (currentStep === 5 && value === '지역 선택하기') ||
+                (currentStep === 6 && value === '날짜 선택하기')
+              )
+            ) {
               handleNextStep();
             }
           }}
@@ -271,8 +299,16 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], on
               key={option}
               ref={option === '무관' && currentStep === 5 ? neutralButtonRef : undefined}
               className={`flex h-auto w-[260px] cursor-pointer flex-col items-start gap-2 rounded-md border p-6 font-bold transition-all duration-300 ease-in-out ${
-                selectedOptions[currentStep] === option ? 'border-primary bg-secondary' : 'border-gray-400'
-              } ${option === '무관' && showRegionSelector ? 'pointer-events-none opacity-50' : ''}`}
+                selectedOptions[currentStep] === option
+                  ? 'border-primary bg-secondary'
+                  : 'border-gray-400'
+              } ${
+                option === '무관' &&
+                ((showRegionSelector && currentStep === 5) ||
+                  (showDateSelector && currentStep === 6))
+                  ? 'pointer-events-none opacity-50'
+                  : ''
+              }`}
               onClick={() => {
                 setSelectedOptions((prev) => ({
                   ...prev,
@@ -280,10 +316,15 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], on
                 }));
                 if (currentStep === 5 && option === '지역 선택하기') {
                   if (neutralButtonRef.current) {
-                    neutralButtonRef.current.classList.add('pointer-events-none', 'opacity-50');
+                    neutralButtonRef.current.classList.add(
+                      'pointer-events-none',
+                      'opacity-50'
+                    );
                     neutralButtonRef.current.style.display = 'none';
                   }
                   setShowRegionSelector(true);
+                } else if (currentStep === 6 && option === '날짜 선택하기') {
+                  setShowDateSelector(true);
                 } else if (currentStep === 9 && option === '지금 작성할게요.') {
                   // Do nothing to allow textarea to appear
                 } else {
@@ -319,12 +360,16 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], on
                   >
                     <textarea
                       rows={6}
-                      className='mt-2 max-h-[160px] min-h-[40px] w-full rounded-md border border-primary p-2 text-gray-700 scrollbar-hide focus:border-primary focus:outline-none'
+                      className='scrollbar-hide mt-2 max-h-[160px] min-h-[40px] w-full rounded-md border border-primary p-2 text-gray-700 focus:border-primary focus:outline-none'
                       placeholder='내용을 작성해주세요.'
                       value={userInput}
                       onChange={(e) => setUserInput(e.target.value)}
                     />
-                    <TypeTwoButton text='다음 단계로 가기' color='bg-secondary' onClick={handleNextStep} />
+                    <TypeTwoButton
+                      text='다음 단계로 가기'
+                      color='bg-secondary'
+                      onClick={handleNextStep}
+                    />
                   </div>
                 )}
             </div>
@@ -339,8 +384,40 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], on
                 console.log(`시 ${selection.area}, 구,군 - ${selection.subArea}`);
                 setShowRegionSelector(false);
                 if (neutralButtonRef.current) {
-                  neutralButtonRef.current.classList.remove('pointer-events-none', 'opacity-50');
+                  neutralButtonRef.current.classList.remove(
+                    'pointer-events-none',
+                    'opacity-50'
+                  );
                 }
+                handleNextStep();
+              }}
+            />
+          </div>
+        )}
+
+        {showDateSelector && (
+          <div className='mt-4 max-w-[280px] m-auto'>
+            <h3 className='mb-2 text-sub_h3 font-bold'>원하는 날짜를 최대 3개까지 선택해주세요:</h3>
+            <div className='flex flex-col gap-2'>
+              {Array.from({ length: 3 }, (_, index) => (
+                <input
+                  key={index}
+                  type='date'
+                  value={dateSelection[index] || ''}
+                  onChange={(e) => {
+                    const newDates = [...dateSelection];
+                    newDates[index] = e.target.value;
+                    setDateSelection(newDates);
+                  }}
+                  className='rounded-md border p-2'
+                />
+              ))}
+            </div>
+            <TypeTwoButton
+              text='다음 단계로 가기'
+              color='bg-secondary'
+              onClick={() => {
+                setShowDateSelector(false);
                 handleNextStep();
               }}
             />
@@ -350,8 +427,34 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], on
     );
   };
 
+  const handleReservation = () => {
+    const data = {
+      petId: selectedPet,
+      desiredServiceCode: selectedOptions[3],
+      lastGroomingDate: selectedOptions[4],
+      desiredRegion:
+        selectedOptions[5] === '무관'
+          ? '무관'
+          : `${regionSelection.area}, ${regionSelection.subArea}`,
+      desiredDate1: dateSelection[0] || '',
+      desiredDate2: dateSelection[1] || '',
+      desiredDate3: dateSelection[2] || '',
+      isVisitRequired: selectedOptions[7] === '원해요',
+      isMonitoringIncluded: selectedOptions[8] === '원해요',
+      additionalRequest: userInput,
+    };
+    console.log(JSON.stringify(data));
+  };
+
   return (
     <div>
+      <div className='max-w-[480px]'>
+        <Header
+          mode='back'
+          title='견적 요청하기'
+          onClick={currentStep === 1 ? undefined : handlePrevStep}
+        />
+      </div>
       <div className='flex h-full w-full flex-col items-center justify-center p-4'>
         <Progress
           value={currentStep}
@@ -378,6 +481,7 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], on
                     ? `${containerHeight}px`
                     : 'auto'
                 : '400px',
+            marginBottom: currentStep === 10 ? '60px' : '',
           }}
         >
           <TransitionGroup component={null}>
@@ -388,15 +492,33 @@ const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], on
               classNames={direction === 'forward' ? 'slide-forward' : 'slide-backward'}
             >
               <div ref={getNodeRef(currentStep)}>
-                {currentStep === 1 ? renderStepOne() : currentStep === 2 ? renderStepTwo() : renderOtherSteps()}
+                {currentStep === 1
+                  ? renderStepOne()
+                  : currentStep === 2
+                    ? renderStepTwo()
+                    : renderOtherSteps()}
               </div>
             </CSSTransition>
           </TransitionGroup>
         </div>
       </div>
-      {currentStep > 1 && (
-        <TypeOneButton text={currentStep === 10 ? '예약하기' : '이전'} onClick={handlePrevStep} color='bg-secondary' />
-      )}
+      <div className='button-container fixed bottom-0 w-full'>
+        <CSSTransition
+          in={currentStep === 10}
+          timeout={500}
+          classNames='slide-up'
+          unmountOnExit
+          nodeRef={buttonRef}
+        >
+          <div ref={buttonRef}>
+            <TypeOneButton
+              text={'예약하기'}
+              onClick={handleReservation}
+              color='bg-secondary'
+            />
+          </div>
+        </CSSTransition>
+      </div>
     </div>
   );
 };
