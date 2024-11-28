@@ -42,6 +42,11 @@ jobs:
           echo "Owner changed: ${{ steps.filter.outputs.owner }}"
           echo "Designer changed: ${{ steps.filter.outputs.designer }}"
           echo "Guardian changed: ${{ steps.filter.outputs.guardian }}"
+      - name: Stop Workflow if No Changes
+        if: ${{ steps.filter.outputs.owner == 'false' && steps.filter.outputs.designer == 'false' && steps.filter.outputs.guardian == 'false' }}
+        run: |
+          echo "No changes detected in owner, designer, or guardian. Stopping workflow."
+          exit 0
 
   frontend-build:
     needs: detect-changes
