@@ -9,7 +9,7 @@ interface IAvatarProps {
 }
 function Avatar({ imageUrl, name, mode, isActive, onClick }: IAvatarProps) {
   return (
-    <div className='w-[45px] flex-col' onClick={onClick}>
+    <button className='w-[45px] flex-col' onClick={onClick}>
       {mode === 'avatar' && (
         <>
           <div
@@ -42,7 +42,7 @@ function Avatar({ imageUrl, name, mode, isActive, onClick }: IAvatarProps) {
           <div className={`flex justify-center pt-[7px] text-caption text-gray-500`}>새 요청</div>
         </>
       )}
-    </div>
+    </button>
   );
 }
 

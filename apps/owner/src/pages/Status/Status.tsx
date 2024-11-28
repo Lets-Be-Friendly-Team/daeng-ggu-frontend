@@ -1,12 +1,15 @@
 import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Header, CategoryTab } from '@daeng-ggu/design-system';
+import { CategoryTab, Header } from '@daeng-ggu/design-system';
+
 import CompletedRequest from '@/pages/Status/CompletedRequest';
 import PendingRequest from '@/pages/Status/PendingRequest';
 
 interface LocationState {
   from?: string;
 }
+
+// https://via.placeholder.com/100
 
 const Status: React.FC = () => {
   const navigate = useNavigate();
@@ -22,67 +25,98 @@ const Status: React.FC = () => {
     }
   }, [state, navigate]);
 
-  const dummyDataForPending = {
-    petId: 0,
-    desiredService: '',
-    isVisitRequired: false,
-    createdAt: '2024-11-28T00:00:00',
-    petList: [
-      {
-        petId: 0,
-        petName: '',
-        petImgUrl: 'https://via.placeholder.com/100',
-      },
-      {
-        petId: 1,
-        petName: '',
-        petImgUrl: 'https://via.placeholder.com/100',
-      },
-    ],
-    estimateList: [
-      {
-        estimateId: 1,
-        designerId: 0,
-        designerName: '포돌맨',
-        designerImageUrl: 'https://via.placeholder.com/100',
-        estimatePrice: 0,
-        petId: 0,
-        petName: '',
-        createdAt: '2024-11-28T00:00:00',
-      },
-      {
-        estimateId: 2,
-        designerId: 101,
-        designerName: 'Alice',
-        designerImageUrl: 'https://via.placeholder.com/100',
-        estimatePrice: 150000,
-        petId: 101,
-        petName: 'Buddy',
-        createdAt: '2024-11-27T14:30:00',
-      },
-      {
-        estimateId: 3,
-        designerId: 102,
-        designerName: 'John',
-        designerImageUrl: 'https://via.placeholder.com/100',
-        estimatePrice: 120000,
-        petId: 102,
-        petName: 'Milo',
-        createdAt: '2024-11-26T11:00:00',
-      },
-      {
-        estimateId: 4,
-        designerId: 103,
-        designerName: 'Sophia',
-        designerImageUrl: 'https://via.placeholder.com/100',
-        estimatePrice: 180000,
-        petId: 103,
-        petName: 'Bella',
-        createdAt: '2024-11-25T09:45:00',
-      },
-    ],
-  };
-
+  const dummyDataForPending = [
+    {
+      petId: 1,
+      petName: 'Buddy',
+      petImgUrl: 'https://via.placeholder.com/100',
+      desiredService: 'Grooming',
+      isVisitRequired: true,
+      createdat: '2024-11-27T15:30:00',
+      estimateList: [
+        {
+          estimateId: 1,
+          designerId: 3,
+          designerName: 'Alice',
+          designerImageUrl: 'https://via.placeholder.com/100',
+          estimatePrice: 150000,
+          petId: 1,
+          petName: 'Buddy',
+          createdAt: '2024-11-27T16:00:00',
+        },
+        {
+          estimateId: 2,
+          designerId: 32,
+          designerName: 'Bob',
+          designerImageUrl: 'https://via.placeholder.com/100',
+          estimatePrice: 140000,
+          petId: 1,
+          petName: 'Buddy',
+          createdAt: '2024-11-27T16:15:00',
+        },
+      ],
+    },
+    {
+      petId: 2,
+      petName: 'Milo',
+      petImgUrl: 'https://via.placeholder.com/100',
+      desiredService: 'Training',
+      isVisitRequired: false,
+      createdat: '2024-11-26T10:00:00',
+      estimateList: [
+        {
+          estimateId: 203,
+          designerId: 303,
+          designerName: 'Sophia',
+          designerImageUrl: 'https://via.placeholder.com/100',
+          estimatePrice: 180000,
+          petId: 2,
+          petName: 'Milo',
+          createdAt: '2024-11-26T10:30:00',
+        },
+        {
+          estimateId: 204,
+          designerId: 304,
+          designerName: 'John',
+          designerImageUrl: 'https://via.placeholder.com/100',
+          estimatePrice: 170000,
+          petId: 2,
+          petName: 'Milo',
+          createdAt: '2024-11-26T11:00:00',
+        },
+      ],
+    },
+    {
+      petId: 3,
+      petName: 'Bella',
+      petImgUrl: 'https://via.placeholder.com/100',
+      desiredService: 'Vet Checkup',
+      isVisitRequired: true,
+      createdat: '2024-11-25T09:15:00',
+      estimateList: [
+        {
+          estimateId: 205,
+          designerId: 305,
+          designerName: 'Emily',
+          designerImageUrl: 'https://via.placeholder.com/100',
+          estimatePrice: 200000,
+          petId: 3,
+          petName: 'Bella',
+          createdAt: '2024-11-25T09:45:00',
+        },
+        {
+          estimateId: 206,
+          designerId: 306,
+          designerName: 'James',
+          designerImageUrl: 'https://via.placeholder.com/100',
+          estimatePrice: 210000,
+          petId: 3,
+          petName: 'Bella',
+          createdAt: '2024-11-25T10:00:00',
+        },
+      ],
+    },
+  ];
 
   const dummyDataForCompleted = {
     requestList: [
@@ -125,7 +159,7 @@ const Status: React.FC = () => {
     ],
   };
 
-
+  // 이거 수정해야됨
   const tabs = [
     {
       label: '견적서받는 중',
