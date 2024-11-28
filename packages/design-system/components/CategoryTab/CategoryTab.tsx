@@ -9,6 +9,39 @@ interface CategoryTabProps {
   tabs: ITab[];
 }
 
+/*
+* 카테고리 이제 차일드로 가지고 있는 컴포넌트에 대해서 스타일 같이 적용됨
+* 그냥 라벨하고 컴포넌트 추가
+* 적용 예시
+* interface LocationState {
+  from?: string;
+}
+
+const Status: React.FC = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const tabs = [
+    {
+      label: '완료된 견적',
+      content: <CompletedRequest />,
+    },
+    {
+      label: '요청중인 견적',
+      content: <PendingRequest />,
+    },
+  ];
+
+  return (
+    <div className='h-full max-w-[480px]'>
+      <div className='max-w-[480px]'>
+        <Header mode='main' title='견적 조회하기' />
+        <CategoryTab tabs={tabs} />
+      </div>
+    </div>
+  );
+};
+**/
+
 const CategoryTab: React.FC<CategoryTabProps> = ({ tabs }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [indicatorOffset, setIndicatorOffset] = useState(0); // Position of the bottom border indicator

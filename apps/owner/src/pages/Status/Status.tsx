@@ -36,7 +36,7 @@ const Status: React.FC = () => {
   return (
     <div className='h-full max-w-[480px]'>
       <div className='max-w-[480px]'>
-        <Header mode='main' title='견적 조회하기' onClick={() => {}} />
+        <Header mode='main' title='견적 조회하기' />
         <CategoryTab tabs={tabs} />
       </div>
     </div>
