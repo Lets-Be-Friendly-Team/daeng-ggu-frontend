@@ -16,6 +16,30 @@ interface Props {
   borderWidth?: string; // 테두리 굵기
   borderColor?: string; // 테두리 색상
 }
+
+/* 컴포넌트 사용예시
+  모든 props값 없어도 사용 가능함
+  
+      <TextArea
+        label='TextArea 테스트2'
+        id='test'
+        name='test'
+        value={textVal2}
+        onChange={handleText2Change}
+        placeholder='테스트 값을 입력해주세요'
+        height='6rem'
+        maxLength={10}
+        // 배경 색상 지정 가능
+        // (tailwind 색상값으로 : white, primary, gray-50, ...)
+        bgColor='white'
+        // 테두리 굵기 지정 가능 (?px, ?rem, ...)
+        borderWidth='0.5px'
+        // 테두리 색상 지정 가능
+        // (tailwind 색상값으로 : white, primary, gray-50, ...)
+        borderColor='primary'
+      />
+*/
+
 const TextArea: FC<Props> = ({
   label = '',
   id = '',
