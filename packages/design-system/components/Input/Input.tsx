@@ -1,3 +1,4 @@
+/* 인풋창 컴포넌트 */
 import React, { ChangeEvent } from 'react';
 
 export type InputValue = string | number | ReadonlyArray<string>;
@@ -15,6 +16,23 @@ interface Props {
   onChange?: (_ev: InputChangeEvent) => void;
 }
 
+/*
+ 컴포넌트 사용 예시
+ 모든 props값은 없어도 사용가능
+
+ <Input
+ type='number'
+ label='인풋 테스트'
+ id='test'
+ name='test'
+ value={val}
+ onChange={handleChange}
+ placeholder='테스트 값을 입력해주세요'
+/>
+
+<Input width='50%' height='5rem' placeholder='label없고 크기조절한 인풋창' />
+*/
+
 const Input: React.FC<Props> = ({
   label = '',
   type = 'text',
@@ -26,16 +44,12 @@ const Input: React.FC<Props> = ({
   height = '',
   onChange,
 }) => {
-  // const [inputValue, setInputValue] = useState<InputValue>(value);
-
   const changeHandler = (_ev: InputChangeEvent) => {
     if (onChange) {
       onChange(_ev);
     }
   };
 
-  // const widthClass = width ? `w-${width}` : `w-full`;
-  // const heigthClass = height ? `h-[${height}]` : `h-auto`;
   return (
     <div>
       {label && (

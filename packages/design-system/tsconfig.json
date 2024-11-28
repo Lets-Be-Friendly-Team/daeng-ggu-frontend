@@ -1,5 +1,9 @@
 {
   "compilerOptions": {
+    "jsx": "react",
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true,
     "emitDeclarationOnly": false,
     "strict": true,
     "rootDir": ".",
