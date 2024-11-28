@@ -23,14 +23,14 @@ const SearchAddress = ({ setAddressForm, handleOpen }: Props) => {
   };
 
   return (
-    <div className='z-50 h-full w-full'>
-      <div className='flex justify-between'>
-        <h1>주소검색</h1>
+    <div className='fixed left-0 right-0 top-0 z-50 mx-auto my-0 h-full max-w-[480px]'>
+      <div className='flex max-w-[480px] justify-between bg-white p-4 text-body1 text-gray-800'>
+        <h1 className='semibold'>주소검색</h1>
         <div onClick={handleOpen}>
-          <CloseIcon className='h-4 w-4' />
+          <CloseIcon className='h-6 w-6 cursor-pointer' />
         </div>
       </div>
-      <DaumPostcode onComplete={handleComplete} />
+      <DaumPostcode onComplete={handleComplete} style={{ maxWidth: '480px', minWidth: '320px', height: '100vh' }} />
     </div>
   );
 };

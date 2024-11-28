@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import SearchAddress from './SearchAddress';
 import Input from '../Input/Input';
-
-const InputAddress = () => {
+import MySearchIcon from '../Icons/MySearchIcon';
+interface Props {
+  label: string;
+}
+const InputAddress: React.FC<Props> = ({ label = '' }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [addressForm, setAddressForm] = useState({
     address1: '',
@@ -18,8 +21,14 @@ const InputAddress = () => {
   };
   return (
     <div>
-      <div className='rounded-md bg-gray-50 px-[1.6rem] py-4' onClick={handleOpen}>
-        <input className='w-full focus:outline-none' placeholder='주소 검색' value={addressForm.address2}></input>
+      {label && <label className='mb-[0.4rem] block text-body3 font-semibold text-gray-800'>{label}</label>}
+      <div className='mb-[0.8rem] flex rounded-md bg-gray-50 px-[1.6rem] py-4' onClick={handleOpen}>
+        <input
+          className='w-full bg-gray-50 text-body3 focus:outline-none'
+          placeholder='주소 검색'
+          value={addressForm.address2}
+        ></input>
+        <MySearchIcon className='h-6 w-6' />
       </div>
       <Input placeholder='상세주소 입력' value={detailAddr} onChange={handleChange} />
       {isOpen && <SearchAddress setAddressForm={setAddressForm} handleOpen={handleOpen} />}

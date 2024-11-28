@@ -11,7 +11,7 @@ import App from './App';
 import '@/styles/sequenceAnimation.css';
 import Status from '@/pages/Status/Status.tsx';
 import InputTest from '@/pages/InputTest/InputTest';
-import { InputAddress } from '@daeng-ggu/design-system';
+import AddressTest from './pages/AddressTest/AddressTest';
 
 export const router = createBrowserRouter([
   {
@@ -57,7 +57,7 @@ export const router = createBrowserRouter([
         children: [
           {
             path: 'test',
-            element: <InputAddress />,
+            element: <AddressTest />,
           },
         ],
       },
