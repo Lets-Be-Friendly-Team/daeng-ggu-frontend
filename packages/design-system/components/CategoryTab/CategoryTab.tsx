@@ -12,6 +12,7 @@ interface CategoryTabProps {
 /*
 * 카테고리 이제 차일드로 가지고 있는 컴포넌트에 대해서 스타일 같이 적용됨
 * 그냥 라벨하고 컴포넌트 추가
+* 근데 변수명 왜 ITab?
 * 적용 예시
 * interface LocationState {
   from?: string;
@@ -44,7 +45,7 @@ const Status: React.FC = () => {
 
 const CategoryTab: React.FC<CategoryTabProps> = ({ tabs }) => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [indicatorOffset, setIndicatorOffset] = useState(0); // Position of the bottom border indicator
+  const [indicatorOffset, setIndicatorOffset] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -67,7 +68,7 @@ const CategoryTab: React.FC<CategoryTabProps> = ({ tabs }) => {
             <div
               key={index}
               className={`flex h-[33px] w-[80px] justify-center py-[8px] cursor-pointer text-sub_h2 ${
-                activeIndex === index ? 'text-primary' : 'text-gray-300'
+                activeIndex === index ? 'text-primary' : 'text-gray-600'
               }`}
               onClick={() => setActiveIndex(index)}
             >
@@ -85,7 +86,6 @@ const CategoryTab: React.FC<CategoryTabProps> = ({ tabs }) => {
         </div>
       </div>
 
-      {/* Content Rendering */}
       <div className='relative overflow-hidden'>
         <div
           className='flex transition-transform duration-300 ease-in-out'
