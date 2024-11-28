@@ -13,7 +13,7 @@
     "turbo:dry-run": "turbo run build --dry-run=json > turbo.json"
   },
   "lint-staged": {
-    "**/*": [
+    "*.{js,jsx,ts,tsx}": [
       "prettier --write",
       "eslint --fix"
     ]
