@@ -36,7 +36,12 @@ jobs:
         with:
           node-version: 'lts/*'
       #👇 Add Storybook build and deploy to GitHub Pages as a step in the workflow
-      - uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
+      - name: Change to storybook directory
+        working-directory: apps/storybook # 원하는 디렉토리로 변경
+        run: pwd # 확인용
+
+      - name: Build & deploy Storybook
+        uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
         with:
           install_command: yarn install # default: npm ci
           build_command: yarn build # default: npm run build-storybook
