@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Avatar, BorderContainer } from '@daeng-ggu/design-system';
+import CloseIcon from '@daeng-ggu/design-system/components/Icons/CloseIcon.tsx';
 
 interface Estimate {
   estimateId: number;
@@ -32,11 +33,17 @@ const PendingRequest: React.FC<PendingRequestProps> = ({ data }) => {
   const handlePetClick = (index: number) => {
     setActivePetIndex(index);
   };
+  const handleRequestDelete = (): void => {
+    console.log('closed');
+  };
+  const handleEstimeDelete = (): void => {
+    console.log('closed');
+  };
 
   const activePet = data[activePetIndex];
 
   return (
-    <div className='mx-auto flex max-w-[360px] flex-col items-center'>
+    <div className='mx-auto flex flex-col items-center px-6'>
       {data.length > 0 ? (
         <div className='mx-[10px] mb-6 w-full'>
           <div>
@@ -68,13 +75,21 @@ const PendingRequest: React.FC<PendingRequestProps> = ({ data }) => {
         <div className='w-full max-w-[300px]'>
           <div className='mb-6'>
             <BorderContainer>
-              <div className='flex justify-center p-4'>
-                <Avatar imageUrl={activePet.petImgUrl} mode='avatar' />
-                <div className='ml-4'>
-                  <h3 className='text-xl font-semibold'>{activePet.petName || '이름 없음'}</h3>
-                  <p>서비스: {activePet.desiredService || '알 수 없음'}</p>
-                  <p>방문 필요 여부: {activePet.isVisitRequired ? '예' : '아니오'}</p>
-                  <p>요청일: {activePet.createdat}</p>
+              <div className='relative'>
+                <button onClick={handleRequestDelete} className='absolute right-4 top-4'>
+                  <CloseIcon className='h-6 w-6 cursor-pointer' />
+                </button>
+
+                <div className='mx-auto flex p-4'>
+                  <div className='flex'>
+                    <Avatar imageUrl={activePet.petImgUrl} mode='requestView' />
+                    <div className='ml-4'>
+                      <h3 className='text-xl font-semibold'>{activePet.petName || '이름 없음'}</h3>
+                      <p>서비스: {activePet.desiredService || '알 수 없음'}</p>
+                      <p>방문 필요 여부: {activePet.isVisitRequired ? '예' : '아니오'}</p>
+                      <p>요청일: {activePet.createdat}</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </BorderContainer>
@@ -84,17 +99,21 @@ const PendingRequest: React.FC<PendingRequestProps> = ({ data }) => {
               <BorderContainer>
                 <ul className='w-full bg-secondary'>
                   {activePet.estimateList.map((estimate, index) => (
-                    <li key={estimate.estimateId}>
+                    <li key={estimate.estimateId} className='relative'>
                       <div
-                        className={`mx-auto flex max-h-[84px] rounded-[8px] bg-white ${
+                        className={`mx-auto flex min-h-[90px] rounded-[8px] bg-white ${
                           index !== activePet.estimateList.length - 1 ? 'mb-4' : ''
                         }`}
                       >
+                        <button onClick={() => handleEstimeDelete()} className='absolute right-4 top-4'>
+                          <CloseIcon className='h-6 w-6 cursor-pointer text-gray-500 hover:text-gray-700' />
+                        </button>
+
                         <div className='mx-auto flex min-w-[240px] items-center bg-white p-4'>
                           <img
                             src={estimate.designerImageUrl}
                             alt={estimate.designerName || '디자이너 이미지'}
-                            className='mr-4 h-16 w-16 rounded-full'
+                            className='mr-4 h-[70px] w-[70px] rounded-[8px]'
                           />
                           <div>
                             <h3 className='text-xl font-semibold'>{estimate.designerName || '이름 없는 디자이너'}</h3>

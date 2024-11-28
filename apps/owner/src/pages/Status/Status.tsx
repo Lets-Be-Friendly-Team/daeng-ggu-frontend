@@ -159,7 +159,6 @@ const Status: React.FC = () => {
     ],
   };
 
-  // 이거 수정해야됨
   const tabs = [
     {
       label: '견적서받는 중',

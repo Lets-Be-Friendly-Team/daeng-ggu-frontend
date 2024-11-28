@@ -1,5 +1,5 @@
 import React from 'react';
-import { BorderContainer } from '@daeng-ggu/design-system';
+import { BorderContainer, CloseIcon } from '@daeng-ggu/design-system';
 
 interface Request {
   requestId: number;
@@ -20,6 +20,9 @@ interface CompletedRequestProps {
 }
 
 const CompletedRequest: React.FC<CompletedRequestProps> = ({ data }) => {
+  const handleRemoveRequest = (): void => {
+    console.log('closed');
+  };
   return (
     <div className='mx-auto flex max-w-[300px] flex-col items-center'>
       <h2 className='mb-4 text-2xl font-bold'>이전견적 조회</h2>
@@ -30,17 +33,21 @@ const CompletedRequest: React.FC<CompletedRequestProps> = ({ data }) => {
           <BorderContainer>
             <ul className='w-full bg-secondary'>
               {data.requestList.map((request, index) => (
-                <li key={request.requestId}>
+                <li key={request.requestId} className='relative'>
                   <div
                     className={`mx-auto flex rounded-[8px] bg-white ${
                       index !== data.requestList.length - 1 ? 'mb-4' : ''
                     }`}
                   >
+                    <button onClick={() => handleRemoveRequest()} className='absolute right-4 top-4'>
+                      <CloseIcon className='h-6 w-6 cursor-pointer text-gray-500 hover:text-gray-700' />
+                    </button>
+
                     <div className='mx-auto flex min-w-[240px] items-center bg-white p-4'>
                       <img
                         src={request.petImgUrl}
                         alt={request.petName || '펫 이미지'}
-                        className='mr-4 h-16 w-16 rounded-full'
+                        className='mr-4 h-[50px] w-[50px] rounded-full'
                       />
                       <div>
                         <h3 className='text-xl font-semibold'>{request.petName || '이름 없는 펫'}</h3>
