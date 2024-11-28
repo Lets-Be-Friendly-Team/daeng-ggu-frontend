@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useState } from 'react';
+import React, { ChangeEvent, FC, useState } from 'react';
 
 export type TextChangeEvent = ChangeEvent<HTMLTextAreaElement>;
 
@@ -19,7 +19,7 @@ interface Props {
 
 /* 컴포넌트 사용예시
   모든 props값 없어도 사용 가능함
-  
+
       <TextArea
         label='TextArea 테스트2'
         id='test'

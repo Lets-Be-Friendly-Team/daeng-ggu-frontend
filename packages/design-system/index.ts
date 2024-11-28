@@ -1,5 +1,3 @@
-import { Import } from 'lucide-react';
-
 import Avatar from './components/Avatar/Avatar';
 import BorderContainer from './components/BorderContainer/BorderContainer';
 import MiniButton from './components/Buttons/MiniButton';
