@@ -8,6 +8,11 @@ interface IHeaderProps {
   title?: string;
   onClick?: () => void;
 }
+
+/*
+* 'back' 및 'close'에 대한 온 클릭버튼 로직 추가
+*  근데 왜 변수명 IHeader?
+* **/
 const Header = ({ mode, title, onClick }: IHeaderProps) => {
   return (
     <div className='flex h-[50px] items-center justify-center bg-white'>
@@ -26,11 +31,13 @@ const Header = ({ mode, title, onClick }: IHeaderProps) => {
         </div>
       )}
       {mode === 'close' && (
-        <div className='flex h-auto w-full items-center px-5 py-4'>
-          <CloseIcon className='mr-auto h-5 w-5' />
-          <div className='flex-1 text-center text-sub_h2'>{title}</div>
+        <div className="flex h-auto w-full items-center px-5 py-4">
+          <button onClick={onClick}>
+            <CloseIcon className="mr-auto h-5 w-5" />
+          </button>
+            <div className="flex-1 text-center text-sub_h2">{title}</div>
         </div>
-      )}
+        )}
     </div>
   );
 };
