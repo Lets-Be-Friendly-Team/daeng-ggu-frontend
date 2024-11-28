@@ -58,9 +58,9 @@ const InputTest = () => {
         placeholder='테스트 값을 입력해주세요'
         height='6rem'
         maxLength={10}
-        bgColor='white'
-        borderWidth='0.5px'
-        borderColor='primary'
+        bgColor='bg-white'
+        borderWidth='border-[0.5px]'
+        borderColor='border-primary'
       />
       <hr className='my-4' />
       <SearchBar keyword={keyword} onChange={handleKeywordChange} />

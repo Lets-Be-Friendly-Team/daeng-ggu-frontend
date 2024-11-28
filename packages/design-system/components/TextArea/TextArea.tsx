@@ -30,13 +30,11 @@ interface Props {
         height='6rem'
         maxLength={10}
         // 배경 색상 지정 가능
-        // (tailwind 색상값으로 : white, primary, gray-50, ...)
-        bgColor='white'
-        // 테두리 굵기 지정 가능 (?px, ?rem, ...)
-        borderWidth='0.5px'
+        bgColor='bg-white'
+        // 테두리 굵기 지정 가능
+        borderWidth='border-[0.5px]'
         // 테두리 색상 지정 가능
-        // (tailwind 색상값으로 : white, primary, gray-50, ...)
-        borderColor='primary'
+        borderColor='border-primary'
       />
 */
 
@@ -62,9 +60,9 @@ const TextArea: FC<Props> = ({
     }
   };
 
-  const bgClass = bgColor ? `bg-${bgColor}` : `bg-gray-50`;
-  const bwClass = borderWidth ? `border-[${borderWidth}]` : '';
-  const bcClass = borderColor ? `border-${borderColor}` : '';
+  const bgClass = bgColor ? `${bgColor}` : `bg-gray-50`;
+  const bwClass = borderWidth ? `${borderWidth}` : '';
+  const bcClass = borderColor ? `${borderColor}` : '';
 
   return (
     <div className='flex flex-col'>
