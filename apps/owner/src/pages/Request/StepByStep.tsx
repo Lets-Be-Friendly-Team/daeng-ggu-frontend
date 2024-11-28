@@ -95,7 +95,6 @@ const StepByStep: React.FC<StepByStepProps> = ({
       selectedOptions[currentStep] === '지금 작성할게요.' &&
       !userInput.trim()
     ) {
-      alert('내용을 작성해주세요.');
       return;
     }
     setDirection('forward');
@@ -397,7 +396,7 @@ const StepByStep: React.FC<StepByStepProps> = ({
         )}
 
         {showDateSelector && (
-          <div className='mt-4'>
+          <div className='mt-4 max-w-[280px] m-auto'>
             <h3 className='mb-2 text-sub_h3 font-bold'>원하는 날짜를 최대 3개까지 선택해주세요:</h3>
             <div className='flex flex-col gap-2'>
               {Array.from({ length: 3 }, (_, index) => (
@@ -428,7 +427,6 @@ const StepByStep: React.FC<StepByStepProps> = ({
     );
   };
 
-  // Function to handle reservation and log data in JSON format
   const handleReservation = () => {
     const data = {
       petId: selectedPet,
