@@ -22,14 +22,41 @@ const Status: React.FC = () => {
     }
   }, [state, navigate]);
 
+  const dummyData =
+    {
+      "petId": 0,
+      "desiredService": "",
+      "isVisitRequired": false,
+      "createdAt": "2024-11-28T00:00:00",
+      "petList": [
+        {
+          "petId": 0,
+          "petName": "",
+          "petImgUrl": ""
+        }
+      ],
+      "estimateList": [
+        {
+          "estimateId": 0,
+          "designerId": 0,
+          "designerName": "",
+          "designerImageUrl": "",
+          "estimatePrice": 0,
+          "petId": 0,
+          "petName": "",
+          "createdAt": "2024-11-28T00:00:00"
+        }
+      ]
+    }
+
   const tabs = [
     {
-      label: '완료된 견적',
-      content: <CompletedRequest />,
+      label: '견적서받는 중',
+      content: <PendingRequest />,
     },
     {
-      label: '요청중인 견적',
-      content: <PendingRequest />,
+      label: '이전견적 조회',
+      content: <CompletedRequest />,
     },
   ];
 
