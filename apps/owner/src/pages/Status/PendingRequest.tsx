@@ -65,10 +65,10 @@ const PendingRequest: React.FC<PendingRequestProps> = ({ data }) => {
           <div className='w-full'>
             <h3 className='mb-2 text-xl font-semibold'>견적 목록</h3>
             <BorderContainer>
-              <ul className='w-full'>
+              <ul className='w-full bg-secondary'>
                 {data.estimateList.map((estimate) => (
-                  <li key={estimate.estimateId} className='flex items-center p-4'>
-                    <div className='flex items-center border border-gray-300 p-4'>
+                  <li key={estimate.estimateId} className='flex bg-white rounded-[8px] mx-auto m-4'>
+                    <div className='flex min-w-[240px] items-center bg-white rounded-[8px] mx-auto p-4'>
                       <img
                         src={estimate.designerImageUrl}
                         alt={estimate.designerName || '디자이너 이미지'}
