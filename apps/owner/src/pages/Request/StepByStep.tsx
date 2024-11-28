@@ -7,16 +7,16 @@ import {
   RadioGroup,
   RadioGroupItem,
   RegionSelector,
-  TypeTwoButton,
   TypeOneButton,
+  TypeTwoButton,
 } from '@daeng-ggu/design-system';
 
 import ProfileButton from '@/pages/Request/ProfileButton';
 import ProfileViewer from '@/pages/Request/ProfileViewer';
+import RequestReview from '@/pages/Request/RequestReview';
 import { useStepStore } from '@/stores/useStepStore';
 
 import '@/styles/sequenceAnimation.css';
-import RequestReview from '@/pages/Request/RequestReview';
 
 interface StepData {
   step: number;
@@ -48,11 +48,7 @@ interface StepByStepProps {
   onProfileSelect: (_petId: number) => void;
 }
 
-const StepByStep: React.FC<StepByStepProps> = ({
-                                                 stepCount,
-                                                 profileData = [],
-                                                 onProfileSelect,
-                                               }) => {
+const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], onProfileSelect }) => {
   const { currentStep, nextStep, prevStep, setDirection, direction } = useStepStore();
   const [selectedPet, setSelectedPet] = useState<number | null>(null);
   const [selectedOptions, setSelectedOptions] = useState<{ [key: number]: string }>({});
@@ -84,14 +80,9 @@ const StepByStep: React.FC<StepByStepProps> = ({
     setDirection('forward');
     setTimeout(() => nextStep(), 0);
   };
-
   const handleNextStep = () => {
     // Add validation for the textarea input on step 9
-    if (
-      currentStep === 9 &&
-      selectedOptions[currentStep] === '지금 작성할게요.' &&
-      !userInput.trim()
-    ) {
+    if (currentStep === 9 && selectedOptions[currentStep] === '지금 작성할게요.' && !userInput.trim()) {
       alert('내용을 작성해주세요.');
       return;
     }
@@ -214,11 +205,7 @@ const StepByStep: React.FC<StepByStepProps> = ({
           text='프로필 수정하기'
           color='bg-secondary'
           onClick={() => {
-            if (
-              window.confirm(
-                '프로필을 수정하면 견적서를 다시 요청해야 합니다. 진행하시겠습니까?'
-              )
-            ) {
+            if (window.confirm('프로필을 수정하면 견적서를 다시 요청해야 합니다. 진행하시겠습니까?')) {
               console.log('Profile editing confirmed');
             } else {
               console.log('Profile editing canceled');
@@ -284,12 +271,8 @@ const StepByStep: React.FC<StepByStepProps> = ({
               key={option}
               ref={option === '무관' && currentStep === 5 ? neutralButtonRef : undefined}
               className={`flex h-auto w-[260px] cursor-pointer flex-col items-start gap-2 rounded-md border p-6 font-bold transition-all duration-300 ease-in-out ${
-                selectedOptions[currentStep] === option
-                  ? 'border-primary bg-secondary'
-                  : 'border-gray-400'
-              } ${
-                option === '무관' && showRegionSelector ? 'pointer-events-none opacity-50' : ''
-              }`}
+                selectedOptions[currentStep] === option ? 'border-primary bg-secondary' : 'border-gray-400'
+              } ${option === '무관' && showRegionSelector ? 'pointer-events-none opacity-50' : ''}`}
               onClick={() => {
                 setSelectedOptions((prev) => ({
                   ...prev,
@@ -336,16 +319,12 @@ const StepByStep: React.FC<StepByStepProps> = ({
                   >
                     <textarea
                       rows={6}
-                      className='scrollbar-hide mt-2 max-h-[160px] min-h-[40px] w-full rounded-md border border-primary p-2 text-gray-700 focus:border-primary focus:outline-none'
+                      className='mt-2 max-h-[160px] min-h-[40px] w-full rounded-md border border-primary p-2 text-gray-700 scrollbar-hide focus:border-primary focus:outline-none'
                       placeholder='내용을 작성해주세요.'
                       value={userInput}
                       onChange={(e) => setUserInput(e.target.value)}
                     />
-                    <TypeTwoButton
-                      text='다음 단계로 가기'
-                      color='bg-secondary'
-                      onClick={handleNextStep}
-                    />
+                    <TypeTwoButton text='다음 단계로 가기' color='bg-secondary' onClick={handleNextStep} />
                   </div>
                 )}
             </div>
@@ -409,22 +388,14 @@ const StepByStep: React.FC<StepByStepProps> = ({
               classNames={direction === 'forward' ? 'slide-forward' : 'slide-backward'}
             >
               <div ref={getNodeRef(currentStep)}>
-                {currentStep === 1
-                  ? renderStepOne()
-                  : currentStep === 2
-                    ? renderStepTwo()
-                    : renderOtherSteps()}
+                {currentStep === 1 ? renderStepOne() : currentStep === 2 ? renderStepTwo() : renderOtherSteps()}
               </div>
             </CSSTransition>
           </TransitionGroup>
         </div>
       </div>
       {currentStep > 1 && (
-        <TypeOneButton
-          text={currentStep === 10 ? '예약하기' : '이전'}
-          onClick={handlePrevStep}
-          color='bg-secondary'
-        />
+        <TypeOneButton text={currentStep === 10 ? '예약하기' : '이전'} onClick={handlePrevStep} color='bg-secondary' />
       )}
     </div>
   );
