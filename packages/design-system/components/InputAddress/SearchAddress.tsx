@@ -10,10 +10,11 @@ interface Props {
 
 const SearchAddress = ({ setAddressForm, handleOpen }: Props) => {
   const handleComplete = (data: Address) => {
-    const address1 = `${data.sido} ${data.sigungu} ${data.bname}`; //서울시 동작구 상도동
-    const address2 = getAddress(data);
+    const address1 = `${data.sido} ${data.sigungu} ${data.bname}`; //서울 강남구 대치동
+    const address2 = data.address; //서울 강남구 선릉로 428
     console.log(data);
     console.log(address1);
+    console.log(address2);
 
     // 선택한 주소값을 상태값으로 설정
     setAddressForm({ address1: address1, address2: address2 });
