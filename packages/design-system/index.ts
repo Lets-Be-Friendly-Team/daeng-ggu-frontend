@@ -4,6 +4,7 @@ import Avatar from './components/Avatar/Avatar';
 import BorderContainer from './components/BorderContainer/BorderContainer';
 import MiniButton from './components/Buttons/MiniButton';
 import CategoryTab from './components/CategoryTab/CategoryTab';
+import DogTypePicker from './components/DogTypePicker/DogTypePicker';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,14 +21,12 @@ import InputAddress from './components/InputAddress/InputAddress';
 import Layout from './components/Layout/Layout';
 import UserProfileImage from './components/ProfileImage/UserProfileImage';
 import { Progress } from './components/Progress/progress';
-import DogTypePicker from './components/RadioGroup/DogTypePicker';
 import { RadioGroup, RadioGroupItem } from './components/RadioGroup/RadioGroup';
 import RegionSelector from './components/RegionSelector/RegionSelector';
 import SearchBar from './components/SearchBar/SearchBar';
 import TextArea from './components/TextArea/TextArea';
 import TypeOneButton from './components/TypeOneButton/TypeOneButton';
 import TypeTwoButton from './components/TypeTwoButton/TypeTwoButton';
-
 export {
   CategoryTab,
   Progress,

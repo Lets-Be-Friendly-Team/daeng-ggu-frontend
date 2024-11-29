@@ -5,6 +5,7 @@ import shiba from '../../assets/images/shiba-inu.webp';
 interface IDogTypeOption {
   label: string;
   image: string;
+  size: string;
 }
 interface IDogTypePickerProps {
   type?: 'radio' | 'checkbox';
@@ -14,10 +15,10 @@ interface IDogTypePickerProps {
 }
 const DogTypePicker = ({ type, selectedValues, onChange }: IDogTypePickerProps) => {
   const dogOprions: IDogTypeOption[] = [
-    { label: '소형견', image: redPoodle },
-    { label: '중형견', image: shiba },
-    { label: '대형견', image: husky },
-    { label: '특수견', image: bichon },
+    { label: '소형견', image: redPoodle, size: 'h-[32px] w-[32px]' },
+    { label: '중형견', image: shiba, size: 'h-[32px] w-[32px]' },
+    { label: '대형견', image: husky, size: 'h-[32px] w-[32px]' },
+    { label: '특수견', image: bichon, size: 'h-[32px] w-[32px]' },
   ];
   const handleChange = (value: string) => {
     if (type === 'checkbox') {
@@ -33,7 +34,7 @@ const DogTypePicker = ({ type, selectedValues, onChange }: IDogTypePickerProps) 
   return (
     <ul className='flex w-full gap-1'>
       {dogOprions.map((option, index) => (
-        <li key={index} className=''>
+        <li key={index}>
           <input
             type={type}
             name={type === 'radio' ? 'dog-type' : `dog-type-${index}`}
@@ -46,9 +47,10 @@ const DogTypePicker = ({ type, selectedValues, onChange }: IDogTypePickerProps) 
             htmlFor={`dog-type-${index}`}
             className='flex h-[80px] w-[68px] flex-col items-center justify-center rounded-[8px] bg-gray-50 py-3 text-gray-800 hover:cursor-pointer hover:bg-secondary peer-checked:border peer-checked:border-primary peer-checked:bg-secondary peer-checked:text-primary'
           >
-            <div className='flex flex-col gap-3'>
-              <img src={option.image} alt={option.label} className='block h-[32px] w-[32px] object-cover' />
-
+            <div className='flex flex-col items-center gap-3'>
+              <div className={`${option.size}`}>
+                <img src={option.image} alt={option.label} className='object-contain' />
+              </div>
               <div className='text-center text-iconCaption'>{option.label}</div>
             </div>
           </label>
