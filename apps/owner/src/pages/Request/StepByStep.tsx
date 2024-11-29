@@ -465,9 +465,9 @@ const StepByStep = ({ stepCount, profileData = [], onProfileSelect }: StepByStep
           </TransitionGroup>
         </div>
       </div>
-      <div className='button-container fixed bottom-0 w-full'>
+      <div className='button-container fixed w-full' style={{ bottom: '65px' }}>
         <CSSTransition in={currentStep === 10} timeout={500} classNames='slide-up' unmountOnExit nodeRef={buttonRef}>
-          <div ref={buttonRef}>
+          <div ref={buttonRef} className='relative'>
             <TypeOneButton text={'예약하기'} onClick={handleReservation} color='bg-secondary' />
           </div>
         </CSSTransition>

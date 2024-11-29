@@ -101,7 +101,7 @@ const RequestReview = ({
   };
 
   return (
-    <div className='m-auto max-w-[320px]'>
+    <div className='m-auto max-w-[320px] pb-20'>
       <div className='items-start'>
         <h2 className='mb-4 text-h3 font-bold text-gray-800'>견적서 요약</h2>
       </div>
