@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface ProfileButtonProps {
   petName: string;
   petImgUrl: string;
@@ -7,7 +5,7 @@ interface ProfileButtonProps {
   onClick: () => void;
 }
 
-const ProfileButton: React.FC<ProfileButtonProps> = ({ petName, petImgUrl, isRequested, onClick }) => {
+const ProfileButton = ({ petName, petImgUrl, isRequested, onClick }: ProfileButtonProps) => {
   return (
     <button
       onClick={onClick}

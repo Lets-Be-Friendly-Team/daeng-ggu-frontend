@@ -1,4 +1,3 @@
-import React from 'react';
 import { MiniButton } from '@daeng-ggu/design-system';
 import ReportDangIcon from '@daeng-ggu/design-system/components/Icons/ReportDangIcon.tsx';
 
@@ -8,13 +7,13 @@ interface EmptyStateProps {
   onClick?: () => void;
 }
 
-const EmptyState: React.FC<EmptyStateProps> = ({
+const EmptyState = ({
   title = '타이틀 안적음!',
   buttonText = '버튼 텍스트 안적음!',
   onClick = () => {
     alert('함수도 안넣었니?');
   },
-}) => {
+}: EmptyStateProps) => {
   return (
     <div className='flex justify-center'>
       <div className='mt-10 flex flex-col items-center px-6'>

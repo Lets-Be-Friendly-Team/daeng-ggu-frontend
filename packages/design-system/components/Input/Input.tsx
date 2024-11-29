@@ -1,5 +1,5 @@
 /* 인풋창 컴포넌트 */
-import React, { ChangeEvent } from 'react';
+import { ChangeEvent } from 'react';
 
 export type InputValue = string | number | ReadonlyArray<string>;
 export type InputChangeEvent = ChangeEvent<HTMLInputElement>;
@@ -33,7 +33,7 @@ interface Props {
 <Input width='50%' height='5rem' placeholder='label없고 크기조절한 인풋창' />
 */
 
-const Input: React.FC<Props> = ({
+const Input = ({
   label = '',
   type = 'text',
   id = '',
@@ -43,7 +43,7 @@ const Input: React.FC<Props> = ({
   width = '',
   height = '',
   onChange,
-}) => {
+}: Props) => {
   const changeHandler = (_ev: InputChangeEvent) => {
     if (onChange) {
       onChange(_ev);

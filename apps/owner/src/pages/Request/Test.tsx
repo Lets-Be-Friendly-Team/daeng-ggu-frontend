@@ -1,8 +1,7 @@
 // Test.tsx
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Test: React.FC = () => {
+const Test = () => {
   const navigate = useNavigate();
   return (
     <div className='flex h-[300px] w-full flex-col items-center justify-center py-10'>

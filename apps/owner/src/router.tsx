@@ -1,17 +1,17 @@
 // router.jsx
-import React, { Suspense } from 'react';
+import { Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 
+import AddressTest from '@/pages/AddressTest/AddressTest';
+import InputTest from '@/pages/InputTest/InputTest';
 import { MainPage } from '@/pages/MainPage';
 import Request from '@/pages/Request/Request';
 import Test from '@/pages/Request/Test';
+import Status from '@/pages/Status/Status.tsx';
 
 import App from './App';
 
 import '@/styles/sequenceAnimation.css';
-import Status from '@/pages/Status/Status.tsx';
-import InputTest from '@/pages/InputTest/InputTest';
-import AddressTest from './pages/AddressTest/AddressTest';
 
 export const router = createBrowserRouter([
   {

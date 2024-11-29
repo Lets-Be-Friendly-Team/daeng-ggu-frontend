@@ -1,6 +1,6 @@
 // components/RequestReview.tsx
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { BorderContainer } from '@daeng-ggu/design-system';
 import { RadioGroup, RadioGroupItem } from '@daeng-ggu/design-system';
 
@@ -72,7 +72,7 @@ const calculateCosts = (
   };
 };
 
-const RequestReview: React.FC<RequestReviewProps> = ({
+const RequestReview = ({
   selectedPet,
   selectedOptions,
   profileData,
@@ -81,7 +81,7 @@ const RequestReview: React.FC<RequestReviewProps> = ({
   onEnableDynamicHeight,
   onDisableDynamicHeight,
   userInput,
-}) => {
+}: RequestReviewProps) => {
   const [editingStep, setEditingStep] = useState<number | null>(null);
   const selectedProfile = profileData.find((profile) => profile.petId === selectedPet);
 

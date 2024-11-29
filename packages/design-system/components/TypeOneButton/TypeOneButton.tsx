@@ -1,12 +1,10 @@
-import React from 'react';
-
 interface StickyButtonProps {
   text: string;
   onClick: () => void;
   color?: string;
 }
 
-const TypeOneButton: React.FC<StickyButtonProps> = ({ text, onClick, color }) => {
+const TypeOneButton = ({ text, onClick, color }: StickyButtonProps) => {
   const textColor = color === 'bg-primary' ? 'text-white' : color === 'bg-secondary' ? 'text-primary' : 'text-black';
   return (
     <div className='absolute bottom-0 w-full max-w-[480px]'>

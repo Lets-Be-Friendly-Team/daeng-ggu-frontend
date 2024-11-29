@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface ProfileData {
   petId: number;
   petName: string;
@@ -16,7 +14,7 @@ interface ProfileViewerProps {
   profile: ProfileData;
 }
 
-const ProfileViewer: React.FC<ProfileViewerProps> = ({
+const ProfileViewer = ({
   profile = {
     petId: 0,
     petName: 'Unknown',
@@ -28,7 +26,7 @@ const ProfileViewer: React.FC<ProfileViewerProps> = ({
     weight: 0,
     specialNotes: '',
   },
-}) => {
+}: ProfileViewerProps) => {
   const { petImgUrl, petName, breed, weight, gender, isNeutered, birthDate } = profile;
 
   return (

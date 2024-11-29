@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Avatar, BorderContainer } from '@daeng-ggu/design-system';
 import CloseIcon from '@daeng-ggu/design-system/components/Icons/CloseIcon.tsx';
@@ -31,7 +31,7 @@ interface PendingRequestProps {
   data?: PendingPet[];
 }
 
-const PendingRequest: React.FC<PendingRequestProps> = ({ data = [] }) => {
+const PendingRequest = ({ data = [] }: PendingRequestProps) => {
   const [activePetIndex, setActivePetIndex] = useState(0);
   const navigate = useNavigate();
 

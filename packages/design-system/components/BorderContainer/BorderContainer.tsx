@@ -1,17 +1,14 @@
 import React from 'react';
-
 interface BorderedContainerProps {
   children: React.ReactNode;
   bgColor?: string;
   innerPadding?: string;
 }
 
-const BorderContainer: React.FC<BorderedContainerProps> = ({ children, bgColor = 'bg-secondary', innerPadding = '' }) => {
+const BorderContainer = ({ children, bgColor = 'bg-secondary', innerPadding = '' }: BorderedContainerProps) => {
   return (
-    <div className={`py-6 px-6 rounded-lg w-full min-w-[300px] ${bgColor}`}>
-      <div className={`flex-col rounded-[8px] bg-white ${innerPadding}`}>
-        {children}
-      </div>
+    <div className={`w-full min-w-[300px] rounded-lg px-6 py-6 ${bgColor}`}>
+      <div className={`flex-col rounded-[8px] bg-white ${innerPadding}`}>{children}</div>
     </div>
   );
 };
