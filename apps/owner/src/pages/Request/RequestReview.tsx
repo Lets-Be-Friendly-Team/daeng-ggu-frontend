@@ -40,7 +40,7 @@ interface RequestReviewProps {
   userInput: string; // Ensure userInput is defined
 }
 
-// Function to calculate costs
+// 비용계산
 const calculateCosts = (
   dogType: string | undefined,
   baseAmount: number,

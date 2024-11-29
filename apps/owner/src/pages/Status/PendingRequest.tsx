@@ -1,11 +1,10 @@
-import React from 'react';
-import { BorderContainer } from '@daeng-ggu/design-system';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Avatar, BorderContainer } from '@daeng-ggu/design-system';
+import CloseIcon from '@daeng-ggu/design-system/components/Icons/CloseIcon.tsx';
 
-interface Pet {
-  petId: number;
-  petName: string;
-  petImgUrl: string;
-}
+import EmptyState from '@/pages/Status/EmptyState.tsx';
+import RequestContainer from '@/pages/Status/RequestContainer.tsx';
 
 interface Estimate {
   estimateId: number;
@@ -18,80 +17,120 @@ interface Estimate {
   createdAt: string;
 }
 
-interface PendingData {
+interface PendingPet {
   petId: number;
-  desiredService: string;
+  petName: string;
+  petImgUrl: string;
+  desiredService?: string;
   isVisitRequired: boolean;
   createdAt: string;
-  petList: Pet[];
   estimateList: Estimate[];
 }
 
 interface PendingRequestProps {
-  data: PendingData;
+  data?: PendingPet[];
 }
 
-const PendingRequest: React.FC<PendingRequestProps> = ({ data }) => {
-  return (
-    <div className='flex flex-col items-center'>
-      <h2 className='mb-4 text-2xl font-bold'>견적서받는 중</h2>
+const PendingRequest: React.FC<PendingRequestProps> = ({ data = [] }) => {
+  const [activePetIndex, setActivePetIndex] = useState(0);
+  const navigate = useNavigate();
 
-      {data.petList.length > 0 ? (
-        <div className='mb-6 w-full'>
-          <h3 className='mb-2 text-xl font-semibold'>반려동물 목록</h3>
-          <div>
-            <ul className='w-full'>
-              {data.petList.map((pet) => (
-                <li key={pet.petId} className='flex items-center border-b border-gray-300 p-4'>
-                  <img
-                    src={pet.petImgUrl}
-                    alt={pet.petName || '반려동물 이미지'}
-                    className='mr-4 h-16 w-16 rounded-full'
-                  />
-                  <div>
-                    <h4 className='text-lg font-medium'>{pet.petName || '이름 없는 반려동물'}</h4>
-                  </div>
-                </li>
+  const handlePetClick = (index: number) => {
+    setActivePetIndex(index);
+  };
+
+  const handleRequestDelete = (): void => {
+    console.log('closed');
+  };
+
+  const handleEstimateDelete = (): void => {
+    console.log('closed');
+  };
+
+  const activePet = data[activePetIndex];
+
+  const showEmptyState = !activePet || !activePet.estimateList || activePet.estimateList.length === 0;
+
+  const emptyStateTitle = !activePet ? '아직 견적 요청 보낸것이 없어요!' : '견적서 제안이 아직 없네요!';
+
+  const emptyStateButtonText = !activePet ? '견적요청하러 가기' : '새로고침하기';
+
+  const emptyStateOnClick = !activePet
+    ? () => navigate('/test/request', { state: { from: '/test' } })
+    : () => window.location.reload();
+
+  return (
+    <div className='mx-auto flex flex-col items-center px-6'>
+      <div className='mx-[10px] mb-6 w-full'>
+        <div>
+          <div className='flex space-x-4 overflow-x-auto'>
+            {data.length > 0 &&
+              data.map((pet, index) => (
+                <Avatar
+                  key={pet.petId}
+                  imageUrl={pet.petImgUrl}
+                  name={pet.petName || '이름 없음'}
+                  mode='avatar'
+                  isActive={activePetIndex === index}
+                  onClick={() => handlePetClick(index)}
+                />
               ))}
-            </ul>
+            <Avatar mode='request' onClick={() => navigate('/test/request', { state: { from: '/test' } })} />
           </div>
         </div>
-      ) : (
-        <p>등록된 반려동물이 없습니다.</p>
+      </div>
+
+      {activePet && (
+        <div className='w-full max-w-[300px]'>
+          <div className='mb-6'>
+            <RequestContainer handleRequestDelete={handleRequestDelete} mode='request' imageUrl={activePet.petImgUrl}>
+              <h3 className='text-xl font-semibold'>{activePet.petName || '이름 없음'}</h3>
+              <p>서비스: {activePet.desiredService || '알 수 없음'}</p>
+              <p>방문 필요 여부: {activePet.isVisitRequired ? '예' : '아니오'}</p>
+              <p>요청일: {activePet.createdAt}</p>
+            </RequestContainer>
+          </div>
+
+          {activePet.estimateList && activePet.estimateList.length > 0 && (
+            <div className='h-full w-full'>
+              <BorderContainer>
+                <ul className='w-full bg-secondary'>
+                  {activePet.estimateList.map((estimate, index) => (
+                    <li key={estimate.estimateId} className='relative'>
+                      <div
+                        className={`mx-auto flex min-h-[90px] rounded-[8px] bg-white ${
+                          index !== activePet.estimateList.length - 1 ? 'mb-4' : ''
+                        }`}
+                      >
+                        <button onClick={handleEstimateDelete} className='absolute right-4 top-4'>
+                          <CloseIcon className='h-6 w-6 cursor-pointer text-gray-500 hover:text-gray-700' />
+                        </button>
+
+                        <div className='mx-auto flex min-w-[240px] items-center bg-white p-4'>
+                          <Avatar
+                            mode='designerCard'
+                            imageUrl={estimate.designerImageUrl}
+                            name={estimate.designerName}
+                            containerClassName='mr-4 h-[70px] w-[70px]'
+                          />
+                          <div>
+                            <h3 className='text-xl font-semibold'>{estimate.designerName || '이름 없는 디자이너'}</h3>
+                            <p>견적 가격: {estimate.estimatePrice.toLocaleString()}원</p>
+                            <p>견적 생성일: {estimate.createdAt}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </BorderContainer>
+            </div>
+          )}
+        </div>
       )}
 
-      {data.estimateList.length > 0 ? (
-        <div>
-          <div className='w-full'>
-            <h3 className='mb-2 text-xl font-semibold'>견적 목록</h3>
-            <BorderContainer>
-              <ul className='w-full bg-secondary'>
-                {data.estimateList.map((estimate) => (
-                  <li key={estimate.estimateId} className='flex bg-white rounded-[8px] mx-auto m-4'>
-                    <div className='flex min-w-[240px] items-center bg-white rounded-[8px] mx-auto p-4'>
-                      <img
-                        src={estimate.designerImageUrl}
-                        alt={estimate.designerName || '디자이너 이미지'}
-                        className='mr-4 h-16 w-16 rounded-full'
-                      />
-                      <div>
-                        <h3 className='text-xl font-semibold'>{estimate.designerName || '이름 없는 디자이너'}</h3>
-                        <p>견적 가격: {estimate.estimatePrice.toLocaleString()}원</p>
-                        <p>펫 이름: {estimate.petName || '알 수 없음'}</p>
-                        <p>견적 생성일: {estimate.createdAt}</p>
-                      </div>
-                    </div>
-
-                  </li>
-                ))}
-              </ul>
-            </BorderContainer>
-
-          </div>
-        </div>
-
-      ) : (
-        <p>현재 요청중인 견적이 없습니다.</p>
+      {showEmptyState && (
+        <EmptyState title={emptyStateTitle} buttonText={emptyStateButtonText} onClick={emptyStateOnClick} />
       )}
     </div>
   );
