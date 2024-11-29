@@ -1,8 +1,10 @@
 import { Import } from 'lucide-react';
+
 import Avatar from './components/Avatar/Avatar';
 import BorderContainer from './components/BorderContainer/BorderContainer';
 import MiniButton from './components/Buttons/MiniButton';
 import CategoryTab from './components/CategoryTab/CategoryTab';
+import DogTypePicker from './components/DogTypePicker/DogTypePicker';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,6 +17,7 @@ import BellAlertIcon from './components/Icons/BellAlertIcon';
 import BellIcon from './components/Icons/BellIcon';
 import CloseIcon from './components/Icons/CloseIcon';
 import Input from './components/Input/Input';
+import InputAddress from './components/InputAddress/InputAddress';
 import Layout from './components/Layout/Layout';
 import UserProfileImage from './components/ProfileImage/UserProfileImage';
 import { Progress } from './components/Progress/progress';
@@ -24,8 +27,6 @@ import SearchBar from './components/SearchBar/SearchBar';
 import TextArea from './components/TextArea/TextArea';
 import TypeOneButton from './components/TypeOneButton/TypeOneButton';
 import TypeTwoButton from './components/TypeTwoButton/TypeTwoButton';
-import InputAddress from './components/InputAddress/InputAddress';
-
 export {
   CategoryTab,
   Progress,
@@ -52,4 +53,5 @@ export {
   TypeOneButton,
   Avatar,
   InputAddress,
+  DogTypePicker,
 };
