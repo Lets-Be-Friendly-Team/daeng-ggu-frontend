@@ -1,7 +1,7 @@
 interface IBellAlertIconProps {
   className?: string;
 }
-function BellAlertIcon({ className }: IBellAlertIconProps) {
+const BellAlertIcon = ({ className }: IBellAlertIconProps) => {
   return (
     <svg viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg' className={className}>
       <path
@@ -13,6 +13,6 @@ function BellAlertIcon({ className }: IBellAlertIconProps) {
       <circle cx='15' cy='5' r='3' fill='#FF0101' />
     </svg>
   );
-}
+};
 
 export default BellAlertIcon;

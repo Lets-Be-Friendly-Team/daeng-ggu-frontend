@@ -1,7 +1,7 @@
 interface ICheckedIconProps {
   className?: string;
 }
-function CheckedIcon({ className }: ICheckedIconProps) {
+const CheckedIcon = ({ className }: ICheckedIconProps) => {
   return (
     <svg viewBox='0 0 24 25' fill='none' xmlns='http://www.w3.org/2000/svg' className={className}>
       <path
@@ -14,6 +14,6 @@ function CheckedIcon({ className }: ICheckedIconProps) {
       />
     </svg>
   );
-}
+};
 
 export default CheckedIcon;

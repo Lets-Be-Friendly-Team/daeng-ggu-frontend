@@ -1,7 +1,7 @@
 interface IUncheckedIconProps {
   className?: string;
 }
-function UncheckedIcon({ className }: IUncheckedIconProps) {
+const UncheckedIcon = ({ className }: IUncheckedIconProps) => {
   return (
     <svg viewBox='0 0 24 25' fill='none' xmlns='http://www.w3.org/2000/svg' className={className}>
       <path
@@ -10,6 +10,6 @@ function UncheckedIcon({ className }: IUncheckedIconProps) {
       />
     </svg>
   );
-}
+};
 
 export default UncheckedIcon;
