@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { BorderContainer, CloseIcon } from '@daeng-ggu/design-system';
+import { BorderContainer } from '@daeng-ggu/design-system';
 
 import EmptyState from '@/pages/Status/EmptyState.tsx';
 
@@ -11,6 +11,8 @@ interface Request {
   desiredService: string;
   isVisitRequired: boolean;
   createdAt: string;
+  codeName: string;
+  majorBreedCode: string; // Added this line
 }
 
 interface CompletedData {
@@ -22,10 +24,29 @@ interface CompletedRequestProps {
 }
 
 const CompletedRequest = ({ data }: CompletedRequestProps) => {
-  const handleRemoveRequest = (): void => {
-    console.log('closed');
-  };
   const navigate = useNavigate();
+
+  const getDeliveryStatus = (majorBreedCode: string) => {
+    switch (majorBreedCode) {
+      case 'S':
+        return '라이트 딜리버리';
+      case 'M':
+        return '미디엄 딜리버리';
+      case 'L':
+        return '라지 딜리버리';
+      case 'X':
+        return '스페셜 딜리버리';
+      default:
+        return '알 수 없음';
+    }
+  };
+  const formatDate = (dateString: string): string => {
+    const match = dateString.match(/-(\d{2})-(\d{2})/);
+    if (match) {
+      return `${match[1]}.${match[2]}.`;
+    }
+    return dateString;
+  };
 
   return (
     <div className='mx-auto flex max-w-[300px] flex-col items-center pt-10'>
@@ -40,21 +61,32 @@ const CompletedRequest = ({ data }: CompletedRequestProps) => {
                       index !== data.requestList.length - 1 ? 'mb-4' : ''
                     }`}
                   >
-                    <button onClick={() => handleRemoveRequest()} className='absolute right-4 top-4'>
-                      <CloseIcon className='h-6 w-6 cursor-pointer text-gray-500 hover:text-gray-700' />
-                    </button>
+                    <div>
+                      <div className='ml-6 pt-4'>
+                        <p className='text-sub_h2 font-bold text-gray-300'>
+                          {request.codeName === 'FAILED' ? '요청실패' : '견적완료'}
+                        </p>
+                      </div>
+                      {/*<button onClick={() => handleRemoveRequest()} className='absolute right-4 top-4'>*/}
+                      {/*  <CloseIcon className='h-6 w-6 cursor-pointer text-gray-500 hover:text-gray-700' />*/}
+                      {/*</button>*/}
 
-                    <div className='mx-auto flex min-w-[240px] items-center bg-white p-4'>
-                      <img
-                        src={request.petImgUrl}
-                        alt={request.petName || '펫 이미지'}
-                        className='mr-4 h-[50px] w-[50px] rounded-full'
-                      />
-                      <div>
-                        <h3 className='text-xl font-semibold'>{request.petName || '이름 없는 펫'}</h3>
-                        <p>서비스: {request.desiredService || '알 수 없음'}</p>
-                        <p>방문 필요 여부: {request.isVisitRequired ? '예' : '아니오'}</p>
-                        <p>요청일: {request.createdAt}</p>
+                      <div className='mx-auto flex min-w-[240px] items-center justify-center rounded-[8px] bg-white pb-10 pl-10 pt-4'>
+                        <img
+                          src={request.petImgUrl}
+                          alt={request.petName || '펫 이미지'}
+                          className='mr-10 h-[50px] w-[50px] rounded-full'
+                        />
+                        <div>
+                          <p>{formatDate(request.createdAt)} 견적요청</p>
+                          <h3 className='text-xl font-semibold'>{request.petName || '이름 없는 펫'}</h3>
+                          <p className='text-iconCaption'>
+                            <span className='mr-1 rounded-[4px] border border-primary px-2 py-[0.8px] text-primary'>
+                              서비스
+                            </span>
+                            {request.desiredService || '알 수 없음'}/{getDeliveryStatus(request.majorBreedCode)}
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>

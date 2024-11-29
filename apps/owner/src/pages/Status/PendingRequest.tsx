@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Avatar, BorderContainer } from '@daeng-ggu/design-system';
-import CloseIcon from '@daeng-ggu/design-system/components/Icons/CloseIcon.tsx';
 
 import EmptyState from '@/pages/Status/EmptyState.tsx';
 import RequestContainer from '@/pages/Status/RequestContainer.tsx';
@@ -24,6 +23,7 @@ interface PendingPet {
   desiredService?: string;
   isVisitRequired: boolean;
   createdAt: string;
+  majorBreedCode: string;
   estimateList: Estimate[];
 }
 
@@ -43,10 +43,6 @@ const PendingRequest = ({ data = [] }: PendingRequestProps) => {
     console.log('closed');
   };
 
-  const handleEstimateDelete = (): void => {
-    console.log('closed');
-  };
-
   const activePet = data[activePetIndex];
 
   const showEmptyState = !activePet || !activePet.estimateList || activePet.estimateList.length === 0;
@@ -58,6 +54,28 @@ const PendingRequest = ({ data = [] }: PendingRequestProps) => {
   const emptyStateOnClick = !activePet
     ? () => navigate('/test/request', { state: { from: '/test' } })
     : () => window.location.reload();
+
+  const getDeliveryStatus = (majorBreedCode: string) => {
+    switch (majorBreedCode) {
+      case 'S':
+        return '라이트 딜리버리';
+      case 'M':
+        return '미디엄 딜리버리';
+      case 'L':
+        return '라지 딜리버리';
+      case 'X':
+        return '스페셜 딜리버리';
+      default:
+        return '알 수 없음';
+    }
+  };
+  const formatDate = (dateString: string): string => {
+    const match = dateString.match(/-(\d{2})-(\d{2})/);
+    if (match) {
+      return `${match[1]}.${match[2]}.`;
+    }
+    return dateString;
+  };
 
   return (
     <div className='mx-auto flex flex-col items-center px-6'>
@@ -83,11 +101,20 @@ const PendingRequest = ({ data = [] }: PendingRequestProps) => {
       {activePet && (
         <div className='w-full max-w-[300px]'>
           <div className='mb-6'>
-            <RequestContainer handleRequestDelete={handleRequestDelete} mode='request' imageUrl={activePet.petImgUrl}>
+            <RequestContainer
+              handleRequestDelete={handleRequestDelete}
+              titleText='견적 요청중'
+              mode='request'
+              imageUrl={activePet.petImgUrl}
+            >
+              <p>{formatDate(activePet.createdAt)} 견적요청</p>
               <h3 className='text-xl font-semibold'>{activePet.petName || '이름 없음'}</h3>
-              <p>서비스: {activePet.desiredService || '알 수 없음'}</p>
+              <p className='text-iconCaption'>
+                <span className='mr-1 rounded-[4px] border border-primary px-2 py-[0.8px] text-primary'>서비스</span>
+                {activePet.desiredService ||
+                  '알 수 없음'}/{getDeliveryStatus(activePet.majorBreedCode)}
+              </p>
               <p>방문 필요 여부: {activePet.isVisitRequired ? '예' : '아니오'}</p>
-              <p>요청일: {activePet.createdAt}</p>
             </RequestContainer>
           </div>
 
@@ -102,9 +129,9 @@ const PendingRequest = ({ data = [] }: PendingRequestProps) => {
                           index !== activePet.estimateList.length - 1 ? 'mb-4' : ''
                         }`}
                       >
-                        <button onClick={handleEstimateDelete} className='absolute right-4 top-4'>
-                          <CloseIcon className='h-6 w-6 cursor-pointer text-gray-500 hover:text-gray-700' />
-                        </button>
+                        {/*<button onClick={handleEstimateDelete} className='absolute right-4 top-4'>*/}
+                        {/*  <CloseIcon className='h-6 w-6 cursor-pointer text-gray-500 hover:text-gray-700' />*/}
+                        {/*</button>*/}
 
                         <div className='mx-auto flex min-w-[240px] items-center bg-white p-4'>
                           <Avatar
@@ -114,9 +141,9 @@ const PendingRequest = ({ data = [] }: PendingRequestProps) => {
                             containerClassName='mr-4 h-[70px] w-[70px]'
                           />
                           <div>
+                            <p>{formatDate(estimate.createdAt)} 견적요청</p>
                             <h3 className='text-xl font-semibold'>{estimate.designerName || '이름 없는 디자이너'}</h3>
                             <p>견적 가격: {estimate.estimatePrice.toLocaleString()}원</p>
-                            <p>견적 생성일: {estimate.createdAt}</p>
                           </div>
                         </div>
                       </div>
