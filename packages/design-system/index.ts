@@ -1,7 +1,7 @@
 import Avatar from './components/Avatar/Avatar';
 import BorderContainer from './components/BorderContainer/BorderContainer';
 import MiniButton from './components/Buttons/MiniButton';
-import { Calendar } from './components/Calendar/Calendar';
+import Calendar from './components/Calendar/Calendar';
 import CategoryTab from './components/CategoryTab/CategoryTab';
 import DogTypePicker from './components/DogTypePicker/DogTypePicker';
 import {

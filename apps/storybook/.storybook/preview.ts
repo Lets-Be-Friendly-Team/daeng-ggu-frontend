@@ -1,6 +1,6 @@
 import type { Preview } from '@storybook/react';
 
-import '../src/styles/index.css';
+import '@daeng-ggu/design-system/styles/index.css';
 
 const preview: Preview = {
   parameters: {
