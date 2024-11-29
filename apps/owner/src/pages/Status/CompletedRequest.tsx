@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BorderContainer, CloseIcon } from '@daeng-ggu/design-system';
 
@@ -22,7 +21,7 @@ interface CompletedRequestProps {
   data: CompletedData;
 }
 
-const CompletedRequest: React.FC<CompletedRequestProps> = ({ data }) => {
+const CompletedRequest = ({ data }: CompletedRequestProps) => {
   const handleRemoveRequest = (): void => {
     console.log('closed');
   };

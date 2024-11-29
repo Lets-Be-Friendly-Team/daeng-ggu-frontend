@@ -1,8 +1,10 @@
 /* 주소 입력창 컴포넌트 */
 import React, { useState } from 'react';
-import SearchAddress from './SearchAddress';
-import Input from '../Input/Input';
+
 import MySearchIcon from '../Icons/MySearchIcon';
+import Input from '../Input/Input';
+
+import SearchAddress from './SearchAddress';
 interface Props {
   label: string;
 }
@@ -14,7 +16,7 @@ label은 안넘겨줘도 됨
 <InputAddress label='주소' />
 */
 
-const InputAddress: React.FC<Props> = ({ label = '' }) => {
+const InputAddress = ({ label = '' }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [addressForm, setAddressForm] = useState({
     address1: '',

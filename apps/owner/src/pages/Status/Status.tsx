@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CategoryTab, Header } from '@daeng-ggu/design-system';
 
@@ -11,7 +11,7 @@ interface LocationState {
 
 // https://via.placeholder.com/100
 
-const Status: React.FC = () => {
+const Status = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const state = location.state as LocationState | undefined;

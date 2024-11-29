@@ -49,7 +49,7 @@ interface StepByStepProps {
   onProfileSelect: (_petId: number) => void;
 }
 
-const StepByStep: React.FC<StepByStepProps> = ({ stepCount, profileData = [], onProfileSelect }) => {
+const StepByStep = ({ stepCount, profileData = [], onProfileSelect }: StepByStepProps) => {
   const { currentStep, nextStep, prevStep, setDirection, direction } = useStepStore();
   const [selectedPet, setSelectedPet] = useState<number | null>(null);
   const [selectedOptions, setSelectedOptions] = useState<{ [key: number]: string }>({});

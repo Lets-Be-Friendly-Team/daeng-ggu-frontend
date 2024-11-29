@@ -13,13 +13,7 @@ interface RequestContainerProps {
 /**
  * 프리티어 이슈로 프롬스 이상하게 보이니 걍 이해 빔
  * */
-const RequestContainer: React.FC<RequestContainerProps> = ({
-  handleRequestDelete,
-  imageUrl,
-  mode = '',
-  children,
-  onClick,
-}) => {
+const RequestContainer = ({ handleRequestDelete, imageUrl, mode = '', children, onClick }: RequestContainerProps) => {
   return (
     <BorderContainer>
       <div className='relative'>

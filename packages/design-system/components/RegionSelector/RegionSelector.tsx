@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import areasData from '../../data/areas.json';
 
@@ -13,7 +13,7 @@ interface RegionSelectorProps {
 
 const areas: Area[] = areasData;
 
-const RegionSelector: React.FC<RegionSelectorProps> = ({ onSelectionChange }: RegionSelectorProps) => {
+const RegionSelector = ({ onSelectionChange }: RegionSelectorProps) => {
   const [selectedArea, setSelectedArea] = useState<string>('');
   const [selectedSubArea, setSelectedSubArea] = useState<string>('');
   const [isAreaOpen, setIsAreaOpen] = useState<boolean>(false);

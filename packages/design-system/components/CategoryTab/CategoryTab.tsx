@@ -67,7 +67,7 @@ const CategoryTab: React.FC<CategoryTabProps> = ({ tabs }) => {
           {tabs.map((tab, index) => (
             <div
               key={index}
-              className={`flex h-[33px] w-[80px] justify-center py-[8px] cursor-pointer text-sub_h2 ${
+              className={`flex h-[33px] w-[80px] cursor-pointer justify-center py-[8px] text-sub_h2 ${
                 activeIndex === index ? 'text-primary' : 'text-gray-600'
               }`}
               onClick={() => setActiveIndex(index)}
