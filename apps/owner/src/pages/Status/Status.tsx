@@ -32,28 +32,28 @@ const Status: React.FC = () => {
       petImgUrl: 'https://via.placeholder.com/100',
       desiredService: 'Grooming',
       isVisitRequired: true,
-      createdat: '2024-11-27T15:30:00',
+      createdAt: '2024-11-27T15:30:00',
       estimateList: [
-        {
-          estimateId: 1,
-          designerId: 3,
-          designerName: 'Alice',
-          designerImageUrl: 'https://via.placeholder.com/100',
-          estimatePrice: 150000,
-          petId: 1,
-          petName: 'Buddy',
-          createdAt: '2024-11-27T16:00:00',
-        },
-        {
-          estimateId: 2,
-          designerId: 32,
-          designerName: 'Bob',
-          designerImageUrl: 'https://via.placeholder.com/100',
-          estimatePrice: 140000,
-          petId: 1,
-          petName: 'Buddy',
-          createdAt: '2024-11-27T16:15:00',
-        },
+        // {
+        //   estimateId: 1,
+        //   designerId: 3,
+        //   designerName: 'Alice',
+        //   designerImageUrl: 'https://via.placeholder.com/100',
+        //   estimatePrice: 150000,
+        //   petId: 1,
+        //   petName: 'Buddy',
+        //   createdAt: '2024-11-27T16:00:00',
+        // },
+        // {
+        //   estimateId: 2,
+        //   designerId: 32,
+        //   designerName: 'Bob',
+        //   designerImageUrl: 'https://via.placeholder.com/100',
+        //   estimatePrice: 140000,
+        //   petId: 1,
+        //   petName: 'Buddy',
+        //   createdAt: '2024-11-27T16:15:00',
+        // },
       ],
     },
     {
@@ -62,7 +62,7 @@ const Status: React.FC = () => {
       petImgUrl: 'https://via.placeholder.com/100',
       desiredService: 'Training',
       isVisitRequired: false,
-      createdat: '2024-11-26T10:00:00',
+      createdAt: '2024-11-26T10:00:00',
       estimateList: [
         {
           estimateId: 203,
@@ -92,7 +92,7 @@ const Status: React.FC = () => {
       petImgUrl: 'https://via.placeholder.com/100',
       desiredService: 'Vet Checkup',
       isVisitRequired: true,
-      createdat: '2024-11-25T09:15:00',
+      createdAt: '2024-11-25T09:15:00',
       estimateList: [
         {
           estimateId: 205,
@@ -127,7 +127,7 @@ const Status: React.FC = () => {
         petImgUrl: 'https://via.placeholder.com/100',
         desiredService: '',
         isVisitRequired: false,
-        created_at: '2024-11-28T00:00:00',
+        createdAt: '2024-11-28T00:00:00', // Corrected property name
       },
       {
         requestId: 2,
@@ -136,7 +136,7 @@ const Status: React.FC = () => {
         petImgUrl: 'https://via.placeholder.com/100',
         desiredService: 'Grooming',
         isVisitRequired: true,
-        created_at: '2024-11-27T15:30:00',
+        createdAt: '2024-11-27T15:30:00', // Corrected property name
       },
       {
         requestId: 3,
@@ -145,7 +145,7 @@ const Status: React.FC = () => {
         petImgUrl: 'https://via.placeholder.com/100',
         desiredService: 'Training',
         isVisitRequired: false,
-        created_at: '2024-11-26T10:00:00',
+        createdAt: '2024-11-26T10:00:00', // Corrected property name
       },
       {
         requestId: 4,
@@ -154,7 +154,7 @@ const Status: React.FC = () => {
         petImgUrl: 'https://via.placeholder.com/100',
         desiredService: 'Vet Checkup',
         isVisitRequired: true,
-        created_at: '2024-11-25T09:15:00',
+        createdAt: '2024-11-25T09:15:00', // Corrected property name
       },
     ],
   };

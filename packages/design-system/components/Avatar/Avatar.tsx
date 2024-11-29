@@ -1,13 +1,42 @@
 import PlusIcon from '../Icons/PlusIcon';
 
 interface IAvatarProps {
-  mode: 'avatar' | 'add' | 'request' | 'requestView';
+  mode: 'avatar' | 'add' | 'request' | 'requestView' | 'designerCard';
   imageUrl?: string;
   name?: string;
   isActive?: boolean;
   onClick?: () => void;
+  containerClassName?: string;
+  imageClassName?: string;
 }
-function Avatar({ imageUrl, name, mode, isActive, onClick }: IAvatarProps) {
+/**
+ * designer card 라는 모드 하나 추가함
+ * 기존에 쓴 곳에는 영향이 없을 예정
+ * designer 카드 쓰는 예시
+ * <Avatar
+ *   mode='designerCard'
+ *   imageUrl={estimate.designerImageUrl}
+ *   name={estimate.designerName}
+ *   containerClassName='mr-4 h-[70px] w-[70px]'
+ *  />
+ * */
+function Avatar({ imageUrl, name, mode, isActive, onClick, containerClassName, imageClassName }: IAvatarProps) {
+  if (mode === 'designerCard') {
+    return (
+      <div
+        className={`flex items-center justify-center overflow-hidden rounded-[8px] ${
+          isActive ? 'border border-primary' : ''
+        } ${containerClassName}`}
+      >
+        <img
+          src={imageUrl}
+          alt={name || '디자이너 이미지'}
+          className={`h-full w-full rounded-[8px] object-cover ${imageClassName}`}
+        />
+      </div>
+    );
+  }
+
   return (
     <button className='w-[45px] flex-col' onClick={onClick}>
       {mode === 'avatar' && (

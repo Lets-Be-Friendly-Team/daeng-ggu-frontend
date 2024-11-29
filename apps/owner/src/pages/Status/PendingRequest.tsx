@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Avatar, BorderContainer } from '@daeng-ggu/design-system';
 import CloseIcon from '@daeng-ggu/design-system/components/Icons/CloseIcon.tsx';
+
+import EmptyState from '@/pages/Status/EmptyState.tsx';
+import RequestContainer from '@/pages/Status/RequestContainer.tsx';
 
 interface Estimate {
   estimateId: number;
@@ -17,38 +21,51 @@ interface PendingPet {
   petId: number;
   petName: string;
   petImgUrl: string;
-  desiredService: string;
+  desiredService?: string;
   isVisitRequired: boolean;
-  createdat: string;
+  createdAt: string;
   estimateList: Estimate[];
 }
 
 interface PendingRequestProps {
-  data: PendingPet[];
+  data?: PendingPet[];
 }
 
-const PendingRequest: React.FC<PendingRequestProps> = ({ data }) => {
+const PendingRequest: React.FC<PendingRequestProps> = ({ data = [] }) => {
   const [activePetIndex, setActivePetIndex] = useState(0);
+  const navigate = useNavigate();
 
   const handlePetClick = (index: number) => {
     setActivePetIndex(index);
   };
+
   const handleRequestDelete = (): void => {
     console.log('closed');
   };
-  const handleEstimeDelete = (): void => {
+
+  const handleEstimateDelete = (): void => {
     console.log('closed');
   };
 
   const activePet = data[activePetIndex];
 
+  const showEmptyState = !activePet || !activePet.estimateList || activePet.estimateList.length === 0;
+
+  const emptyStateTitle = !activePet ? '아직 견적 요청 보낸것이 없어요!' : '견적서 제안이 아직 없네요!';
+
+  const emptyStateButtonText = !activePet ? '견적요청하러 가기' : '새로고침하기';
+
+  const emptyStateOnClick = !activePet
+    ? () => navigate('/test/request', { state: { from: '/test' } })
+    : () => window.location.reload();
+
   return (
     <div className='mx-auto flex flex-col items-center px-6'>
-      {data.length > 0 ? (
-        <div className='mx-[10px] mb-6 w-full'>
-          <div>
-            <div className='flex space-x-4 overflow-x-auto'>
-              {data.map((pet, index) => (
+      <div className='mx-[10px] mb-6 w-full'>
+        <div>
+          <div className='flex space-x-4 overflow-x-auto'>
+            {data.length > 0 &&
+              data.map((pet, index) => (
                 <Avatar
                   key={pet.petId}
                   imageUrl={pet.petImgUrl}
@@ -58,43 +75,23 @@ const PendingRequest: React.FC<PendingRequestProps> = ({ data }) => {
                   onClick={() => handlePetClick(index)}
                 />
               ))}
-              <Avatar
-                mode='request'
-                onClick={() => {
-                  /* Handle new request */
-                }}
-              />
-            </div>
+            <Avatar mode='request' onClick={() => navigate('/test/request', { state: { from: '/test' } })} />
           </div>
         </div>
-      ) : (
-        <p>등록된 반려동물이 없습니다.</p>
-      )}
+      </div>
 
-      {activePet ? (
+      {activePet && (
         <div className='w-full max-w-[300px]'>
           <div className='mb-6'>
-            <BorderContainer>
-              <div className='relative'>
-                <button onClick={handleRequestDelete} className='absolute right-4 top-4'>
-                  <CloseIcon className='h-6 w-6 cursor-pointer' />
-                </button>
-
-                <div className='mx-auto flex p-4'>
-                  <div className='flex'>
-                    <Avatar imageUrl={activePet.petImgUrl} mode='requestView' />
-                    <div className='ml-4'>
-                      <h3 className='text-xl font-semibold'>{activePet.petName || '이름 없음'}</h3>
-                      <p>서비스: {activePet.desiredService || '알 수 없음'}</p>
-                      <p>방문 필요 여부: {activePet.isVisitRequired ? '예' : '아니오'}</p>
-                      <p>요청일: {activePet.createdat}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </BorderContainer>
+            <RequestContainer handleRequestDelete={handleRequestDelete} mode='request' imageUrl={activePet.petImgUrl}>
+              <h3 className='text-xl font-semibold'>{activePet.petName || '이름 없음'}</h3>
+              <p>서비스: {activePet.desiredService || '알 수 없음'}</p>
+              <p>방문 필요 여부: {activePet.isVisitRequired ? '예' : '아니오'}</p>
+              <p>요청일: {activePet.createdAt}</p>
+            </RequestContainer>
           </div>
-          {activePet.estimateList.length > 0 ? (
+
+          {activePet.estimateList && activePet.estimateList.length > 0 && (
             <div className='h-full w-full'>
               <BorderContainer>
                 <ul className='w-full bg-secondary'>
@@ -105,15 +102,16 @@ const PendingRequest: React.FC<PendingRequestProps> = ({ data }) => {
                           index !== activePet.estimateList.length - 1 ? 'mb-4' : ''
                         }`}
                       >
-                        <button onClick={() => handleEstimeDelete()} className='absolute right-4 top-4'>
+                        <button onClick={handleEstimateDelete} className='absolute right-4 top-4'>
                           <CloseIcon className='h-6 w-6 cursor-pointer text-gray-500 hover:text-gray-700' />
                         </button>
 
                         <div className='mx-auto flex min-w-[240px] items-center bg-white p-4'>
-                          <img
-                            src={estimate.designerImageUrl}
-                            alt={estimate.designerName || '디자이너 이미지'}
-                            className='mr-4 h-[70px] w-[70px] rounded-[8px]'
+                          <Avatar
+                            mode='designerCard'
+                            imageUrl={estimate.designerImageUrl}
+                            name={estimate.designerName}
+                            containerClassName='mr-4 h-[70px] w-[70px]'
                           />
                           <div>
                             <h3 className='text-xl font-semibold'>{estimate.designerName || '이름 없는 디자이너'}</h3>
@@ -127,12 +125,12 @@ const PendingRequest: React.FC<PendingRequestProps> = ({ data }) => {
                 </ul>
               </BorderContainer>
             </div>
-          ) : (
-            <p>현재 요청중인 견적이 없습니다.</p>
           )}
         </div>
-      ) : (
-        <p>선택된 반려동물이 없습니다.</p>
+      )}
+
+      {showEmptyState && (
+        <EmptyState title={emptyStateTitle} buttonText={emptyStateButtonText} onClick={emptyStateOnClick} />
       )}
     </div>
   );

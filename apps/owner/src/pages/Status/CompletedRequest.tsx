@@ -1,5 +1,8 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { BorderContainer, CloseIcon } from '@daeng-ggu/design-system';
+
+import EmptyState from '@/pages/Status/EmptyState.tsx';
 
 interface Request {
   requestId: number;
@@ -8,7 +11,7 @@ interface Request {
   petImgUrl: string;
   desiredService: string;
   isVisitRequired: boolean;
-  created_at: string;
+  createdAt: string;
 }
 
 interface CompletedData {
@@ -23,13 +26,12 @@ const CompletedRequest: React.FC<CompletedRequestProps> = ({ data }) => {
   const handleRemoveRequest = (): void => {
     console.log('closed');
   };
-  return (
-    <div className='mx-auto flex max-w-[300px] flex-col items-center'>
-      <h2 className='mb-4 text-2xl font-bold'>이전견적 조회</h2>
+  const navigate = useNavigate();
 
+  return (
+    <div className='mx-auto flex max-w-[300px] flex-col items-center pt-10'>
       {data.requestList.length > 0 ? (
         <div className='w-full'>
-          <h3 className='mb-2 text-xl font-semibold'>견적 목록</h3>
           <BorderContainer>
             <ul className='w-full bg-secondary'>
               {data.requestList.map((request, index) => (
@@ -53,7 +55,7 @@ const CompletedRequest: React.FC<CompletedRequestProps> = ({ data }) => {
                         <h3 className='text-xl font-semibold'>{request.petName || '이름 없는 펫'}</h3>
                         <p>서비스: {request.desiredService || '알 수 없음'}</p>
                         <p>방문 필요 여부: {request.isVisitRequired ? '예' : '아니오'}</p>
-                        <p>요청일: {request.created_at}</p>
+                        <p>요청일: {request.createdAt}</p>
                       </div>
                     </div>
                   </div>
@@ -63,7 +65,11 @@ const CompletedRequest: React.FC<CompletedRequestProps> = ({ data }) => {
           </BorderContainer>
         </div>
       ) : (
-        <p>완료된 견적이 없습니다.</p>
+        <EmptyState
+          title='첫 견적서 요청을 해보세요!'
+          buttonText='견적서 요청하기'
+          onClick={() => navigate('/test/request', { state: { from: '/test' } })}
+        />
       )}
     </div>
   );
