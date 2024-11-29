@@ -1,6 +1,6 @@
 /* 주소 검색용 팝업창 (daum api 사용) */
 import DaumPostcode, { Address } from 'react-daum-postcode';
-import getAddress from '../../utils/getAddress';
+// import getAddress from '../../utils/getAddress';
 import CloseIcon from '../Icons/CloseIcon';
 
 interface Props {
@@ -12,6 +12,7 @@ const SearchAddress = ({ setAddressForm, handleOpen }: Props) => {
   const handleComplete = (data: Address) => {
     const address1 = `${data.sido} ${data.sigungu} ${data.bname}`; //서울 강남구 대치동
     const address2 = data.address; //서울 강남구 선릉로 428
+    // const address2 = getAddress(data); //서울 강남구 선릉로 428 (대치동)
     console.log(data);
     console.log(address1);
     console.log(address2);
