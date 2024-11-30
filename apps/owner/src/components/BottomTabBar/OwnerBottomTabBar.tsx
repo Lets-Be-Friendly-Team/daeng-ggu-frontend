@@ -26,7 +26,7 @@ const OwnerBottomTabBar = () => {
           <span className={cn(isActive ? 'text-primary' : 'text-gray-300')}>{tab.label}</span>
         </>
       )}
-    ></BottomTabBar>
+    />
   );
 };
 
