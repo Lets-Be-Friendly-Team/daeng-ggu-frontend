@@ -5,25 +5,40 @@ import MySearchIcon from '../Icons/MySearchIcon';
 import Input from '../Input/Input';
 
 import SearchAddress from './SearchAddress';
+
+export type AddressForm = {
+  address1: string;
+  address2: string;
+};
+
 interface Props {
-  label: string;
+  label?: string;
+  addressForm: AddressForm;
+  detailAddr: string;
+  setAddressForm: (_form: AddressForm) => void;
+  setDetailAddr: (_detail: string) => void;
 }
 
 /*
 컴포넌트 사용 예시
 label은 안넘겨줘도 됨
 
-<InputAddress label='주소' />
+<InputAddress label='주소'
+        addressForm={addressForm}
+        setAddressForm={setAddressForm}
+        detailAddr={detailAddr}
+        setDetailAddr={setDetailAddr}
+        />
 */
 
-const InputAddress = ({ label = '' }: Props) => {
+const InputAddress = ({
+  label = '',
+  addressForm = { address1: '', address2: '' },
+  detailAddr = '',
+  setAddressForm,
+  setDetailAddr,
+}: Props) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [addressForm, setAddressForm] = useState({
-    address1: '',
-    address2: '',
-  });
-  const [detailAddr, setDetailAddr] = useState('');
-
   const handleOpen = () => {
     setIsOpen((prev) => !prev);
   };
