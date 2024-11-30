@@ -12,6 +12,7 @@ import Test from '@/pages/Request/Test.tsx';
 import DetailPage from '@/pages/Status/DetailPage.tsx';
 import Status from '@/pages/Status/Status.tsx';
 
+import MyPage from './pages/MyPage/MyPage';
 import App from './App';
 
 import '@/styles/sequenceAnimation.css';
@@ -73,6 +74,10 @@ export const router = createBrowserRouter([
             element: <ProgressPage />,
           },
         ],
+      },
+      {
+        path: 'profile',
+        element: <MyPage />,
       },
     ],
   },
