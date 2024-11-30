@@ -4,6 +4,7 @@ import BottomTabBar from './components/BottomTabBar/BottomTabBar';
 import MiniButton from './components/Buttons/MiniButton';
 import Calendar from './components/Calendar/Calendar';
 import CategoryTab from './components/CategoryTab/CategoryTab';
+import DetailButton from './components/DetailButton/DetailButton';
 import DogTypePicker from './components/DogTypePicker/DogTypePicker';
 import {
   DropdownMenu,
@@ -81,6 +82,7 @@ export {
   PlusIcon,
   MySearchIcon,
   RightIcon,
+  DetailButton,
   ServiceCheckBox,
   ArrowUp,
   ArrowDown,
