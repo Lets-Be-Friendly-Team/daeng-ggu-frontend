@@ -1,7 +1,7 @@
 interface IPlusIconProps {
   className?: string;
 }
-function PlusIcon({ className }: IPlusIconProps) {
+const PlusIcon = ({ className }: IPlusIconProps) => {
   return (
     <svg viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg' className={className}>
       <path
@@ -14,6 +14,6 @@ function PlusIcon({ className }: IPlusIconProps) {
       />
     </svg>
   );
-}
+};
 
 export default PlusIcon;

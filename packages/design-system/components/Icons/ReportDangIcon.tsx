@@ -2,7 +2,7 @@ interface ReportDangIconProps {
   className?: string; // Optional className for styling
 }
 
-function ReportDangIcon({ className }: ReportDangIconProps) {
+const ReportDangIcon = ({ className }: ReportDangIconProps) => {
   return (
     <svg
       width='83'
@@ -31,6 +31,6 @@ function ReportDangIcon({ className }: ReportDangIconProps) {
       </defs>
     </svg>
   );
-}
+};
 
 export default ReportDangIcon;

@@ -1,7 +1,7 @@
 interface ICloseIconProps {
   className?: string;
 }
-function CloseIcon({ className }: ICloseIconProps) {
+const CloseIcon = ({ className }: ICloseIconProps) => {
   return (
     <svg viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg' className={className}>
       <path
@@ -10,6 +10,6 @@ function CloseIcon({ className }: ICloseIconProps) {
       />
     </svg>
   );
-}
+};
 
 export default CloseIcon;

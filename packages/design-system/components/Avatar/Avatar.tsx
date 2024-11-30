@@ -20,7 +20,7 @@ interface IAvatarProps {
  *   containerClassName='mr-4 h-[70px] w-[70px]'
  *  />
  * */
-function Avatar({ imageUrl, name, mode, isActive, onClick, containerClassName, imageClassName }: IAvatarProps) {
+const Avatar = ({ imageUrl, name, mode, isActive, onClick, containerClassName, imageClassName }: IAvatarProps) => {
   if (mode === 'designerCard') {
     return (
       <div
@@ -94,6 +94,6 @@ function Avatar({ imageUrl, name, mode, isActive, onClick, containerClassName, i
       )}
     </button>
   );
-}
+};
 
 export default Avatar;
