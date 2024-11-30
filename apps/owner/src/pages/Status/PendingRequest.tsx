@@ -52,7 +52,7 @@ const PendingRequest = ({ data = [] }: PendingRequestProps) => {
   const emptyStateButtonText = !activePet ? '견적요청하러 가기' : '새로고침하기';
 
   const emptyStateOnClick = !activePet
-    ? () => navigate('/test/request', { state: { from: '/test' } })
+    ? () => navigate('/bid/request', { state: { from: '/bid' } })
     : () => window.location.reload();
 
   const getDeliveryStatus = (majorBreedCode: string) => {
@@ -93,7 +93,11 @@ const PendingRequest = ({ data = [] }: PendingRequestProps) => {
                   onClick={() => handlePetClick(index)}
                 />
               ))}
-            <Avatar mode='request' onClick={() => navigate('/test/request', { state: { from: '/test' } })} />
+            <Avatar
+              key='request-avatar' // Unique key added here
+              mode='request'
+              onClick={() => navigate('/bid/request', { state: { from: '/bid' } })}
+            />
           </div>
         </div>
       </div>

@@ -1,30 +1,11 @@
-import { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
 import { CategoryTab, Header } from '@daeng-ggu/design-system';
 
 import CompletedRequest from '@/pages/Status/CompletedRequest';
 import PendingRequest from '@/pages/Status/PendingRequest';
 
-interface LocationState {
-  from?: string;
-}
-
 // https://via.placeholder.com/100
 
 const Status = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const state = location.state as LocationState | undefined;
-
-  useEffect(() => {
-    const previousPath = state?.from || '';
-
-    if (previousPath !== '/test') {
-      alert(`ㄴㄴ ${previousPath || 'unknown'}`);
-      setTimeout(() => navigate('/', { replace: true }), 0);
-    }
-  }, [state, navigate]);
-
   const dummyDataForPending = [
     {
       petId: 1,
@@ -168,7 +149,7 @@ const Status = () => {
         majorBreedCode: 'S',
       },
       {
-        requestId: 3,
+        requestId: 5,
         petId: 102,
         petName: '밀난',
         petImgUrl: 'https://via.placeholder.com/100',
@@ -179,7 +160,7 @@ const Status = () => {
         majorBreedCode: 'S',
       },
       {
-        requestId: 3,
+        requestId: 6,
         petId: 102,
         petName: '밀난',
         petImgUrl: 'https://via.placeholder.com/100',
@@ -190,7 +171,7 @@ const Status = () => {
         majorBreedCode: 'S',
       },
       {
-        requestId: 3,
+        requestId: 7,
         petId: 102,
         petName: '밀난',
         petImgUrl: 'https://via.placeholder.com/100',
@@ -201,7 +182,7 @@ const Status = () => {
         majorBreedCode: 'S',
       },
       {
-        requestId: 3,
+        requestId: 8,
         petId: 102,
         petName: '밀난',
         petImgUrl: 'https://via.placeholder.com/100',

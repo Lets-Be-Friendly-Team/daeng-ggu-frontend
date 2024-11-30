@@ -64,7 +64,7 @@ const Request = () => {
   useEffect(() => {
     const previousPath = location.state?.from || '';
 
-    if (previousPath !== '/test') {
+    if (previousPath !== '/bid') {
       alert(`ㄴㄴ ${previousPath || 'unknown'}`);
       setTimeout(() => navigate('/', { replace: true }), 0);
     }

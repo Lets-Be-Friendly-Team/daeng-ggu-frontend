@@ -1,5 +1,3 @@
-// Updated StepByStep.tsx
-
 import React, { useEffect, useRef, useState } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import {
@@ -64,7 +62,6 @@ const StepByStep = ({ stepCount, profileData = [], onProfileSelect }: StepByStep
 
   const [userInput, setUserInput] = useState<string>('');
 
-  // State variables for date selection in Step 6
   const [showDateSelector, setShowDateSelector] = useState<boolean>(false);
   const [dateSelection, setDateSelection] = useState<string[]>([]);
 
@@ -220,7 +217,6 @@ const StepByStep = ({ stepCount, profileData = [], onProfileSelect }: StepByStep
             }
           }}
         />
-
         <TypeTwoButton text='다음 단계로 가기' color='bg-secondary' onClick={handleNextStep} />
       </div>
     );
