@@ -2,63 +2,89 @@ import { useState } from 'react';
 
 import ArrowDown from '../Icons/ArrowDown';
 import ArrowUp from '../Icons/ArrowUp';
+import CheckedIcon from '../Icons/CheckedIcon';
+import UncheckedIcon from '../Icons/UncheckedIcon';
 
-function ServiceCheckBox() {
+interface IServiceCheckBoxProps {
+  // eslint-disable-next-line no-unused-vars
+  onChange?: (selectedItems: string[]) => void;
+}
+
+function ServiceCheckBox({ onChange }: IServiceCheckBoxProps) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [selectedItems, setSelectedItems] = useState<Record<string, boolean>>({});
+
+  const serviceOptions = [
+    { id: 'service1', label: '기본 서비스 (미용, 목욕)' },
+    { id: 'service2', label: '프리미엄 - 스파' },
+    { id: 'service3', label: '프리미엄 - 풀케어' },
+    { id: 'service4', label: '프리미엄 - 모니터링' },
+  ];
 
   const toggleDropdown = () => {
     setIsDropdownOpen((prev) => !prev);
   };
 
+  const handleItemClick = (id: string) => {
+    setSelectedItems((prev) => {
+      const newState = { ...prev, [id]: !prev[id] };
+      if (onChange) {
+        const selectedIds = Object.keys(newState).filter((key) => newState[key]);
+        onChange(selectedIds);
+      }
+      return newState;
+    });
+  };
+
+  const selectedLabels = Object.keys(selectedItems)
+    .filter((key) => selectedItems[key])
+    .map((key) => {
+      const option = serviceOptions.find((opt) => opt.id === key);
+      if (option?.label === serviceOptions[0].label) {
+        return '기본';
+      }
+      return option?.label.split(' - ')[1] || option?.label;
+    })
+    .join('/');
+
   return (
-    <>
+    <div className='flex flex-col gap-[6px]'>
       <div
         onClick={toggleDropdown}
-        className='flex h-[36px] w-[280px] items-center justify-between rounded-[8px] bg-gray-50 px-4 text-center text-body3 text-gray-800'
+        className='flex h-[36px] w-[280px] cursor-pointer items-center justify-between rounded-[8px] bg-gray-50 px-4 text-body3 text-gray-800'
       >
-        <div>기본/스파/풀케어</div>
+        <div>{selectedLabels || '서비스를 선택하세요'}</div>
         <div className='w-auto'>
-          {isDropdownOpen ? <ArrowUp className={'h-4 w-4'} /> : <ArrowDown className={'h-4 w-4'} />}
+          {isDropdownOpen ? <ArrowUp className='h-4 w-4' /> : <ArrowDown className='h-4 w-4' />}
         </div>
       </div>
 
-      <div id='dropdownSearch' className={`z-10 w-[280px] rounded-lg bg-white ${isDropdownOpen ? '' : 'hidden'}`}>
-        <ul className='h-48 overflow-y-auto text-caption text-gray-500'>
-          <li>
-            <div className='flex items-center rounded p-2 hover:bg-gray-100'>
-              <input id='checkbox-item-11' type='checkbox' className='h-4 w-4 rounded border-gray-300 bg-gray-100' />
-              <label htmlFor='checkbox-item-11' className='ms-2 w-full rounded'>
-                기본 서비스 (미용, 목욕)
-              </label>
-            </div>
-          </li>
-          <li>
-            <div className='flex items-center rounded p-2 hover:bg-gray-100'>
-              <input id='checkbox-item-11' type='checkbox' className='h-4 w-4 rounded border-gray-300 bg-gray-100' />
-              <label htmlFor='checkbox-item-11' className='ms-2 w-full rounded'>
-                프리미엄 - 스파
-              </label>
-            </div>
-          </li>
-          <li>
-            <div className='flex items-center rounded p-2 hover:bg-gray-100'>
-              <input id='checkbox-item-11' type='checkbox' className='h-4 w-4 rounded border-gray-300 bg-gray-100' />
-              <label htmlFor='checkbox-item-11' className='ms-2 w-full rounded'>
-                프리미엄 - 풀케어
-              </label>
-            </div>
-          </li>
-          <li>
-            <div className='flex items-center rounded p-2 hover:bg-gray-100'>
-              <input id='checkbox-item-11' type='checkbox' className='h-4 w-4 rounded border-gray-300 bg-gray-100' />
-              <label htmlFor='checkbox-item-11' className='ms-2 w-full rounded'>
-                프리미엄 - 모니터링
-              </label>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </>
+      {isDropdownOpen && (
+        <div className='z-10 w-[280px] rounded-lg'>
+          <ul className='text-caption text-gray-500'>
+            {serviceOptions.map((option, index) => (
+              <li key={option.id}>
+                <div
+                  onClick={() => handleItemClick(option.id)}
+                  className={`flex h-[34px] cursor-pointer items-center p-[6px] ${
+                    selectedItems[option.id] ? 'bg-secondary text-primary' : 'hover:bg-secondary hover:text-primary'
+                  } ${index !== serviceOptions.length - 1 ? 'border-b border-gray-100' : ''}`}
+                >
+                  <div className='flex h-4 w-4 items-center justify-center'>
+                    {selectedItems[option.id] ? (
+                      <CheckedIcon className='h-4 w-4 text-primary' />
+                    ) : (
+                      <UncheckedIcon className='h-4 w-4' />
+                    )}
+                  </div>
+                  <label className='ms-2 w-full cursor-pointer'>{option.label}</label>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
   );
 }
 
