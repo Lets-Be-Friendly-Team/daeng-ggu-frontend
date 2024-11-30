@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import * as React from 'react';
 import { DayPicker } from 'react-day-picker';
 // import { isSunday } from 'date-fns';
@@ -55,8 +53,8 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
       //   outside: 'text-gray-200',
       // }}
       components={{
-        IconLeft: ({ ...props }) => <ChevronLeft className='h-4 w-4' />,
-        IconRight: ({ ...props }) => <ChevronRight className='h-4 w-4' />,
+        IconLeft: () => <ChevronLeft className='h-4 w-4' />,
+        IconRight: () => <ChevronRight className='h-4 w-4' />,
       }}
       {...props}
     />
