@@ -30,6 +30,7 @@ import SendIcon from './components/Icons/SendIcon';
 import Input from './components/Input/Input';
 import InputAddress from './components/InputAddress/InputAddress';
 import Layout from './components/Layout/Layout';
+import PageContainer from './components/PageContainer/PageContainer';
 import UserProfileImage from './components/ProfileImage/UserProfileImage';
 import { Progress } from './components/Progress/progress';
 import { RadioGroup, RadioGroupItem } from './components/RadioGroup/RadioGroup';
@@ -81,4 +82,5 @@ export {
   ServiceCheckBox,
   ArrowUp,
   ArrowDown,
+  PageContainer,
 };
