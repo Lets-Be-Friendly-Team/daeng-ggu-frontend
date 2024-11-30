@@ -30,6 +30,7 @@ export default {
         black: 'rgba(var(--black))',
         primary: 'rgba(var(--primary))',
         secondary: 'rgba(var(--secondary))',
+        warning: 'rgba(var(--warning))',
         gray: {
           50: 'rgba(var(--gray50))',
           100: 'rgba(var(--gray100))',
@@ -45,9 +46,5 @@ export default {
       },
     },
   },
-  plugins: [
-    require('tailwindcss-animate'),
-    require('tailwind-scrollbar-hide'),
-  ],
-
+  plugins: [require('tailwindcss-animate'), require('tailwind-scrollbar-hide')],
 };

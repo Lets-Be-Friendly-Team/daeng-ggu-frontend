@@ -1,5 +1,5 @@
 interface IButtonProps {
-  text: String;
+  text: string;
   isActive?: boolean;
   onClick?: () => void;
 }

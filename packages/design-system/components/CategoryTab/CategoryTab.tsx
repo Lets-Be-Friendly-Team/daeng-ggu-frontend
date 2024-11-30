@@ -18,7 +18,7 @@ interface CategoryTabProps {
   from?: string;
 }
 
-const Status: React.FC = () => {
+const Status = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const tabs = [
@@ -43,7 +43,7 @@ const Status: React.FC = () => {
 };
 **/
 
-const CategoryTab: React.FC<CategoryTabProps> = ({ tabs }) => {
+const CategoryTab = ({ tabs }: CategoryTabProps) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [indicatorOffset, setIndicatorOffset] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
