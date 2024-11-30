@@ -2,8 +2,13 @@ import { BottomTabBar, FeedIcon, MapIcon, MyPageIcon, ReservationIcon, SendIcon 
 
 import { cn } from '@/lib/utils';
 import { useOwnerBottomTabStore } from '@/stores/bottomTabStore';
+/* to-do
 
-// 로그인 상태에 따라 마이페이지/로그인 label 변경
+* 로그인 상태에 따라 마이페이지/로그인 label 변경
+* path 변경
+
+ */
+
 const ownerTabs = [
   { label: '디자이너 찾기', icon: MapIcon, path: '/' },
   { label: '피드', icon: FeedIcon, path: '/feed' },
