@@ -12,6 +12,8 @@ import {
   DropdownMenuTrigger,
 } from './components/Dropdown-menu/Dropdown-menu';
 import Header from './components/Header/Header';
+import ArrowDown from './components/Icons/ArrowDown';
+import ArrowUp from './components/Icons/ArrowUp';
 import BackIcon from './components/Icons/BackIcon';
 import BellAlertIcon from './components/Icons/BellAlertIcon';
 import BellIcon from './components/Icons/BellIcon';
@@ -33,6 +35,7 @@ import { Progress } from './components/Progress/progress';
 import { RadioGroup, RadioGroupItem } from './components/RadioGroup/RadioGroup';
 import RegionSelector from './components/RegionSelector/RegionSelector';
 import SearchBar from './components/SearchBar/SearchBar';
+import ServiceCheckBox from './components/ServiceCheckBox/ServiceCheckBox';
 import TextArea from './components/TextArea/TextArea';
 import TypeOneButton from './components/TypeOneButton/TypeOneButton';
 import TypeTwoButton from './components/TypeTwoButton/TypeTwoButton';
@@ -75,4 +78,7 @@ export {
   ReportDangIcon,
   PlusIcon,
   MySearchIcon,
+  ServiceCheckBox,
+  ArrowUp,
+  ArrowDown,
 };
