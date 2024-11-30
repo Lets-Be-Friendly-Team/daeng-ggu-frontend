@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Avatar, BorderContainer } from '@daeng-ggu/design-system';
+import { Avatar, BorderContainer, RightIcon } from '@daeng-ggu/design-system';
 
 import EmptyState from '@/pages/Status/EmptyState.tsx';
 import RequestContainer from '@/pages/Status/RequestContainer.tsx';
@@ -107,8 +107,8 @@ const PendingRequest = ({ data = [] }: PendingRequestProps) => {
               mode='request'
               imageUrl={activePet.petImgUrl}
             >
-              <p>{formatDate(activePet.createdAt)} 견적요청</p>
-              <h3 className='text-xl font-semibold'>{activePet.petName || '이름 없음'}</h3>
+              <p className='text-gray-800'>{formatDate(activePet.createdAt)} 견적요청</p>
+              <h3 className='text-sub_h3 font-semibold'>{activePet.petName || '이름 없음'}</h3>
               <p className='text-iconCaption'>
                 <span className='mr-1 rounded-[4px] border border-primary px-2 py-[0.8px] text-primary'>서비스</span>
                 {activePet.desiredService ||
@@ -141,9 +141,18 @@ const PendingRequest = ({ data = [] }: PendingRequestProps) => {
                             containerClassName='mr-4 h-[70px] w-[70px]'
                           />
                           <div>
-                            <p>{formatDate(estimate.createdAt)} 견적요청</p>
-                            <h3 className='text-xl font-semibold'>{estimate.designerName || '이름 없는 디자이너'}</h3>
-                            <p>견적 가격: {estimate.estimatePrice.toLocaleString()}원</p>
+                            <p className='text-gray-800'>{formatDate(estimate.createdAt)} 견적요청</p>
+                            <p className='text-sub_h3 font-semibold'>{estimate.designerName || '이름 없는 디자이너'}</p>
+                            <p className='text-sub_h2 font-bold'>{estimate.estimatePrice.toLocaleString()}원</p>
+                            <p className='text-sub_h3 font-bold'>미용고객: {activePet.petName}</p>
+                            <button className='flex items-center text-iconCaption'>
+                              <p className='flex items-center'>
+                                <span>상세보기</span>
+                                <span>
+                                  <RightIcon className='h-[9px] w-[8px] pb-[1px]' />
+                                </span>
+                              </p>
+                            </button>
                           </div>
                         </div>
                       </div>

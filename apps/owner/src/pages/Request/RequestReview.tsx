@@ -37,7 +37,7 @@ interface RequestReviewProps {
   onOptionChange: (_step: number, _newOption: string) => void;
   onEnableDynamicHeight: () => void;
   onDisableDynamicHeight?: () => void;
-  userInput: string; // Ensure userInput is defined
+  userInput: string;
 }
 
 // 비용계산

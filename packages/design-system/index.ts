@@ -40,6 +40,8 @@ import ServiceCheckBox from './components/ServiceCheckBox/ServiceCheckBox';
 import TextArea from './components/TextArea/TextArea';
 import TypeOneButton from './components/TypeOneButton/TypeOneButton';
 import TypeTwoButton from './components/TypeTwoButton/TypeTwoButton';
+import RightIcon from './components/Icons/RightIcon';
+
 
 export {
   CategoryTab,
@@ -79,6 +81,7 @@ export {
   ReportDangIcon,
   PlusIcon,
   MySearchIcon,
+  RightIcon,
   ServiceCheckBox,
   ArrowUp,
   ArrowDown,
