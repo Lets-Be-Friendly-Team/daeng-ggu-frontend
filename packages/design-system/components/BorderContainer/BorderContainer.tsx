@@ -5,11 +5,7 @@ interface BorderedContainerProps {
   innerPadding?: string;
 }
 
-const BorderContainer: React.FC<BorderedContainerProps> = ({
-  children,
-  bgColor = 'bg-secondary',
-  innerPadding = '',
-}) => {
+const BorderContainer = ({ children, bgColor = 'bg-secondary', innerPadding = '' }: BorderedContainerProps) => {
   return (
     <div className={`w-full min-w-[300px] rounded-lg px-6 py-6 ${bgColor}`}>
       <div className={`flex-col rounded-[8px] bg-white ${innerPadding}`}>{children}</div>
