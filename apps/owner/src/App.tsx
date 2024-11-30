@@ -5,9 +5,8 @@ import OwnerBottomTabBar from './components/BottomTabBar/OwnerBottomTabBar';
 
 function App() {
   return (
-    <Layout>
+    <Layout tab={<OwnerBottomTabBar />}>
       <Outlet />
-      <OwnerBottomTabBar />
     </Layout>
   );
 }
