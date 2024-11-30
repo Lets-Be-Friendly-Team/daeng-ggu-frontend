@@ -3,7 +3,7 @@ import { Calendar } from '@daeng-ggu/design-system';
 import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof Calendar> = {
-  title: 'Example/Calendar',
+  title: 'Daeng-ggu/Calendar',
   component: Calendar,
   argTypes: {
     selected: { control: 'date' },

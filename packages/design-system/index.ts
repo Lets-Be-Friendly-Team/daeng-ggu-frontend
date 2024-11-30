@@ -1,5 +1,6 @@
 import Avatar from './components/Avatar/Avatar';
 import BorderContainer from './components/BorderContainer/BorderContainer';
+import BottomTabBar from './components/BottomTabBar/BottomTabBar';
 import MiniButton from './components/Buttons/MiniButton';
 import Calendar from './components/Calendar/Calendar';
 import CategoryTab from './components/CategoryTab/CategoryTab';
@@ -11,7 +12,19 @@ import {
   DropdownMenuTrigger,
 } from './components/Dropdown-menu/Dropdown-menu';
 import Header from './components/Header/Header';
-
+import BackIcon from './components/Icons/BackIcon';
+import BellAlertIcon from './components/Icons/BellAlertIcon';
+import BellIcon from './components/Icons/BellIcon';
+import CloseIcon from './components/Icons/CloseIcon';
+import FeedIcon from './components/Icons/FeedIcon';
+import MapIcon from './components/Icons/MapIcon';
+import MyPageIcon from './components/Icons/MyPageIcon';
+import MySearchIcon from './components/Icons/MySearchIcon';
+import PlusIcon from './components/Icons/PlusIcon';
+import ReportDangIcon from './components/Icons/ReportDangIcon';
+import RequestListIcon from './components/Icons/RequestListIcon';
+import ReservationIcon from './components/Icons/ReservationIcon';
+import SendIcon from './components/Icons/SendIcon';
 import Input from './components/Input/Input';
 import InputAddress from './components/InputAddress/InputAddress';
 import Layout from './components/Layout/Layout';
@@ -23,19 +36,6 @@ import SearchBar from './components/SearchBar/SearchBar';
 import TextArea from './components/TextArea/TextArea';
 import TypeOneButton from './components/TypeOneButton/TypeOneButton';
 import TypeTwoButton from './components/TypeTwoButton/TypeTwoButton';
-import BottomTabBar from './components/BottomTabBar/BottomTabBar';
-
-// 아이콘 컴포넌트
-import BackIcon from './components/Icons/BackIcon';
-import BellAlertIcon from './components/Icons/BellAlertIcon';
-import BellIcon from './components/Icons/BellIcon';
-import CloseIcon from './components/Icons/CloseIcon';
-import MapIcon from './components/Icons/MapIcon';
-import FeedIcon from './components/Icons/FeedIcon';
-import SendIcon from './components/Icons/SendIcon';
-import ReservationIcon from './components/Icons/ReservationIcon';
-import MyPageIcon from './components/Icons/MyPageIcon';
-import RequestListIcon from './components/Icons/RequestListIcon';
 
 export {
   CategoryTab,
@@ -72,4 +72,7 @@ export {
   RequestListIcon,
   DogTypePicker,
   Calendar,
+  ReportDangIcon,
+  PlusIcon,
+  MySearchIcon,
 };

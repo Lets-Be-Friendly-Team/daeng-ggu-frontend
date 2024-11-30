@@ -1,10 +1,11 @@
 /* 주소 검색용 팝업창 (daum api 사용) */
 import DaumPostcode, { Address } from 'react-daum-postcode';
+
 // import getAddress from '../../utils/getAddress';
 import CloseIcon from '../Icons/CloseIcon';
 
 interface Props {
-  setAddressForm: (form: { address1: string; address2: string }) => void;
+  setAddressForm: (_form: { address1: string; address2: string }) => void;
   handleOpen: () => void;
 }
 
