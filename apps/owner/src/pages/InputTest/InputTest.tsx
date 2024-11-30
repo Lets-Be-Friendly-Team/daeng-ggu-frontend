@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Input, SearchBar, TextArea } from '@daeng-ggu/design-system';
+import { ImageUploader, Input, SearchBar, TextArea } from '@daeng-ggu/design-system';
 import { InputValue } from '@daeng-ggu/design-system/components/Input/Input';
 
 const InputTest = () => {
@@ -24,7 +24,7 @@ const InputTest = () => {
     setKeyword(ev.target.value);
   };
   return (
-    <div className='p-8'>
+    <div className='p-8 pb-[8rem]'>
       <Input
         type='number'
         label='인풋 테스트'
@@ -63,6 +63,8 @@ const InputTest = () => {
       />
       <hr className='my-4' />
       <SearchBar keyword={keyword} onChange={handleKeywordChange} />
+      <hr className='my-4' />
+      <ImageUploader />
     </div>
   );
 };
