@@ -2,12 +2,18 @@ interface ProfileData {
   petId: number;
   petName: string;
   petImgUrl: string;
-  breed: string;
+  petImgName?: string;
+  subBreed: string;
   birthDate: string;
   gender: string;
   isNeutered: boolean;
   weight: number;
+  dogType?: string;
+  isRequested?: boolean;
   specialNotes?: string;
+  customerName?: string;
+  phone?: string;
+  address?: string;
 }
 
 interface ProfileViewerProps {
@@ -19,7 +25,7 @@ const ProfileViewer = ({
     petId: 0,
     petName: 'Unknown',
     petImgUrl: '',
-    breed: 'Unknown',
+    subBreed: 'Unknown',
     birthDate: 'N/A',
     gender: 'N/A',
     isNeutered: false,
@@ -27,7 +33,7 @@ const ProfileViewer = ({
     specialNotes: '',
   },
 }: ProfileViewerProps) => {
-  const { petImgUrl, petName, breed, weight, gender, isNeutered, birthDate } = profile;
+  const { petImgUrl, petName, subBreed, weight, gender, isNeutered, birthDate } = profile;
 
   return (
     <div className='flex min-w-[250px] justify-center rounded-[8px] border-primary bg-white p-6'>
@@ -42,7 +48,7 @@ const ProfileViewer = ({
             이름: <span className='text-primary'>{petName}</span>
           </p>
           <p className='text-iconCaption text-gray-600'>
-            견종: <span className='text-primary'>{breed}</span>
+            견종: <span className='text-primary'>{subBreed}</span>
           </p>
           <p className='text-iconCaption text-gray-600'>
             몸무게: <span className='text-primary'>{weight}kg</span>

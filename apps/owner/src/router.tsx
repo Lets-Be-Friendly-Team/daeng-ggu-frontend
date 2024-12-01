@@ -6,6 +6,7 @@ import AddressTest from '@/pages/AddressTest/AddressTest';
 import InputTest from '@/pages/InputTest/InputTest';
 import { MainPage } from '@/pages/MainPage';
 import Request from '@/pages/Request/Request';
+import DetailPage from '@/pages/Status/DetailPage.tsx';
 import Status from '@/pages/Status/Status.tsx';
 
 import App from './App';
@@ -35,6 +36,10 @@ export const router = createBrowserRouter([
           {
             path: 'request',
             element: <Request />,
+          },
+          {
+            path: 'detail',
+            element: <DetailPage />,
           },
         ],
       },

@@ -28,14 +28,16 @@ interface ProfileData {
   petName: string;
   petImgUrl: string;
   petImgName: string;
-  breed: string;
   birthDate: string;
   gender: string;
   isNeutered: boolean;
   weight: number;
-  dogType: string;
-  isRequested: boolean;
+  majorBreedCode: string;
+  majorBreed: string;
+  subBreedCode: string;
+  subBreed: string;
   specialNotes?: string;
+  isRequested: boolean;
   customerName: string;
   phone: string;
   address: string;
@@ -191,12 +193,11 @@ const StepByStep = ({ stepCount, profileData = [], onProfileSelect }: StepByStep
                 petName: 'Unknown',
                 petImgUrl: '',
                 petImgName: 'No Image',
-                breed: 'Unknown',
+                subBreed: 'Unknown',
                 birthDate: 'N/A',
                 gender: 'N/A',
                 isNeutered: false,
                 weight: 0,
-                dogType: '',
                 isRequested: false,
                 specialNotes: '',
                 customerName: '',

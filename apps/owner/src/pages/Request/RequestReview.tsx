@@ -11,13 +11,17 @@ interface ProfileData {
   petId: number;
   petName: string;
   petImgUrl: string;
-  breed: string;
+  petImgName: string;
   birthDate: string;
   gender: string;
   isNeutered: boolean;
   weight: number;
-  dogType: string;
+  majorBreedCode: string;
+  majorBreed: string;
+  subBreedCode: string;
+  subBreed: string;
   specialNotes?: string;
+  isRequested: boolean;
   customerName: string;
   phone: string;
   address: string;
@@ -33,21 +37,61 @@ interface RequestReviewProps {
   selectedPet: number | null;
   selectedOptions: { [key: number]: string };
   profileData: ProfileData[];
-  stepData: StepData[];
-  onOptionChange: (_step: number, _newOption: string) => void;
-  onEnableDynamicHeight: () => void;
+  stepData?: StepData[];
+  onOptionChange?: (_step: number, _newOption: string) => void;
+  onEnableDynamicHeight?: () => void;
   onDisableDynamicHeight?: () => void;
   userInput: string;
+  mode?: 'detail' | 'default';
 }
 
-// 비용계산
+// Default stepData values
+const defaultStepData: StepData[] = [
+  {
+    step: 3,
+    title: '원하시는 서비스를 선택 해주세요.',
+    options: ['목욕', '풀케어 서비스', '전체미용', '부분미용', '위생미용', '스파'],
+  },
+  {
+    step: 4,
+    title: '마지막 미용시기를 알려주세요.',
+    options: ['첫 미용', '1달 내외', '2달 내외', '3달 내외', '잘 모르겠어요.'],
+  },
+  {
+    step: 5,
+    title: '지역을 선택 해주세요.',
+    options: ['지역 선택하기', '무관'],
+  },
+  {
+    step: 6,
+    title: '날짜를 선택 해주세요.',
+    options: ['날짜 선택하기', '무관'],
+  },
+  {
+    step: 7,
+    title: '반려견 픽업 여부를 확인 해주세요.',
+    options: ['원해요', '괜찮아요'],
+  },
+  {
+    step: 8,
+    title: '모니터링 여부를 확인 해주세요.',
+    options: ['원해요', '괜찮아요'],
+  },
+  {
+    step: 9,
+    title: '서비스 관련 문의사항을 남겨주세요.',
+    options: ['따로 논의할께요', '지금 작성할게요.'],
+  },
+];
+
+// 비용계산 함수는 그대로 유지
 const calculateCosts = (
-  dogType: string | undefined,
+  majorBreed: string | undefined,
   baseAmount: number,
 ): { movingCost: string; totalAmount: string } => {
   let movingCost = 0;
 
-  switch (dogType) {
+  switch (majorBreed) {
     case '특수견':
       movingCost = 70000;
       break;
@@ -76,21 +120,26 @@ const RequestReview = ({
   selectedPet,
   selectedOptions,
   profileData,
-  stepData,
+  stepData = defaultStepData,
   onOptionChange,
   onEnableDynamicHeight,
   onDisableDynamicHeight,
   userInput,
+  mode = 'default',
 }: RequestReviewProps) => {
   const [editingStep, setEditingStep] = useState<number | null>(null);
   const selectedProfile = profileData.find((profile) => profile.petId === selectedPet);
 
   const baseAmount = 0;
-  const { movingCost, totalAmount } = calculateCosts(selectedProfile?.dogType, baseAmount);
+  const { movingCost, totalAmount } = calculateCosts(selectedProfile?.majorBreed, baseAmount);
 
   const handleEdit = (step: number) => {
+    if (mode === 'detail') return;
     setEditingStep(step);
-    onEnableDynamicHeight();
+    // onEnableDynamicHeight && onEnableDynamicHeight();
+    if (onEnableDynamicHeight) {
+      onEnableDynamicHeight();
+    }
   };
 
   const handleCancelEdit = () => {
@@ -101,12 +150,12 @@ const RequestReview = ({
   };
 
   return (
-    <div className='m-auto max-w-[320px] pb-20'>
+    <div className='m-automax-w-[320px] pb-32'>
       <div className='items-start'>
         <h2 className='mb-4 text-h3 font-bold text-gray-800'>견적서 요약</h2>
       </div>
       <div className='flex flex-col items-center'>
-        <div className='w-full'>
+        <div className='mb-16 w-full'>
           {selectedProfile ? (
             <div className='mb-6'>
               <BorderContainer innerPadding='p-3'>
@@ -132,7 +181,9 @@ const RequestReview = ({
                           <RadioGroup
                             value={selectedOptions[step] || ''}
                             onValueChange={(value: string) => {
-                              onOptionChange(step, value);
+                              if (onOptionChange) {
+                                onOptionChange(step, value);
+                              }
                               setEditingStep(null);
                               if (onDisableDynamicHeight) {
                                 onDisableDynamicHeight();
@@ -162,7 +213,7 @@ const RequestReview = ({
                               {selectedOptions[step] || '선택되지 않음'}
                             </p>
                           )}
-                          {step !== 5 && step !== 9 && (
+                          {mode !== 'detail' && step !== 5 && step !== 9 && (
                             <button className='p-2' onClick={() => handleEdit(step)}>
                               <img src={editIcon} alt='Edit' className='h-6 w-6' style={{ cursor: 'pointer' }} />
                             </button>
@@ -192,7 +243,7 @@ const RequestReview = ({
             <BorderContainer innerPadding='p-3'>
               <div className='flex-col items-start p-2 text-gray-800'>
                 <div className='mb-2 flex justify-between'>
-                  <span>댕동비({selectedProfile ? selectedProfile.dogType : '정보 없음'})</span>
+                  <span>댕동비({selectedProfile ? selectedProfile.majorBreed : '정보 없음'})</span>
                   <span>{movingCost}</span>
                 </div>
                 <div className='mt-2 flex justify-between border-t pt-2 text-lg font-bold'>
