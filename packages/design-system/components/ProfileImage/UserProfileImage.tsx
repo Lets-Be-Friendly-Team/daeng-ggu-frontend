@@ -7,24 +7,18 @@ interface IUserProfileImage {
 }
 const UserProfileImage = ({ imageUrl, size = 'large', onClick }: IUserProfileImage) => {
   const sizes = {
-    small: {
-      container: 'w-11 h-11',
-      image: 'w-[20px] h-[20px]',
-    },
-    large: {
-      container: 'w-[70px] h-[70px]',
-      image: 'w-[50px] h-[50px]',
-    },
+    small: 'w-[45px] h-[45px]',
+    large: 'w-[70px] h-[70px]',
   };
 
   return (
     <div
-      className={`${sizes[size].container} flex items-center justify-center overflow-hidden rounded-full bg-secondary`}
+      className={`${sizes[size]} flex items-center justify-center overflow-hidden rounded-full bg-secondary`}
       onClick={onClick}
     >
       <img
         src={imageUrl || defaultImage}
-        className={`${sizes[size].image} ${imageUrl ? 'h-full w-full rounded-full' : ''} object-contain`}
+        className={`${sizes[size]} ${imageUrl ? 'h-full w-full rounded-full' : ''} object-contain`}
         onError={(e) => (e.currentTarget.src = defaultImage)}
         alt='User Profile'
       />
