@@ -37,7 +37,7 @@ const EditUserProfilePage = () => {
   return (
     <>
       <PageContainer>
-        <Header mode='back' title='프로필 수정' onClick={navigateBack} />
+        <Header mode='back' title='내 프로필 수정' onClick={navigateBack} />
         <div className='flex flex-col gap-5'>
           <Input label='이름' placeholder={data.customerName} />
           <Input label='생년월일' placeholder={data.birthDate} />

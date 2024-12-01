@@ -12,6 +12,7 @@ import Test from '@/pages/Request/Test.tsx';
 import DetailPage from '@/pages/Status/DetailPage.tsx';
 import Status from '@/pages/Status/Status.tsx';
 
+import EditPetProfilePage from './pages/EditPetProfilePage/EditPetProfilePage';
 import EditUserProfilePage from './pages/EditUserProfilePage/EditUserProfilePage';
 import MyPage from './pages/MyPage/MyPage';
 import App from './App';
@@ -83,6 +84,10 @@ export const router = createBrowserRouter([
       {
         path: 'profile/edit',
         element: <EditUserProfilePage />,
+      },
+      {
+        path: 'profile/edit/:petId',
+        element: <EditPetProfilePage />,
       },
     ],
   },
