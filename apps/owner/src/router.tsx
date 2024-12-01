@@ -2,6 +2,7 @@
 import { Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 
+import ROUTES from '@/constants/routes';
 import InputTest from '@/pages/InputTest/InputTest';
 import { MainPage } from '@/pages/MainPage';
 import ProgressPage from '@/pages/ProgressPage/ProgressPage';
@@ -15,7 +16,7 @@ import '@/styles/sequenceAnimation.css';
 
 export const router = createBrowserRouter([
   {
-    path: '/',
+    path: ROUTES.main,
     element: (
       <Suspense>
         <App />
@@ -53,7 +54,7 @@ export const router = createBrowserRouter([
         ],
       },
       {
-        path: 'progress',
+        path: ROUTES.progress,
         children: [
           {
             index: true,
