@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router';
 import { CategoryTab, Header } from '@daeng-ggu/design-system';
 
 import PageContainer from '../../../../../packages/design-system/components/PageContainer/PageContainer';
@@ -100,6 +101,7 @@ const data = {
   ],
 };
 const MyPage = () => {
+  const navigate = useNavigate();
   const tabs = [
     {
       label: '리뷰',
@@ -110,9 +112,12 @@ const MyPage = () => {
       content: <BookmarkList bookmarkList={data.bookmarkList} />,
     },
   ];
+  const handleToMainPage = () => {
+    navigate('/');
+  };
   return (
     <PageContainer>
-      <Header mode='back' title='마이페이지' />
+      <Header mode='back' title='마이페이지' onClick={handleToMainPage} />
       <Profile nickname={data.nickname} customerImgUrl={data.customerImgUrl} customerImgName={data.customerImgName} />
       <AvartarList pets={data.petList} />
       <CategoryTab tabs={tabs} />
