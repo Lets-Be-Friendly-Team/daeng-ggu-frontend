@@ -2,9 +2,9 @@
 import { Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 
-import AddressTest from '@/pages/AddressTest/AddressTest';
 import InputTest from '@/pages/InputTest/InputTest';
 import { MainPage } from '@/pages/MainPage';
+import ProgressPage from '@/pages/ProgressPage/ProgressPage';
 import Request from '@/pages/Request/Request';
 import DetailPage from '@/pages/Status/DetailPage.tsx';
 import Status from '@/pages/Status/Status.tsx';
@@ -53,11 +53,11 @@ export const router = createBrowserRouter([
         ],
       },
       {
-        path: 'address',
+        path: 'progress',
         children: [
           {
-            path: 'test',
-            element: <AddressTest />,
+            index: true,
+            element: <ProgressPage />,
           },
         ],
       },
