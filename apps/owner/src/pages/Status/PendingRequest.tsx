@@ -44,13 +44,60 @@ interface PendingPet {
   specialNotes: string;
 }
 
-interface PendingRequestProps {
-  data?: PendingPet[];
+interface DesignerRequest {
+  requestId: number;
+  petId: number;
+  petName: string;
+  petImageUrl: string;
+  desiredServiceCode: string;
+  isVisitRequired: boolean;
+  createdAt: string;
 }
 
-const PendingRequest = ({ data = [] }: PendingRequestProps) => {
-  const [activePetIndex, setActivePetIndex] = useState(0);
+interface PendingRequestProps {
+  data: PendingPet[] | DesignerRequest[];
+  isDesigner: boolean;
+}
+
+const PendingRequest = ({ data, isDesigner }: PendingRequestProps) => {
   const navigate = useNavigate();
+  const [activePetIndex, setActivePetIndex] = useState(0);
+
+  const formatDate = (dateString: string): string => {
+    const match = dateString.match(/-(\d{2})-(\d{2})/);
+    if (match) {
+      return `${match[1]}.${match[2]}.`;
+    }
+    return dateString;
+  };
+
+  if (isDesigner) {
+    return (
+      <div className='mx-auto flex flex-col items-center px-[20px]'>
+        {data.length > 0 ? (
+          (data as DesignerRequest[]).map((request) => (
+            <div key={request.requestId} className='mb-6 w-full max-w-[300px]'>
+              <BorderContainer>
+                <div className='p-4'>
+                  <p className='text-gray-800'>{formatDate(request.createdAt)} 견적요청</p>
+                  <h3 className='text-sub_h3 font-semibold'>{request.petName || '이름 없음'}</h3>
+                  <p className='pb-2 text-iconCaption'>
+                    {request.desiredServiceCode}/{request.isVisitRequired ? '방문 필요' : '방문 불필요'}
+                  </p>
+                  <DetailButton text='상세보기' onClick={() => navigate('/bid/detail', { state: { data: request } })} />
+                </div>
+              </BorderContainer>
+            </div>
+          ))
+        ) : (
+          <EmptyState title='견적 요청이 없습니다.' buttonText='새로고침' onClick={() => window.location.reload()} />
+        )}
+      </div>
+    );
+  }
+
+  // Default mode logic
+  const activePet = data[activePetIndex] as PendingPet;
 
   const handlePetClick = (index: number) => {
     setActivePetIndex(index);
@@ -63,8 +110,6 @@ const PendingRequest = ({ data = [] }: PendingRequestProps) => {
   const handleDetailPage = (petData: PendingPet) => {
     navigate('/bid/detail', { state: { data: petData } });
   };
-
-  const activePet = data[activePetIndex];
 
   const showEmptyState = !activePet || !activePet.estimateList || activePet.estimateList.length === 0;
 
@@ -90,40 +135,35 @@ const PendingRequest = ({ data = [] }: PendingRequestProps) => {
         return '알 수 없음';
     }
   };
-  const formatDate = (dateString: string): string => {
-    const match = dateString.match(/-(\d{2})-(\d{2})/);
-    if (match) {
-      return `${match[1]}.${match[2]}.`;
-    }
-    return dateString;
-  };
 
   return (
     <div className='mx-auto flex flex-col items-center px-[20px]'>
-      <div className='mx-[10px] mb-6 w-full'>
-        <div>
-          <div className='flex space-x-4 overflow-x-auto'>
-            {data.length > 0 &&
-              data.map((pet, index) => (
-                <Avatar
-                  key={pet.petId}
-                  imageUrl={pet.petImgUrl}
-                  name={pet.petName || '이름 없음'}
-                  mode='avatar'
-                  isActive={activePetIndex === index}
-                  onClick={() => handlePetClick(index)}
-                />
-              ))}
-            <Avatar
-              key='request-avatar' // Unique key added here
-              mode='request'
-              onClick={() => navigate('/bid/request', { state: { from: '/bid' } })}
-            />
+      {!isDesigner && (
+        <div className='mx-[10px] mb-6 w-full'>
+          <div>
+            <div className='flex space-x-4 overflow-x-auto'>
+              {data.length > 0 &&
+                (data as PendingPet[]).map((pet, index) => (
+                  <Avatar
+                    key={pet.petId}
+                    imageUrl={pet.petImgUrl}
+                    name={pet.petName || '이름 없음'}
+                    mode='avatar'
+                    isActive={activePetIndex === index}
+                    onClick={() => handlePetClick(index)}
+                  />
+                ))}
+              <Avatar
+                key='request-avatar'
+                mode='request'
+                onClick={() => navigate('/bid/request', { state: { from: '/bid' } })}
+              />
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
-      {activePet && (
+      {activePet && !isDesigner && (
         <div className='w-full max-w-[300px]'>
           <div className='mb-6'>
             <RequestContainer
@@ -154,10 +194,6 @@ const PendingRequest = ({ data = [] }: PendingRequestProps) => {
                           index !== activePet.estimateList.length - 1 ? 'mb-4' : ''
                         }`}
                       >
-                        {/*<button onClick={handleEstimateDelete} className='absolute right-4 top-4'>*/}
-                        {/*  <CloseIcon className='h-6 w-6 cursor-pointer text-gray-500 hover:text-gray-700' />*/}
-                        {/*</button>*/}
-
                         <div className='mx-auto flex min-w-[240px] items-center bg-white p-4'>
                           <Avatar
                             mode='designerCard'

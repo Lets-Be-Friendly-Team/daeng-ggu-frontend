@@ -11,8 +11,11 @@ const Test = () => {
       >
         Go to Request
       </button>
-      <button className='h-10 w-[100px] bg-amber-400' onClick={() => navigate('status', { state: { from: '/test' } })}>
-        Go to Status
+      <button
+        className='h-10 w-[100px] bg-amber-400'
+        onClick={() => navigate('/bid/designer', { state: { from: '/bid/designer' } })}
+      >
+        Go to designer mode
       </button>
     </div>
   );

@@ -1,3 +1,4 @@
+import { useLocation } from 'react-router-dom';
 import { CategoryTab, Header } from '@daeng-ggu/design-system';
 
 import CompletedRequest from '@/pages/Status/CompletedRequest';
@@ -6,6 +7,31 @@ import PendingRequest from '@/pages/Status/PendingRequest';
 // https://via.placeholder.com/100
 
 const Status = () => {
+  const location = useLocation();
+  const fromPath = location.state?.from;
+  const isDesignerMode = fromPath === '/bid/designer';
+
+  const dummyDataForDesigner = [
+    {
+      requestId: 1,
+      petId: 1,
+      petName: '장미',
+      petImageUrl: 'https://via.placeholder.com/100',
+      desiredServiceCode: '부분미용',
+      isVisitRequired: true,
+      createdAt: '2024-12-02T10:30:00',
+    },
+    {
+      requestId: 2,
+      petId: 2,
+      petName: '포돌',
+      petImageUrl: 'https://via.placeholder.com/100',
+      desiredServiceCode: '스파',
+      isVisitRequired: true,
+      createdAt: '2024-12-02T10:30:00',
+    },
+  ];
+
   const dummyDataForPending = [
     {
       petId: 1,
@@ -300,8 +326,13 @@ const Status = () => {
 
   const tabs = [
     {
-      label: '견적서받는 중',
-      content: <PendingRequest data={dummyDataForPending} />,
+      label: isDesignerMode ? '견적 요청 목록' : '견적서받는 중',
+      content: (
+        <PendingRequest
+          data={isDesignerMode ? dummyDataForDesigner : dummyDataForPending}
+          isDesigner={isDesignerMode}
+        />
+      ),
     },
     {
       label: '이전견적 조회',

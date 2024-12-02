@@ -8,6 +8,7 @@ import InputTest from '@/pages/InputTest/InputTest';
 import { MainPage } from '@/pages/MainPage';
 import ProgressPage from '@/pages/ProgressPage/ProgressPage';
 import Request from '@/pages/Request/Request';
+import Test from '@/pages/Request/Test.tsx';
 import DetailPage from '@/pages/Status/DetailPage.tsx';
 import Status from '@/pages/Status/Status.tsx';
 
@@ -43,6 +44,15 @@ export const router = createBrowserRouter([
           {
             path: 'detail',
             element: <DetailPage />,
+          },
+          {
+            path: 'test',
+            element: <Test />,
+          },
+
+          {
+            path: 'designer',
+            element: <Status />,
           },
         ],
       },
