@@ -71,7 +71,7 @@ const CompletedRequest = ({ data }: CompletedRequestProps) => {
                       {/*  <CloseIcon className='h-6 w-6 cursor-pointer text-gray-500 hover:text-gray-700' />*/}
                       {/*</button>*/}
 
-                      <div className='mx-auto flex min-w-[240px] items-center justify-center rounded-[8px] bg-white pb-10 pl-10 pt-4'>
+                      <div className='flex min-w-[240px] items-center justify-center rounded-[8px] bg-white pb-10 pl-10 pt-4'>
                         <img
                           src={request.petImgUrl}
                           alt={request.petName || '펫 이미지'}

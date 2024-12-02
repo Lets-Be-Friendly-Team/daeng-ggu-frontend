@@ -4,6 +4,7 @@ import BottomTabBar from './components/BottomTabBar/BottomTabBar';
 import MiniButton from './components/Buttons/MiniButton';
 import Calendar from './components/Calendar/Calendar';
 import CategoryTab from './components/CategoryTab/CategoryTab';
+import DetailButton from './components/DetailButton/DetailButton';
 import DogTypePicker from './components/DogTypePicker/DogTypePicker';
 import {
   DropdownMenu,
@@ -26,6 +27,7 @@ import PlusIcon from './components/Icons/PlusIcon';
 import ReportDangIcon from './components/Icons/ReportDangIcon';
 import RequestListIcon from './components/Icons/RequestListIcon';
 import ReservationIcon from './components/Icons/ReservationIcon';
+import RightIcon from './components/Icons/RightIcon';
 import SendIcon from './components/Icons/SendIcon';
 import Input from './components/Input/Input';
 import InputAddress from './components/InputAddress/InputAddress';
@@ -79,6 +81,8 @@ export {
   ReportDangIcon,
   PlusIcon,
   MySearchIcon,
+  RightIcon,
+  DetailButton,
   ServiceCheckBox,
   ArrowUp,
   ArrowDown,

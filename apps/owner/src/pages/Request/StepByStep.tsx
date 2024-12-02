@@ -1,5 +1,3 @@
-// Updated StepByStep.tsx
-
 import React, { useEffect, useRef, useState } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import {
@@ -30,14 +28,16 @@ interface ProfileData {
   petName: string;
   petImgUrl: string;
   petImgName: string;
-  breed: string;
   birthDate: string;
   gender: string;
   isNeutered: boolean;
   weight: number;
-  dogType: string;
-  isRequested: boolean;
+  majorBreedCode: string;
+  majorBreed: string;
+  subBreedCode: string;
+  subBreed: string;
   specialNotes?: string;
+  isRequested: boolean;
   customerName: string;
   phone: string;
   address: string;
@@ -64,7 +64,6 @@ const StepByStep = ({ stepCount, profileData = [], onProfileSelect }: StepByStep
 
   const [userInput, setUserInput] = useState<string>('');
 
-  // State variables for date selection in Step 6
   const [showDateSelector, setShowDateSelector] = useState<boolean>(false);
   const [dateSelection, setDateSelection] = useState<string[]>([]);
 
@@ -194,12 +193,11 @@ const StepByStep = ({ stepCount, profileData = [], onProfileSelect }: StepByStep
                 petName: 'Unknown',
                 petImgUrl: '',
                 petImgName: 'No Image',
-                breed: 'Unknown',
+                subBreed: 'Unknown',
                 birthDate: 'N/A',
                 gender: 'N/A',
                 isNeutered: false,
                 weight: 0,
-                dogType: '',
                 isRequested: false,
                 specialNotes: '',
                 customerName: '',
@@ -220,7 +218,6 @@ const StepByStep = ({ stepCount, profileData = [], onProfileSelect }: StepByStep
             }
           }}
         />
-
         <TypeTwoButton text='다음 단계로 가기' color='bg-secondary' onClick={handleNextStep} />
       </div>
     );
@@ -465,9 +462,9 @@ const StepByStep = ({ stepCount, profileData = [], onProfileSelect }: StepByStep
           </TransitionGroup>
         </div>
       </div>
-      <div className='button-container fixed bottom-0 w-full'>
+      <div className='button-container fixed w-full' style={{ bottom: '65px' }}>
         <CSSTransition in={currentStep === 10} timeout={500} classNames='slide-up' unmountOnExit nodeRef={buttonRef}>
-          <div ref={buttonRef}>
+          <div ref={buttonRef} className='relative'>
             <TypeOneButton text={'예약하기'} onClick={handleReservation} color='bg-secondary' />
           </div>
         </CSSTransition>

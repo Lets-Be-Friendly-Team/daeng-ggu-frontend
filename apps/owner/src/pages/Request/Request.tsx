@@ -13,12 +13,14 @@ const Request = () => {
       petName: '포돌이',
       petImgUrl: 'https://via.placeholder.com/100',
       petImgName: 'podori.jpg',
-      breed: 'Podolski',
       birthDate: '2018-01-15',
       gender: 'male',
       isNeutered: true,
       weight: 68,
-      dogType: '대형견',
+      majorBreedCode: 'L',
+      majorBreed: '대형견',
+      subBreedCode: 'PODOL',
+      subBreed: 'Podolski',
       specialNotes: '활발하며 사교성이 좋습니다.',
       isRequested: true,
       customerName: '김철수',
@@ -30,12 +32,14 @@ const Request = () => {
       petName: '장미',
       petImgUrl: 'https://via.placeholder.com/100',
       petImgName: 'jangmi.jpg',
-      breed: 'Podolski',
       birthDate: '2020-05-20',
       gender: 'female',
       isNeutered: false,
       weight: 15,
-      dogType: '중형견',
+      majorBreedCode: 'L',
+      majorBreed: '대형견',
+      subBreedCode: 'PODOL',
+      subBreed: 'Podolski',
       specialNotes: '낯선 사람을 경계합니다.',
       isRequested: false,
       customerName: '이영희',
@@ -47,12 +51,14 @@ const Request = () => {
       petName: '장군이',
       petImgUrl: 'https://via.placeholder.com/100',
       petImgName: 'janggun.jpg',
-      breed: 'Podolski',
       birthDate: '2019-09-10',
       gender: 'male',
       isNeutered: true,
       weight: 10,
-      dogType: '소형견',
+      majorBreedCode: 'L',
+      majorBreed: '대형견',
+      subBreedCode: 'PODOL',
+      subBreed: 'Podolski',
       specialNotes: '조용하고 침착하게 물어요.',
       isRequested: false,
       customerName: '박민수',
@@ -64,7 +70,7 @@ const Request = () => {
   useEffect(() => {
     const previousPath = location.state?.from || '';
 
-    if (previousPath !== '/test') {
+    if (previousPath !== '/bid') {
       alert(`ㄴㄴ ${previousPath || 'unknown'}`);
       setTimeout(() => navigate('/', { replace: true }), 0);
     }

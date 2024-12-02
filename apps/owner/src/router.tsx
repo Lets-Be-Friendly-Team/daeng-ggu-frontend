@@ -6,7 +6,7 @@ import AddressTest from '@/pages/AddressTest/AddressTest';
 import InputTest from '@/pages/InputTest/InputTest';
 import { MainPage } from '@/pages/MainPage';
 import Request from '@/pages/Request/Request';
-import Test from '@/pages/Request/Test';
+import DetailPage from '@/pages/Status/DetailPage.tsx';
 import Status from '@/pages/Status/Status.tsx';
 
 import App from './App';
@@ -27,19 +27,19 @@ export const router = createBrowserRouter([
         element: <MainPage />,
       },
       {
-        path: 'test',
+        path: 'bid',
         children: [
           {
             index: true,
-            element: <Test />,
+            element: <Status />,
           },
           {
             path: 'request',
             element: <Request />,
           },
           {
-            path: 'status',
-            element: <Status />,
+            path: 'detail',
+            element: <DetailPage />,
           },
         ],
       },

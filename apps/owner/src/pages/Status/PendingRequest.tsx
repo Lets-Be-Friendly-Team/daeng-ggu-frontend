@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Avatar, BorderContainer } from '@daeng-ggu/design-system';
+import { Avatar, BorderContainer, DetailButton } from '@daeng-ggu/design-system';
 
 import EmptyState from '@/pages/Status/EmptyState.tsx';
 import RequestContainer from '@/pages/Status/RequestContainer.tsx';
@@ -22,6 +22,13 @@ interface PendingPet {
   petImgUrl: string;
   desiredService?: string;
   isVisitRequired: boolean;
+  lastGroomingDate?: string;
+  desiredDate1?: string;
+  desiredDate2?: string;
+  desiredDate3?: string;
+  desiredRegion?: string;
+  isMonitoringIncluded: boolean;
+  additionalRequest: string;
   createdAt: string;
   majorBreedCode: string;
   estimateList: Estimate[];
@@ -43,6 +50,10 @@ const PendingRequest = ({ data = [] }: PendingRequestProps) => {
     console.log('closed');
   };
 
+  const handleDetailPage = (petData: PendingPet) => {
+    navigate('/bid/detail', { state: { data: petData } });
+  };
+
   const activePet = data[activePetIndex];
 
   const showEmptyState = !activePet || !activePet.estimateList || activePet.estimateList.length === 0;
@@ -52,7 +63,7 @@ const PendingRequest = ({ data = [] }: PendingRequestProps) => {
   const emptyStateButtonText = !activePet ? '견적요청하러 가기' : '새로고침하기';
 
   const emptyStateOnClick = !activePet
-    ? () => navigate('/test/request', { state: { from: '/test' } })
+    ? () => navigate('/bid/request', { state: { from: '/bid' } })
     : () => window.location.reload();
 
   const getDeliveryStatus = (majorBreedCode: string) => {
@@ -78,7 +89,7 @@ const PendingRequest = ({ data = [] }: PendingRequestProps) => {
   };
 
   return (
-    <div className='mx-auto flex flex-col items-center px-6'>
+    <div className='mx-auto flex flex-col items-center'>
       <div className='mx-[10px] mb-6 w-full'>
         <div>
           <div className='flex space-x-4 overflow-x-auto'>
@@ -93,7 +104,11 @@ const PendingRequest = ({ data = [] }: PendingRequestProps) => {
                   onClick={() => handlePetClick(index)}
                 />
               ))}
-            <Avatar mode='request' onClick={() => navigate('/test/request', { state: { from: '/test' } })} />
+            <Avatar
+              key='request-avatar' // Unique key added here
+              mode='request'
+              onClick={() => navigate('/bid/request', { state: { from: '/bid' } })}
+            />
           </div>
         </div>
       </div>
@@ -107,14 +122,14 @@ const PendingRequest = ({ data = [] }: PendingRequestProps) => {
               mode='request'
               imageUrl={activePet.petImgUrl}
             >
-              <p>{formatDate(activePet.createdAt)} 견적요청</p>
-              <h3 className='text-xl font-semibold'>{activePet.petName || '이름 없음'}</h3>
-              <p className='text-iconCaption'>
+              <p className='text-gray-800'>{formatDate(activePet.createdAt)} 견적요청</p>
+              <h3 className='text-sub_h3 font-semibold'>{activePet.petName || '이름 없음'}</h3>
+              <p className='pb-2 text-iconCaption'>
                 <span className='mr-1 rounded-[4px] border border-primary px-2 py-[0.8px] text-primary'>서비스</span>
                 {activePet.desiredService ||
                   '알 수 없음'}/{getDeliveryStatus(activePet.majorBreedCode)}
               </p>
-              <p>방문 필요 여부: {activePet.isVisitRequired ? '예' : '아니오'}</p>
+              <DetailButton text='상세보기' onClick={() => handleDetailPage(activePet)} />
             </RequestContainer>
           </div>
 
@@ -141,9 +156,11 @@ const PendingRequest = ({ data = [] }: PendingRequestProps) => {
                             containerClassName='mr-4 h-[70px] w-[70px]'
                           />
                           <div>
-                            <p>{formatDate(estimate.createdAt)} 견적요청</p>
-                            <h3 className='text-xl font-semibold'>{estimate.designerName || '이름 없는 디자이너'}</h3>
-                            <p>견적 가격: {estimate.estimatePrice.toLocaleString()}원</p>
+                            <p className='text-gray-800'>{formatDate(estimate.createdAt)} 견적요청</p>
+                            <p className='text-sub_h3 font-semibold'>{estimate.designerName || '이름 없는 디자이너'}</p>
+                            <p className='text-sub_h2 font-bold'>{estimate.estimatePrice.toLocaleString()}원</p>
+                            <p className='pb-1 text-sub_h3 font-bold'>미용고객: {activePet.petName}</p>
+                            <DetailButton text='상세보기' onClick={handleRequestDelete} />
                           </div>
                         </div>
                       </div>
