@@ -1,11 +1,12 @@
 import { useNavigate } from 'react-router';
-import { Header, Input, PageContainer, TextArea, TypeTwoButton } from '@daeng-ggu/design-system';
+import { Header, Input, PageContainer, TextArea, TypeOneButton, TypeTwoButton } from '@daeng-ggu/design-system';
 
 const EditPetProfilePage = () => {
   const navigate = useNavigate();
   const navigateBack = () => {
     navigate(-1);
   };
+  const onClick = () => {};
   const petData = {
     petId: 1, // 반려견 아이디
     petName: '장군이', // 반려견 이름
@@ -23,30 +24,35 @@ const EditPetProfilePage = () => {
   };
 
   return (
-    <PageContainer>
-      <Header mode='back' title={`${petData.petName} 프로필 수정`} onClick={navigateBack} />
-      <div className='flex flex-col gap-5'>
-        <Input label='이름' placeholder={petData.petName} />
-        <Input label='견종' placeholder={petData.subBreed} />
-        <Input label='생일' placeholder={petData.birthDate} />
-        <div>
-          <div className='mb-[0.4rem] block text-body3 font-semibold text-gray-800'>성별</div>
-          <div className='flex gap-1'>
-            <TypeTwoButton text='남' color={petData.gender === 'M' ? 'bg-secondary' : ''} />
-            <TypeTwoButton text='여' color={petData.gender === 'Y' ? 'bg-secondary' : ''} />
+    <>
+      <PageContainer>
+        <Header mode='back' title={`${petData.petName} 프로필 수정`} onClick={navigateBack} />
+        <div className='flex flex-col gap-5'>
+          <Input label='이름' placeholder={petData.petName} />
+          <Input label='견종' placeholder={petData.subBreed} />
+          <Input label='생일' placeholder={petData.birthDate} />
+          <div>
+            <div className='mb-[0.4rem] block text-body3 font-semibold text-gray-800'>성별</div>
+            <div className='flex gap-1'>
+              <TypeTwoButton text='남' color={petData.gender === 'M' ? 'bg-secondary' : ''} />
+              <TypeTwoButton text='여' color={petData.gender === 'Y' ? 'bg-secondary' : ''} />
+            </div>
           </div>
-        </div>
-        <div>
-          <div className='mb-[0.4rem] block text-body3 font-semibold text-gray-800'>중성화 여부</div>
-          <div className='flex gap-1'>
-            <TypeTwoButton text='O' color={petData.isNeutered === 'Y' ? 'bg-secondary' : ''} />
-            <TypeTwoButton text='X' color={petData.isNeutered === 'N' ? 'bg-secondary' : ''} />
+          <div>
+            <div className='mb-[0.4rem] block text-body3 font-semibold text-gray-800'>중성화 여부</div>
+            <div className='flex gap-1'>
+              <TypeTwoButton text='O' color={petData.isNeutered === 'Y' ? 'bg-secondary' : ''} />
+              <TypeTwoButton text='X' color={petData.isNeutered === 'N' ? 'bg-secondary' : ''} />
+            </div>
           </div>
+          <Input label='몸무게 (kg 단위)' placeholder={petData.weight} />
+          <TextArea label='특이사항 (입질, 아픈 곳, 예민한 곳)' placeholder={petData.specialNotes} />
         </div>
-        <Input label='몸무게 (kg 단위)' placeholder={petData.weight} />
-        <TextArea label='특이사항 (입질, 아픈 곳, 예민한 곳)' placeholder={petData.specialNotes} />
+      </PageContainer>
+      <div className='fixed w-full' style={{ bottom: '65px' }}>
+        <TypeOneButton text='저장하기' color='bg-secondary' onClick={onClick} />
       </div>
-    </PageContainer>
+    </>
   );
 };
 

@@ -22,6 +22,8 @@ import ArrowUp from './components/Icons/ArrowUp';
 import BackIcon from './components/Icons/BackIcon';
 import BellAlertIcon from './components/Icons/BellAlertIcon';
 import BellIcon from './components/Icons/BellIcon';
+import BookmarkFillIcon from './components/Icons/BookmarkFillIcon';
+import BookmarkIcon from './components/Icons/BookmarkIcon';
 import CloseIcon from './components/Icons/CloseIcon';
 import FeedIcon from './components/Icons/FeedIcon';
 import MapIcon from './components/Icons/MapIcon';
@@ -96,4 +98,6 @@ export {
   ImageUploader,
   LogoImage,
   ProfileImgUploader,
+  BookmarkIcon,
+  BookmarkFillIcon,
 };
