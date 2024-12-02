@@ -32,6 +32,16 @@ interface PendingPet {
   createdAt: string;
   majorBreedCode: string;
   estimateList: Estimate[];
+  customerName: string;
+  phone: string;
+  address: string;
+  subBreed: string;
+  birthDate: string;
+  gender: string;
+  isNeutered: boolean;
+  weight: number;
+  majorBreed: string;
+  specialNotes: string;
 }
 
 interface PendingRequestProps {
@@ -89,7 +99,7 @@ const PendingRequest = ({ data = [] }: PendingRequestProps) => {
   };
 
   return (
-    <div className='mx-auto flex flex-col items-center'>
+    <div className='mx-auto flex flex-col items-center px-[20px]'>
       <div className='mx-[10px] mb-6 w-full'>
         <div>
           <div className='flex space-x-4 overflow-x-auto'>

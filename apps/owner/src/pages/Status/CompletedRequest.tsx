@@ -49,7 +49,7 @@ const CompletedRequest = ({ data }: CompletedRequestProps) => {
   };
 
   return (
-    <div className='mx-auto flex max-w-[300px] flex-col items-center pt-10'>
+    <div className='mx-auto mb-[100px] flex max-w-[300px] flex-col items-center pt-10'>
       {data.requestList.length > 0 ? (
         <div className='w-full'>
           <BorderContainer>

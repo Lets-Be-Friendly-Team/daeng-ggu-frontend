@@ -8,7 +8,7 @@ interface ProfileData {
   gender: string;
   isNeutered: boolean;
   weight: number;
-  dogType?: string;
+  majorBreed?: string;
   isRequested?: boolean;
   specialNotes?: string;
   customerName?: string;
