@@ -1,7 +1,8 @@
 // import { MapIcon, MyPageIcon, SendIcon } from '@daeng-ggu/design-system';
 
-import { Modal } from '@daeng-ggu/design-system';
-import { useModalStore } from '@daeng-ggu/shared';
+import { Header, SearchBar } from '@daeng-ggu/design-system';
+
+import MainCategoryTab from '@/components/MainCategoryTab/MainCategoryTab';
 
 // import OwnerBottomTabBar from '@/components/BottomTabBar/OwnerBottomTabBar';
 
@@ -17,11 +18,13 @@ const MainPage = () => {
     });
   };
   return (
-    <div>
-      <div className='text-xl font-bold'>MainPagee</div>
-      <div className='font-pretendard-variable text-xl'></div>
-      <button onClick={onClick}>open modal</button>
-    </div>
+    <>
+      <Header mode='main' />
+      <div className='p-4'>
+        <SearchBar />
+      </div>
+      <MainCategoryTab />
+    </>
   );
 };
 
