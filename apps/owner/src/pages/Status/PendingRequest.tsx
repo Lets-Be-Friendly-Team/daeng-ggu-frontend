@@ -5,6 +5,13 @@ import { Avatar, BorderContainer, DetailButton } from '@daeng-ggu/design-system'
 import EmptyState from '@/pages/Status/EmptyState.tsx';
 import RequestContainer from '@/pages/Status/RequestContainer.tsx';
 
+/*
+ * 수정해야될 사항
+ * 1.boolean에서 스트링 기준으로 조건부 렌더링 생성
+ * 2.디자인
+ * 3.디자이너 상세페이지 ㅅㅂ
+ * **/
+
 interface Estimate {
   estimateId: number;
   designerId: number;
@@ -79,12 +86,25 @@ const PendingRequest = ({ data, isDesigner }: PendingRequestProps) => {
             <div key={request.requestId} className='mb-6 w-full max-w-[300px]'>
               <BorderContainer>
                 <div className='p-4'>
-                  <p className='text-gray-800'>{formatDate(request.createdAt)} 견적요청</p>
-                  <h3 className='text-sub_h3 font-semibold'>{request.petName || '이름 없음'}</h3>
-                  <p className='pb-2 text-iconCaption'>
-                    {request.desiredServiceCode}/{request.isVisitRequired ? '방문 필요' : '방문 불필요'}
-                  </p>
-                  <DetailButton text='상세보기' onClick={() => navigate('/bid/detail', { state: { data: request } })} />
+                  <div className='flex items-center pl-2'>
+                    <Avatar
+                      mode='designerCard'
+                      imageUrl={request.petImageUrl}
+                      name={request.petName}
+                      containerClassName='mr-4 h-[70px] w-[70px]'
+                    />
+                    <div className='flex flex-col'>
+                      <p className='text-gray-800'>{formatDate(request.createdAt)} 견적요청</p>
+                      <h3 className='text-sub_h3 font-semibold'>{request.petName || '이름 없음'}</h3>
+                      <p className='pb-2 text-iconCaption'>
+                        {request.desiredServiceCode}/{request.isVisitRequired ? '방문 필요' : '방문 불필요'}
+                      </p>
+                      <DetailButton
+                        text='상세보기'
+                        onClick={() => navigate('/bid/detail', { state: { data: request } })}
+                      />
+                    </div>
+                  </div>
                 </div>
               </BorderContainer>
             </div>
@@ -96,7 +116,6 @@ const PendingRequest = ({ data, isDesigner }: PendingRequestProps) => {
     );
   }
 
-  // Default mode logic
   const activePet = data[activePetIndex] as PendingPet;
 
   const handlePetClick = (index: number) => {
