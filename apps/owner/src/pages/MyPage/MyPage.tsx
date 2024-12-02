@@ -1,7 +1,5 @@
 import { useNavigate } from 'react-router';
-import { CategoryTab, Header } from '@daeng-ggu/design-system';
-
-import PageContainer from '../../../../../packages/design-system/components/PageContainer/PageContainer';
+import { CategoryTab, Header, PageContainer } from '@daeng-ggu/design-system';
 
 import AvartarList from './components/AvartarList';
 import BookmarkList from './components/BookmarkList';

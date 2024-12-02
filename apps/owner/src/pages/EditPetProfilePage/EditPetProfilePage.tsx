@@ -1,10 +1,5 @@
 import { useNavigate } from 'react-router';
-import { TextArea } from '@daeng-ggu/design-system';
-
-import PageContainer from './../../../../../node_modules/@daeng-ggu/design-system/components/PageContainer/PageContainer';
-import TypeTwoButton from './../../../../../node_modules/@daeng-ggu/design-system/components/TypeTwoButton/TypeTwoButton';
-import Header from './../../../../../packages/design-system/components/Header/Header';
-import Input from './../../../../../packages/design-system/components/Input/Input';
+import { Header, Input, PageContainer, TextArea, TypeTwoButton } from '@daeng-ggu/design-system';
 
 const EditPetProfilePage = () => {
   const navigate = useNavigate();

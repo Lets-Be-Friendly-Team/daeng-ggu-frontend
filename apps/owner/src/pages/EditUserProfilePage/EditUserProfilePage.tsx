@@ -1,19 +1,5 @@
 import { useNavigate } from 'react-router';
-import { Input, TypeOneButton, TypeTwoButton } from '@daeng-ggu/design-system';
-
-import PageContainer from './../../../../../node_modules/@daeng-ggu/design-system/components/PageContainer/PageContainer';
-import Header from './../../../../../packages/design-system/components/Header/Header';
-// customerId		Long	보호자 아이디
-// customerName		String	보호자명
-// newCustomerImgFile		MultipartFile	신규 보호자 이미지 파일
-// preCustomerImgUrl		String	변경전 이미지 URL
-// birthDate 		String	생년월일 (YYYYMMDD)
-// gender		String	성별
-// phone		String	전화번호
-// nickname 		String	닉네임
-// address1		String	기본주소1
-// address2		String	기본주소2
-// detailAddress		String	상세 주소
+import { Header, Input, PageContainer, TypeOneButton, TypeTwoButton } from '@daeng-ggu/design-system';
 
 const data = {
   customerId: 2,
