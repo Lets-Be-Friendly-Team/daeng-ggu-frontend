@@ -8,7 +8,13 @@ const InputTest = () => {
   const [textVal2, setTextVal2] = useState<string>('');
   const [keyword, setKeyword] = useState<string>('');
   const [imgList, setImgList] = useState<File[]>([]);
+  const initialImgList = [
+    'https://blog.malcang.com/wp-content/uploads/2024/03/1-1.png',
+    'https://blog.malcang.com/wp-content/uploads/2024/03/1-1.png',
+    'https://blog.malcang.com/wp-content/uploads/2024/03/1-1.png',
+  ];
   const [image, setImage] = useState<File | undefined>(undefined);
+  const initialProfileImg = 'https://blog.malcang.com/wp-content/uploads/2024/03/1-1.png';
 
   const handleChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
     setVal(ev.target.value);
@@ -66,9 +72,9 @@ const InputTest = () => {
       <hr className='my-4' />
       <SearchBar keyword={keyword} onChange={handleKeywordChange} />
       <hr className='my-4' />
-      <ImageUploader imgList={imgList} setImgList={setImgList} label='사진' />
+      <ImageUploader imgList={imgList} setImgList={setImgList} label='사진' initialImgList={initialImgList} />
       <hr className='my-4' />
-      <ProfileImgUploader image={image} setImage={setImage} />
+      <ProfileImgUploader image={image} setImage={setImage} initialImageUrl={initialProfileImg} />
     </div>
   );
 };
