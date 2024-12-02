@@ -4120,6 +4120,11 @@ __metadata:
     lint-staged: "npm:^15.2.10"
     pinst: "npm:^3.0.0"
     prettier: "npm:^3.3.3"
+<<<<<<< HEAD
+=======
+    react-drag-drop-files: "npm:^2.4.0"
+    swiper: "npm:^11.1.15"
+>>>>>>> 3b4b2d6 (feat: onchange 추가)
     turbo: "npm:^2.3.1"
     typescript: "npm:^5.7.2"
     typescript-eslint: "npm:^8.16.0"

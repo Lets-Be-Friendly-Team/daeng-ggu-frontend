@@ -1,5 +1,13 @@
 import { useNavigate } from 'react-router';
-import { Header, Input, PageContainer, TextArea, TypeOneButton, TypeTwoButton } from '@daeng-ggu/design-system';
+import {
+  Header,
+  Input,
+  PageContainer,
+  ProfileImgUploader,
+  TextArea,
+  TypeOneButton,
+  TypeTwoButton,
+} from '@daeng-ggu/design-system';
 
 const EditPetProfilePage = () => {
   const navigate = useNavigate();
@@ -27,6 +35,10 @@ const EditPetProfilePage = () => {
     <>
       <PageContainer>
         <Header mode='back' title={`${petData.petName} 프로필 수정`} onClick={navigateBack} />
+        <div className='flex h-[180px] w-full flex-col items-center justify-center gap-[15px]'>
+          <ProfileImgUploader />
+          <button className='block text-caption text-gray-400'>프로필 사진 삭제</button>
+        </div>
         <div className='flex flex-col gap-5'>
           <Input label='이름' placeholder={petData.petName} />
           <Input label='견종' placeholder={petData.subBreed} />
