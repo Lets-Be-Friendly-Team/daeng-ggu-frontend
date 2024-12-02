@@ -14,7 +14,7 @@ const data = {
   customerId: 2,
   customerName: '김장미',
   newCustomerImgFile: '',
-  preCustomerImgUrl: 'https://via.placeholder.com/100',
+  preCustomerImgUrl: 'https://daeng-ggu-test.s3.ap-northeast-2.amazonaws.com/jangmi.jpg',
   birthDate: '19900520',
   gender: 'female',
   phone: '010-1234-5678',
@@ -30,6 +30,7 @@ const EditUserProfilePage = () => {
   };
 
   const [formData, setFormData] = useState(data);
+  const [profileImage, setProfileImage] = useState<File | undefined>(undefined);
 
   const handleChange = (field: string, value: string | File | null) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -39,6 +40,7 @@ const EditUserProfilePage = () => {
       const payload = {
         ...formData,
         address: `${formData.address1} ${formData.address2} ${formData.detailAddress}`,
+        newCustomerImgFile: profileImage || '',
       };
 
       // 데이터를 localStorage에 저장 (테스트용)
@@ -51,13 +53,22 @@ const EditUserProfilePage = () => {
       console.error(error);
     }
   };
+
+  const handleImageDelete = () => {
+    setProfileImage(undefined);
+    setFormData((prev) => ({ ...prev, preCustomerImgUrl: '' }));
+  };
   return (
     <>
       <PageContainer>
         <Header mode='back' title='내 프로필 수정' onClick={navigateBack} />
         <div className='flex h-[180px] w-full flex-col items-center justify-center gap-[15px]'>
-          <ProfileImgUploader />
-          <button className='block text-caption text-gray-400' onClick={() => handleChange('newCustomerImgFile', null)}>
+          <ProfileImgUploader
+            image={profileImage}
+            setImage={setProfileImage}
+            initialImageUrl={formData.preCustomerImgUrl}
+          />
+          <button className='block text-caption text-gray-400' onClick={handleImageDelete}>
             프로필 사진 삭제
           </button>
         </div>
