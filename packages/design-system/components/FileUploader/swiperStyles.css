@@ -1,0 +1,21 @@
+.swiper {
+  width: 100%;
+  aspect-ratio: 3/2;
+}
+
+.swiper-wrapper {
+  align-items: center;
+}
+
+.swiper-slide {
+  overflow: hidden;
+}
+.swiper-button-next:after {
+  text-shadow: 0 0 4px white;
+}
+.swiper-button-prev:after {
+  text-shadow: 0 0 4px white;
+}
+.swiper-pagination-bullet {
+  box-shadow: 0 0 3px white;
+}
