@@ -1,3 +1,4 @@
+import LogoImage from './assets/images/logoImage.png';
 import Avatar from './components/Avatar/Avatar';
 import BorderContainer from './components/BorderContainer/BorderContainer';
 import BottomTabBar from './components/BottomTabBar/BottomTabBar';
@@ -91,5 +92,6 @@ export {
   ArrowDown,
   PageContainer,
   ImageUploader,
+  LogoImage,
   ProfileImgUploader,
 };

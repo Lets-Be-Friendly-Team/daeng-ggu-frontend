@@ -45,5 +45,8 @@
     "apps/*",
     "packages/*"
   ],
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "@sentry/react": "^8.41.0"
+  }
 }
