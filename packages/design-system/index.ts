@@ -13,6 +13,7 @@ import {
   DropdownMenuTrigger,
 } from './components/Dropdown-menu/Dropdown-menu';
 import ImageUploader from './components/FileUploader/ImageUploader';
+import ProfileImgUploader from './components/FileUploader/ProfileImgUploader';
 import Header from './components/Header/Header';
 import ArrowDown from './components/Icons/ArrowDown';
 import ArrowUp from './components/Icons/ArrowUp';
@@ -89,4 +90,5 @@ export {
   ArrowDown,
   PageContainer,
   ImageUploader,
+  ProfileImgUploader,
 };

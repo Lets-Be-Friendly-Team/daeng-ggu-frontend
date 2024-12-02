@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ImageUploader, Input, SearchBar, TextArea } from '@daeng-ggu/design-system';
+import { ImageUploader, Input, ProfileImgUploader, SearchBar, TextArea } from '@daeng-ggu/design-system';
 import { InputValue } from '@daeng-ggu/design-system/components/Input/Input';
 
 const InputTest = () => {
@@ -7,6 +7,8 @@ const InputTest = () => {
   const [textVal, setTextVal] = useState<string>('');
   const [textVal2, setTextVal2] = useState<string>('');
   const [keyword, setKeyword] = useState<string>('');
+  const [imgList, setImgList] = useState<File[]>([]);
+  const [image, setImage] = useState<File | undefined>(undefined);
 
   const handleChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
     setVal(ev.target.value);
@@ -64,7 +66,9 @@ const InputTest = () => {
       <hr className='my-4' />
       <SearchBar keyword={keyword} onChange={handleKeywordChange} />
       <hr className='my-4' />
-      <ImageUploader />
+      <ImageUploader imgList={imgList} setImgList={setImgList} label='사진' />
+      <hr className='my-4' />
+      <ProfileImgUploader image={image} setImage={setImage} />
     </div>
   );
 };
