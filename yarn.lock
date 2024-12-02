@@ -428,6 +428,7 @@ __metadata:
     "@daeng-ggu/tailwind-config": "workspace:*"
     "@radix-ui/react-avatar": "npm:^1.1.1"
     "@radix-ui/react-slot": "npm:^1.1.0"
+    "@sentry/react": "npm:^8.41.0"
     "@tanstack/eslint-plugin-query": "npm:^5.60.1"
     "@tanstack/react-query": "npm:^5.61.0"
     "@tanstack/react-query-devtools": "npm:^5.61.0"
@@ -3780,7 +3781,6 @@ __metadata:
   resolution: "daeng-ggu-frontend@workspace:."
   dependencies:
     "@eslint/js": "npm:^9.15.0"
-    "@sentry/react": "npm:^8.41.0"
     "@types/jest": "npm:^29.5.14"
     eslint: "npm:9.14.0"
     eslint-config-prettier: "npm:^9.1.0"
