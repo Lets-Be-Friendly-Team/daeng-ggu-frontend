@@ -28,7 +28,7 @@ export const router = createBrowserRouter([
         element: <MainPage />,
       },
       {
-        path: 'bid',
+        path: ROUTES.bid,
         children: [
           {
             index: true,
