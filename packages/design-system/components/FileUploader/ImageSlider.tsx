@@ -12,7 +12,7 @@ import 'swiper/css/pagination';
 import 'swiper/css';
 import './swiperStyles.css';
 interface SliderProps {
-  list: File[];
+  list: string[];
 }
 const ImageSlider = ({ list }: SliderProps) => {
   return (
@@ -37,7 +37,7 @@ const ImageSlider = ({ list }: SliderProps) => {
         {list.map((item, index) => (
           <SwiperSlide key={index}>
             <div className='swiper-zoom-container'>
-              <img src={URL.createObjectURL(item)} alt={`이미지 ${index}`} className='object-contain' />
+              <img src={item} alt={`이미지 ${index}`} className='object-contain' />
             </div>
           </SwiperSlide>
         ))}

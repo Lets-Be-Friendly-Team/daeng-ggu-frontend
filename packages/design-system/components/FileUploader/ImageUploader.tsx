@@ -1,5 +1,5 @@
 // 이미지 업로드 컴포넌트
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { FileUploader } from 'react-drag-drop-files';
 
 import logoImage from '../../assets/images/logoImage.png';
@@ -12,13 +12,13 @@ interface ImageUploaderProps {
   imgList?: File[];
   setImgList?: Dispatch<SetStateAction<File[]>>;
   label?: string;
+  initialImgList?: string[];
 }
 // 허용 파일 타입 설정
 const fileTypes = ['jpg', 'png', 'jpeg', 'gif'];
 
-const ImageUploader = ({ imgList = [], setImgList, label = '' }: ImageUploaderProps) => {
-  // image list 관리
-  // const [imgList, setImgList] = useState<File[]>([]);
+const ImageUploader = ({ imgList = [], setImgList, label = '', initialImgList = [] }: ImageUploaderProps) => {
+  const [currentInitialImgList, setCurrentInitialImgList] = useState<string[]>(initialImgList);
 
   // image 추가 핸들러
   const imgRegistHandler = (files: File[]) => {
@@ -26,16 +26,20 @@ const ImageUploader = ({ imgList = [], setImgList, label = '' }: ImageUploaderPr
   };
 
   // image 삭제 핸들러
-  const imgDeleteHandler = (deleteIndex: number) => {
-    setImgList?.((prev) => prev.filter((_, index) => index !== deleteIndex));
+  const imgDeleteHandler = (deleteIndex: number, isInitial: boolean) => {
+    if (isInitial) {
+      setCurrentInitialImgList((prev) => prev.filter((_, index) => index !== deleteIndex));
+    } else {
+      setImgList?.((prev) => prev.filter((_, index) => index !== deleteIndex));
+    }
   };
 
   return (
     <div>
       <label>{label}</label>
       {/* 슬라이더 */}
-      {imgList.length > 0 ? (
-        <ImageSlider list={imgList} />
+      {currentInitialImgList.length + imgList.length > 0 ? (
+        <ImageSlider list={[...currentInitialImgList, ...imgList.map((file) => URL.createObjectURL(file))]} />
       ) : (
         <div className='flex aspect-[3/2] w-full flex-col items-center justify-center gap-y-6 rounded-md bg-secondary'>
           <img src={logoImage} className='w-[15rem]' alt='기본 이미지' />
@@ -43,14 +47,25 @@ const ImageUploader = ({ imgList = [], setImgList, label = '' }: ImageUploaderPr
         </div>
       )}
       <ul className='mt-4 flex w-full flex-wrap gap-x-[4%] gap-y-6'>
-        {/* 미리보기 */}
+        {/* 초기 이미지 미리보기 */}
+        {currentInitialImgList.map((url, index) => (
+          <div key={`initial-${index}`} className='relative flex aspect-square w-[22%]'>
+            <li className='overflow-hidden rounded-md'>
+              <img className='h-full w-full object-cover' alt='이미지' src={url} />
+            </li>
+            <button onClick={() => imgDeleteHandler(index, true)} className='absolute -right-2 -top-2'>
+              <CloseCircleIcon className='h-8 w-8' />
+            </button>
+          </div>
+        ))}
+        {/* 업로드된 파일 미리보기 */}
         {imgList.map((image, index) => {
           return (
             <div key={index} className='relative flex aspect-square w-[22%]'>
               <li className='overflow-hidden rounded-md'>
                 <img className='h-full w-full object-cover' alt='이미지' src={URL.createObjectURL(image)} />
               </li>
-              <button onClick={() => imgDeleteHandler(index)} className='absolute -right-2 -top-2'>
+              <button onClick={() => imgDeleteHandler(index, false)} className='absolute -right-2 -top-2'>
                 <CloseCircleIcon className='h-8 w-8' />
               </button>
             </div>
