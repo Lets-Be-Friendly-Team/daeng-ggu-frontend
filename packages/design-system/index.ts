@@ -42,9 +42,9 @@ import RegionSelector from './components/RegionSelector/RegionSelector';
 import SearchBar from './components/SearchBar/SearchBar';
 import ServiceCheckBox from './components/ServiceCheckBox/ServiceCheckBox';
 import TextArea from './components/TextArea/TextArea';
+import TimeSelect from './components/TimeSelect/TimeSelect';
 import TypeOneButton from './components/TypeOneButton/TypeOneButton';
 import TypeTwoButton from './components/TypeTwoButton/TypeTwoButton';
-
 export {
   CategoryTab,
   Progress,
@@ -71,6 +71,7 @@ export {
   TypeOneButton,
   Avatar,
   InputAddress,
+  TimeSelect,
   BottomTabBar,
   MapIcon,
   FeedIcon,
