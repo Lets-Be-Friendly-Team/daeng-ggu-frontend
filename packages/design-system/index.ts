@@ -25,8 +25,12 @@ import BellIcon from './components/Icons/BellIcon';
 import BookmarkFillIcon from './components/Icons/BookmarkFillIcon';
 import BookmarkIcon from './components/Icons/BookmarkIcon';
 import CloseIcon from './components/Icons/CloseIcon';
+import EmptyHeartIcon from './components/Icons/EmptyHeartIcon';
 import FeedIcon from './components/Icons/FeedIcon';
+import FilledHeartIcon from './components/Icons/FilledHeartIcon';
+import LockIcon from './components/Icons/LockIcon';
 import MapIcon from './components/Icons/MapIcon';
+import MoreIcon from './components/Icons/MoreIcon';
 import MyPageIcon from './components/Icons/MyPageIcon';
 import MySearchIcon from './components/Icons/MySearchIcon';
 import PlusIcon from './components/Icons/PlusIcon';
@@ -35,6 +39,9 @@ import RequestListIcon from './components/Icons/RequestListIcon';
 import ReservationIcon from './components/Icons/ReservationIcon';
 import RightIcon from './components/Icons/RightIcon';
 import SendIcon from './components/Icons/SendIcon';
+import StarEmptyIcon from './components/Icons/StarEmptyIcon';
+import StarFullIcon from './components/Icons/StarFullIcon';
+import StarHalfIcon from './components/Icons/StarHalfIcon';
 import Input from './components/Input/Input';
 import InputAddress from './components/InputAddress/InputAddress';
 import Layout from './components/Layout/Layout';
@@ -100,4 +107,11 @@ export {
   ProfileImgUploader,
   BookmarkIcon,
   BookmarkFillIcon,
+  FilledHeartIcon,
+  EmptyHeartIcon,
+  StarEmptyIcon,
+  StarFullIcon,
+  StarHalfIcon,
+  LockIcon,
+  MoreIcon,
 };

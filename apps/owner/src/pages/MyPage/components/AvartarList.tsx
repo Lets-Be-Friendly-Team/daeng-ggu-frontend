@@ -15,6 +15,9 @@ const AvartarList = ({ pets }: IAvartarListProps) => {
   const handleAvartarClick = (petId: number) => {
     navigate(`/profile/edit/${petId}`);
   };
+  const handleAddAvartarClick = () => {
+    navigate(`/profile/pet/add`);
+  };
   return (
     <div className='pt-4'>
       <div className='flex gap-[20px]'>
@@ -23,7 +26,7 @@ const AvartarList = ({ pets }: IAvartarListProps) => {
             <Avatar mode='avatar' imageUrl={pet.petImgUrl} name={pet.petName} />
           </div>
         ))}
-        <Avatar mode='add' />
+        <Avatar mode='add' onClick={handleAddAvartarClick} />
       </div>
     </div>
   );

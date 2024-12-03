@@ -59,7 +59,7 @@ const EditUserProfilePage = () => {
     setFormData((prev) => ({ ...prev, preCustomerImgUrl: '' }));
   };
   return (
-    <>
+    <div className='pb-[185px]'>
       <PageContainer>
         <Header mode='back' title='내 프로필 수정' onClick={navigateBack} />
         <div className='flex h-[180px] w-full flex-col items-center justify-center gap-[15px]'>
@@ -130,7 +130,7 @@ const EditUserProfilePage = () => {
       <div className='fixed w-full' style={{ bottom: '65px' }}>
         <TypeOneButton text='저장하기' color='bg-secondary' onClick={submitFormData} />
       </div>
-    </>
+    </div>
   );
 };
 
