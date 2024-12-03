@@ -7,7 +7,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import { router } from '@/router.tsx';
 
-// import '@/styles/index.css';
+import '@/styles/index.css';
 import '@daeng-ggu/design-system/styles/index.css';
 
 const queryClient = new QueryClient();

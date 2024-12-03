@@ -1,6 +1,7 @@
-import { BottomTabBar, FeedIcon, MyPageIcon, ReservationIcon, RequestListIcon } from '@daeng-ggu/design-system';
-import { useDesignerBottomTabStore } from '@/stores/bottomTabStore';
+import { BottomTabBar, FeedIcon, MyPageIcon, RequestListIcon, ReservationIcon } from '@daeng-ggu/design-system';
+
 import { cn } from '@/lib/utils';
+import { useDesignerBottomTabStore } from '@/stores/bottomTabStore';
 
 // 로그인 상태에 따라 마이페이지/로그인 label 변경
 const designerTabs = [
