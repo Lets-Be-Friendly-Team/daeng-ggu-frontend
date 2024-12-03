@@ -15,6 +15,7 @@ import Status from '@/pages/Status/Status.tsx';
 import EditPetProfilePage from './pages/EditPetProfilePage/EditPetProfilePage';
 import EditUserProfilePage from './pages/EditUserProfilePage/EditUserProfilePage';
 import MyPage from './pages/MyPage/MyPage';
+import ReviewDetailPage from './pages/ReviewDetailPage/ReviewDetailPage';
 import App from './App';
 
 import '@/styles/sequenceAnimation.css';
@@ -88,6 +89,10 @@ export const router = createBrowserRouter([
       {
         path: 'profile/edit/:petId',
         element: <EditPetProfilePage />,
+      },
+      {
+        path: 'profile/review/:reviewId',
+        element: <ReviewDetailPage />,
       },
     ],
   },

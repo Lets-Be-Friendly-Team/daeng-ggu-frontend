@@ -28,7 +28,7 @@ const data = {
     {
       reviewId: 1,
       reviewImgUrl1: 'https://daeng-ggu-test.s3.ap-northeast-2.amazonaws.com/haneul.jpg',
-      reviewImgUrl2: null,
+      reviewImgUrl2: 'https://daeng-ggu-test.s3.ap-northeast-2.amazonaws.com/haneul.jpg',
       reviewImgUrl3: null,
       designerId: 4,
       designerImgUrl: 'https://daeng-ggu-test.s3.ap-northeast-2.amazonaws.com/BigBang+Pet+Salon.jpg',
@@ -103,7 +103,14 @@ const MyPage = () => {
   const tabs = [
     {
       label: '리뷰',
-      content: <ReviewList reviews={data.reviewList} />,
+      content: (
+        <ReviewList
+          reviews={data.reviewList}
+          onReviewClick={(reviewId: number) =>
+            navigate(`/profile/review/${reviewId}`, { state: { reviews: data.reviewList } })
+          }
+        />
+      ),
     },
     {
       label: '찜한 목록',
