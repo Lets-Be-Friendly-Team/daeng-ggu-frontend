@@ -1,32 +1,35 @@
 // import
 import { useEffect, useRef, useState } from 'react';
+import { PageContainer } from '@daeng-ggu/design-system';
 
 import map from '@/assets/images/MainCategoryTab/map.png';
 import popular from '@/assets/images/MainCategoryTab/popular.png';
 import premium from '@/assets/images/MainCategoryTab/premium.png';
 import total from '@/assets/images/MainCategoryTab/total.png';
+import DesignerList from '@/components/DesignerInfo/DesignerList';
+import PremiumList from '@/components/DesignerInfo/PremiumList';
 
 const MainCategoryTab = () => {
   const tabs = [
     {
       icon: total,
       label: '전체',
-      content: <div>전체</div>,
+      content: <DesignerList category='total' />,
     },
     {
       icon: popular,
       label: '인기',
-      // content:
+      content: <DesignerList category='popular' />,
     },
     {
       icon: premium,
       label: '프리미엄',
-      // content:
+      content: <PremiumList />,
     },
     {
       icon: map,
       label: '지도검색',
-      // content:
+      // content: ,
     },
   ];
 
@@ -49,36 +52,39 @@ const MainCategoryTab = () => {
   }, [activeIndex]);
 
   return (
-    <div className='h-[7rem] w-full shadow-md'>
-      <div ref={containerRef} className='relative flex items-center justify-between px-[2rem]'>
-        {tabs.map((tab, index) => (
+    <div className='flex h-full flex-col'>
+      <div className='sticky top-[8.55rem] z-10 bg-white shadow-md'>
+        <div ref={containerRef} className='relative flex items-center justify-between px-[2rem]'>
+          {tabs.map((tab, index) => (
+            <div
+              key={index}
+              className={`flex h-[7rem] w-[5rem] cursor-pointer flex-col items-center justify-between py-[0.8rem] text-body3 ${
+                activeIndex === index ? 'text-primary' : 'text-gray-600'
+              }`}
+              onClick={() => setActiveIndex(index)}
+            >
+              <img src={tab.icon} alt={tab.label} className='w-[3rem]' />
+              <div className=''>{tab.label}</div>
+            </div>
+          ))}
           <div
-            key={index}
-            className={`flex h-[7rem] w-[5rem] cursor-pointer flex-col items-center justify-between py-[0.8rem] text-body3 ${
-              activeIndex === index ? 'text-primary' : 'text-gray-600'
-            }`}
-            onClick={() => setActiveIndex(index)}
-          >
-            <img src={tab.icon} alt={tab.label} className='w-[3rem]' />
-            <div className=''>{tab.label}</div>
-          </div>
-        ))}
-        <div
-          className='absolute bottom-0 h-[2px] bg-primary transition-all duration-300 ease-in-out'
-          style={{
-            width: '5rem',
-            left: `${indicatorOffset}px`,
-          }}
-        ></div>
+            className='absolute bottom-0 h-[2px] bg-primary transition-all duration-300 ease-in-out'
+            style={{
+              width: '5rem',
+              left: `${indicatorOffset}px`,
+            }}
+          ></div>
+        </div>
       </div>
-      <div className='relative overflow-hidden'>
+      {/* 스크롤 가능한 콘텐츠 영역 */}
+      <div className='flex-1 overflow-y-auto'>
         <div
           className='flex transition-transform duration-300 ease-in-out'
           style={{ transform: `translateX(-${activeIndex * 100}%)` }}
         >
           {tabs.map((tab, index) => (
-            <div key={index} className='w-full flex-shrink-0'>
-              {tab.content}
+            <div key={index} className='mb-[6.5rem] w-full flex-shrink-0 py-[2rem]'>
+              <PageContainer>{tab.content}</PageContainer>
             </div>
           ))}
         </div>

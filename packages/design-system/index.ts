@@ -15,11 +15,14 @@ import {
 import ImageUploader from './components/FileUploader/ImageUploader';
 import ProfileImgUploader from './components/FileUploader/ProfileImgUploader';
 import Header from './components/Header/Header';
+// icon import
 import ArrowDown from './components/Icons/ArrowDown';
 import ArrowUp from './components/Icons/ArrowUp';
 import BackIcon from './components/Icons/BackIcon';
 import BellAlertIcon from './components/Icons/BellAlertIcon';
 import BellIcon from './components/Icons/BellIcon';
+import EmptyBookMarkIcon from './components/Icons/BookMark/EmptyBookMarkIcon';
+import FullBookMarkIcon from './components/Icons/BookMark/FullBookMarkIcon';
 import CloseIcon from './components/Icons/CloseIcon';
 import FeedIcon from './components/Icons/FeedIcon';
 import MapIcon from './components/Icons/MapIcon';
@@ -31,6 +34,9 @@ import RequestListIcon from './components/Icons/RequestListIcon';
 import ReservationIcon from './components/Icons/ReservationIcon';
 import RightIcon from './components/Icons/RightIcon';
 import SendIcon from './components/Icons/SendIcon';
+import EmptyStarIcon from './components/Icons/Star/EmptyStarIcon';
+import FullStarIcon from './components/Icons/Star/FullStarIcon';
+import HalfStarIcon from './components/Icons/Star/HalfStarIcon';
 import Input from './components/Input/Input';
 import InputAddress from './components/InputAddress/InputAddress';
 import Layout from './components/Layout/Layout';
@@ -45,6 +51,7 @@ import TextArea from './components/TextArea/TextArea';
 import TimeSelect from './components/TimeSelect/TimeSelect';
 import TypeOneButton from './components/TypeOneButton/TypeOneButton';
 import TypeTwoButton from './components/TypeTwoButton/TypeTwoButton';
+
 export {
   CategoryTab,
   Progress,
@@ -92,4 +99,9 @@ export {
   PageContainer,
   ImageUploader,
   ProfileImgUploader,
+  EmptyStarIcon,
+  HalfStarIcon,
+  FullStarIcon,
+  FullBookMarkIcon,
+  EmptyBookMarkIcon,
 };
