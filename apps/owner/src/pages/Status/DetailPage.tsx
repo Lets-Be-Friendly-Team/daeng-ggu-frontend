@@ -1,7 +1,7 @@
 // src/pages/Bid/DetailPage.tsx
 
 import { useLocation } from 'react-router-dom';
-import { TypeOneButton } from '@daeng-ggu/design-system';
+import { Header, TypeOneButton } from '@daeng-ggu/design-system';
 
 import RequestReview from '@/pages/Request/RequestReview.tsx';
 
@@ -33,7 +33,10 @@ const DetailPage = () => {
 
   return (
     <div>
-      <div>
+      <div className='mb-6 max-w-[480px]'>
+        <Header mode='back' title='견적요청서 상세보기' onClick={() => {}} />
+      </div>
+      <div className='px-[20px]'>
         <RequestReview {...processedData} />
       </div>
       <div className='button-container fixed w-full' style={{ bottom: '65px' }}>

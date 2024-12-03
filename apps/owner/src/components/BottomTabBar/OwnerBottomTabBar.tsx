@@ -13,7 +13,6 @@ const ownerTabs = [
   { label: '디자이너 찾기', icon: MapIcon, path: '/' },
   { label: '피드', icon: FeedIcon, path: '/feed' },
   { label: '견적 요청', icon: SendIcon, path: '/bid' },
-  // { label: '견적 요청', icon: SendIcon, path: '/input/test' },
   { label: '예약 현황', icon: ReservationIcon, path: '/address/test' },
   { label: '마이페이지', icon: MyPageIcon, path: '/my' },
 ];
