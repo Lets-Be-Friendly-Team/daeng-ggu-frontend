@@ -20,7 +20,7 @@ const MainPage = () => {
   return (
     <>
       <Header mode='main' />
-      <div className='p-8'>
+      <div className='sticky top-0 z-10 bg-white p-8'>
         <SearchBar />
       </div>
       <MainCategoryTab />
