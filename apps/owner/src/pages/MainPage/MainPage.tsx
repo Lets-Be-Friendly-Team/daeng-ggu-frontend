@@ -10,7 +10,7 @@ const MainPage = () => {
   return (
     <>
       <Header mode='main' />
-      <div className='p-4'>
+      <div className='p-8'>
         <SearchBar />
       </div>
       <MainCategoryTab />
