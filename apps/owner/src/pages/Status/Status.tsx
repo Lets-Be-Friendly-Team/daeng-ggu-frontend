@@ -3,13 +3,26 @@ import { CategoryTab, Header } from '@daeng-ggu/design-system';
 
 import CompletedRequest from '@/pages/Status/CompletedRequest';
 import PendingRequest from '@/pages/Status/PendingRequest';
+import { Mode } from '@/types';
 
 // https://via.placeholder.com/100
 
 const Status = () => {
   const location = useLocation();
   const fromPath = location.state?.from;
-  const isDesignerMode = fromPath === '/bid/designer';
+
+  let mode: Mode = 'user';
+
+  switch (fromPath) {
+    case '/bid/designer':
+      mode = 'designer';
+      break;
+    case '/bid/reservation':
+      mode = 'reservation';
+      break;
+    default:
+      mode = 'user';
+  }
 
   const dummyDataForDesigner = [
     {
@@ -31,6 +44,39 @@ const Status = () => {
       createdAt: '2024-12-02T10:30:00',
     },
   ];
+
+  const dummyDataForDesignerCompleted = {
+    requestList: [
+      {
+        petId: 1,
+        petName: '장미',
+        petImgUrl: 'https://via.placeholder.com/100',
+        desiredService: '부분미용',
+        lastGroomingDate: '한달전',
+        desiredDate1: '2023-10-15T10:00:00',
+        desiredDate2: '2023-10-16T14:00:00',
+        desiredDate3: '2023-10-17T09:00:00',
+        desiredRegion: '서울, 강남구',
+        isVisitRequired: true,
+        isMonitoringIncluded: false,
+        additionalRequest: '잘 물어요',
+      },
+      {
+        petId: 2,
+        petName: '장군',
+        petImgUrl: 'https://via.placeholder.com/100',
+        desiredService: '잔체미용',
+        lastGroomingDate: '한달전',
+        desiredDate1: '2023-10-15T10:00:00',
+        desiredDate2: '2023-10-16T14:00:00',
+        desiredDate3: '2023-10-17T09:00:00',
+        desiredRegion: '서울, 강남구',
+        isVisitRequired: true,
+        isMonitoringIncluded: false,
+        additionalRequest: '잘 물다 말아요',
+      },
+    ],
+  };
 
   const dummyDataForPending = [
     {
@@ -60,26 +106,26 @@ const Status = () => {
       phone: '010-1234-5678',
       address: '서울시 강남구 테헤란로 123 포돌빌딩 1304호',
       estimateList: [
-        {
-          estimateId: 1,
-          designerId: 3,
-          designerName: 'Alice',
-          designerImageUrl: 'https://via.placeholder.com/100',
-          estimatePrice: 150000,
-          petId: 1,
-          petName: 'Buddy',
-          createdAt: '2024-11-27T16:00:00',
-        },
-        {
-          estimateId: 2,
-          designerId: 32,
-          designerName: 'Bob',
-          designerImageUrl: 'https://via.placeholder.com/100',
-          estimatePrice: 140000,
-          petId: 1,
-          petName: 'Buddy',
-          createdAt: '2024-11-27T16:15:00',
-        },
+        // {
+        //   estimateId: 1,
+        //   designerId: 3,
+        //   designerName: 'Alice',
+        //   designerImageUrl: 'https://via.placeholder.com/100',
+        //   estimatePrice: 150000,
+        //   petId: 1,
+        //   petName: 'Buddy',
+        //   createdAt: '2024-11-27T16:00:00',
+        // },
+        // {
+        //   estimateId: 2,
+        //   designerId: 32,
+        //   designerName: 'Bob',
+        //   designerImageUrl: 'https://via.placeholder.com/100',
+        //   estimatePrice: 140000,
+        //   petId: 1,
+        //   petName: 'Buddy',
+        //   createdAt: '2024-11-27T16:15:00',
+        // },
       ],
     },
     {
@@ -323,20 +369,39 @@ const Status = () => {
       },
     ],
   };
+  const getDataByMode = (mode: Mode) => {
+    switch (mode) {
+      case 'designer':
+        return dummyDataForDesigner;
+      case 'user':
+        return dummyDataForPending;
+      case 'reservation':
+        return [];
+      default:
+        return [];
+    }
+  };
+
+  const getCompletedDataByMode = (mode: Mode) => {
+    switch (mode) {
+      case 'designer':
+        return dummyDataForDesignerCompleted;
+      case 'user':
+      case 'reservation':
+        return dummyDataForCompleted;
+      default:
+        return { requestList: [] };
+    }
+  };
 
   const tabs = [
     {
-      label: isDesignerMode ? '견적 요청 목록' : '견적서받는 중',
-      content: (
-        <PendingRequest
-          data={isDesignerMode ? dummyDataForDesigner : dummyDataForPending}
-          isDesigner={isDesignerMode}
-        />
-      ),
+      label: mode === 'designer' ? '견적요청 목록' : mode === 'reservation' ? '예약 목록' : '견적서받는 중',
+      content: <PendingRequest data={getDataByMode(mode)} mode={mode} />,
     },
     {
       label: '이전견적 조회',
-      content: <CompletedRequest data={dummyDataForCompleted} />,
+      content: <CompletedRequest data={getCompletedDataByMode(mode)} mode={mode} />,
     },
   ];
 
