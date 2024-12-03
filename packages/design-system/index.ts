@@ -1,3 +1,4 @@
+import LogoImage from './assets/images/logoImage.webp';
 import Avatar from './components/Avatar/Avatar';
 import BorderContainer from './components/BorderContainer/BorderContainer';
 import BottomTabBar from './components/BottomTabBar/BottomTabBar';
@@ -12,6 +13,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from './components/Dropdown-menu/Dropdown-menu';
+import ImageSlider from './components/FileUploader/ImageSlider';
 import ImageUploader from './components/FileUploader/ImageUploader';
 import ProfileImgUploader from './components/FileUploader/ProfileImgUploader';
 import Header from './components/Header/Header';
@@ -47,6 +49,7 @@ import TypeOneButton from './components/TypeOneButton/TypeOneButton';
 import TypeTwoButton from './components/TypeTwoButton/TypeTwoButton';
 export {
   CategoryTab,
+  ImageSlider,
   Progress,
   Input,
   RegionSelector,
@@ -91,5 +94,6 @@ export {
   ArrowDown,
   PageContainer,
   ImageUploader,
+  LogoImage,
   ProfileImgUploader,
 };

@@ -2,7 +2,7 @@
 import { Dispatch, SetStateAction } from 'react';
 import { FileUploader } from 'react-drag-drop-files';
 
-import logo from '../../assets/images/logoImage.png';
+import logo from '../../assets/images/logoImage.webp';
 import CameraIcon from '../Icons/CameraIcon';
 
 interface ProfileImgUploaderProps {

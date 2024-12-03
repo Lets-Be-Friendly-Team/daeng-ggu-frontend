@@ -2,7 +2,7 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import { FileUploader } from 'react-drag-drop-files';
 
-import logoImage from '../../assets/images/logoImage.png';
+import logoImage from '../../assets/images/logoImage.webp';
 import CloseCircleIcon from '../Icons/CloseCircleIcon';
 import PlusIcon from '../Icons/PlusIcon';
 

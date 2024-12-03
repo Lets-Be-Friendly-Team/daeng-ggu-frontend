@@ -7,6 +7,8 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import { router } from '@/router.tsx';
 
+import './sentry';
+
 import '@/styles/index.css';
 import '@daeng-ggu/design-system/styles/index.css';
 

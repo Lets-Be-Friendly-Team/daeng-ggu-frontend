@@ -1,4 +1,4 @@
-import defaultImage from '../../assets/images/logoImage.png';
+import defaultImage from '../../assets/images/logoImage.webp';
 
 interface IUserProfileImage {
   imageUrl?: string;
