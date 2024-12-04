@@ -371,6 +371,7 @@ __metadata:
     "@radix-ui/react-radio-group": "npm:^1.2.1"
     "@radix-ui/react-slot": "npm:^1.1.0"
     "@types/node": "npm:^22.9.4"
+    "@types/swiper": "npm:^6.0.0"
     "@typescript-eslint/eslint-plugin": "npm:^8.16.0"
     "@typescript-eslint/parser": "npm:^8.16.0"
     "@vitejs/plugin-react": "npm:^4.3.3"
@@ -2917,6 +2918,15 @@ __metadata:
   version: 4.2.5
   resolution: "@types/stylis@npm:4.2.5"
   checksum: 10c0/23f5b35a3a04f6bb31a29d404fa1bc8e0035fcaff2356b4047743a057e0c37b2eba7efe14d57dd2b95b398cea3bac294d9c6cd93ed307d8c0b7f5d282224b469
+  languageName: node
+  linkType: hard
+
+"@types/swiper@npm:^6.0.0":
+  version: 6.0.0
+  resolution: "@types/swiper@npm:6.0.0"
+  dependencies:
+    swiper: "npm:*"
+  checksum: 10c0/096a4a8017b296752d5a72bf5da07e2507eed0ae32603ce560060c9aee6134431c2d34fcde42bde3f4790ec498aa6e697d0e02d2b6a3e58d99c72a4794d3e9ba
   languageName: node
   linkType: hard
 
@@ -9003,7 +9013,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"swiper@npm:^11.1.15":
+"swiper@npm:*, swiper@npm:^11.1.15":
   version: 11.1.15
   resolution: "swiper@npm:11.1.15"
   checksum: 10c0/3faabc5b33c0663513e8e41c4ef7920d4c9a1ca6b988848f2e51e1db0d01471a1bae22fce3177b9d3ab2c128fc6df23074415ae7957bd0f8542fd7387fa5263d
