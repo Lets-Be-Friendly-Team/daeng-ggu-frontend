@@ -9,7 +9,7 @@ import {
   PageMode,
   ReservationProcessedData,
   UserProcessedData,
-} from '@/requestAndStatusTypes.ts'; // Adjust the import path as needed
+} from '@/types/requestAndStatusTypes'; // Adjust the import path as needed
 
 const DetailPage = () => {
   const location = useLocation();

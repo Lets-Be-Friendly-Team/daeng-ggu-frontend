@@ -2,7 +2,7 @@
 
 import CompletedRequestDesigner from '@/pages/Status/CompletedRequestDesigner';
 import CompletedRequestUser from '@/pages/Status/CompletedRequestUser';
-import { CompletedData, DesignerCompletedData, PageMode } from '@/requestAndStatusTypes.ts';
+import { CompletedData, DesignerCompletedData, PageMode } from '@/types/requestAndStatusTypes';
 
 interface CompletedRequestProps {
   data: CompletedData | DesignerCompletedData;

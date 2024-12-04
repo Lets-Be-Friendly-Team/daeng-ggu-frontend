@@ -6,7 +6,7 @@ import { RadioGroup, RadioGroupItem } from '@daeng-ggu/design-system';
 
 import editIcon from '@/assets/edit.svg';
 import ProfileViewer from '@/pages/Request/ProfileViewer';
-import { isDesignerProfileData, RequestReviewProps, StepData } from '@/requestAndStatusTypes.ts';
+import { isDesignerProfileData, RequestReviewProps, StepData } from '@/types/requestAndStatusTypes';
 
 const defaultStepData: StepData[] = [
   {

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { BorderContainer, DetailButton } from '@daeng-ggu/design-system';
 
 import EmptyState from '@/pages/Status/EmptyState.tsx';
-import { DesignerCompletedData } from '@/requestAndStatusTypes.ts';
+import { DesignerCompletedData } from '@/types/requestAndStatusTypes';
 
 interface CompletedRequestDesignerProps {
   data: DesignerCompletedData;

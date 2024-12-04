@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { BorderContainer } from '@daeng-ggu/design-system';
 
 import EmptyState from '@/pages/Status/EmptyState.tsx';
-import { CompletedData } from '@/requestAndStatusTypes.ts';
+import { CompletedData } from '@/types/requestAndStatusTypes';
 
 interface CompletedRequestUserProps {
   data: CompletedData;

@@ -22,10 +22,18 @@ export interface ProfileData {
   address: string;
   desiredServiceCode?: string;
 }
-
-// Removed empty interfaces to avoid ESLint errors
-// export interface DesignerProfileData extends ProfileData {}
-// export interface ReservationProfileData extends ProfileData {}
+export interface DesignerRequest {
+  requestId: number;
+  petId: number;
+  petName: string;
+  petImageUrl: string;
+  desiredServiceCode: string;
+  isVisitRequired: boolean;
+  createdAt: string;
+}
+export interface ReservationRequest {
+  _placeholder?: never;
+}
 
 export interface StepData {
   step: number;

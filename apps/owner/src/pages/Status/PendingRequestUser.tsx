@@ -4,7 +4,7 @@ import { Avatar, BorderContainer, DetailButton } from '@daeng-ggu/design-system'
 
 import EmptyState from '@/pages/Status/EmptyState.tsx';
 import RequestContainer from '@/pages/Status/RequestContainer.tsx';
-import { Estimate, PendingPet } from '@/requestAndStatusTypes.ts';
+import { Estimate, PendingPet } from '@/types/requestAndStatusTypes';
 
 interface PendingRequestUserProps {
   data: PendingPet[];

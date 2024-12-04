@@ -3,7 +3,7 @@ import { CategoryTab, Header } from '@daeng-ggu/design-system';
 
 import CompletedRequest from '@/pages/Status/CompletedRequest';
 import PendingRequest from '@/pages/Status/PendingRequest';
-import { Mode } from '@/requestAndStatusTypes.ts';
+import { PageMode } from '@/types/requestAndStatusTypes';
 
 // https://via.placeholder.com/100
 
@@ -11,7 +11,7 @@ const Status = () => {
   const location = useLocation();
   const fromPath = location.state?.from;
 
-  let mode: Mode = 'user';
+  let mode: PageMode = 'user';
 
   switch (fromPath) {
     case '/bid/designer':
@@ -369,7 +369,7 @@ const Status = () => {
       },
     ],
   };
-  const getDataByMode = (mode: Mode) => {
+  const getDataByMode = (mode: PageMode) => {
     switch (mode) {
       case 'designer':
         return dummyDataForDesigner;
@@ -382,7 +382,7 @@ const Status = () => {
     }
   };
 
-  const getCompletedDataByMode = (mode: Mode) => {
+  const getCompletedDataByMode = (mode: PageMode) => {
     switch (mode) {
       case 'designer':
         return dummyDataForDesignerCompleted;

@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { Avatar, BorderContainer, DetailButton } from '@daeng-ggu/design-system';
 
-import { DesignerRequest } from '@/requestAndStatusTypes.ts';
+import { DesignerRequest } from '@/types/requestAndStatusTypes';
 
 interface PendingRequestDesignerProps {
   data: DesignerRequest[];
