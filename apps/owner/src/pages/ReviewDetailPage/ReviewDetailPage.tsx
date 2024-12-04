@@ -9,7 +9,12 @@ import {
   StarFullIcon,
   UserProfileImage,
 } from '@daeng-ggu/design-system';
+import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
+
+import EditDeleteModal from './components/EditDeleteModal';
+
+import './swiperStyle.css';
 
 interface IReviewItem {
   reviewId: number;
@@ -29,6 +34,7 @@ interface IReviewItem {
 const ReviewDetail = () => {
   const [expandedReviews, setExpandedReviews] = useState<{ [key: number]: boolean }>({});
   const [isLiked, setIsLiked] = useState<boolean>(false);
+  const [isModalOpen, setModalOpen] = useState<boolean>(false);
   const { state } = useLocation();
   const { reviewId } = useParams();
   const navigate = useNavigate();
@@ -41,6 +47,10 @@ const ReviewDetail = () => {
 
   const navigateBack = () => {
     navigate('/profile');
+  };
+
+  const toggleModal = () => {
+    setModalOpen((prev) => !prev);
   };
 
   return (
@@ -56,17 +66,17 @@ const ReviewDetail = () => {
             <div className='text-caption text-secondary'>{reviews[activeIndex]?.designerAddress}</div>
           </div>
           <div className='flex items-center gap-[18px]'>
-            {reviews[activeIndex]?.feedExposure ? null : <LockIcon className='h-[15px] w-[15px]' color='#F2F4F5' />}
+            {reviews[activeIndex]?.feedExposure ? null : <LockIcon className='h-[20px] w-[20px]' color='#F2F4F5' />}
             <button onClick={navigateBack}>
-              <CloseIcon className='h-[15px] w-[15px]' color='#F2F4F5' />
+              <CloseIcon className='h-[20px] w-[20px]' color='#F2F4F5' />
             </button>
           </div>
         </div>
       </div>
 
       {/* 고정된 리뷰 내용 */}
-      <div className='absolute bottom-0 left-0 right-0 z-10 flex h-[400px] items-end gap-[18px] bg-gradient-to-t from-black via-transparent to-transparent px-5 pb-16'>
-        <div className='flex-1 pb-20 text-body3 text-secondary'>
+      <div className='absolute bottom-0 left-0 right-0 z-10 flex h-[360px] items-end gap-[18px] bg-gradient-to-t from-black via-transparent to-transparent px-5 pb-8'>
+        <div className='flex-1 pb-20 text-body2 text-secondary'>
           {expandedReviews[currentReviewIndex] ? (
             reviews[currentReviewIndex]?.reviewContents // 현재 리뷰 내용
           ) : (
@@ -89,24 +99,26 @@ const ReviewDetail = () => {
         </div>
 
         <div className='flex flex-col gap-[10px]'>
+          {isModalOpen && <EditDeleteModal />}
           <div className='flex flex-col items-center'>
-            <button className='pb-[10px]'>
-              <MoreIcon className='h-[24px] w-[24px]' color='#F2F4F5' />
+            <button className='pb-[10px]' onClick={toggleModal}>
+              <MoreIcon className='h-[30px] w-[30px]' color='#F2F4F5' />
             </button>
+
             <button>
-              <StarFullIcon className='h-[24px] w-[24px]' />
+              <StarFullIcon className='h-[30px] w-[30px]' />
             </button>
-            <div className='text-gray-50'>{reviews[activeIndex]?.reviewStar}</div>
+            <div className='text-body3 text-gray-50'>{reviews[activeIndex]?.reviewStar}</div>
           </div>
           <div className='flex flex-col items-center'>
             <button onClick={() => setIsLiked((prev) => !prev)}>
               {isLiked ? (
-                <FilledHeartIcon className='h-[24px] w-[24px]' color='#FF6842' />
+                <FilledHeartIcon className='h-[30px] w-[30px]' color='#FF6842' />
               ) : (
-                <EmptyHeartIcon className='h-[24px] w-[24px]' color='#F2F4F5' />
+                <EmptyHeartIcon className='h-[30px] w-[30px]' color='#F2F4F5' />
               )}
             </button>
-            <div className='text-gray-50'>{reviews[activeIndex]?.reviewLikeCnt}</div>
+            <div className='text-body3 text-gray-50'>{reviews[activeIndex]?.reviewLikeCnt}</div>
           </div>
         </div>
       </div>
@@ -121,11 +133,20 @@ const ReviewDetail = () => {
           navigate(`/profile/review/${reviews[swiper.activeIndex].reviewId}`, { replace: true, state: { reviews } });
         }}
         className='flex-1'
+        modules={[Pagination]}
+        preventClicksPropagation={true}
       >
         {reviews.map((review) => (
           <SwiperSlide key={review.reviewId}>
             {/* Horizontal Swiper */}
-            <Swiper direction='horizontal' slidesPerView={1} className='h-full'>
+            <Swiper
+              direction='horizontal'
+              slidesPerView={1}
+              pagination={{ clickable: true }}
+              modules={[Pagination]}
+              preventClicksPropagation={true}
+              className='relative h-full'
+            >
               {[review.reviewImgUrl1, review.reviewImgUrl2, review.reviewImgUrl3]
                 .filter(Boolean)
                 .map((imageUrl, index) => (
@@ -136,8 +157,8 @@ const ReviewDetail = () => {
                         alt={`Image ${index + 1}`}
                         className='absolute left-0 top-0 h-full w-full object-cover'
                         style={{
-                          objectFit: 'cover', // 이미지를 잘라내는 옵션
-                          objectPosition: 'center', // 이미지를 가운데 정렬
+                          objectFit: 'cover',
+                          objectPosition: 'center',
                         }}
                       />
                     </div>
