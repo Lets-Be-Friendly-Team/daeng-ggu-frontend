@@ -4,12 +4,11 @@ import { Navigation, Pagination, Zoom } from 'swiper/modules';
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import 'swiper/css/zoom';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-
+import 'swiper/css/navigation.min.css';
+import 'swiper/css/pagination.min.css';
+import 'swiper/css/zoom.min.css';
 // Import Swiper styles
-import 'swiper/css';
+import 'swiper/css.min.css';
 import './swiperStyles.css';
 interface SliderProps {
   list: string[];
