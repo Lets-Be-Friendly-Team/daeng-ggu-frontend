@@ -1,4 +1,4 @@
-import { ChangeEvent, FC } from 'react';
+import React, { ChangeEvent, FC } from 'react';
 
 import MySearchIcon from '../Icons/MySearchIcon';
 
@@ -11,12 +11,26 @@ interface Props {
   width?: string;
   height?: string;
   onChange?: (_ev: InputChangeEvent) => void;
+  handleSearch?: () => void;
 }
 
-const SearchBar: FC<Props> = ({ name = '', placeholder = '', keyword = '', width = '', height = '', onChange }) => {
+const SearchBar: FC<Props> = ({
+  name = '',
+  placeholder = '',
+  keyword = '',
+  width = '',
+  height = '',
+  onChange,
+  handleSearch,
+}) => {
   const changeHandler = (_ev: InputChangeEvent) => {
     if (onChange) {
       onChange(_ev);
+    }
+  };
+  const handleSearchEnter = (_e: React.KeyboardEvent<HTMLInputElement>): void => {
+    if (_e.key === 'Enter') {
+      handleSearch?.();
     }
   };
   return (
@@ -29,6 +43,7 @@ const SearchBar: FC<Props> = ({ name = '', placeholder = '', keyword = '', width
         onChange={changeHandler}
         style={{ width: width || '100%', height: height || 'auto' }}
         className='text-body3 focus:outline-none'
+        onKeyUp={handleSearchEnter}
       ></input>
     </div>
   );

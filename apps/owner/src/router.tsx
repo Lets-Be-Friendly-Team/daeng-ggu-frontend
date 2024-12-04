@@ -10,6 +10,7 @@ import Request from '@/pages/Request/Request';
 import DetailPage from '@/pages/Status/DetailPage.tsx';
 import Status from '@/pages/Status/Status.tsx';
 
+import MapPage from './pages/Map/MapPage';
 import App from './App';
 
 import '@/styles/sequenceAnimation.css';
@@ -61,6 +62,10 @@ export const router = createBrowserRouter([
             element: <ProgressPage />,
           },
         ],
+      },
+      {
+        path: 'map',
+        children: [{ index: true, element: <MapPage /> }],
       },
     ],
   },
