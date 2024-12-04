@@ -1,8 +1,8 @@
 // router.jsx
 import { Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
+import { RouterErrorFallback } from '@daeng-ggu/shared';
 
-import RouterErrorFallback from '@/components/ErrorFallback/RouterErrorFallback';
 import ROUTES from '@/constants/routes';
 import InputTest from '@/pages/InputTest/InputTest';
 import { MainPage } from '@/pages/MainPage';

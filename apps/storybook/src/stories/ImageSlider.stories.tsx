@@ -12,9 +12,6 @@ const meta: Meta<typeof ImageSlider> = {
       description: '이미지 URL 배열',
     },
   },
-  parameters: {
-    layout: 'centered',
-  },
 };
 
 export default meta;

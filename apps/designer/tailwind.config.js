@@ -8,6 +8,7 @@ export default {
     './index.html',
     './src/**/*.{js,ts,jsx,tsx}',
     path.join(path.dirname(require.resolve('@daeng-ggu/design-system')), './components/**/*.{js,ts,jsx,tsx}'),
+    path.join(path.dirname(require.resolve('@daeng-ggu/shared')), './src/components/**/*.{js,ts,jsx,tsx}'),
     '../owner/src/**/*.{js,ts,jsx,tsx}',
   ],
   safelist: [

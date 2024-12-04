@@ -5,7 +5,7 @@
     "declarationMap": true,
     "emitDeclarationOnly": false,
     "strict": true,
-    "rootDir": "."
+    "rootDir": ".",
   },
   "extends": "@daeng-ggu/typescript-config/base.json",
   "include": ["./**/*.ts", "./**/*.tsx", "./**/*.d.ts", "./**/*.json"],
