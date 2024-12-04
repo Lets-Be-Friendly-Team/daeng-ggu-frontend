@@ -29,6 +29,7 @@ export interface DesignerRequest {
   petImageUrl: string;
   desiredServiceCode: string;
   isVisitRequired: boolean;
+  majorBreedCode: string;
   createdAt: string;
 }
 export interface ReservationRequest {

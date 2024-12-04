@@ -32,6 +32,7 @@ const Status = () => {
       petImageUrl: 'https://via.placeholder.com/100',
       desiredServiceCode: '부분미용',
       isVisitRequired: true,
+      majorBreedCode: 'S',
       createdAt: '2024-12-02T10:30:00',
     },
     {
@@ -41,6 +42,7 @@ const Status = () => {
       petImageUrl: 'https://via.placeholder.com/100',
       desiredServiceCode: '스파',
       isVisitRequired: true,
+      majorBreedCode: 'L',
       createdAt: '2024-12-02T10:30:00',
     },
   ];
