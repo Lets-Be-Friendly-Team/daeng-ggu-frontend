@@ -1,7 +1,7 @@
 // router.jsx
 import { Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
-import RouterErrorFallback from '@daeng-ggu/owner/src/components/ErrorFallback/RouterErrorFallback.tsx';
+import { RouterErrorFallback } from '@daeng-ggu/shared';
 
 // import '@/styles/sequenceAnimation.css';
 import ROUTES from '@/constrants/routes.ts';
