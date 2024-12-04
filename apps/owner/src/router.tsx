@@ -11,6 +11,7 @@ import Request from '@/pages/Request/Request';
 import Test from '@/pages/Request/Test.tsx';
 import DetailPage from '@/pages/Status/DetailPage.tsx';
 import Status from '@/pages/Status/Status.tsx';
+import Suggest from '@/pages/Suggest/Suggest.tsx';
 
 import AddPetProfilePage from './pages/AddPetProfilePage/AddPetProfilePage';
 import EditPetProfilePage from './pages/EditPetProfilePage/EditPetProfilePage';
@@ -58,6 +59,10 @@ export const router = createBrowserRouter([
           {
             path: 'designer',
             element: <Status />,
+          },
+          {
+            path: 'suggest',
+            element: <Suggest />,
           },
         ],
       },
