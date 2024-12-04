@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { BorderContainer } from '@daeng-ggu/design-system';
 
 import EmptyState from '@/pages/Status/EmptyState.tsx';
-import { CompletedData } from '@/types';
+import { CompletedData } from '@/requestAndStatusTypes.ts';
 
 interface CompletedRequestUserProps {
   data: CompletedData;
@@ -67,7 +67,7 @@ const CompletedRequestUser = ({ data }: CompletedRequestUserProps) => {
                             <span className='mr-1 rounded-[4px] border border-primary px-2 py-[0.8px] text-primary'>
                               서비스
                             </span>
-                            {request.desiredService || '알 수 없음'}/{getDeliveryStatus(request.majorBreedCode)}
+                            {request.desiredServiceCode || '알 수 없음'}/{getDeliveryStatus(request.majorBreedCode)}
                           </p>
                         </div>
                       </div>

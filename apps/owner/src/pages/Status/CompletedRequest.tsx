@@ -2,11 +2,11 @@
 
 import CompletedRequestDesigner from '@/pages/Status/CompletedRequestDesigner';
 import CompletedRequestUser from '@/pages/Status/CompletedRequestUser';
-import { CompletedData, DesignerCompletedData, Mode } from '@/types';
+import { CompletedData, DesignerCompletedData, PageMode } from '@/requestAndStatusTypes.ts';
 
 interface CompletedRequestProps {
   data: CompletedData | DesignerCompletedData;
-  mode: Mode;
+  mode: PageMode;
 }
 
 const CompletedRequest = ({ data, mode }: CompletedRequestProps) => {

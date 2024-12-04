@@ -1,4 +1,4 @@
-// components/RequestReview.tsx
+// src/components/RequestReview.tsx
 
 import { useState } from 'react';
 import { BorderContainer } from '@daeng-ggu/design-system';
@@ -6,46 +6,8 @@ import { RadioGroup, RadioGroupItem } from '@daeng-ggu/design-system';
 
 import editIcon from '@/assets/edit.svg';
 import ProfileViewer from '@/pages/Request/ProfileViewer';
+import { isDesignerProfileData, RequestReviewProps, StepData } from '@/requestAndStatusTypes.ts';
 
-interface ProfileData {
-  petId: number;
-  petName: string;
-  petImgUrl: string;
-  petImgName: string;
-  birthDate: string;
-  gender: string;
-  isNeutered: boolean;
-  weight: number;
-  majorBreedCode: string;
-  majorBreed: string;
-  subBreedCode: string;
-  subBreed: string;
-  specialNotes?: string;
-  isRequested: boolean;
-  customerName: string;
-  phone: string;
-  address: string;
-}
-
-interface StepData {
-  step: number;
-  title: string;
-  options: string[];
-}
-
-interface RequestReviewProps {
-  selectedPet: number | null;
-  selectedOptions: { [key: number]: string };
-  profileData: ProfileData[];
-  stepData?: StepData[];
-  onOptionChange?: (_step: number, _newOption: string) => void;
-  onEnableDynamicHeight?: () => void;
-  onDisableDynamicHeight?: () => void;
-  userInput: string;
-  mode?: 'detail' | 'default';
-}
-
-// Default stepData values
 const defaultStepData: StepData[] = [
   {
     step: 3,
@@ -84,7 +46,9 @@ const defaultStepData: StepData[] = [
   },
 ];
 
-// 비용계산 함수는 그대로 유지
+/**
+ * 비용계산 함수는 그대로 유지
+ */
 const calculateCosts = (
   majorBreed: string | undefined,
   baseAmount: number,
@@ -126,6 +90,7 @@ const RequestReview = ({
   onDisableDynamicHeight,
   userInput,
   mode = 'default',
+  pageMode = 'user',
 }: RequestReviewProps) => {
   const [editingStep, setEditingStep] = useState<number | null>(null);
   const selectedProfile = profileData.find((profile) => profile.petId === selectedPet);
@@ -136,7 +101,6 @@ const RequestReview = ({
   const handleEdit = (step: number) => {
     if (mode === 'detail') return;
     setEditingStep(step);
-    // onEnableDynamicHeight && onEnableDynamicHeight();
     if (onEnableDynamicHeight) {
       onEnableDynamicHeight();
     }
@@ -147,6 +111,20 @@ const RequestReview = ({
     if (onDisableDynamicHeight) {
       onDisableDynamicHeight();
     }
+  };
+
+  const getDisplayValue = (step: number): string => {
+    if (pageMode === 'designer' && selectedProfile && isDesignerProfileData(selectedProfile)) {
+      if (step === 3) {
+        return selectedProfile.desiredServiceCode || '정보 없음';
+      }
+    }
+
+    if (step === 9 && selectedOptions[step] === '지금 작성할게요.') {
+      return userInput || '작성된 내용이 없습니다.';
+    }
+
+    return selectedOptions[step] || '선택되지 않음';
   };
 
   return (
@@ -204,16 +182,8 @@ const RequestReview = ({
                         </div>
                       ) : (
                         <span className='flex items-center'>
-                          {step === 9 && selectedOptions[step] === '지금 작성할게요.' ? (
-                            <p className='text-sub_h3 font-bold text-gray-800'>
-                              {userInput || '작성된 내용이 없습니다.'}
-                            </p>
-                          ) : (
-                            <p className='text-sub_h3 font-bold text-gray-800'>
-                              {selectedOptions[step] || '선택되지 않음'}
-                            </p>
-                          )}
-                          {mode !== 'detail' && step !== 5 && step !== 9 && (
+                          <p className='text-sub_h3 font-bold text-gray-800'>{getDisplayValue(step)}</p>
+                          {mode !== 'detail' && ![5, 9].includes(step) && (
                             <button className='p-2' onClick={() => handleEdit(step)}>
                               <img src={editIcon} alt='Edit' className='h-6 w-6' style={{ cursor: 'pointer' }} />
                             </button>
@@ -225,33 +195,68 @@ const RequestReview = ({
                 ))}
               </ul>
             </BorderContainer>
-            <div className='mt-6 items-start'>
-              <h2 className='mb-4 text-h3 font-bold text-gray-800'>댕송지 정보</h2>
-            </div>
-            <BorderContainer innerPadding='p-3'>
-              <div className='flex-col items-start p-2 text-gray-800'>
-                <p className='text-sub_h2 font-bold'>{selectedProfile ? selectedProfile.customerName : '정보 없음'}</p>
-                <p className='text-body3 font-bold text-gray-800'>
-                  {selectedProfile ? selectedProfile.phone : '정보 없음'}
-                </p>
-                <p className='pt-1 text-caption'>{selectedProfile ? selectedProfile.address : '정보 없음'}</p>
-              </div>
-            </BorderContainer>
-            <div className='mt-6 items-start'>
-              <h2 className='mb-4 text-h3 font-bold text-gray-800'>결제 정보</h2>
-            </div>
-            <BorderContainer innerPadding='p-3'>
-              <div className='flex-col items-start p-2 text-gray-800'>
-                <div className='mb-2 flex justify-between'>
-                  <span>댕동비({selectedProfile ? selectedProfile.majorBreed : '정보 없음'})</span>
-                  <span>{movingCost}</span>
+
+            {pageMode === 'user' && (
+              <>
+                <div className='mt-6 items-start'>
+                  <h2 className='mb-4 text-h3 font-bold text-gray-800'>댕송지 정보</h2>
                 </div>
-                <div className='mt-2 flex justify-between border-t pt-2 text-lg font-bold'>
-                  <span>결제 금액</span>
-                  <span>{totalAmount}</span>
+                <BorderContainer innerPadding='p-3'>
+                  <div className='flex-col items-start p-2 text-gray-800'>
+                    <p className='text-sub_h2 font-bold'>
+                      {selectedProfile ? selectedProfile.customerName : '정보 없음'}
+                    </p>
+                    <p className='text-body3 font-bold text-gray-800'>
+                      {selectedProfile ? selectedProfile.phone : '정보 없음'}
+                    </p>
+                    <p className='pt-1 text-caption'>{selectedProfile ? selectedProfile.address : '정보 없음'}</p>
+                  </div>
+                </BorderContainer>
+                <div className='mt-6 items-start'>
+                  <h2 className='mb-4 text-h3 font-bold text-gray-800'>결제 정보</h2>
                 </div>
-              </div>
-            </BorderContainer>
+                <BorderContainer innerPadding='p-3'>
+                  <div className='flex-col items-start p-2 text-gray-800'>
+                    <div className='mb-2 flex justify-between'>
+                      <span>댕동비({selectedProfile ? selectedProfile.majorBreed : '정보 없음'})</span>
+                      <span>{movingCost}</span>
+                    </div>
+                    <div className='mt-2 flex justify-between border-t pt-2 text-lg font-bold'>
+                      <span>결제 금액</span>
+                      <span>{totalAmount}</span>
+                    </div>
+                  </div>
+                </BorderContainer>
+              </>
+            )}
+
+            {pageMode === 'designer' && selectedProfile && (
+              <>
+                <div className='mt-6 items-start'>
+                  <h2 className='mb-4 text-h3 font-bold text-gray-800'>댕송지 정보</h2>
+                </div>
+                <BorderContainer innerPadding='p-3'>
+                  <div className='flex-col items-start p-2 text-gray-800'>
+                    <p className='text-sub_h2 font-bold'>{selectedProfile.customerName || '정보 없음'}</p>
+                    <p className='text-body3 font-bold text-gray-800'>{selectedProfile.phone || '정보 없음'}</p>
+                    <p className='pt-1 text-caption'>{selectedProfile.address || '정보 없음'}</p>
+                  </div>
+                </BorderContainer>
+              </>
+            )}
+
+            {pageMode === 'reservation' && (
+              <>
+                <div className='mt-6 items-start'>
+                  <h2 className='mb-4 text-h3 font-bold text-gray-800'>예약 정보</h2>
+                </div>
+                <BorderContainer innerPadding='p-3'>
+                  <div className='flex-col items-start p-2 text-gray-800'>
+                    <p className='text-sub_h2 font-bold'>예약 상세 정보가 아직 없습니다.</p>
+                  </div>
+                </BorderContainer>
+              </>
+            )}
           </div>
         </div>
       </div>

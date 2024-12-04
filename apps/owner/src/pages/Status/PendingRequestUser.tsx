@@ -4,7 +4,7 @@ import { Avatar, BorderContainer, DetailButton } from '@daeng-ggu/design-system'
 
 import EmptyState from '@/pages/Status/EmptyState.tsx';
 import RequestContainer from '@/pages/Status/RequestContainer.tsx';
-import { Estimate, PendingPet } from '@/types';
+import { Estimate, PendingPet } from '@/requestAndStatusTypes.ts';
 
 interface PendingRequestUserProps {
   data: PendingPet[];
@@ -90,7 +90,7 @@ const PendingRequestUser = ({ data }: PendingRequestUserProps) => {
             <h3 className='text-sub_h3 font-semibold'>{activePet.petName || '이름 없음'}</h3>
             <p className='pb-2 text-iconCaption'>
               <span className='mr-1 rounded-[4px] border border-primary px-2 py-[0.8px] text-primary'>서비스</span>
-              {activePet.desiredService ||
+              {activePet.desiredServiceCode ||
                 '알 수 없음'}/{getDeliveryStatus(activePet.majorBreedCode)}
             </p>
             <DetailButton text='상세보기' onClick={() => handleDetailPage(activePet)} />

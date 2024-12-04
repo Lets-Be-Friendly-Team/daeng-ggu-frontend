@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { BorderContainer, DetailButton } from '@daeng-ggu/design-system';
 
 import EmptyState from '@/pages/Status/EmptyState.tsx';
-import { DesignerCompletedData } from '@/types';
+import { DesignerCompletedData } from '@/requestAndStatusTypes.ts';
 
 interface CompletedRequestDesignerProps {
   data: DesignerCompletedData;
@@ -54,7 +54,7 @@ const CompletedRequestDesigner = ({ data }: CompletedRequestDesignerProps) => {
                             <span className='mr-1 rounded-[4px] border border-primary px-2 py-[0.8px] text-primary'>
                               서비스
                             </span>
-                            {request.desiredService || '알 수 없음'}
+                            {request.desiredServiceCode || '알 수 없음'}
                           </p>
                           <DetailButton text='상세보기' onClick={() => handleDetailPage()} />
                         </div>

@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { Avatar, BorderContainer, DetailButton } from '@daeng-ggu/design-system';
 
-import { DesignerRequest } from '@/types';
+import { DesignerRequest } from '@/requestAndStatusTypes.ts';
 
 interface PendingRequestDesignerProps {
   data: DesignerRequest[];
@@ -18,8 +18,8 @@ const PendingRequestDesigner = ({ data }: PendingRequestDesignerProps) => {
     return dateString;
   };
 
-  const handleDetailPage = (request: DesignerRequest) => {
-    navigate('/bid/detail', { state: { data: request } });
+  const handleDetailPage = () => {
+    navigate('/bid/detail', { state: { data: '', pageMode: 'designer' } });
   };
 
   return (
@@ -41,7 +41,7 @@ const PendingRequestDesigner = ({ data }: PendingRequestDesignerProps) => {
                   <p className='pb-2 text-iconCaption'>
                     {request.desiredServiceCode}/{request.isVisitRequired ? '방문 필요' : '방문 불필요'}
                   </p>
-                  <DetailButton text='상세보기' onClick={() => handleDetailPage(request)} />
+                  <DetailButton text='상세보기' onClick={() => handleDetailPage()} />
                 </div>
               </div>
             </div>

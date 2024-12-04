@@ -9,17 +9,7 @@ interface IAvatarProps {
   containerClassName?: string;
   imageClassName?: string;
 }
-/**
- * designer card 라는 모드 하나 추가함
- * 기존에 쓴 곳에는 영향이 없을 예정
- * designer 카드 쓰는 예시
- * <Avatar
- *   mode='designerCard'
- *   imageUrl={estimate.designerImageUrl}
- *   name={estimate.designerName}
- *   containerClassName='mr-4 h-[70px] w-[70px]'
- *  />
- * */
+
 const Avatar = ({ imageUrl, name, mode, isActive, onClick, containerClassName, imageClassName }: IAvatarProps) => {
   if (mode === 'designerCard') {
     return (

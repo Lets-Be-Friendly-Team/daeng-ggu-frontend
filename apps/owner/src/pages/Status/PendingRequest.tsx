@@ -4,7 +4,7 @@ import EmptyState from '@/pages/Status/EmptyState';
 import PendingRequestDesigner from '@/pages/Status/PendingRequestDesigner';
 import PendingRequestReservation from '@/pages/Status/PendingRequestReservation';
 import PendingRequestUser from '@/pages/Status/PendingRequestUser';
-import { DesignerRequest, Mode, PendingPet, ReservationRequest } from '@/types';
+import { DesignerRequest, Mode, PendingPet, ReservationRequest } from '@/requestAndStatusTypes.ts';
 
 interface PendingRequestProps {
   data: PendingPet[] | DesignerRequest[] | ReservationRequest[];
