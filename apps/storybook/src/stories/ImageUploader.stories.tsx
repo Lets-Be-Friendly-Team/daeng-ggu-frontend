@@ -17,9 +17,6 @@ const meta: Meta<typeof ImageUploader> = {
       defaultValue: ['https://via.placeholder.com/150', 'https://via.placeholder.com/200'],
     },
   },
-  parameters: {
-    layout: 'centered',
-  },
 };
 
 export default meta;
