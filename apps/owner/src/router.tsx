@@ -18,6 +18,7 @@ import EditPetProfilePage from './pages/EditPetProfilePage/EditPetProfilePage';
 import EditUserProfilePage from './pages/EditUserProfilePage/EditUserProfilePage';
 import MyPage from './pages/MyPage/MyPage';
 import ReviewDetailPage from './pages/ReviewDetailPage/ReviewDetailPage';
+import SearchResultPage from './pages/MainPage/SearchResultPage';
 import MapPage from './pages/Map/MapPage';
 import App from './App';
 
@@ -36,6 +37,10 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <MainPage />,
+      },
+      {
+        path: 'search',
+        element: <SearchResultPage />,
       },
       {
         path: ROUTES.bid,
