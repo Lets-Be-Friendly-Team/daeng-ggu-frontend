@@ -10,6 +10,7 @@ import Request from '@/pages/Request/Request';
 import DetailPage from '@/pages/Status/DetailPage.tsx';
 import Status from '@/pages/Status/Status.tsx';
 
+import SearchResultPage from './pages/MainPage/SearchResultPage';
 import MapPage from './pages/Map/MapPage';
 import App from './App';
 
@@ -27,6 +28,10 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <MainPage />,
+      },
+      {
+        path: 'search',
+        element: <SearchResultPage />,
       },
       {
         path: 'bid',

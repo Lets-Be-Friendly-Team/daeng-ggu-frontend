@@ -1,6 +1,9 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
-import { SearchBar } from '@daeng-ggu/design-system';
+import { Header, PageContainer, SearchBar } from '@daeng-ggu/design-system';
+
+import { designerList, DesignerType } from '@/components/DesignerInfo/DesignerData';
+import DesignerList from '@/components/DesignerInfo/DesignerList';
 
 const SearchResultPage = () => {
   const location = useLocation();
@@ -12,17 +15,31 @@ const SearchResultPage = () => {
   const navigate = useNavigate();
   // 검색시 수행할 함수
   const handleSearch = () => {
-    navigate(`/search?keyword=${keyword}`, {
+    navigate(`/search?keyword=${newKeyword}`, {
       state: {
         keyword,
       },
     });
   };
 
+  // api 연동
+  const [searchResult, setSearchResult] = useState<DesignerType[]>([]);
+  useEffect(() => {
+    setSearchResult(designerList);
+  }, []);
+
   return (
-    <div>
-      <SearchBar keyword={newKeyword} handleSearch={handleSearch} onChange={handleKeywordChange} />
-    </div>
+    <>
+      <Header mode='main' />
+      <PageContainer>
+        <div className='sticky top-0 z-10 py-8'>
+          <SearchBar keyword={newKeyword} handleSearch={handleSearch} onChange={handleKeywordChange} />
+        </div>
+        <div className='mb-[6.5rem] pb-8'>
+          <DesignerList dataList={searchResult} />
+        </div>
+      </PageContainer>
+    </>
   );
 };
 export default SearchResultPage;

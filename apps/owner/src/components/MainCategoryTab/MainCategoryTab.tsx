@@ -1,5 +1,6 @@
 // import
 import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router';
 import { PageContainer } from '@daeng-ggu/design-system';
 
 import map from '@/assets/images/MainCategoryTab/map.png';
@@ -59,6 +60,7 @@ const MainCategoryTab = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [indicatorOffset, setIndicatorOffset] = useState(40);
   const containerRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (containerRef.current) {
@@ -84,7 +86,12 @@ const MainCategoryTab = () => {
               className={`flex h-[7rem] w-[5rem] cursor-pointer flex-col items-center justify-between py-[0.8rem] text-body3 ${
                 activeIndex === index ? 'text-primary' : 'text-gray-600'
               }`}
-              onClick={() => setActiveIndex(index)}
+              onClick={() => {
+                setActiveIndex(index);
+                if (index === 3) {
+                  navigate('/map');
+                }
+              }}
             >
               <img src={tab.icon} alt={tab.label} className='w-[3rem]' />
               <div className=''>{tab.label}</div>
@@ -106,7 +113,7 @@ const MainCategoryTab = () => {
           style={{ transform: `translateX(-${activeIndex * 100}%)` }}
         >
           {tabs.map((tab, index) => (
-            <div key={index} className='mb-[6.5rem] w-full flex-shrink-0 py-[2rem]'>
+            <div key={index} className='mb-[6.5rem] w-full flex-shrink-0 pt-[2rem]'>
               <PageContainer>{tab.content}</PageContainer>
             </div>
           ))}
