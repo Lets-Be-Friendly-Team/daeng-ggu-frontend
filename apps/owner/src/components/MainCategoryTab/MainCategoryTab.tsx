@@ -6,20 +6,43 @@ import map from '@/assets/images/MainCategoryTab/map.png';
 import popular from '@/assets/images/MainCategoryTab/popular.png';
 import premium from '@/assets/images/MainCategoryTab/premium.png';
 import total from '@/assets/images/MainCategoryTab/total.png';
-import DesignerList from '@/components/DesignerInfo/DesignerList';
+import {
+  designerList,
+  popularList,
+  premiumFcList,
+  premiumSpList,
+  premiumStList,
+} from '@/components/DesignerInfo/DesignerData';
+import PopularList from '@/components/DesignerInfo/PopularList';
 import PremiumList from '@/components/DesignerInfo/PremiumList';
+import TotalList from '@/components/DesignerInfo/TotalList';
+import useDesignerListStore from '@/stores/designerListStore';
 
 const MainCategoryTab = () => {
+  /* api 연동 => fetch 함수 작성(apis 폴더에?), useQuery 사용해 데이터 가져오는 훅 정의(hooks 폴더 만들어야하나)
+   * get은 한번(searchWord에 빈값 넣어서 전체 조회)
+   * category마다 다른 column 가져와서 dataList 변수에 저장
+   */
+  const setLists = useDesignerListStore((state) => state.setLists);
+  useEffect(() => {
+    setLists({
+      designerList: designerList,
+      popularList: popularList,
+      premiumSpList: premiumSpList,
+      premiumFcList: premiumFcList,
+      premiumStList: premiumStList,
+    });
+  }, [setLists]);
   const tabs = [
     {
       icon: total,
       label: '전체',
-      content: <DesignerList category='total' />,
+      content: <TotalList />,
     },
     {
       icon: popular,
       label: '인기',
-      content: <DesignerList category='popular' />,
+      content: <PopularList />,
     },
     {
       icon: premium,

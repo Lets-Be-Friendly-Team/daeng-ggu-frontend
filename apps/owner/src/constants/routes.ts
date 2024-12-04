@@ -5,6 +5,7 @@ const ROUTES = {
   feed: '/feed',
   reservation: '/reservation',
   profile: '/profile',
+  map: '/map',
 } as const;
 
 export default ROUTES;

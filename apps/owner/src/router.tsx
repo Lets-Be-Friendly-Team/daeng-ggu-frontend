@@ -18,6 +18,7 @@ import EditPetProfilePage from './pages/EditPetProfilePage/EditPetProfilePage';
 import EditUserProfilePage from './pages/EditUserProfilePage/EditUserProfilePage';
 import MyPage from './pages/MyPage/MyPage';
 import ReviewDetailPage from './pages/ReviewDetailPage/ReviewDetailPage';
+import MapPage from './pages/Map/MapPage';
 import App from './App';
 
 import '@/styles/sequenceAnimation.css';
@@ -103,6 +104,10 @@ export const router = createBrowserRouter([
       {
         path: 'profile/review/:reviewId',
         element: <ReviewDetailPage />,
+      },
+      {
+        path: ROUTES.map,
+        children: [{ index: true, element: <MapPage /> }],
       },
     ],
   },
