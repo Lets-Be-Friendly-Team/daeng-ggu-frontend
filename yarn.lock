@@ -2002,6 +2002,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@rollup/rollup-win32-x64-msvc@npm:4.28.0":
+  version: 4.28.0
+  resolution: "@rollup/rollup-win32-x64-msvc@npm:4.28.0"
+  conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
 "@sentry-internal/browser-utils@npm:8.42.0":
   version: 8.42.0
   resolution: "@sentry-internal/browser-utils@npm:8.42.0"
