@@ -1,17 +1,91 @@
+import { useLocation } from 'react-router-dom';
 import { CategoryTab, Header } from '@daeng-ggu/design-system';
 
 import CompletedRequest from '@/pages/Status/CompletedRequest';
 import PendingRequest from '@/pages/Status/PendingRequest';
+import { PageMode } from '@/types/requestAndStatusTypes';
 
 // https://via.placeholder.com/100
 
 const Status = () => {
+  const location = useLocation();
+  const fromPath = location.state?.from;
+
+  let mode: PageMode = 'user';
+
+  switch (fromPath) {
+    case '/bid/designer':
+      mode = 'designer';
+      break;
+    case '/bid/reservation':
+      mode = 'reservation';
+      break;
+    default:
+      mode = 'user';
+  }
+
+  const dummyDataForDesigner = [
+    {
+      requestId: 1,
+      petId: 1,
+      petName: '장미',
+      petImageUrl: 'https://via.placeholder.com/100',
+      desiredServiceCode: '부분미용',
+      isVisitRequired: true,
+      majorBreedCode: 'S',
+      createdAt: '2024-12-02T10:30:00',
+    },
+    {
+      requestId: 2,
+      petId: 2,
+      petName: '포돌',
+      petImageUrl: 'https://via.placeholder.com/100',
+      desiredServiceCode: '스파',
+      isVisitRequired: true,
+      majorBreedCode: 'L',
+      createdAt: '2024-12-02T10:30:00',
+    },
+  ];
+
+  const dummyDataForDesignerCompleted = {
+    requestList: [
+      {
+        petId: 1,
+        petName: '장미',
+        petImgUrl: 'https://via.placeholder.com/100',
+        desiredServiceCode: '부분미용',
+        lastGroomingDate: '한달전',
+        desiredDate1: '2023-10-15T10:00:00',
+        desiredDate2: '2023-10-16T14:00:00',
+        desiredDate3: '2023-10-17T09:00:00',
+        desiredRegion: '서울, 강남구',
+        isVisitRequired: true,
+        isMonitoringIncluded: false,
+        additionalRequest: '잘 물어요',
+      },
+      {
+        petId: 2,
+        petName: '장군',
+        petImgUrl: 'https://via.placeholder.com/100',
+        desiredServiceCode: '잔체미용',
+        lastGroomingDate: '한달전',
+        desiredDate1: '2023-10-15T10:00:00',
+        desiredDate2: '2023-10-16T14:00:00',
+        desiredDate3: '2023-10-17T09:00:00',
+        desiredRegion: '서울, 강남구',
+        isVisitRequired: true,
+        isMonitoringIncluded: false,
+        additionalRequest: '잘 물다 말아요',
+      },
+    ],
+  };
+
   const dummyDataForPending = [
     {
       petId: 1,
       petName: '장미',
       petImgUrl: 'https://via.placeholder.com/100',
-      desiredService: '부분미용',
+      desiredServiceCode: '부분미용',
       lastGroomingDate: '한달전',
       desiredDate1: '2023-10-15T10:00:00',
       desiredDate2: '2023-10-16T14:00:00',
@@ -34,33 +108,33 @@ const Status = () => {
       phone: '010-1234-5678',
       address: '서울시 강남구 테헤란로 123 포돌빌딩 1304호',
       estimateList: [
-        {
-          estimateId: 1,
-          designerId: 3,
-          designerName: 'Alice',
-          designerImageUrl: 'https://via.placeholder.com/100',
-          estimatePrice: 150000,
-          petId: 1,
-          petName: 'Buddy',
-          createdAt: '2024-11-27T16:00:00',
-        },
-        {
-          estimateId: 2,
-          designerId: 32,
-          designerName: 'Bob',
-          designerImageUrl: 'https://via.placeholder.com/100',
-          estimatePrice: 140000,
-          petId: 1,
-          petName: 'Buddy',
-          createdAt: '2024-11-27T16:15:00',
-        },
+        // {
+        //   estimateId: 1,
+        //   designerId: 3,
+        //   designerName: 'Alice',
+        //   designerImageUrl: 'https://via.placeholder.com/100',
+        //   estimatePrice: 150000,
+        //   petId: 1,
+        //   petName: 'Buddy',
+        //   createdAt: '2024-11-27T16:00:00',
+        // },
+        // {
+        //   estimateId: 2,
+        //   designerId: 32,
+        //   designerName: 'Bob',
+        //   designerImageUrl: 'https://via.placeholder.com/100',
+        //   estimatePrice: 140000,
+        //   petId: 1,
+        //   petName: 'Buddy',
+        //   createdAt: '2024-11-27T16:15:00',
+        // },
       ],
     },
     {
       petId: 2,
       petName: '포돌이',
       petImgUrl: 'https://via.placeholder.com/100',
-      desiredService: '스파',
+      desiredServiceCode: '스파',
       lastGroomingDate: '두달전',
       desiredDate1: '2023-10-15T10:00:00',
       desiredDate2: '2023-10-16T14:00:00',
@@ -109,7 +183,7 @@ const Status = () => {
       petId: 3,
       petName: '장군이',
       petImgUrl: 'https://via.placeholder.com/100',
-      desiredService: '전체미용',
+      desiredServiceCode: '전체미용',
       lastGroomingDate: '한달전',
       desiredDate1: '2023-10-15T10:00:00',
       desiredDate2: '2023-10-16T14:00:00',
@@ -158,7 +232,7 @@ const Status = () => {
       petId: 4,
       petName: '뽀삐',
       petImgUrl: 'https://via.placeholder.com/100',
-      desiredService: '전체미용',
+      desiredServiceCode: '전체미용',
       lastGroomingDate: '세달전',
       desiredDate1: '2023-10-15T10:00:00',
       desiredDate2: '2023-10-16T14:00:00',
@@ -212,7 +286,7 @@ const Status = () => {
         petId: 0,
         petName: '장군맨',
         petImgUrl: 'https://via.placeholder.com/100',
-        desiredService: '스파',
+        desiredServiceCode: '스파',
         isVisitRequired: false,
         createdAt: '2024-11-28T00:00:00',
         codeName: 'COMPLETED',
@@ -223,7 +297,7 @@ const Status = () => {
         petId: 101,
         petName: '장군걸',
         petImgUrl: 'https://via.placeholder.com/100',
-        desiredService: 'Grooming',
+        desiredServiceCode: 'Grooming',
         isVisitRequired: true,
         createdAt: '2024-11-27T15:30:00',
         codeName: 'FAILED',
@@ -234,7 +308,7 @@ const Status = () => {
         petId: 102,
         petName: '밀난',
         petImgUrl: 'https://via.placeholder.com/100',
-        desiredService: '부분미용',
+        desiredServiceCode: '부분미용',
         isVisitRequired: false,
         createdAt: '2024-11-26T10:00:00',
         codeName: 'COMPLETED',
@@ -245,7 +319,7 @@ const Status = () => {
         petId: 103,
         petName: '부모미',
         petImgUrl: 'https://via.placeholder.com/100',
-        desiredService: '전체미용',
+        desiredServiceCode: '전체미용',
         isVisitRequired: true,
         createdAt: '2024-11-25T09:15:00',
         codeName: 'COMPLETED',
@@ -256,7 +330,7 @@ const Status = () => {
         petId: 102,
         petName: '밀난',
         petImgUrl: 'https://via.placeholder.com/100',
-        desiredService: '부분미용',
+        desiredServiceCode: '부분미용',
         isVisitRequired: false,
         createdAt: '2024-11-26T10:00:00',
         codeName: 'COMPLETED',
@@ -267,7 +341,7 @@ const Status = () => {
         petId: 102,
         petName: '밀난',
         petImgUrl: 'https://via.placeholder.com/100',
-        desiredService: '부분미용',
+        desiredServiceCode: '부분미용',
         isVisitRequired: false,
         createdAt: '2024-11-26T10:00:00',
         codeName: 'COMPLETED',
@@ -278,7 +352,7 @@ const Status = () => {
         petId: 102,
         petName: '밀난',
         petImgUrl: 'https://via.placeholder.com/100',
-        desiredService: '부분미용',
+        desiredServiceCode: '부분미용',
         isVisitRequired: false,
         createdAt: '2024-11-26T10:00:00',
         codeName: 'COMPLETED',
@@ -289,7 +363,7 @@ const Status = () => {
         petId: 102,
         petName: '밀난',
         petImgUrl: 'https://via.placeholder.com/100',
-        desiredService: '부분미용',
+        desiredServiceCode: '부분미용',
         isVisitRequired: false,
         createdAt: '2024-11-26T10:00:00',
         codeName: 'COMPLETED',
@@ -297,15 +371,39 @@ const Status = () => {
       },
     ],
   };
+  const getDataByMode = (mode: PageMode) => {
+    switch (mode) {
+      case 'designer':
+        return dummyDataForDesigner;
+      case 'user':
+        return dummyDataForPending;
+      case 'reservation':
+        return [];
+      default:
+        return [];
+    }
+  };
+
+  const getCompletedDataByMode = (mode: PageMode) => {
+    switch (mode) {
+      case 'designer':
+        return dummyDataForDesignerCompleted;
+      case 'user':
+      case 'reservation':
+        return dummyDataForCompleted;
+      default:
+        return { requestList: [] };
+    }
+  };
 
   const tabs = [
     {
-      label: '견적서받는 중',
-      content: <PendingRequest data={dummyDataForPending} />,
+      label: mode === 'designer' ? '견적요청 목록' : mode === 'reservation' ? '예약 목록' : '견적서받는 중',
+      content: <PendingRequest data={getDataByMode(mode)} mode={mode} />,
     },
     {
       label: '이전견적 조회',
-      content: <CompletedRequest data={dummyDataForCompleted} />,
+      content: <CompletedRequest data={getCompletedDataByMode(mode)} mode={mode} />,
     },
   ];
 
