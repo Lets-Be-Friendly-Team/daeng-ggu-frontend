@@ -1,7 +1,7 @@
 // src/pages/Bid/DetailPage.tsx
 
-import { useLocation } from 'react-router-dom';
-import { Header, TypeOneButton } from '@daeng-ggu/design-system';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Header, PageContainer, TypeOneButton } from '@daeng-ggu/design-system';
 
 import RequestReview from '@/pages/Request/RequestReview.tsx';
 import {
@@ -9,19 +9,18 @@ import {
   PageMode,
   ReservationProcessedData,
   UserProcessedData,
-} from '@/types/requestAndStatusTypes'; // Adjust the import path as needed
-
+} from '@/types/requestAndStatusTypes';
 const DetailPage = () => {
   const location = useLocation();
   const data = location.state?.data;
-  const pageMode: PageMode = location.state?.pageMode || 'user'; // Default to 'user' if not specified
+  const pageMode: PageMode = location.state?.pageMode || 'user';
+  const navigate = useNavigate();
 
-  // Temporary data for demonstration purposes
   const tempDataUser = {
     petId: 1,
     petName: '이전견적맨',
     petImgUrl: 'https://via.placeholder.com/100',
-    desiredServiceCode: '부분미용', // Changed from desiredService to desiredServiceCode
+    desiredServiceCode: '부분미용',
     lastGroomingDate: '한달전',
     desiredDate1: '2023-10-15T10:00:00',
     desiredDate2: '2023-10-16T14:00:00',
@@ -49,7 +48,7 @@ const DetailPage = () => {
     petId: 1,
     petName: '견적요청맨',
     petImgUrl: 'https://via.placeholder.com/100',
-    desiredServiceCode: '부분미용', // Already using desiredServiceCode
+    desiredServiceCode: '부분미용',
     lastGroomingDate: '한달전',
     desiredDate1: '2023-10-15T10:00:00',
     desiredDate2: '2023-10-16T14:00:00',
@@ -73,9 +72,7 @@ const DetailPage = () => {
     address: '서울시 강남구 테헤란로 123 포돌빌딩 1304호',
   };
 
-  const tempDataReservation = {
-    // Define temporary data for reservation mode when implemented
-  };
+  const tempDataReservation = {};
 
   const selectedData =
     pageMode === 'user'
@@ -84,10 +81,6 @@ const DetailPage = () => {
         ? data || tempDataDesigner
         : data || tempDataReservation;
 
-  /**
-   * Modified getSelectedOptions to handle different page modes.
-   * Now always uses desiredServiceCode.
-   */
   const getSelectedOptions = (): { [key: number]: string } => {
     return {
       3: selectedData.desiredServiceCode || '정보 없음',
@@ -146,28 +139,24 @@ const DetailPage = () => {
           }}
         />
       </div>
-
-      <div className='px-[20px]'>
+      <PageContainer>
         <RequestReview {...processedData} pageMode={pageMode} />
-      </div>
-
-      <div className='button-container fixed w-full' style={{ bottom: '65px' }}>
-        <div className='relative flex justify-center'>
-          <TypeOneButton
-            text={buttonText}
-            onClick={() => {
-              if (pageMode === 'user') {
-                // navigate('/booking', { state: { petId: selectedData.petId } });
-                console.log('예약하기 버튼 클릭');
-              } else if (pageMode === 'designer') {
-                // navigate('/booking', { state: { petId: selectedData.petId } });
-              } else if (pageMode === 'reservation') {
-                console.log('예약 취소 버튼 클릭');
-              }
-            }}
-            color='bg-secondary'
-          />
-        </div>
+      </PageContainer>
+      <div className='fixed w-full' style={{ bottom: '65px' }}>
+        <TypeOneButton
+          text={buttonText}
+          onClick={() => {
+            if (pageMode === 'user') {
+              // navigate('/booking', { state: { petId: selectedData.petId } });
+              console.log('예약하기 버튼 클릭');
+            } else if (pageMode === 'designer') {
+              navigate('/bid/suggest', { state: { petId: selectedData.petId } });
+            } else if (pageMode === 'reservation') {
+              console.log('예약 취소 버튼 클릭');
+            }
+          }}
+          color='bg-secondary'
+        />
       </div>
     </div>
   );

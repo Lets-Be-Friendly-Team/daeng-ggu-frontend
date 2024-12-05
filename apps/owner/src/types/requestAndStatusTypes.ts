@@ -79,8 +79,12 @@ export interface RequestReviewProps {
   pageMode?: PageMode;
 }
 
-export const isDesignerProfileData = (profile: ProfileData): profile is ProfileData => {
-  return false;
+interface DesignerProfileData extends ProfileData {
+  desiredServiceCode: string;
+}
+
+export const isDesignerProfileData = (profile: ProfileData): profile is DesignerProfileData => {
+  return typeof profile.desiredServiceCode === 'string';
 };
 
 export interface Estimate {

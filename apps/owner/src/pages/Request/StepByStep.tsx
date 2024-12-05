@@ -185,40 +185,46 @@ const StepByStep = ({ stepCount, profileData = [], onProfileSelect }: StepByStep
 
     return (
       <div className='flex flex-col items-center pt-10'>
-        <div className='rounded-[8px] border border-primary'>
-          <ProfileViewer
-            profile={
-              petProfile || {
-                petId: 0,
-                petName: 'Unknown',
-                petImgUrl: '',
-                petImgName: 'No Image',
-                subBreed: 'Unknown',
-                birthDate: 'N/A',
-                gender: 'N/A',
-                isNeutered: false,
-                weight: 0,
-                isRequested: false,
-                specialNotes: '',
-                customerName: '',
-                phone: '',
-                address: '',
+        <div className='relative'>
+          <div className='rounded-[8px] border border-primary'>
+            <ProfileViewer
+              profile={
+                petProfile || {
+                  petId: 0,
+                  petName: 'Unknown',
+                  petImgUrl: '',
+                  petImgName: 'No Image',
+                  subBreed: 'Unknown',
+                  birthDate: 'N/A',
+                  gender: 'N/A',
+                  isNeutered: false,
+                  weight: 0,
+                  isRequested: false,
+                  specialNotes: '',
+                  customerName: '',
+                  phone: '',
+                  address: '',
+                }
               }
-            }
-          />
+            />
+          </div>
+          <div className='mt-6'>
+            <TypeTwoButton
+              text='프로필 수정하기'
+              color='bg-secondary'
+              onClick={() => {
+                if (window.confirm('프로필을 수정하면 견적서를 다시 요청해야 합니다. 진행하시겠습니까?')) {
+                  console.log('Profile editing confirmed');
+                } else {
+                  console.log('Profile editing canceled');
+                }
+              }}
+            />
+            <div className='mt-6'>
+              <TypeTwoButton text='다음 단계로 가기' color='bg-secondary' onClick={handleNextStep} />
+            </div>
+          </div>
         </div>
-        <TypeTwoButton
-          text='프로필 수정하기'
-          color='bg-secondary'
-          onClick={() => {
-            if (window.confirm('프로필을 수정하면 견적서를 다시 요청해야 합니다. 진행하시겠습니까?')) {
-              console.log('Profile editing confirmed');
-            } else {
-              console.log('Profile editing canceled');
-            }
-          }}
-        />
-        <TypeTwoButton text='다음 단계로 가기' color='bg-secondary' onClick={handleNextStep} />
       </div>
     );
   };
@@ -304,7 +310,7 @@ const StepByStep = ({ stepCount, profileData = [], onProfileSelect }: StepByStep
                 } else if (currentStep === 6 && option === '날짜 선택하기') {
                   setShowDateSelector(true);
                 } else if (currentStep === 9 && option === '지금 작성할게요.') {
-                  // Do nothing to allow textarea to appear
+                  // 아무것도 안하지만 if 문 특성상 필요
                 } else {
                   handleNextStep();
                 }
