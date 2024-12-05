@@ -132,7 +132,7 @@ const ReviewDetail = () => {
           setActiveIndex(swiper.activeIndex);
           navigate(`/profile/review/${reviews[swiper.activeIndex].reviewId}`, { replace: true, state: { reviews } });
         }}
-        className='flex-1'
+        className='mySwiper2 flex-1'
         modules={[Pagination]}
         preventClicksPropagation={true}
       >
