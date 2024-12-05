@@ -1,4 +1,4 @@
-import APIFetch from '@/apis/APIFetch';
+import APIFetch from '../apis/APIFetch';
 
 export const API_URL = import.meta.env.VITE_BASE_URL;
 
