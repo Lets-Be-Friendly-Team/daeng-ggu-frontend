@@ -126,11 +126,14 @@ const MyPage = () => {
       content: <BookmarkList bookmarkList={data.bookmarkList} />,
     },
   ];
+  const handleNavigateMain = () => {
+    navigate('/');
+  };
 
   return (
     <div className='pb-[185px]'>
       <PageContainer>
-        <Header mode='back' title='마이페이지' />
+        <Header mode='back' title='마이페이지' onClick={handleNavigateMain} />
         <Profile nickname={data.nickname} customerImgUrl={data.customerImgUrl} customerImgName={data.customerImgName} />
         <AvartarList pets={data.petList} />
         <CategoryTab tabs={tabs} />
