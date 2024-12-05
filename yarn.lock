@@ -364,6 +364,7 @@ __metadata:
   resolution: "@daeng-ggu/design-system@workspace:packages/design-system"
   dependencies:
     "@daeng-ggu/eslint-config": "npm:*"
+    "@daeng-ggu/shared": "workspace:*"
     "@daeng-ggu/tailwind-config": "npm:*"
     "@daeng-ggu/typescript-config": "npm:*"
     "@radix-ui/react-dropdown-menu": "npm:^2.1.2"
@@ -550,6 +551,7 @@ __metadata:
     typescript: "npm:~5.6.2"
     typescript-eslint: "npm:^8.15.0"
     vite: "npm:^6.0.1"
+    zustand: "npm:^5.0.1"
   languageName: unknown
   linkType: soft
 

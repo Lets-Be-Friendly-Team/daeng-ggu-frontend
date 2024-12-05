@@ -45,6 +45,7 @@ import StarHalfIcon from './components/Icons/StarHalfIcon';
 import Input from './components/Input/Input';
 import InputAddress from './components/InputAddress/InputAddress';
 import Layout from './components/Layout/Layout';
+import Modal from './components/Modal/Modal';
 import PageContainer from './components/PageContainer/PageContainer';
 import UserProfileImage from './components/ProfileImage/UserProfileImage';
 import { Progress } from './components/Progress/progress';
@@ -56,6 +57,7 @@ import TextArea from './components/TextArea/TextArea';
 import TimeSelect from './components/TimeSelect/TimeSelect';
 import TypeOneButton from './components/TypeOneButton/TypeOneButton';
 import TypeTwoButton from './components/TypeTwoButton/TypeTwoButton';
+
 export {
   CategoryTab,
   ImageSlider,
@@ -71,6 +73,7 @@ export {
   MiniButton,
   BackIcon,
   BellAlertIcon,
+  Modal,
   BellIcon,
   CloseIcon,
   Layout,
