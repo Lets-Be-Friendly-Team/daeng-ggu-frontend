@@ -1,0 +1,16 @@
+/* Remove the default border from the editor container */
+.editor .ql-container {
+    min-height: 150px;
+    max-height: 500px;
+    overflow-y: auto;
+    border: none;
+}
+
+.editor .ql-toolbar {
+    border: none;
+    border-bottom: 1px solid #D1D5DB;
+}
+
+.editor .ql-container.ql-snow {
+    border-top: none;
+}

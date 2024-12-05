@@ -1,7 +1,7 @@
 // src/pages/Bid/DetailPage.tsx
 
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Header, TypeOneButton } from '@daeng-ggu/design-system';
+import { Header, PageContainer, TypeOneButton } from '@daeng-ggu/design-system';
 
 import RequestReview from '@/pages/Request/RequestReview.tsx';
 import {
@@ -139,27 +139,24 @@ const DetailPage = () => {
           }}
         />
       </div>
-
-      <div className='px-[20px]'>
+      <PageContainer>
         <RequestReview {...processedData} pageMode={pageMode} />
-      </div>
-      <div className='fixed bottom-[65px] left-0 z-50 w-full px-4'>
-        <div className='flex justify-center'>
-          <TypeOneButton
-            text={buttonText}
-            onClick={() => {
-              if (pageMode === 'user') {
-                // navigate('/booking', { state: { petId: selectedData.petId } });
-                console.log('예약하기 버튼 클릭');
-              } else if (pageMode === 'designer') {
-                navigate('/bid/suggest', { state: { petId: selectedData.petId } });
-              } else if (pageMode === 'reservation') {
-                console.log('예약 취소 버튼 클릭');
-              }
-            }}
-            color='bg-secondary'
-          />
-        </div>
+      </PageContainer>
+      <div className='fixed w-full' style={{ bottom: '65px' }}>
+        <TypeOneButton
+          text={buttonText}
+          onClick={() => {
+            if (pageMode === 'user') {
+              // navigate('/booking', { state: { petId: selectedData.petId } });
+              console.log('예약하기 버튼 클릭');
+            } else if (pageMode === 'designer') {
+              navigate('/bid/suggest', { state: { petId: selectedData.petId } });
+            } else if (pageMode === 'reservation') {
+              console.log('예약 취소 버튼 클릭');
+            }
+          }}
+          color='bg-secondary'
+        />
       </div>
     </div>
   );
