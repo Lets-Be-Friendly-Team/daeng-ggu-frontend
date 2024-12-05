@@ -7,7 +7,7 @@ import tseslint from 'typescript-eslint';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import prettierPlugin from 'eslint-plugin-prettier';
 import eslintPluginJsxA11y from 'eslint-plugin-jsx-a11y';
-import noRelativeImportPaths from 'eslint-plugin-no-relative-import-paths';
+// import noRelativeImportPaths from 'eslint-plugin-no-relative-import-paths';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 
 export default tseslint.config(
@@ -43,10 +43,10 @@ export default tseslint.config(
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
       'prettier/prettier': 'error',
       // 상대경로 import 금지, rootDir 기준으로 @로 시작하는 절대경로로 변경
-      'no-relative-import-paths/no-relative-import-paths': [
-        'warn',
-        { allowSameFolder: true, rootDir: 'src', prefix: '@' },
-      ],
+      // 'no-relative-import-paths/no-relative-import-paths': [
+      //   'warn',
+      //   { allowSameFolder: true, rootDir: 'src', prefix: '@' },
+      // ],
 
       // 유효한 aria-* 속성만 사용
       'jsx-a11y/alt-text': [
