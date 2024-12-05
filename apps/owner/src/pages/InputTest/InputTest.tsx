@@ -13,6 +13,8 @@ const InputTest = () => {
     'https://blog.malcang.com/wp-content/uploads/2024/03/1-1.png',
     'https://blog.malcang.com/wp-content/uploads/2024/03/1-1.png',
   ];
+  const [video, setVideo] = useState<File | null>(null);
+  const initialVideo = 'https://cdnvod.yonhapnews.co.kr/yonhapnewsvod/202412/MYH20241205018500704_700M1.mp4';
   const [image, setImage] = useState<File | undefined>(undefined);
   const initialProfileImg = 'https://blog.malcang.com/wp-content/uploads/2024/03/1-1.png';
 
@@ -72,7 +74,16 @@ const InputTest = () => {
       <hr className='my-4' />
       <SearchBar keyword={keyword} onChange={handleKeywordChange} />
       <hr className='my-4' />
-      <ImageUploader imgList={imgList} setImgList={setImgList} label='사진' initialImgList={initialImgList} />
+      <ImageUploader
+        mode='both'
+        imgList={imgList}
+        setImgList={setImgList}
+        label='사진'
+        initialImgList={initialImgList}
+        video={video}
+        setVideo={setVideo}
+        initialVideo={initialVideo}
+      />
       <hr className='my-4' />
       <ProfileImgUploader image={image} setImage={setImage} initialImageUrl={initialProfileImg} />
     </div>
