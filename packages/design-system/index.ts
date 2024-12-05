@@ -46,6 +46,7 @@ import Input from './components/Input/Input';
 import InputAddress from './components/InputAddress/InputAddress';
 import Layout from './components/Layout/Layout';
 import Modal from './components/Modal/Modal';
+import ModalContainer from './components/Modal/ModalContainer';
 import PageContainer from './components/PageContainer/PageContainer';
 import UserProfileImage from './components/ProfileImage/UserProfileImage';
 import { Progress } from './components/Progress/progress';
@@ -55,13 +56,21 @@ import SearchBar from './components/SearchBar/SearchBar';
 import ServiceCheckBox from './components/ServiceCheckBox/ServiceCheckBox';
 import TextArea from './components/TextArea/TextArea';
 import TimeSelect from './components/TimeSelect/TimeSelect';
+import Toast from './components/Toast/Toast';
+import ToastContainer from './components/Toast/ToastContainer';
 import TypeOneButton from './components/TypeOneButton/TypeOneButton';
 import TypeTwoButton from './components/TypeTwoButton/TypeTwoButton';
-
+import type { ModalProps } from './types/modal';
+import type { ToastType } from './types/toast';
 export {
   CategoryTab,
+  ToastType,
+  ModalProps,
+  ToastContainer,
+  ModalContainer,
   ImageSlider,
   Progress,
+  Toast,
   Input,
   RegionSelector,
   RadioGroup,

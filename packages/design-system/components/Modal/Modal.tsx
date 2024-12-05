@@ -1,5 +1,6 @@
-import { ModalProps, useClickOutside } from '@daeng-ggu/shared';
+import { useClickOutside } from '@daeng-ggu/shared';
 
+import { ModalProps } from '../../types/modal';
 import TypeTwoButton from '../TypeTwoButton/TypeTwoButton';
 
 const Modal = ({ onConfirm, description, onClose, confirmText, cancelText, title }: ModalProps) => {
