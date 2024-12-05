@@ -6,11 +6,12 @@ import BellIcon from '../Icons/BellIcon';
 import CloseIcon from '../Icons/CloseIcon';
 
 interface IHeaderProps {
-  mode: 'main' | 'back' | 'close';
+  mode: 'main' | 'back' | 'close' | 'customBack';
   title?: string;
+  onClick?: () => void;
 }
 
-const Header = ({ mode, title }: IHeaderProps) => {
+const Header = ({ mode, title, onClick }: IHeaderProps) => {
   const navigate = useNavigate();
   const handleLogoClick = () => {
     navigate('/');
@@ -18,33 +19,30 @@ const Header = ({ mode, title }: IHeaderProps) => {
   const handleBackClick = () => {
     navigate(-1);
   };
+
   return (
     <div className='sticky left-0 right-0 top-0 z-50 flex h-[50px] w-full bg-white'>
-      <div className='mx-auto flex h-auto w-full max-w-[1200px] items-center px-5 py-4'>
+      <div className='relative mx-auto flex h-auto w-full max-w-[1200px] items-center py-4'>
         {mode === 'main' && (
           <div className='flex w-full items-center justify-between'>
             <button>
               <img src={textLogoImage} alt='logo image' className='h-[22px] w-[41px]' onClick={handleLogoClick} />
             </button>
-            <button className=''>
+            <button>
               <BellIcon className='ml-auto h-[20px] w-[20px]' />
             </button>
           </div>
         )}
-        {mode === 'back' && (
+        {(mode === 'back' || mode === 'close' || mode === 'customBack') && (
           <>
-            <button onClick={handleBackClick}>
-              <BackIcon className='mr-auto h-[20px] w-[20px]' />
+            <button onClick={onClick || handleBackClick} className='absolute left-0 flex h-[50px] items-center'>
+              {mode === 'close' ? (
+                <CloseIcon className='h-[20px] w-[20px]' />
+              ) : (
+                <BackIcon className='h-[20px] w-[20px]' />
+              )}
             </button>
-            <div className='flex-1 text-center text-sub_h2'>{title}</div>
-          </>
-        )}
-        {mode === 'close' && (
-          <>
-            <button onClick={handleBackClick}>
-              <CloseIcon className='mr-auto h-[20px] w-[20px]' />
-            </button>
-            <div className='flex-1 text-center text-sub_h2'>{title}</div>
+            <div className='flex-1 text-center text-h2'>{title}</div>
           </>
         )}
       </div>

@@ -417,7 +417,7 @@ const StepByStep = ({ stepCount, profileData = [], onProfileSelect }: StepByStep
   return (
     <div>
       <div className='max-w-[480px]'>
-        <Header mode='back' title='견적 요청하기' onClick={currentStep === 1 ? undefined : handlePrevStep} />
+        <Header mode='customBack' title='견적 요청하기' onClick={currentStep === 1 ? undefined : handlePrevStep} />
       </div>
       <div className='flex h-full w-full flex-col items-center justify-center p-4'>
         <Progress

@@ -27,9 +27,6 @@ const petData = {
 };
 const EditPetProfilePage = () => {
   const navigate = useNavigate();
-  const navigateBack = () => {
-    navigate(-1);
-  };
   const [formData, setFormData] = useState(petData);
   const [profileImage, setProfileImage] = useState<File | undefined>(undefined);
   const handleChange = (field: string, value: string | File | null) => {
@@ -60,7 +57,7 @@ const EditPetProfilePage = () => {
   return (
     <div className='pb-[185px]'>
       <PageContainer>
-        <Header mode='back' title={`${petData.petName} 프로필 수정`} onClick={navigateBack} />
+        <Header mode='back' title={`${petData.petName} 프로필 수정`} />
         <div className='flex h-[180px] w-full flex-col items-center justify-center gap-[15px]'>
           <ProfileImgUploader image={profileImage} setImage={setProfileImage} initialImageUrl={formData.prePetImgUrl} />
           <button className='block text-caption text-gray-400' onClick={handleImageDelete}>
@@ -118,7 +115,7 @@ const EditPetProfilePage = () => {
           </div>
           <Input
             label='몸무게 (kg 단위)'
-            placeholder={petData.weight}
+            placeholder={petData.weight.toString()}
             value={formData.weight}
             onChange={(e) => handleChange('weight', e.target.value)}
           />

@@ -25,9 +25,6 @@ const data = {
 };
 const EditUserProfilePage = () => {
   const navigate = useNavigate();
-  const navigateBack = () => {
-    navigate(-1);
-  };
 
   const [formData, setFormData] = useState(data);
   const [profileImage, setProfileImage] = useState<File | undefined>(undefined);
@@ -61,7 +58,7 @@ const EditUserProfilePage = () => {
   return (
     <div className='pb-[185px]'>
       <PageContainer>
-        <Header mode='back' title='내 프로필 수정' onClick={navigateBack} />
+        <Header mode='back' title='내 프로필 수정' />
         <div className='flex h-[180px] w-full flex-col items-center justify-center gap-[15px]'>
           <ProfileImgUploader
             image={profileImage}

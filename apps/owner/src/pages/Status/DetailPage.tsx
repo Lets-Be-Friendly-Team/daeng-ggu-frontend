@@ -139,7 +139,7 @@ const DetailPage = () => {
     <div>
       <div className='mb-6 max-w-[480px]'>
         <Header
-          mode='back'
+          mode='customBack'
           title={headerTitle}
           onClick={() => {
             window.history.back();
