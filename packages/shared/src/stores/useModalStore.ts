@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { ModalProps } from '@daeng-ggu/shared';
+import { ModalProps } from '@daeng-ggu/design-system';
 import { create } from 'zustand';
 
 type PartialModalProps = Partial<ModalProps>;

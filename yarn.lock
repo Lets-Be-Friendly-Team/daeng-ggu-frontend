@@ -543,18 +543,26 @@ __metadata:
   resolution: "@daeng-ggu/shared@workspace:packages/shared"
   dependencies:
     "@eslint/js": "npm:^9.15.0"
+    "@types/eslint-plugin-jsx-a11y": "npm:^6"
+    "@types/eslint-plugin-tailwindcss": "npm:^3"
     "@types/react": "npm:^18.3.12"
     "@types/react-dom": "npm:^18.3.1"
     "@vitejs/plugin-react": "npm:^4.3.4"
-    eslint: "npm:^9.15.0"
+    eslint: "npm:9.14.0"
+    eslint-config-prettier: "npm:^9.1.0"
+    eslint-plugin-jsx-a11y: "npm:^6.10.2"
+    eslint-plugin-prettier: "npm:^5.2.1"
     eslint-plugin-react-hooks: "npm:^5.0.0"
     eslint-plugin-react-refresh: "npm:^0.4.14"
+    eslint-plugin-simple-import-sort: "npm:^12.1.1"
+    eslint-plugin-tailwindcss: "npm:^3.17.5"
     globals: "npm:^15.12.0"
+    prettier-plugin-tailwindcss: "npm:^0.6.8"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
     tailwindcss: "npm:^3.4.15"
     typescript: "npm:~5.6.2"
-    typescript-eslint: "npm:^8.15.0"
+    typescript-eslint: "npm:^8.11.0"
     vite: "npm:^6.0.1"
     zustand: "npm:^5.0.1"
   languageName: unknown
@@ -4778,7 +4786,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:^9.13.0, eslint@npm:^9.15.0":
+"eslint@npm:^9.13.0":
   version: 9.16.0
   resolution: "eslint@npm:9.16.0"
   dependencies:
@@ -8527,6 +8535,7 @@ __metadata:
   dependencies:
     "@chromatic-com/storybook": "npm:^3.2.2"
     "@daeng-ggu/design-system": "npm:*"
+    "@daeng-ggu/shared": "workspace:*"
     "@eslint/js": "npm:^9.13.0"
     "@storybook/addon-essentials": "npm:^8.4.5"
     "@storybook/addon-interactions": "npm:^8.4.5"
@@ -9202,7 +9211,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript-eslint@npm:^8.11.0, typescript-eslint@npm:^8.15.0, typescript-eslint@npm:^8.16.0":
+"typescript-eslint@npm:^8.11.0, typescript-eslint@npm:^8.16.0":
   version: 8.17.0
   resolution: "typescript-eslint@npm:8.17.0"
   dependencies:

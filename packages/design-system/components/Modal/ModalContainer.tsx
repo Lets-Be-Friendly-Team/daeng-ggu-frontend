@@ -1,4 +1,5 @@
-import useModalStore from '../../stores/useModalStore';
+import { useModalStore } from '@daeng-ggu/shared';
+
 import { ModalProps } from '../../types/modal';
 
 const ModalContainer = () => {

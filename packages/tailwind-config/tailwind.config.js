@@ -3,6 +3,15 @@ export default {
   darkMode: ['class'],
   theme: {
     extend: {
+      keyframes: {
+        slideUp: {
+          '0%': { transform: 'translate(-50%, -100%)', opacity: '0' },
+          '100%': { transform: 'translate(-50%, 0%)', opacity: '1' },
+        },
+      },
+      animation: {
+        'slide-up': 'slideUp 0.2s ease-in-out',
+      },
       borderRadius: {
         sm: '0.4rem',
         md: '0.8rem',
