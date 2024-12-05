@@ -12,6 +12,11 @@ import Test from '@/pages/Request/Test.tsx';
 import DetailPage from '@/pages/Status/DetailPage.tsx';
 import Status from '@/pages/Status/Status.tsx';
 
+import AddPetProfilePage from './pages/AddPetProfilePage/AddPetProfilePage';
+import EditPetProfilePage from './pages/EditPetProfilePage/EditPetProfilePage';
+import EditUserProfilePage from './pages/EditUserProfilePage/EditUserProfilePage';
+import MyPage from './pages/MyPage/MyPage';
+import ReviewDetailPage from './pages/ReviewDetailPage/ReviewDetailPage';
 import App from './App';
 
 import '@/styles/sequenceAnimation.css';
@@ -73,6 +78,26 @@ export const router = createBrowserRouter([
             element: <ProgressPage />,
           },
         ],
+      },
+      {
+        path: 'profile',
+        element: <MyPage />,
+      },
+      {
+        path: 'profile/edit',
+        element: <EditUserProfilePage />,
+      },
+      {
+        path: 'profile/edit/:petId',
+        element: <EditPetProfilePage />,
+      },
+      {
+        path: 'profile/pet/add',
+        element: <AddPetProfilePage />,
+      },
+      {
+        path: 'profile/review/:reviewId',
+        element: <ReviewDetailPage />,
       },
     ],
   },
