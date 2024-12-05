@@ -3,21 +3,25 @@ import { Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import { RouterErrorFallback } from '@daeng-ggu/shared';
 
+import App from '@/App';
 import ROUTES from '@/constants/routes';
+import AddPetProfilePage from '@/pages/AddPetProfilePage/AddPetProfilePage';
+import EditPetProfilePage from '@/pages/EditPetProfilePage/EditPetProfilePage';
+import EditUserProfilePage from '@/pages/EditUserProfilePage/EditUserProfilePage';
 import InputTest from '@/pages/InputTest/InputTest';
 import { MainPage } from '@/pages/MainPage';
+import MyPage from '@/pages/MyPage/MyPage';
 import ProgressPage from '@/pages/ProgressPage/ProgressPage';
 import Request from '@/pages/Request/Request';
 import Test from '@/pages/Request/Test.tsx';
+import ReservationPage from '@/pages/ReservationPage/ReservationPage';
+import ReviewDetailPage from '@/pages/ReviewDetailPage/ReviewDetailPage';
 import DetailPage from '@/pages/Status/DetailPage.tsx';
 import Status from '@/pages/Status/Status.tsx';
-import Suggest from '@/pages/Suggest/Suggest.tsx';
 
 import AddPetProfilePage from './pages/AddPetProfilePage/AddPetProfilePage';
 import EditPetProfilePage from './pages/EditPetProfilePage/EditPetProfilePage';
 import EditUserProfilePage from './pages/EditUserProfilePage/EditUserProfilePage';
-import SearchResultPage from './pages/MainPage/SearchResultPage';
-import MapPage from './pages/Map/MapPage';
 import MyPage from './pages/MyPage/MyPage';
 import ReviewDetailPage from './pages/ReviewDetailPage/ReviewDetailPage';
 import App from './App';
@@ -95,24 +99,28 @@ export const router = createBrowserRouter([
         ],
       },
       {
-        path: 'profile',
+        path: ROUTES.profile,
         element: <MyPage />,
       },
       {
-        path: 'profile/edit',
+        path: ROUTES.profileEdit,
         element: <EditUserProfilePage />,
       },
       {
-        path: 'profile/edit/:petId',
+        path: ROUTES.profileEditPet,
         element: <EditPetProfilePage />,
       },
       {
-        path: 'profile/pet/add',
+        path: ROUTES.profileAddPet,
         element: <AddPetProfilePage />,
       },
       {
-        path: 'profile/review/:reviewId',
+        path: ROUTES.reviewDetail,
         element: <ReviewDetailPage />,
+      },
+      {
+        path: ROUTES.reservation,
+        element: <ReservationPage />,
       },
     ],
   },

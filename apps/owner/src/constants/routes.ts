@@ -3,10 +3,14 @@ const ROUTES = {
   progress: '/progress',
   bid: '/bid',
   feed: '/feed',
-  reservation: '/reservation',
-  profile: '/profile',
   map: '/map',
   search: '/search',
+  profile: '/profile',
+  profileEdit: '/profile/edit',
+  profileEditPet: '/profile/edit/:petId',
+  profileAddPet: '/profile/pet/add',
+  reviewDetail: '/profile/review/:reviewId',
+  reservation: '/profile/reservation',
 } as const;
 
 export default ROUTES;
