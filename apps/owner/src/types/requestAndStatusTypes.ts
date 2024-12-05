@@ -84,7 +84,7 @@ interface DesignerProfileData extends ProfileData {
 }
 
 export const isDesignerProfileData = (profile: ProfileData): profile is DesignerProfileData => {
-  return false;
+  return typeof profile.desiredServiceCode === 'string';
 };
 
 export interface Estimate {
