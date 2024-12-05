@@ -1,6 +1,6 @@
 interface TimeSelectProps {
   availableTimes: number[];
-  selectValue: number;
+  selectValue: number | null;
   onSelectChange: (_value: number) => void;
 }
 
