@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import HTTPError from '@/apis/HTTPError';
-import buildURL from '@/apis/utils/BuildURL';
-import { HTTP_METHOD } from '@/constants/api';
-import ROUTES from '@/constants/routes';
+import { HTTP_METHOD } from '../constants/api';
+import buildURL from '../utils/buildURL';
+
+import HTTPError from './HTTPError';
 
 interface RequestProps {
   path: string;
@@ -111,7 +111,7 @@ class APIFetch implements APIFetchType {
     } catch (error) {
       // await deleteAccessToken()
       console.log(error);
-      window.location.href = ROUTES.main;
+      window.location.href = '/';
     }
     //  await this.reissueAccessToken();
   }
