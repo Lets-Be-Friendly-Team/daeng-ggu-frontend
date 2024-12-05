@@ -6,6 +6,7 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tsconfigPaths()],
+  assetsInclude: ['**/*.woff2'],
   resolve: {
     alias: {
       '@': path.resolve('src'),
