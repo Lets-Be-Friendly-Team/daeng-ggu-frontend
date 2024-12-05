@@ -1,6 +1,5 @@
-import { ModalProps } from 'src/types/modal';
-
 import useModalStore from '../../stores/useModalStore';
+import { ModalProps } from '../../types/modal';
 
 const ModalContainer = () => {
   const { Component, props, isOpen, close } = useModalStore();
