@@ -1,5 +1,7 @@
 import { ChangeEvent, FC, useState } from 'react';
 
+import { cn } from '../../lib/utils';
+
 export type TextChangeEvent = ChangeEvent<HTMLTextAreaElement>;
 
 interface Props {
@@ -15,6 +17,7 @@ interface Props {
   bgColor?: string; // 배경 색상
   borderWidth?: string; // 테두리 굵기
   borderColor?: string; // 테두리 색상
+  className?: string;
 }
 
 /* 컴포넌트 사용예시
@@ -51,6 +54,7 @@ const TextArea: FC<Props> = ({
   bgColor = '',
   borderWidth = '',
   borderColor = '',
+  className,
 }) => {
   const [inputCount, setInputCount] = useState(0);
   const changeHandler = (_ev: TextChangeEvent) => {
@@ -65,7 +69,7 @@ const TextArea: FC<Props> = ({
   const bcClass = borderColor ? `${borderColor}` : '';
 
   return (
-    <div className='flex flex-col'>
+    <div className={cn('flex flex-col', className)}>
       {label && (
         <label htmlFor={id} className='mb-[0.4rem] block text-body3 font-semibold text-gray-800'>
           {label}

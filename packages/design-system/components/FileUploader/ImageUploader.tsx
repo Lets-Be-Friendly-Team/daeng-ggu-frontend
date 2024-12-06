@@ -99,7 +99,7 @@ const ImageUploader = ({
 
   return (
     <div>
-      <label>{label}</label>
+      <label className='text-sub_h1 font-semibold'>{label}</label>
       {/* 슬라이더 */}
       {sliderList.length > 0 ? (
         <ImageSlider list={sliderList} />

@@ -21,9 +21,18 @@ type Story = StoryObj<typeof ImageSlider>;
 export const Default: Story = {
   args: {
     list: [
-      'https://via.placeholder.com/400x300?text=Image+1',
-      'https://via.placeholder.com/400x300?text=Image+2',
-      'https://via.placeholder.com/400x300?text=Image+3',
+      {
+        type: 'image',
+        src: 'https://via.placeholder.com/800x600',
+      },
+      {
+        type: 'image',
+        src: 'https://via.placeholder.com/800x600',
+      },
+      {
+        type: 'image',
+        src: 'https://via.placeholder.com/800x600',
+      },
     ],
   },
 };

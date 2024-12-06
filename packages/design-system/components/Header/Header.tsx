@@ -37,7 +37,7 @@ const Header = ({ mode, title, onClick }: IHeaderProps) => {
           <>
             <button onClick={onClick || handleBackClick} className='absolute left-0 flex h-[50px] items-center'>
               {mode === 'close' ? (
-                <CloseIcon className='h-[20px] w-[20px]' />
+                <CloseIcon className='h-[20px] w-[20px]' color='#454C53' />
               ) : (
                 <BackIcon className='h-[20px] w-[20px]' />
               )}
