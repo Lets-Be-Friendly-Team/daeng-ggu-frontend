@@ -16,10 +16,10 @@ import Suggest from '@/pages/Suggest/Suggest.tsx';
 import AddPetProfilePage from './pages/AddPetProfilePage/AddPetProfilePage';
 import EditPetProfilePage from './pages/EditPetProfilePage/EditPetProfilePage';
 import EditUserProfilePage from './pages/EditUserProfilePage/EditUserProfilePage';
-import MyPage from './pages/MyPage/MyPage';
-import ReviewDetailPage from './pages/ReviewDetailPage/ReviewDetailPage';
 import SearchResultPage from './pages/MainPage/SearchResultPage';
 import MapPage from './pages/Map/MapPage';
+import MyPage from './pages/MyPage/MyPage';
+import ReviewDetailPage from './pages/ReviewDetailPage/ReviewDetailPage';
 import App from './App';
 
 import '@/styles/sequenceAnimation.css';
@@ -39,7 +39,11 @@ export const router = createBrowserRouter([
         element: <MainPage />,
       },
       {
-        path: 'search',
+        path: ROUTES.map,
+        children: [{ index: true, element: <MapPage /> }],
+      },
+      {
+        path: ROUTES.search,
         element: <SearchResultPage />,
       },
       {
@@ -109,10 +113,6 @@ export const router = createBrowserRouter([
       {
         path: 'profile/review/:reviewId',
         element: <ReviewDetailPage />,
-      },
-      {
-        path: ROUTES.map,
-        children: [{ index: true, element: <MapPage /> }],
       },
     ],
   },

@@ -24,9 +24,11 @@ const MainPage = () => {
   };
   return (
     <>
-      <Header mode='main' />
-      <div className='sticky top-0 z-10 bg-white p-8'>
-        <SearchBar keyword={keyword} onChange={handleKeywordChange} handleSearch={handleSearch} />
+      <div className='sticky top-0 z-10'>
+        <Header mode='main' />
+        <div className='bg-white p-8'>
+          <SearchBar keyword={keyword} onChange={handleKeywordChange} handleSearch={handleSearch} />
+        </div>
       </div>
       <MainCategoryTab />
     </>

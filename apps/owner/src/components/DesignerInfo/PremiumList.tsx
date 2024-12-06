@@ -16,7 +16,7 @@ const PremiumList = () => {
     { label: '스트리밍', content: <DesignerList dataList={stList} /> },
   ];
   return (
-    <div className='mt-[-2rem]'>
+    <div className='mb-[2rem] mt-[-2rem]'>
       <CategoryTab tabs={tabs} />
     </div>
   );

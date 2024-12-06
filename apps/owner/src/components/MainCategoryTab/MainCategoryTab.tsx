@@ -78,7 +78,7 @@ const MainCategoryTab = () => {
 
   return (
     <div className='flex h-full flex-col'>
-      <div className='sticky top-[8.55rem] z-10 bg-white shadow-md'>
+      <div className='sticky top-[13.6rem] z-10 bg-white shadow-md'>
         <div ref={containerRef} className='relative flex items-center justify-between px-[2rem]'>
           {tabs.map((tab, index) => (
             <div

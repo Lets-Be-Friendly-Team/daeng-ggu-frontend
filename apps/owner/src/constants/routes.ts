@@ -6,6 +6,7 @@ const ROUTES = {
   reservation: '/reservation',
   profile: '/profile',
   map: '/map',
+  search: '/search',
 } as const;
 
 export default ROUTES;
