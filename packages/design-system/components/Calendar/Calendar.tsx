@@ -9,7 +9,6 @@ import { cn } from '../../lib/utils';
 export type CalendarProps = ComponentProps<typeof DayPicker>;
 
 function Calendar({ className, classNames, showOutsideDays = true, ...props }: CalendarProps) {
-  // Custom DayContent component
   function CustomDayContent(dayContentProps: DayContentProps) {
     const { date } = dayContentProps;
     const dayNumber = date.getDate();
