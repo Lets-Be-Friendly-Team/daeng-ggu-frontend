@@ -16,6 +16,8 @@ import Suggest from '@/pages/Suggest/Suggest.tsx';
 import AddPetProfilePage from './pages/AddPetProfilePage/AddPetProfilePage';
 import EditPetProfilePage from './pages/EditPetProfilePage/EditPetProfilePage';
 import EditUserProfilePage from './pages/EditUserProfilePage/EditUserProfilePage';
+import SearchResultPage from './pages/MainPage/SearchResultPage';
+import MapPage from './pages/Map/MapPage';
 import MyPage from './pages/MyPage/MyPage';
 import ReviewDetailPage from './pages/ReviewDetailPage/ReviewDetailPage';
 import App from './App';
@@ -35,6 +37,14 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <MainPage />,
+      },
+      {
+        path: ROUTES.map,
+        children: [{ index: true, element: <MapPage /> }],
+      },
+      {
+        path: ROUTES.search,
+        element: <SearchResultPage />,
       },
       {
         path: ROUTES.bid,

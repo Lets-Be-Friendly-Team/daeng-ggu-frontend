@@ -25,7 +25,13 @@ const OwnerBottomTabBar = () => {
 
   // url 바뀔때마다 activePath update
   useEffect(() => {
-    setActivePath(`/${location.pathname.split('/', 2)[1]}`);
+    const path = `/${location.pathname.split('/', 2)[1]}`;
+    if (path === '/map' || path === '/search') {
+      setActivePath('/');
+    } else {
+      setActivePath(path);
+    }
+    console.log(path);
   }, [location.pathname, setActivePath]);
 
   return (
