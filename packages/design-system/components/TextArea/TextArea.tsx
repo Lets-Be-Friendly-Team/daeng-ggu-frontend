@@ -71,7 +71,7 @@ const TextArea: FC<Props> = ({
   return (
     <div className={cn('flex flex-col', className)}>
       {label && (
-        <label htmlFor={id} className='mb-[0.4rem] block text-body3 font-semibold text-gray-800'>
+        <label htmlFor={id} className='mb-[0.4rem] block text-sub_h1 font-semibold text-gray-800'>
           {label}
         </label>
       )}
@@ -85,8 +85,8 @@ const TextArea: FC<Props> = ({
           value={value}
           onChange={changeHandler}
           maxLength={maxLength}
-          style={{ width: width || '100%', height: height || 'auto' }}
-          className={`${bgClass} max-h-20 resize-none overflow-y-auto text-body3 focus:outline-none [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 [&::-webkit-scrollbar]:w-2`}
+          style={{ width: width || '100%', height: height || '5rem' }}
+          className={`${bgClass} resize-none overflow-y-auto text-body3 focus:outline-none [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 [&::-webkit-scrollbar]:w-2`}
         ></textarea>
       </div>
       {maxLength && (

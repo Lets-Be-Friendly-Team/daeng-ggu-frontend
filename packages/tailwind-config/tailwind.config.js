@@ -22,17 +22,17 @@ export default {
         'pretendard-variable': ['Pretendard-Variable', 'sans-serif'],
       },
       fontSize: {
-        h1: ['2.4rem', { lineHeight: '3rem' }], // 24px font size, 30px line height
-        h2: ['2rem', { lineHeight: '2.6rem' }], // 20px font size, 26px line height
-        h3: ['1.8rem', { lineHeight: '2.4rem' }], // 18px font size, 24px line height
-        sub_h1: ['1.6rem', { lineHeight: '2.2rem' }], // 16px font size, 22px line height
-        sub_h2: ['1.4rem', { lineHeight: '2rem' }], // 14px font size, 20px line height
-        sub_h3: ['1.2rem', { lineHeight: '1.6rem' }], // 12px font size, 16px line height
-        body1: ['1.6rem', { lineHeight: '2.2rem' }], // 16px font size, 22px line height
-        body2: ['1.4rem', { lineHeight: '2rem' }], // 14px font size, 20px line height
-        body3: ['1.2rem', { lineHeight: '1.6rem' }], // 12px font size, 16px line height
-        caption: ['1rem', { lineHeight: '1.4rem' }], // 10px font size, 14px line height
-        iconCaption: ['0.8rem', { lineHeight: '1.2rem' }], // 8px font size, 12px line height      },
+        h1: ['2.8rem', { lineHeight: '3rem' }], // 24px font size, 30px line height
+        h2: ['2.4rem', { lineHeight: '2.6rem' }], // 20px font size, 26px line height
+        h3: ['2.2rem', { lineHeight: '2.4rem' }], // 18px font size, 24px line height
+        sub_h1: ['2rem', { lineHeight: '2.2rem' }], // 16px font size, 22px line height
+        sub_h2: ['1.8rem', { lineHeight: '2rem' }], // 14px font size, 20px line height
+        sub_h3: ['1.6rem', { lineHeight: '1.6rem' }], // 12px font size, 16px line height
+        body1: ['1.8rem', { lineHeight: '2.2rem' }], // 16px font size, 22px line height
+        body2: ['1.6rem', { lineHeight: '2rem' }], // 14px font size, 20px line height
+        body3: ['1.4rem', { lineHeight: '1.6rem' }], // 12px font size, 16px line height
+        caption: ['1.4rem', { lineHeight: '1.4rem' }], // 10px font size, 14px line height
+        iconCaption: ['1.2rem', { lineHeight: '1.2rem' }], // 8px font size, 12px line height      },
       },
       colors: {
         white: 'rgba(var(--white))',
