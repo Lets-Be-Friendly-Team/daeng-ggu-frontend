@@ -1,14 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import {
+  Calendar,
   Header,
   Progress,
   RadioGroup,
   RadioGroupItem,
   RegionSelector,
+  TimeSelect,
   TypeOneButton,
   TypeTwoButton,
 } from '@daeng-ggu/design-system';
+import { format } from 'date-fns';
 
 import ProfileButton from '@/pages/Request/ProfileButton';
 import ProfileViewer from '@/pages/Request/ProfileViewer';
@@ -43,6 +46,12 @@ interface ProfileData {
   address: string;
 }
 
+interface SelectedDateTime {
+  dateStr: string;
+  selectedDate: Date | null;
+  selectedTime: number | null;
+}
+
 interface StepByStepProps {
   stepCount: number;
   profileData: ProfileData[];
@@ -62,67 +71,24 @@ const StepByStep = ({ stepCount, profileData = [], onProfileSelect }: StepByStep
     subArea: '',
   });
 
+  // For Step 9
   const [userInput, setUserInput] = useState<string>('');
 
+  // For Step 6 - show 3 buttons and allow date/time selection per button
   const [showDateSelector, setShowDateSelector] = useState<boolean>(false);
-  const [dateSelection, setDateSelection] = useState<string[]>([]);
+  const [selectedDateTimes, setSelectedDateTimes] = useState<SelectedDateTime[]>([
+    { dateStr: '', selectedDate: null, selectedTime: null },
+    { dateStr: '', selectedDate: null, selectedTime: null },
+    { dateStr: '', selectedDate: null, selectedTime: null },
+  ]);
+
+  const [activeDateIndex, setActiveDateIndex] = useState<number | null>(null);
+  const [showCalendar, setShowCalendar] = useState<boolean>(false);
+  const [showTimeSelect, setShowTimeSelect] = useState<boolean>(false);
 
   const nodeRefs = useRef<Record<number, React.RefObject<HTMLDivElement>>>({});
   const neutralButtonRef = useRef<HTMLDivElement | null>(null);
   const buttonRef = useRef<HTMLDivElement>(null);
-
-  const getNodeRef = (key: number): React.RefObject<HTMLDivElement> => {
-    if (!nodeRefs.current[key]) {
-      nodeRefs.current[key] = React.createRef<HTMLDivElement>();
-    }
-    return nodeRefs.current[key];
-  };
-
-  const handleProfileClick = (petId: number) => {
-    onProfileSelect(petId);
-    setSelectedPet(petId);
-    setDirection('forward');
-    setTimeout(() => nextStep(), 0);
-  };
-  const handleNextStep = () => {
-    if (currentStep === 9 && selectedOptions[currentStep] === '지금 작성할게요.' && !userInput.trim()) {
-      return;
-    }
-    setDirection('forward');
-    setTimeout(() => nextStep(), 0);
-  };
-
-  const handlePrevStep = () => {
-    if (currentStep === 5 && showRegionSelector) {
-      setShowRegionSelector(false);
-      setRegionSelection({ area: '', subArea: '' });
-      setDirection('backward');
-      setTimeout(() => prevStep(), 0);
-    } else if (currentStep === 6 && showDateSelector) {
-      setShowDateSelector(false);
-      setDateSelection([]);
-      setDirection('backward');
-      setTimeout(() => prevStep(), 0);
-    } else {
-      setDirection('backward');
-      setTimeout(() => prevStep(), 0);
-    }
-  };
-
-  useEffect(() => {
-    const activeRef = nodeRefs.current[currentStep];
-    if (activeRef && activeRef.current) {
-      setContainerHeight(activeRef.current.offsetHeight);
-    }
-  }, [currentStep, showRegionSelector, showDateSelector]);
-
-  const handleEnableDynamicHeight = () => {
-    setIsDynamicHeight(true);
-  };
-
-  const handleDisableDynamicHeight = () => {
-    setIsDynamicHeight(false);
-  };
 
   const stepData: StepData[] = [
     {
@@ -163,6 +129,143 @@ const StepByStep = ({ stepCount, profileData = [], onProfileSelect }: StepByStep
   ];
 
   const currentStepData = stepData.find((data) => data.step === currentStep);
+
+  const getNodeRef = (key: number): React.RefObject<HTMLDivElement> => {
+    if (!nodeRefs.current[key]) {
+      nodeRefs.current[key] = React.createRef<HTMLDivElement>();
+    }
+    return nodeRefs.current[key];
+  };
+
+  const handleProfileClick = (petId: number) => {
+    onProfileSelect(petId);
+    setSelectedPet(petId);
+    setDirection('forward');
+    setTimeout(() => nextStep(), 0);
+  };
+
+  const handleNextStep = () => {
+    if (currentStep === 9 && selectedOptions[currentStep] === '지금 작성할게요.' && !userInput.trim()) {
+      return;
+    }
+    setDirection('forward');
+    setTimeout(() => nextStep(), 0);
+  };
+
+  const handlePrevStep = () => {
+    if (currentStep === 5 && showRegionSelector) {
+      setShowRegionSelector(false);
+      setRegionSelection({ area: '', subArea: '' });
+      setDirection('backward');
+      setTimeout(() => prevStep(), 0);
+    } else if (currentStep === 6 && showDateSelector) {
+      setShowDateSelector(false);
+      setDirection('backward');
+      setTimeout(() => prevStep(), 0);
+    } else {
+      setDirection('backward');
+      setTimeout(() => prevStep(), 0);
+    }
+  };
+
+  useEffect(() => {
+    const activeRef = nodeRefs.current[currentStep];
+    if (activeRef && activeRef.current) {
+      setContainerHeight(activeRef.current.offsetHeight);
+    }
+  }, [currentStep, showRegionSelector, showDateSelector, showCalendar, showTimeSelect, selectedDateTimes]);
+
+  const handleEnableDynamicHeight = () => {
+    setIsDynamicHeight(true);
+  };
+
+  const handleDisableDynamicHeight = () => {
+    setIsDynamicHeight(false);
+  };
+
+  const handleDateTimeButtonClick = (index: number) => {
+    setActiveDateIndex(index);
+    setShowCalendar(true);
+    setShowTimeSelect(false);
+  };
+
+  const handleDateSelect = (date: Date | undefined) => {
+    if (activeDateIndex === null) return;
+    if (date) {
+      const newDateTimes = [...selectedDateTimes];
+      newDateTimes[activeDateIndex].selectedDate = date;
+      setSelectedDateTimes(newDateTimes);
+      setShowTimeSelect(true);
+    }
+  };
+
+  const handleTimeSelectChange = (time: number) => {
+    if (activeDateIndex === null) return;
+    const newDateTimes = [...selectedDateTimes];
+    const chosenDate = newDateTimes[activeDateIndex].selectedDate;
+    if (!chosenDate) return; // date not chosen yet
+    newDateTimes[activeDateIndex].selectedTime = time;
+    // Now store full date and time in dateStr
+    const datePart = format(chosenDate, 'yyyy-MM-dd');
+    const timePart = String(time).padStart(2, '0') + ':00:00';
+    newDateTimes[activeDateIndex].dateStr = `${datePart} ${timePart}`;
+    setSelectedDateTimes(newDateTimes);
+
+    // Close selection
+    setShowCalendar(false);
+    setShowTimeSelect(false);
+    setActiveDateIndex(null);
+  };
+
+  const renderDateSelector = () => {
+    return (
+      <div className='m-auto mt-4 flex max-w-[280px] flex-col items-center gap-2'>
+        <h3 className='mb-2 text-sub_h3 font-bold'>날짜와 시간을 선택해주세요.</h3>
+        <div className='flex w-full flex-col gap-2'>
+          {selectedDateTimes.map((item, index) => (
+            <TypeTwoButton
+              key={index}
+              text={item.dateStr || '0 date'}
+              color='bg-secondary'
+              onClick={() => handleDateTimeButtonClick(index)}
+            />
+          ))}
+        </div>
+
+        {activeDateIndex !== null && showCalendar && (
+          <div className='mt-4 w-full'>
+            <Calendar
+              mode='single'
+              selected={selectedDateTimes[activeDateIndex].selectedDate || undefined}
+              onSelect={handleDateSelect}
+              disabled={() => false}
+            />
+            {showTimeSelect && (
+              <>
+                <h3 className='my-4 text-sub_h3 font-bold'>시간을 선택해주세요:</h3>
+                <TimeSelect
+                  availableTimes={Array.from({ length: 12 }, (_, i) => i + 9)} // 9:00 to 20:00
+                  selectValue={selectedDateTimes[activeDateIndex].selectedTime}
+                  onSelectChange={handleTimeSelectChange}
+                />
+              </>
+            )}
+          </div>
+        )}
+
+        <div className='mt-4'>
+          <TypeTwoButton
+            text='다음 단계로 가기'
+            color='bg-secondary'
+            onClick={() => {
+              setShowDateSelector(false);
+              handleNextStep();
+            }}
+          />
+        </div>
+      </div>
+    );
+  };
 
   const renderStepOne = () => (
     <div className='flex flex-col items-center pt-10'>
@@ -245,9 +348,10 @@ const StepByStep = ({ stepCount, profileData = [], onProfileSelect }: StepByStep
             6:
               selectedOptions[6] === '무관'
                 ? '무관'
-                : dateSelection.length > 0
-                  ? dateSelection.join(', ')
-                  : '날짜 선택하기',
+                : selectedDateTimes
+                    .filter((d) => d.dateStr)
+                    .map((d) => d.dateStr)
+                    .join(', ') || '날짜 선택하기',
           }}
           profileData={profileData}
           stepData={stepData}
@@ -270,10 +374,7 @@ const StepByStep = ({ stepCount, profileData = [], onProfileSelect }: StepByStep
           className='flex flex-col items-center gap-4'
           value={selectedOptions[currentStep] || ''}
           onValueChange={(value: string) => {
-            setSelectedOptions((prev) => ({
-              ...prev,
-              [currentStep]: value,
-            }));
+            setSelectedOptions((prev) => ({ ...prev, [currentStep]: value }));
             if (currentStep === 9 && value !== '지금 작성할게요.') {
               setUserInput('');
             }
@@ -310,7 +411,7 @@ const StepByStep = ({ stepCount, profileData = [], onProfileSelect }: StepByStep
                 } else if (currentStep === 6 && option === '날짜 선택하기') {
                   setShowDateSelector(true);
                 } else if (currentStep === 9 && option === '지금 작성할게요.') {
-                  // 아무것도 안하지만 if 문 특성상 필요
+                  // no-op
                 } else {
                   handleNextStep();
                 }
@@ -338,9 +439,7 @@ const StepByStep = ({ stepCount, profileData = [], onProfileSelect }: StepByStep
                 option === '지금 작성할게요.' && (
                   <div
                     className='w-full overflow-hidden transition-all duration-300 ease-in-out'
-                    style={{
-                      height: 'auto',
-                    }}
+                    style={{ height: 'auto' }}
                   >
                     <textarea
                       rows={6}
@@ -372,34 +471,7 @@ const StepByStep = ({ stepCount, profileData = [], onProfileSelect }: StepByStep
           </div>
         )}
 
-        {showDateSelector && (
-          <div className='m-auto mt-4 max-w-[280px]'>
-            <h3 className='mb-2 text-sub_h3 font-bold'>원하는 날짜를 최대 3개까지 선택해주세요:</h3>
-            <div className='flex flex-col gap-2'>
-              {Array.from({ length: 3 }, (_, index) => (
-                <input
-                  key={index}
-                  type='date'
-                  value={dateSelection[index] || ''}
-                  onChange={(e) => {
-                    const newDates = [...dateSelection];
-                    newDates[index] = e.target.value;
-                    setDateSelection(newDates);
-                  }}
-                  className='rounded-md border p-2'
-                />
-              ))}
-            </div>
-            <TypeTwoButton
-              text='다음 단계로 가기'
-              color='bg-secondary'
-              onClick={() => {
-                setShowDateSelector(false);
-                handleNextStep();
-              }}
-            />
-          </div>
-        )}
+        {showDateSelector && renderDateSelector()}
       </div>
     );
   };
@@ -410,9 +482,9 @@ const StepByStep = ({ stepCount, profileData = [], onProfileSelect }: StepByStep
       desiredServiceCode: selectedOptions[3],
       lastGroomingDate: selectedOptions[4],
       desiredRegion: selectedOptions[5] === '무관' ? '무관' : `${regionSelection.area}, ${regionSelection.subArea}`,
-      desiredDate1: dateSelection[0] || '',
-      desiredDate2: dateSelection[1] || '',
-      desiredDate3: dateSelection[2] || '',
+      desiredDate1: selectedDateTimes[0].dateStr || '',
+      desiredDate2: selectedDateTimes[1].dateStr || '',
+      desiredDate3: selectedDateTimes[2].dateStr || '',
       isVisitRequired: selectedOptions[7] === '원해요',
       isMonitoringIncluded: selectedOptions[8] === '원해요',
       additionalRequest: userInput,
@@ -450,7 +522,7 @@ const StepByStep = ({ stepCount, profileData = [], onProfileSelect }: StepByStep
                   : containerHeight
                     ? `${containerHeight}px`
                     : 'auto'
-                : '400px',
+                : '1000px',
             marginBottom: currentStep === 10 ? '60px' : '',
           }}
         >

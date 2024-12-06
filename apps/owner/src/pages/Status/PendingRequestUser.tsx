@@ -116,7 +116,7 @@ const PendingRequestUser = ({ data }: PendingRequestUserProps) => {
                           mode='designerCard'
                           imageUrl={estimate.designerImageUrl}
                           name={estimate.designerName}
-                          containerClassName='mr-4 h-[70px] w-[70px]'
+                          containerClassName='mr-8 h-[70px] w-[70px]'
                         />
                         <div>
                           <p className='text-gray-800'>{formatDate(estimate.createdAt)} 견적요청</p>
