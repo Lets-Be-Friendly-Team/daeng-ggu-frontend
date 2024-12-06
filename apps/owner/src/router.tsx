@@ -25,7 +25,8 @@ import ReviewDetailPage from '@/pages/ReviewDetailPage/ReviewDetailPage';
 import DetailDesigner from '@/pages/Status/DetailDesigner.tsx';
 import DetailPage from '@/pages/Status/DetailPage.tsx';
 import Status from '@/pages/Status/Status.tsx';
-import Suggest from '@/pages/Suggest/Suggest';
+import Suggest from '@/pages/Suggest/Suggest.tsx';
+import LoginPage from '@/pages/LoginPage/LoginPage';
 
 import DesignerProfilePage from './pages/DesignerProfilePage/DesignerProfilePage';
 import FeedPage from './pages/FeedPage/FeedPage';
@@ -67,6 +68,10 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.feed,
         element: <FeedPage />,
+      },
+      {
+        path: ROUTES.login,
+        children: [{ index: true, element: <LoginPage /> }],
       },
       {
         path: ROUTES.map,
