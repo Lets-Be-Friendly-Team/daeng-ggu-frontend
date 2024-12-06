@@ -21,7 +21,8 @@ import ReservationPage from '@/pages/ReservationPage/ReservationPage';
 import ReviewDetailPage from '@/pages/ReviewDetailPage/ReviewDetailPage';
 import DetailPage from '@/pages/Status/DetailPage.tsx';
 import Status from '@/pages/Status/Status.tsx';
-import Suggest from '@/pages/Suggest/Suggest';
+import Suggest from '@/pages/Suggest/Suggest.tsx';
+import LoginPage from '@/pages/LoginPage/LoginPage';
 
 import '@/styles/sequenceAnimation.css';
 
@@ -38,6 +39,10 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <MainPage />,
+      },
+      {
+        path: ROUTES.login,
+        children: [{ index: true, element: <LoginPage /> }],
       },
       {
         path: ROUTES.map,
