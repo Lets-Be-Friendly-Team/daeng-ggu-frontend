@@ -2,7 +2,7 @@ import { LogoImage, PageContainer } from '@daeng-ggu/design-system';
 
 import KakaoLoginBtn from '@/components/KakaoLoginBtn/KakaoLoginBtn';
 
-interface LoginContentProps {
+export interface LoginContentProps {
   userType: 'C' | 'D';
 }
 const LoginContent = ({ userType }: LoginContentProps) => {
@@ -35,7 +35,7 @@ const LoginContent = ({ userType }: LoginContentProps) => {
             )}
           </div>
         </div>
-        <KakaoLoginBtn />
+        <KakaoLoginBtn userType={userType} />
       </div>
     </PageContainer>
   );
