@@ -10,6 +10,8 @@ import EditPetProfilePage from '@/pages/EditPetProfilePage/EditPetProfilePage';
 import EditUserProfilePage from '@/pages/EditUserProfilePage/EditUserProfilePage';
 import InputTest from '@/pages/InputTest/InputTest';
 import { MainPage } from '@/pages/MainPage';
+import SearchResultPage from '@/pages/MainPage/SearchResultPage';
+import MapPage from '@/pages/Map/MapPage';
 import MyPage from '@/pages/MyPage/MyPage';
 import ProgressPage from '@/pages/ProgressPage/ProgressPage';
 import Request from '@/pages/Request/Request';
@@ -18,13 +20,7 @@ import ReservationPage from '@/pages/ReservationPage/ReservationPage';
 import ReviewDetailPage from '@/pages/ReviewDetailPage/ReviewDetailPage';
 import DetailPage from '@/pages/Status/DetailPage.tsx';
 import Status from '@/pages/Status/Status.tsx';
-
-import AddPetProfilePage from './pages/AddPetProfilePage/AddPetProfilePage';
-import EditPetProfilePage from './pages/EditPetProfilePage/EditPetProfilePage';
-import EditUserProfilePage from './pages/EditUserProfilePage/EditUserProfilePage';
-import MyPage from './pages/MyPage/MyPage';
-import ReviewDetailPage from './pages/ReviewDetailPage/ReviewDetailPage';
-import App from './App';
+import Suggest from '@/pages/Suggest/Suggest';
 
 import '@/styles/sequenceAnimation.css';
 
