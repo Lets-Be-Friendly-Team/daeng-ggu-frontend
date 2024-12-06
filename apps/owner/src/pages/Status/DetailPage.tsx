@@ -15,6 +15,7 @@ const DetailPage = () => {
   const data = location.state?.data;
   const pageMode: PageMode = location.state?.pageMode || 'user';
   const navigate = useNavigate();
+  console.log(pageMode);
 
   const tempDataUser = {
     petId: 1,
@@ -50,9 +51,9 @@ const DetailPage = () => {
     petImgUrl: 'https://via.placeholder.com/100',
     desiredServiceCode: '부분미용',
     lastGroomingDate: '한달전',
-    desiredDate1: '2023-10-15T10:00:00',
-    desiredDate2: '2023-10-16T14:00:00',
-    desiredDate3: '2023-10-17T09:00:00',
+    desiredDate1: '2024-12-15T10:00:00',
+    desiredDate2: '2024-12-16T14:00:00',
+    desiredDate3: '2024-12-17T09:00:00',
     desiredRegion: '서울, 강남구',
     isVisitRequired: true,
     isMonitoringIncluded: false,
@@ -78,7 +79,7 @@ const DetailPage = () => {
     pageMode === 'user'
       ? data || tempDataUser
       : pageMode === 'designer'
-        ? data || tempDataDesigner
+        ? tempDataDesigner
         : data || tempDataReservation;
 
   const getSelectedOptions = (): { [key: number]: string } => {
@@ -150,7 +151,17 @@ const DetailPage = () => {
               // navigate('/booking', { state: { petId: selectedData.petId } });
               console.log('예약하기 버튼 클릭');
             } else if (pageMode === 'designer') {
-              navigate('/bid/suggest', { state: { petId: selectedData.petId } });
+              navigate('/bid/suggest', {
+                state: {
+                  petId: selectedData.petId,
+                  customerName: selectedData.customerName,
+                  desiredDateOne: selectedData.desiredDate1,
+                  desiredDateTwo: selectedData.desiredDate2,
+                  desiredDateThree: selectedData.desiredDate3,
+                  address: selectedData.address,
+                  phone: selectedData.phone,
+                },
+              });
             } else if (pageMode === 'reservation') {
               console.log('예약 취소 버튼 클릭');
             }
