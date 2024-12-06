@@ -8,7 +8,7 @@ interface IProfileProps {
 }
 const Profile = ({ nickname, customerImgUrl }: IProfileProps) => {
   const navigate = useNavigate();
-  const goToReservations = () => navigate('/reservations');
+  const goToReservations = () => navigate('/profile/reservation');
   const goToEditProfile = () => navigate('/profile/edit');
   return (
     <div className='w-full'>
