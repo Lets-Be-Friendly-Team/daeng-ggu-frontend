@@ -5,11 +5,11 @@ import LoginContent from './LoginContent';
 const LoginPage = () => {
   const tabs = [
     {
-      label: '보호자 회원',
+      label: '보호자',
       content: <LoginContent userType='C' />,
     },
     {
-      label: '디자이너 회원',
+      label: '디자이너',
       content: <LoginContent userType='D' />,
     },
   ];
