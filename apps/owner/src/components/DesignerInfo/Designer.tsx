@@ -9,14 +9,14 @@ const Designer = ({ designer }: { designer: DesignerType }) => {
         <img className='w-fll h-full object-cover' src={designer.designerImgUrl} alt='디자이너 사진' />
       </div>
       <div className='mt-3 flex flex-col gap-y-1 text-body3 text-gray-600'>
-        <div className='flex items-center gap-x-4'>
+        <div className='flex h-[2.2rem] items-center gap-x-4'>
           <p className='text-h2 font-bold text-primary'>{designer.nickname}</p>
 
-          <div className='flex items-center gap-x-1 leading-3'>
+          <div className='flex gap-x-1'>
             <FullStarIcon size='w-[1.2rem] h-[1.2rem]' color='fill-[#FFC90A]' />
             <p>{designer.reviewStarAvg}</p>
           </div>
-          <div className='flex items-center gap-x-1 leading-3'>
+          <div className='flex gap-x-1'>
             <FullBookMarkIcon size='w-[1.2rem] h-[1.2rem]' color='fill-primary' />
             <p>{designer.bookmarkCnt}</p>
           </div>
