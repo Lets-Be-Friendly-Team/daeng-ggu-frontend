@@ -1,7 +1,7 @@
 interface BulbIconProps {
   className?: string;
 }
-const Bulb = ({ className }: BulbIconProps) => {
+const BulbIcon = ({ className }: BulbIconProps) => {
   return (
     <svg viewBox='0 0 25 25' fill='none' xmlns='http://www.w3.org/2000/svg' className={className}>
       <path
@@ -12,4 +12,4 @@ const Bulb = ({ className }: BulbIconProps) => {
   );
 };
 
-export default Bulb;
+export default BulbIcon;

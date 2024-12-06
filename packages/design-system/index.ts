@@ -48,6 +48,7 @@ import BookmarkFillIcon from './components/Icons/BookmarkFillIcon';
 import BookmarkIcon from './components/Icons/BookmarkIcon';
 import EmptyBookMarkIcon from './components/Icons/BookMark/EmptyBookMarkIcon';
 import FullBookMarkIcon from './components/Icons/BookMark/FullBookMarkIcon';
+import BulbIcon from './components/Icons/BulbIcon';
 import CloseIcon from './components/Icons/CloseIcon';
 import EmptyHeartIcon from './components/Icons/EmptyHeartIcon';
 import FeedIcon from './components/Icons/FeedIcon';
@@ -62,6 +63,7 @@ import ReportDangIcon from './components/Icons/ReportDangIcon';
 import RequestListIcon from './components/Icons/RequestListIcon';
 import ReservationIcon from './components/Icons/ReservationIcon';
 import RightIcon from './components/Icons/RightIcon';
+import ScissorIcon from './components/Icons/ScissorIcon';
 import SendIcon from './components/Icons/SendIcon';
 import StarEmptyIcon from './components/Icons/StarEmptyIcon';
 import StarFullIcon from './components/Icons/StarFullIcon';
@@ -134,6 +136,8 @@ export {
   StarHalfIcon,
   LockIcon,
   MoreIcon,
+  BulbIcon,
+  ScissorIcon,
   EmptyStarIcon,
   HalfStarIcon,
   FullStarIcon,
