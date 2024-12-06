@@ -12,6 +12,7 @@ const ROUTES = {
   reviewDetail: 'profile/review/:reviewId',
   reservation: 'profile/reservation',
   review: 'review',
+  login: 'login',
 } as const;
 
 export default ROUTES;
