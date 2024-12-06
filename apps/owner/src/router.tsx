@@ -6,6 +6,7 @@ import { RouterErrorFallback } from '@daeng-ggu/shared';
 import App from '@/App';
 import ROUTES from '@/constants/routes';
 import AddPetProfilePage from '@/pages/AddPetProfilePage/AddPetProfilePage';
+import CreateReviewPage from '@/pages/CreateReviewPage/CreateReviewPage';
 import EditPetProfilePage from '@/pages/EditPetProfilePage/EditPetProfilePage';
 import EditUserProfilePage from '@/pages/EditUserProfilePage/EditUserProfilePage';
 import InputTest from '@/pages/InputTest/InputTest';
@@ -91,6 +92,15 @@ export const router = createBrowserRouter([
           {
             index: true,
             element: <ProgressPage />,
+          },
+        ],
+      },
+      {
+        path: ROUTES.review,
+        children: [
+          {
+            index: true,
+            element: <CreateReviewPage />,
           },
         ],
       },
