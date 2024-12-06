@@ -68,14 +68,7 @@ export const router = createBrowserRouter([
         path: ROUTES.feed,
         element: <FeedPage />,
       },
-      {
-        path: ROUTES.login,
-        children: [{ index: true, element: <LoginPage /> }],
-      },
-      {
-        path: ROUTES.signup,
-        children: [{ index: true, element: <SignUpPage /> }],
-      },
+
       {
         path: ROUTES.map,
         children: [{ index: true, element: <MapPage /> }],
