@@ -1,5 +1,7 @@
 import { ChangeEvent, FC, useState } from 'react';
 
+import { cn } from '../../lib/utils';
+
 export type TextChangeEvent = ChangeEvent<HTMLTextAreaElement>;
 
 interface Props {
@@ -15,6 +17,7 @@ interface Props {
   bgColor?: string; // 배경 색상
   borderWidth?: string; // 테두리 굵기
   borderColor?: string; // 테두리 색상
+  className?: string;
 }
 
 /* 컴포넌트 사용예시
@@ -51,6 +54,7 @@ const TextArea: FC<Props> = ({
   bgColor = '',
   borderWidth = '',
   borderColor = '',
+  className,
 }) => {
   const [inputCount, setInputCount] = useState(0);
   const changeHandler = (_ev: TextChangeEvent) => {
@@ -65,9 +69,9 @@ const TextArea: FC<Props> = ({
   const bcClass = borderColor ? `${borderColor}` : '';
 
   return (
-    <div className='flex flex-col'>
+    <div className={cn('flex flex-col', className)}>
       {label && (
-        <label htmlFor={id} className='mb-[0.4rem] block text-body3 font-semibold text-gray-800'>
+        <label htmlFor={id} className='mb-[0.4rem] block text-sub_h1 font-semibold text-gray-800'>
           {label}
         </label>
       )}
@@ -81,8 +85,8 @@ const TextArea: FC<Props> = ({
           value={value}
           onChange={changeHandler}
           maxLength={maxLength}
-          style={{ width: width || '100%', height: height || 'auto' }}
-          className={`${bgClass} max-h-20 resize-none overflow-y-auto text-body3 focus:outline-none [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 [&::-webkit-scrollbar]:w-2`}
+          style={{ width: width || '100%', height: height || '5rem' }}
+          className={`${bgClass} resize-none overflow-y-auto text-body3 focus:outline-none [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 [&::-webkit-scrollbar]:w-2`}
         ></textarea>
       </div>
       {maxLength && (
