@@ -34,7 +34,7 @@ const ImageSlider = ({ list }: SliderProps) => {
         clickable: true,
       }}
       modules={[Zoom, Navigation, Pagination]}
-      className='mySwiper overflow-hidden rounded-md border border-gray-100'
+      className='mySwiper1 overflow-hidden rounded-md border border-gray-100'
     >
       {list.map((item, index) => (
         <SwiperSlide key={index}>
