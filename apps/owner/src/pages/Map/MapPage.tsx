@@ -18,13 +18,22 @@ const MapPage = () => {
   return (
     <NavermapsProvider ncpClientId='j6dpvzog6c'>
       <div className='relative'>
-        <Header mode='back' title='지도로 검색' />
-        <div className='absolute z-10 w-3/4 p-8'>
-          <SearchBar keyword={keyword} onChange={handleKeywordChange} handleSearch={handleSearch} />
+        {/* <div className='px-8'>
+          <Header mode='back' title='지도로 검색' />
+        </div> */}
+        <div className='absolute z-10 w-full'>
+          <div className='bg-white px-8'>
+            <Header mode='back' title='지도로 검색' />
+          </div>
+          <div className='p-8'>
+            <SearchBar keyword={keyword} onChange={handleKeywordChange} handleSearch={handleSearch} />
+          </div>
         </div>
-        <NaverMapContent className='absolute top-0 mb-24 h-[calc(100vh-70px)]' mapLat={37.3595704} mapLng={127.105399}>
+        {/* <div className='absolute top-0 mb-[6.5rem] h-[calc(100vh-50px)]'> */}
+        <NaverMapContent className='absolute top-0 h-[calc(100vh-65px)]' mapLat={37.3595704} mapLng={127.105399}>
           <Marker position={{ lat: 37.3595704, lng: 127.105399 }} />
         </NaverMapContent>
+        {/* </div> */}
       </div>
     </NavermapsProvider>
   );

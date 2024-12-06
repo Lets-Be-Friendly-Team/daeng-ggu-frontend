@@ -24,9 +24,9 @@ const MainPage = () => {
   };
   return (
     <>
-      <div className='sticky top-0 z-10'>
+      <div className='sticky top-0 z-10 px-8'>
         <Header mode='main' />
-        <div className='bg-white p-8'>
+        <div className='bg-white py-8'>
           <SearchBar keyword={keyword} onChange={handleKeywordChange} handleSearch={handleSearch} />
         </div>
       </div>
