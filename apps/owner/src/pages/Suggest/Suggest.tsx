@@ -196,7 +196,7 @@ const Suggest = () => {
 
   return (
     <div>
-      <div className='mb-6 max-w-[480px]'>
+      <div className='mb-6 w-full'>
         <Header
           mode='customBack'
           title='견적 제안하기'

@@ -58,7 +58,7 @@ const SuggestReview = ({ data }: SuggestReviewProps) => {
           </div>
           <BorderContainer>
             <div className='mx-auto flex min-h-[90px] rounded-[8px] bg-white'>
-              <div className='mx-auto flex min-w-[240px] items-center bg-white p-4'>
+              <div className='mx-auto flex w-full items-center bg-white p-4'>
                 <Avatar
                   mode='designerCard'
                   imageUrl={data.designerImageUrl}

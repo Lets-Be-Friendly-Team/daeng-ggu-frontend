@@ -60,8 +60,8 @@ const DetailDesigner = () => {
   const modifiedData = { ...tempDesignerData, serviceDescription };
 
   return (
-    <div className='h-full max-w-[480px]'>
-      <div className='max-w-[480px]'>
+    <div className='h-full w-full'>
+      <div className='w-full'>
         <Header mode='back' title='견적 제안서 보기' />
         <SuggestReview data={modifiedData} />
       </div>
