@@ -28,6 +28,7 @@ import FullBookMarkIcon from './components/Icons/BookMark/FullBookMarkIcon';
 import BookmarkFillIcon from './components/Icons/BookmarkFillIcon';
 import BookmarkIcon from './components/Icons/BookmarkIcon';
 import BulbIcon from './components/Icons/BulbIcon';
+import { CircleScissorIcon } from './components/Icons/CircleScissorIcon';
 import CloseIcon from './components/Icons/CloseIcon';
 import EmptyHeartIcon from './components/Icons/EmptyHeartIcon';
 import FeedIcon from './components/Icons/FeedIcon';
@@ -74,6 +75,7 @@ import type { ModalProps } from './types/modal';
 import type { ToastType } from './types/toast';
 export {
   CategoryTab,
+  CircleScissorIcon,
   StarRating,
   StarIcon,
   ToastType,

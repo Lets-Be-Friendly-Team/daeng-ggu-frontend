@@ -1,42 +1,63 @@
+import { MemoryRouter } from 'react-router-dom';
 import { Header } from '@daeng-ggu/design-system';
-import { action } from '@storybook/addon-actions';
-import type { Meta, StoryFn } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 
-export default {
-  title: 'Daeng-ggu/Header',
+const meta: Meta<typeof Header> = {
+  title: 'daeng-ggu/Header',
   component: Header,
   argTypes: {
     mode: {
-      control: { type: 'select', options: ['main', 'back', 'close'] },
-      description: 'Header mode: main, back, or close',
+      control: 'select',
+      options: ['main', 'back', 'close', 'customBack'],
+      description: '헤더의 모드',
+      defaultValue: 'main',
     },
     title: {
       control: 'text',
-      description: 'Title for the header (used in back and close modes)',
+      description: '헤더의 제목',
     },
-    onClick: { action: 'clicked', description: 'Callback for button click' },
+    onClick: {
+      action: 'onClick',
+      description: '클릭 시 실행되는 콜백 함수',
+    },
   },
-} as Meta;
-
-const Template: StoryFn = (args) => <Header mode='main' {...args} />;
-
-export const Main = Template.bind({});
-Main.args = {
-  mode: 'main',
-  title: 'Main Header',
-  onClick: action('Logo clicked'),
+  decorators: [
+    (Story) => (
+      <MemoryRouter>
+        <Story />
+      </MemoryRouter>
+    ),
+  ],
 };
 
-export const BackIcon = Template.bind({});
-BackIcon.args = {
-  mode: 'back',
-  title: 'Back Header',
-  onClick: action('Back button clicked'),
+export default meta;
+
+type Story = StoryObj<typeof Header>;
+
+export const MainHeader: Story = {
+  args: {
+    mode: 'main',
+  },
 };
 
-export const CloseIcon = Template.bind({});
-CloseIcon.args = {
-  mode: 'close',
-  title: 'Close Header',
-  onClick: action('Close button clicked'),
+export const BackHeader: Story = {
+  args: {
+    mode: 'back',
+    title: '뒤로가기',
+  },
+};
+
+export const CloseHeader: Story = {
+  args: {
+    mode: 'close',
+    title: '닫기',
+  },
+};
+
+export const CustomBackHeader: Story = {
+  args: {
+    mode: 'customBack',
+    title: '사용자 지정 뒤로가기',
+    onClick: () => alert('Custom Back Clicked!'),
+  },
 };
