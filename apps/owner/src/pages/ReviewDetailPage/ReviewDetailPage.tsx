@@ -68,7 +68,7 @@ const ReviewDetail = () => {
           <div className='flex items-center gap-[18px]'>
             {reviews[activeIndex]?.feedExposure ? null : <LockIcon className='h-[20px] w-[20px]' color='#F2F4F5' />}
             <button onClick={navigateBack}>
-              <CloseIcon className='h-[20px] w-[20px]' color='#F2F4F5' />
+              <CloseIcon className='h-[20px] w-[20px] stroke-white' />
             </button>
           </div>
         </div>
