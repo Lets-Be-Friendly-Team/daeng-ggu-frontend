@@ -1,5 +1,6 @@
 import { ChangeEvent, useState } from 'react';
 import { Header, SearchBar } from '@daeng-ggu/design-system';
+import { useUserLocation } from '@daeng-ggu/shared';
 
 import CustomMarker from '@/components/NaverMap/CustomMarker';
 import NaverMapContent from '@/components/NaverMap/NaverMapContent';
@@ -14,6 +15,7 @@ const MapPage = () => {
   const handleSearch = () => {
     console.log('검색 실행:', keyword);
   };
+  const { location } = useUserLocation();
 
   return (
     <div className='relative'>
@@ -29,7 +31,11 @@ const MapPage = () => {
         </div>
       </div>
       {/* <div className='absolute top-0 mb-[6.5rem] h-[calc(100vh-50px)]'> */}
-      <NaverMapContent className='absolute top-0 h-[calc(100vh-65px)]' mapLat={37.3595704} mapLng={127.105399}>
+      <NaverMapContent
+        className='absolute top-0 h-[calc(100vh-75px)]'
+        mapLat={location.coordinates.lat}
+        mapLng={location.coordinates.lng}
+      >
         <CustomMarker
           markerList={[
             { designerId: 1, lat: 37.3595704, lng: 127.105399, nickname: 'test' },
