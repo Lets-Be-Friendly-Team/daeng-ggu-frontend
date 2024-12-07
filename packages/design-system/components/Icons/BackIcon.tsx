@@ -1,13 +1,17 @@
+import { cn } from '../../lib/utils';
+
 interface IBackIconProps {
   className?: string;
 }
 const BackIcon = ({ className }: IBackIconProps) => {
   return (
-    <svg viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg' className={className}>
-      <path
-        d='M14.1407 4.26301V2.75325C14.1407 2.62239 13.9903 2.55012 13.8887 2.6302L5.08401 9.50715C5.0092 9.56533 4.94867 9.63982 4.90703 9.72495C4.8654 9.81008 4.84375 9.9036 4.84375 9.99836C4.84375 10.0931 4.8654 10.1866 4.90703 10.2718C4.94867 10.3569 5.0092 10.4314 5.08401 10.4896L13.8887 17.3665C13.9922 17.4466 14.1407 17.3743 14.1407 17.2435V15.7337C14.1407 15.638 14.0957 15.5462 14.0215 15.4876L6.99026 9.99934L14.0215 4.5091C14.0957 4.45051 14.1407 4.35871 14.1407 4.26301Z'
-        fill='#454C53'
-      />
+    <svg
+      className={cn('stroke-gray-800', className)}
+      viewBox='0 0 18 18'
+      fill='none'
+      xmlns='http://www.w3.org/2000/svg'
+    >
+      <path d='M13 2L5 9L13 16' stroke='#080808' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' />
     </svg>
   );
 };
