@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { Avatar, BorderContainer, PageContainer, TypeOneButton } from '@daeng-ggu/design-system';
 
 interface EstimateImg {

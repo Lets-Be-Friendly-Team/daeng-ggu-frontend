@@ -41,7 +41,7 @@ const ProfileViewer = ({
         <img
           src={petImgUrl || 'https://via.placeholder.com/100'}
           alt={petName || 'Unknown Pet'}
-          className='mb-4 h-28 w-28 rounded-full border border-gray-300'
+          className='h-28 w-28 rounded-full border border-gray-300'
         />
         <div className='ml-4 grid grid-cols-2 gap-x-4 gap-y-2'>
           <p className='text-iconCaption text-gray-600'>

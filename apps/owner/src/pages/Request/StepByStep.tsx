@@ -311,7 +311,7 @@ const StepByStep = ({ stepCount, profileData = [], onProfileSelect }: StepByStep
               }
             />
           </div>
-          <div className='mt-6'>
+          <div className='mt-6 flex w-full flex-col items-center'>
             <TypeTwoButton
               text='프로필 수정하기'
               color='bg-secondary'
@@ -323,7 +323,7 @@ const StepByStep = ({ stepCount, profileData = [], onProfileSelect }: StepByStep
                 }
               }}
             />
-            <div className='mt-6'>
+            <div className='mt-4 flex w-full flex-col items-center'>
               <TypeTwoButton text='다음 단계로 가기' color='bg-secondary' onClick={handleNextStep} />
             </div>
           </div>
@@ -454,7 +454,6 @@ const StepByStep = ({ stepCount, profileData = [], onProfileSelect }: StepByStep
             </div>
           ))}
         </RadioGroup>
-
         {showRegionSelector && (
           <div>
             <RegionSelector

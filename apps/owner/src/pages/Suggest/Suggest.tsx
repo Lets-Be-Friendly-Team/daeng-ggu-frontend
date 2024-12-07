@@ -136,19 +136,28 @@ const Suggest = () => {
       console.log('Estimate Request Object:', estimateRequest);
 
       const estimateImgList = imagesWithIds.map((image) => ({
-        id: image.id,
         estimateImgUrl: image.file,
       }));
 
+      // Build the third list: estimateImgIdList
+      const estimateImgIdList = imagesWithIds.map((image) => ({
+        estimateTagId: image.id,
+      }));
+
       console.log('Estimate Image List:', estimateImgList);
+      console.log('Estimate Img ID List:', estimateImgIdList);
 
       const formData = new FormData();
       formData.append('estimateRequest', new Blob([JSON.stringify(estimateRequest)], { type: 'application/json' }));
 
       // Append images
       estimateImgList.forEach((img, index) => {
-        formData.append(`estimateImgList[${index}].id`, img.id);
         formData.append(`estimateImgList[${index}].estimateImgUrl`, img.estimateImgUrl);
+      });
+
+      // Append image ID list
+      estimateImgIdList.forEach((imgIdItem, index) => {
+        formData.append(`estimateImgIdList[${index}].estimateTagId`, imgIdItem.estimateTagId);
       });
 
       for (const pair of formData.entries()) {
@@ -173,7 +182,6 @@ const Suggest = () => {
       console.log('제안하기 성공:', result);
       alert('견적 제안이 성공적으로 제출되었습니다.');
 
-      // Optionally, reset the form or navigate the user
       // Reset form fields
       setTextEditorValue('');
       setPrice('');
@@ -282,11 +290,14 @@ const Suggest = () => {
         </div>
       </PageContainer>
 
-      <div className='fixed w-full' style={{ bottom: '65px' }}>
-        <TypeOneButton text='제안하기' color='bg-secondary' onClick={handleSubmit} />
-        <div className='fixed w-full' style={{ bottom: '7.5rem' }}>
-          <TypeOneButton text='제안하기' color='bg-secondary' onClick={() => {}} />
-        </div>
+      <div className='fixed w-full' style={{ bottom: '7.5rem' }}>
+        <TypeOneButton
+          text='제안하기'
+          color='bg-secondary'
+          onClick={() => {
+            handleSubmit();
+          }}
+        />
       </div>
     </div>
   );

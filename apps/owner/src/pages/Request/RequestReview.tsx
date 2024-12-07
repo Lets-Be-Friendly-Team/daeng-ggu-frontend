@@ -148,8 +148,8 @@ const RequestReview = ({
             <div className='items-start'>
               <h2 className='mb-4 text-h3 font-bold text-gray-800'>요청 상세</h2>
             </div>
-            <BorderContainer innerPadding='p-3'>
-              <ul className='ml-5'>
+            <BorderContainer innerPadding='py-6 pl-2'>
+              <ul className='ml-5 mt-4'>
                 {stepData.map(({ step, title, options }) => (
                   <li key={step} className='flex flex-col gap-2 pb-5'>
                     <div>
@@ -181,13 +181,26 @@ const RequestReview = ({
                           </button>
                         </div>
                       ) : (
-                        <span className='flex items-center'>
+                        <span
+                          className={`flex items-center gap-2`} // Maintain consistent spacing
+                          style={{
+                            minHeight: '40px', // Adjust this height as needed to match the button's height
+                          }}
+                        >
                           <p className='text-sub_h3 font-bold text-gray-800'>{getDisplayValue(step)}</p>
-                          {mode !== 'detail' && ![5, 9].includes(step) && (
-                            <button className='p-2' onClick={() => handleEdit(step)}>
-                              <img src={editIcon} alt='Edit' className='h-6 w-6' style={{ cursor: 'pointer' }} />
-                            </button>
-                          )}
+                          {![5, 9].includes(step) &&
+                            (mode !== 'detail' ? (
+                              <button className='p-2' onClick={() => handleEdit(step)}>
+                                <img src={editIcon} alt='Edit' className='h-6 w-6' style={{ cursor: 'pointer' }} />
+                              </button>
+                            ) : (
+                              <div
+                                className='h-6 w-6'
+                                style={{
+                                  visibility: 'hidden', // Ensures an invisible placeholder
+                                }}
+                              />
+                            ))}
                         </span>
                       )}
                     </div>
@@ -198,35 +211,42 @@ const RequestReview = ({
 
             {pageMode === 'user' && (
               <>
-                <div className='mt-6 items-start'>
-                  <h2 className='mb-4 text-h3 font-bold text-gray-800'>댕송지 정보</h2>
-                </div>
-                <BorderContainer innerPadding='p-3'>
-                  <div className='flex-col items-start p-2 text-gray-800'>
-                    <p className='text-sub_h2 font-bold'>
-                      {selectedProfile ? selectedProfile.customerName : '정보 없음'}
-                    </p>
-                    <p className='text-body3 font-bold text-gray-800'>
-                      {selectedProfile ? selectedProfile.phone : '정보 없음'}
-                    </p>
-                    <p className='pt-1 text-caption'>{selectedProfile ? selectedProfile.address : '정보 없음'}</p>
+                <div>
+                  <div className='mt-6 items-start'>
+                    <h2 className='mb-4 text-h3 font-bold text-gray-800'>댕송지 정보</h2>
                   </div>
-                </BorderContainer>
-                <div className='mt-6 items-start'>
-                  <h2 className='mb-4 text-h3 font-bold text-gray-800'>결제 정보</h2>
+                  <BorderContainer innerPadding='p-3'>
+                    <div className='flex-col items-start p-2 text-gray-800'>
+                      <p className='text-sub_h2 font-bold'>
+                        {selectedProfile ? selectedProfile.customerName : '정보 없음'}
+                      </p>
+                      <p className='text-body3 font-bold text-gray-800'>
+                        {selectedProfile ? selectedProfile.phone : '정보 없음'}
+                      </p>
+                      <p className='pt-1 text-caption'>{selectedProfile ? selectedProfile.address : '정보 없음'}</p>
+                    </div>
+                  </BorderContainer>
                 </div>
-                <BorderContainer innerPadding='p-3'>
-                  <div className='flex-col items-start p-2 text-gray-800'>
-                    <div className='mb-2 flex justify-between'>
-                      <span>댕동비({selectedProfile ? selectedProfile.majorBreed : '정보 없음'})</span>
-                      <span>{movingCost}</span>
+
+                {mode == 'detail' && (
+                  <>
+                    <div className='mt-6 items-start'>
+                      <h2 className='mb-4 text-h3 font-bold text-gray-800'>결제 정보</h2>
                     </div>
-                    <div className='mt-2 flex justify-between border-t pt-2 text-lg font-bold'>
-                      <span>결제 금액</span>
-                      <span>{totalAmount}</span>
-                    </div>
-                  </div>
-                </BorderContainer>
+                    <BorderContainer innerPadding='p-3'>
+                      <div className='flex-col items-start p-2 text-gray-800'>
+                        <div className='mb-2 flex justify-between'>
+                          <span>댕동비({selectedProfile ? selectedProfile.majorBreed : '정보 없음'})</span>
+                          <span>{movingCost}</span>
+                        </div>
+                        <div className='mt-2 flex justify-between border-t pt-2 text-lg font-bold'>
+                          <span>결제 금액</span>
+                          <span>{totalAmount}</span>
+                        </div>
+                      </div>
+                    </BorderContainer>
+                  </>
+                )}
               </>
             )}
 

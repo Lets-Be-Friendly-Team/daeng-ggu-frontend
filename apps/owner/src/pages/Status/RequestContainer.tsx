@@ -39,10 +39,10 @@ const RequestContainer = ({
             <CloseIcon className='h-6 w-6 cursor-pointer' />
           </button>
         )}
-        <div className='mx-auto flex pb-4 pl-10 pt-4' onClick={onClick}>
-          <div className='flex'>
+        <div className='mx-auto flex px-6 pb-4 pt-4' onClick={onClick}>
+          <div className='flex items-center'>
             <Avatar imageUrl={imageUrl} mode='designerCard' containerClassName='h-[70px] w-[70px]' />
-            <div className='ml-12'>{children}</div>
+            <div className='ml-6'>{children}</div>
           </div>
         </div>
       </div>
