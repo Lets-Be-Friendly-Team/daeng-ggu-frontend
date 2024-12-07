@@ -13,6 +13,7 @@ const ROUTES = {
   reservation: 'reservation',
   review: 'review',
   login: 'login',
+  signup: 'signup',
 } as const;
 
 export default ROUTES;
