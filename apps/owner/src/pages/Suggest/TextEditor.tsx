@@ -1,13 +1,20 @@
+// src/pages/Suggest/TextEditor.tsx
+
 import { useMemo, useRef, useState } from 'react';
-import ReactQuill, { Quill } from 'react-quill';
+import ReactQuill from 'react-quill';
 import ImageUploader from 'quill-image-uploader';
 
 import 'react-quill/dist/quill.snow.css';
-import '@/styles/TextEditor.css'; // Import your custom CSS
+import '@/styles/TextEditor.css';
 
-Quill.register('modules/imageUploader', ImageUploader);
+// Register the image uploader module
+ReactQuill.Quill.register('modules/imageUploader', ImageUploader);
 
-const TextEditor = () => {
+interface TextEditorProps {
+  onChange: (_content: string, _images: string[]) => void;
+}
+
+const TextEditor = ({ onChange }: TextEditorProps) => {
   const [value, setValue] = useState<string>('');
   const quillRef = useRef<ReactQuill | null>(null);
 
@@ -35,7 +42,7 @@ const TextEditor = () => {
         ['clean'],
       ],
       imageUploader: {
-        upload: uploadImage, // Use the uploadImage function
+        upload: uploadImage,
       },
     }),
     [],
@@ -61,13 +68,31 @@ const TextEditor = () => {
     [],
   );
 
+  const handleChange = (content: string) => {
+    setValue(content);
+
+    try {
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = content;
+      const imgElements = tempDiv.getElementsByTagName('img');
+      const images: string[] = [];
+      for (let i = 0; i < imgElements.length; i++) {
+        images.push(imgElements[i].src);
+      }
+
+      onChange(content, images);
+    } catch (error) {
+      console.error('Error processing editor content:', error);
+    }
+  };
+
   return (
     <div className='w-full'>
       <ReactQuill
         ref={quillRef}
         theme='snow'
         value={value}
-        onChange={setValue}
+        onChange={handleChange}
         className='editor'
         modules={modules}
         formats={formats}

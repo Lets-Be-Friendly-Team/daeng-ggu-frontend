@@ -17,6 +17,7 @@ import MyPage from '@/pages/MyPage/MyPage';
 import ProgressPage from '@/pages/ProgressPage/ProgressPage';
 import Request from '@/pages/Request/Request';
 import Test from '@/pages/Request/Test.tsx';
+import DetailDesigner from '@/pages/Status/DetailDesigner.tsx';
 import ReservationPage from '@/pages/ReservationPage/ReservationPage';
 import ReviewDetailPage from '@/pages/ReviewDetailPage/ReviewDetailPage';
 import DetailPage from '@/pages/Status/DetailPage.tsx';
@@ -74,6 +75,10 @@ export const router = createBrowserRouter([
           {
             path: 'suggest',
             element: <Suggest />,
+          },
+          {
+            path: 'detailDesigner',
+            element: <DetailDesigner />,
           },
         ],
       },

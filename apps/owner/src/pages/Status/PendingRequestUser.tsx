@@ -26,6 +26,10 @@ const PendingRequestUser = ({ data }: PendingRequestUserProps) => {
     navigate('/bid/detail', { state: { data: item } });
   };
 
+  const handleDetailDesignerPage = (item: PendingPet | Estimate) => {
+    navigate('/bid/detailDesigner', { state: { data: item } });
+  };
+
   const handlePetClick = (index: number) => {
     setActivePetIndex(index);
   };
@@ -86,14 +90,27 @@ const PendingRequestUser = ({ data }: PendingRequestUserProps) => {
             mode='request'
             imageUrl={activePet.petImgUrl}
           >
-            <p className='text-gray-800'>{formatDate(activePet.createdAt)} 견적요청</p>
-            <h3 className='text-sub_h3 font-semibold'>{activePet.petName || '이름 없음'}</h3>
-            <p className='pb-2 text-iconCaption'>
-              <span className='mr-1 rounded-[4px] border border-primary px-2 py-[0.8px] text-primary'>서비스</span>
-              {activePet.desiredServiceCode ||
-                '알 수 없음'}/{getDeliveryStatus(activePet.majorBreedCode)}
-            </p>
-            <DetailButton text='상세보기' onClick={() => handleDetailPage(activePet)} />
+            <p className='pb-2 text-gray-800'>{formatDate(activePet.createdAt)} 견적요청</p>
+            <h3 className='pb-2 text-sub_h3 font-semibold'>{activePet.petName || '이름 없음'}</h3>
+            <div className='text-iconCaption'>
+              <div className='flex'>
+                <div className='mr-2 flex min-w-[50px] flex-col'>
+                  <div>
+                    <p className='mr-1 h-[16px] min-w-[44px] rounded-[4px] border border-primary px-2 py-[0.8px] text-primary'>
+                      서비스
+                    </p>
+                  </div>
+                  <div className='mt-2'>
+                    <DetailButton text='상세보기' onClick={() => handleDetailPage(activePet)} />
+                  </div>
+                </div>
+                <div>
+                  <p>
+                    {activePet.desiredServiceCode || '알 수 없음'}/{getDeliveryStatus(activePet.majorBreedCode)}
+                  </p>
+                </div>
+              </div>
+            </div>
           </RequestContainer>
         </div>
 
@@ -113,14 +130,14 @@ const PendingRequestUser = ({ data }: PendingRequestUserProps) => {
                           mode='designerCard'
                           imageUrl={estimate.designerImageUrl}
                           name={estimate.designerName}
-                          containerClassName='mr-4 h-[70px] w-[70px]'
+                          containerClassName='mr-8 h-[70px] w-[70px]'
                         />
                         <div>
                           <p className='text-gray-800'>{formatDate(estimate.createdAt)} 견적요청</p>
                           <p className='text-sub_h3 font-semibold'>{estimate.designerName || '이름 없는 디자이너'}</p>
                           <p className='text-sub_h2 font-bold'>{estimate.estimatePrice.toLocaleString()}원</p>
                           <p className='pb-1 text-sub_h3 font-bold'>미용고객: {activePet.petName}</p>
-                          <DetailButton text='상세보기' onClick={() => handleDetailPage(estimate)} />
+                          <DetailButton text='상세보기' onClick={() => handleDetailDesignerPage(estimate)} />
                         </div>
                       </div>
                     </div>

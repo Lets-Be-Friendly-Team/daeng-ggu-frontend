@@ -61,14 +61,25 @@ const CompletedRequestUser = ({ data }: CompletedRequestUserProps) => {
                           className='mr-10 h-[50px] w-[50px] rounded-full'
                         />
                         <div>
-                          <p>{formatDate(request.createdAt)} 견적요청</p>
-                          <h3 className='text-xl font-semibold'>{request.petName || '이름 없는 펫'}</h3>
-                          <p className='text-iconCaption'>
-                            <span className='mr-1 rounded-[4px] border border-primary px-2 py-[0.8px] text-primary'>
-                              서비스
-                            </span>
-                            {request.desiredServiceCode || '알 수 없음'}/{getDeliveryStatus(request.majorBreedCode)}
-                          </p>
+                          <p className='pb-2 text-gray-800'>{formatDate(request.createdAt)} 견적요청</p>
+                          <h3 className='pb-2 text-sub_h3 font-semibold'>{request.petName || '이름 없는 펫'}</h3>
+                          <div className='text-iconCaption'>
+                            <div className='flex'>
+                              <div className='mr-2 flex min-w-[50px] flex-col'>
+                                <div>
+                                  <p className='mr-1 h-[16px] min-w-[44px] rounded-[4px] border border-primary px-2 py-[0.8px] text-center text-primary'>
+                                    서비스
+                                  </p>
+                                </div>
+                              </div>
+                              <div>
+                                <p className='py-auto'>
+                                  {request.desiredServiceCode || '알 수 없음'}/
+                                  {getDeliveryStatus(request.majorBreedCode)}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
