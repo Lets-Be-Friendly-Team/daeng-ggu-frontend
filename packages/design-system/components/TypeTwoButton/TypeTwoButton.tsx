@@ -5,25 +5,28 @@ interface TypeTwoButtonProps {
   color?: string;
   onClick?: () => void;
   className?: string;
+  fontWeight?: string;
+  border?: string;
 }
 
-const TypeTwoButton = ({ className, text, color, onClick }: TypeTwoButtonProps) => {
+const TypeTwoButton = ({ className, text, color, onClick, fontWeight, border }: TypeTwoButtonProps) => {
   const textColor =
     color === 'bg-primary'
       ? 'text-white'
       : color === 'bg-secondary'
         ? 'text-primary border border-primary'
         : 'text-black';
-
+  const fontWeightClass = fontWeight ? `${fontWeight}` : 'font-bold';
+  const borderClass = border ? `${border}` : '';
   return (
     <button
       className={cn(
-        `mt-6 h-[48px] w-full max-w-[280px] rounded border px-4 py-2 text-body2 font-bold hover:bg-opacity-80 ${color} ${textColor}`,
+        `h-[48px] w-full max-w-[280px] rounded-md px-4 py-2 ${fontWeightClass} ${borderClass} hover:bg-opacity-80 ${color} ${textColor}`,
         className,
       )}
       onClick={onClick}
     >
-      {text ? text : '내용없음'}
+      <p className='text-body3'>{text ? text : '내용없음'}</p>
     </button>
   );
 };

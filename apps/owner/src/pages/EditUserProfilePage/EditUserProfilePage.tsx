@@ -87,13 +87,15 @@ const EditUserProfilePage = () => {
             <div className='flex gap-1'>
               <TypeTwoButton
                 text='남'
-                color={formData.gender === 'male' ? 'bg-secondary' : ''}
+                color={formData.gender === 'male' ? 'bg-secondary' : 'bg-gray-50'}
+                fontWeight='font-medium'
                 onClick={() => handleChange('gender', 'male')}
               />
               <TypeTwoButton
                 text='여'
-                color={formData.gender === 'female' ? 'bg-secondary' : ''}
+                color={formData.gender === 'female' ? 'bg-secondary' : 'bg-gray-50'}
                 onClick={() => handleChange('gender', 'female')}
+                fontWeight='font-medium'
               />
             </div>
           </div>
