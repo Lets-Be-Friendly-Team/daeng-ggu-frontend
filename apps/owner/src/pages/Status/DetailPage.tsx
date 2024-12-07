@@ -131,7 +131,7 @@ const DetailPage = () => {
   const buttonText = pageMode === 'user' ? '예약하기' : pageMode === 'designer' ? '견적 제안하기' : '예약 취소';
   return (
     <div>
-      <div className='mb-6 max-w-[480px]'>
+      <div className='mb-6 w-full'>
         <Header
           mode='customBack'
           title={headerTitle}

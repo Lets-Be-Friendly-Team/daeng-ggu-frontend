@@ -36,7 +36,7 @@ const ProfileViewer = ({
   const { petImgUrl, petName, subBreed, weight, gender, isNeutered, birthDate } = profile;
 
   return (
-    <div className='flex min-w-[240px] justify-center rounded-[8px] border-primary bg-white p-6'>
+    <div className='flex w-full justify-center rounded-[8px] border-primary bg-white p-6'>
       <div className='flex items-center'>
         <img
           src={petImgUrl || 'https://via.placeholder.com/100'}

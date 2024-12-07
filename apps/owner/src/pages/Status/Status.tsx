@@ -408,8 +408,8 @@ const Status = () => {
   ];
 
   return (
-    <div className='h-full max-w-[480px]'>
-      <div className='max-w-[480px]'>
+    <div className='h-full w-full'>
+      <div className='w-full'>
         <Header mode='main' title='견적 조회하기' />
         <CategoryTab tabs={tabs} />
       </div>
