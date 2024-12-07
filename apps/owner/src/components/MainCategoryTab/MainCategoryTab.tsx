@@ -107,7 +107,7 @@ const MainCategoryTab = () => {
           {tabs.map((tab, index) => (
             <div
               key={index}
-              className={`flex h-[7rem] w-[5rem] cursor-pointer flex-col items-center justify-between py-[0.8rem] text-body3 ${
+              className={`flex h-[7rem] w-[6rem] cursor-pointer flex-col items-center justify-between py-[0.8rem] text-body3 ${
                 activeIndex === index ? 'text-primary' : 'text-gray-600'
               }`}
               onClick={() => {
@@ -127,7 +127,7 @@ const MainCategoryTab = () => {
           <div
             className='absolute bottom-0 h-[2px] bg-primary transition-all duration-300 ease-in-out'
             style={{
-              width: '5rem',
+              width: '6rem',
               left: `${indicatorOffset}px`,
             }}
           ></div>
