@@ -62,8 +62,6 @@ const MainCategoryTab = () => {
       // content: ,
     },
   ];
-
-  // const [activeCategory, setActiveCategory] = useState<string | undefined | null>('total');
   const [activeIndex, setActiveIndex] = useState(0);
   const [indicatorOffset, setIndicatorOffset] = useState(40);
   const containerRef = useRef<HTMLDivElement>(null);
