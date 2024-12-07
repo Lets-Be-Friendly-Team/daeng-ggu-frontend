@@ -8,7 +8,7 @@ const Designer = ({ designer }: { designer: DesignerType }) => {
       <div className='aspect-square w-full overflow-hidden rounded-md'>
         <img className='w-fll h-full object-cover' src={designer.designerImgUrl} alt='디자이너 사진' />
       </div>
-      <div className='mt-3 flex flex-col gap-y-1 text-body3 text-gray-600'>
+      <div className='mt-4 flex flex-col gap-y-2 text-body3 text-gray-600'>
         <div className='flex h-[2.2rem] items-center gap-x-4'>
           <p className='text-h2 font-bold text-primary'>{designer.nickname}</p>
 

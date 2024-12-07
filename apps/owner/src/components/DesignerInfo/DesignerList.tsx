@@ -33,7 +33,7 @@ const DesignerList = ({ dataList }: DesignerListProps) => {
   //   }
   // });
   return (
-    <div className='flex flex-col gap-y-8'>
+    <div className='flex flex-col gap-y-[5rem]'>
       {dataList.map((designer, index) => (
         <Designer key={index} designer={designer} />
       ))}
