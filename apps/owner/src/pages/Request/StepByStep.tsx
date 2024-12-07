@@ -71,10 +71,8 @@ const StepByStep = ({ stepCount, profileData = [], onProfileSelect }: StepByStep
     subArea: '',
   });
 
-  // For Step 9
   const [userInput, setUserInput] = useState<string>('');
 
-  // For Step 6 - show 3 buttons and allow date/time selection per button
   const [showDateSelector, setShowDateSelector] = useState<boolean>(false);
   const [selectedDateTimes, setSelectedDateTimes] = useState<SelectedDateTime[]>([
     { dateStr: '', selectedDate: null, selectedTime: null },
@@ -203,15 +201,13 @@ const StepByStep = ({ stepCount, profileData = [], onProfileSelect }: StepByStep
     if (activeDateIndex === null) return;
     const newDateTimes = [...selectedDateTimes];
     const chosenDate = newDateTimes[activeDateIndex].selectedDate;
-    if (!chosenDate) return; // date not chosen yet
+    if (!chosenDate) return;
     newDateTimes[activeDateIndex].selectedTime = time;
-    // Now store full date and time in dateStr
     const datePart = format(chosenDate, 'yyyy-MM-dd');
     const timePart = String(time).padStart(2, '0') + ':00:00';
     newDateTimes[activeDateIndex].dateStr = `${datePart} ${timePart}`;
     setSelectedDateTimes(newDateTimes);
 
-    // Close selection
     setShowCalendar(false);
     setShowTimeSelect(false);
     setActiveDateIndex(null);
@@ -219,7 +215,7 @@ const StepByStep = ({ stepCount, profileData = [], onProfileSelect }: StepByStep
 
   const renderDateSelector = () => {
     return (
-      <div className='m-auto mt-4 flex max-w-[280px] flex-col items-center gap-2'>
+      <div className='m-auto mt-4 flex w-full flex-col items-center gap-2'>
         <h3 className='mb-2 text-sub_h3 font-bold'>날짜와 시간을 선택해주세요.</h3>
         <div className='flex w-full flex-col gap-2'>
           {selectedDateTimes.map((item, index) => (
@@ -231,11 +227,9 @@ const StepByStep = ({ stepCount, profileData = [], onProfileSelect }: StepByStep
             />
           ))}
         </div>
-
         {activeDateIndex !== null && showCalendar && (
           <div className='mt-4 w-full'>
             <Calendar
-              mode='single'
               selected={selectedDateTimes[activeDateIndex].selectedDate || undefined}
               onSelect={handleDateSelect}
               disabled={() => false}
@@ -493,7 +487,7 @@ const StepByStep = ({ stepCount, profileData = [], onProfileSelect }: StepByStep
 
   return (
     <div>
-      <div className='max-w-[480px]'>
+      <div className='w-full'>
         <Header mode='customBack' title='견적 요청하기' onClick={currentStep === 1 ? undefined : handlePrevStep} />
       </div>
       <div className='flex h-full w-full flex-col items-center justify-center p-4'>
