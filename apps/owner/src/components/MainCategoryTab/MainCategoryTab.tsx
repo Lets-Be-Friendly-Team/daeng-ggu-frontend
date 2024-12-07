@@ -1,6 +1,7 @@
 // import
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
+import { useSearchParams } from 'react-router-dom';
 import { PageContainer } from '@daeng-ggu/design-system';
 
 import map from '@/assets/images/MainCategoryTab/map.png';
@@ -24,6 +25,7 @@ const MainCategoryTab = () => {
    * get은 한번(searchWord에 빈값 넣어서 전체 조회)
    * category마다 다른 column 가져와서 dataList 변수에 저장
    */
+
   const setLists = useDesignerListStore((state) => state.setLists);
   useEffect(() => {
     setLists({
@@ -38,25 +40,30 @@ const MainCategoryTab = () => {
     {
       icon: total,
       label: '전체',
+      path: 'total',
       content: <TotalList />,
     },
     {
       icon: popular,
       label: '인기',
+      path: 'popular',
       content: <PopularList />,
     },
     {
       icon: premium,
       label: '프리미엄',
+      path: 'premium',
       content: <PremiumList />,
     },
     {
       icon: map,
       label: '지도검색',
+      path: '',
       // content: ,
     },
   ];
 
+  // const [activeCategory, setActiveCategory] = useState<string | undefined | null>('total');
   const [activeIndex, setActiveIndex] = useState(0);
   const [indicatorOffset, setIndicatorOffset] = useState(40);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -75,6 +82,25 @@ const MainCategoryTab = () => {
       }
     }
   }, [activeIndex]);
+  const [query, setQuery] = useSearchParams();
+  useEffect(() => {
+    console.log(query.get('category'));
+    const category = query.get('category');
+    switch (category) {
+      case null:
+        setActiveIndex(0);
+        break;
+      case 'total':
+        setActiveIndex(0);
+        break;
+      case 'popular':
+        setActiveIndex(1);
+        break;
+      case 'premium':
+        setActiveIndex(2);
+        break;
+    }
+  }, [query]);
 
   return (
     <div className='flex h-full flex-col'>
@@ -90,6 +116,9 @@ const MainCategoryTab = () => {
                 setActiveIndex(index);
                 if (index === 3) {
                   navigate('/map');
+                } else {
+                  query.set('category', tab.path);
+                  setQuery(query);
                 }
               }}
             >
@@ -107,7 +136,7 @@ const MainCategoryTab = () => {
         </div>
       </div>
       {/* 스크롤 가능한 콘텐츠 영역 */}
-      <div className='flex-1 overflow-y-auto'>
+      <div className='flex-1 overflow-y-auto overflow-x-hidden'>
         <div
           className='flex transition-transform duration-300 ease-in-out'
           style={{ transform: `translateX(-${activeIndex * 100}%)` }}
