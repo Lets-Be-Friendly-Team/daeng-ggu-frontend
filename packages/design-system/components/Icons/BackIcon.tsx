@@ -11,7 +11,7 @@ const BackIcon = ({ className }: IBackIconProps) => {
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
     >
-      <path d='M13 2L5 9L13 16' stroke='#080808' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' />
+      <path d='M13 2L5 9L13 16' stroke='#080808' strokeWidth='1.5' strokeLinecap='round' strokeLinejoin='round' />
     </svg>
   );
 };

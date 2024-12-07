@@ -15,9 +15,9 @@ const CloseIcon = ({ className }: ICloseIconProps) => {
     >
       <path
         d='M14.25 3.75L3.75 14.25M3.75 3.75L14.25 14.25'
-        stroke-width='1.5'
-        stroke-linecap='round'
-        stroke-linejoin='round'
+        strokeWidth='1.5'
+        strokeLinecap='round'
+        strokeLinejoin='round'
       />
     </svg>
   );
