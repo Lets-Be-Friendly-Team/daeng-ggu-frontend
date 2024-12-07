@@ -45,7 +45,7 @@ const Status = () => {
 
 const CategoryTab = ({ tabs }: CategoryTabProps) => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [indicatorOffset, setIndicatorOffset] = useState(0);
+  const [indicatorStyles, setIndicatorStyles] = useState({ left: 0, width: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -55,7 +55,10 @@ const CategoryTab = ({ tabs }: CategoryTabProps) => {
 
       if (buttonElements[activeIndex]) {
         const button = buttonElements[activeIndex];
-        setIndicatorOffset(button.offsetLeft);
+        setIndicatorStyles({
+          left: button.offsetLeft,
+          width: button.offsetWidth,
+        });
       }
     }
   }, [activeIndex]);
@@ -67,7 +70,7 @@ const CategoryTab = ({ tabs }: CategoryTabProps) => {
           {tabs.map((tab, index) => (
             <div
               key={index}
-              className={`flex h-[33px] w-[80px] cursor-pointer justify-center py-[8px] text-sub_h2 ${
+              className={`flex h-[33px] cursor-pointer justify-center py-[8px] text-sub_h2 ${
                 activeIndex === index ? 'text-primary' : 'text-gray-600'
               }`}
               onClick={() => setActiveIndex(index)}
@@ -79,8 +82,8 @@ const CategoryTab = ({ tabs }: CategoryTabProps) => {
           <div
             className='absolute bottom-0 h-[2px] bg-primary transition-all duration-300 ease-in-out'
             style={{
-              width: '80px',
-              left: `${indicatorOffset}px`,
+              width: `${indicatorStyles.width}px`,
+              left: `${indicatorStyles.left}px`,
             }}
           ></div>
         </div>

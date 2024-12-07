@@ -28,7 +28,7 @@ const Avatar = ({ imageUrl, name, mode, isActive, onClick, containerClassName, i
   }
 
   return (
-    <button className='w-[45px] flex-col' onClick={onClick}>
+    <button className='w-auto flex-col' onClick={onClick}>
       {mode === 'avatar' && (
         <>
           <div
