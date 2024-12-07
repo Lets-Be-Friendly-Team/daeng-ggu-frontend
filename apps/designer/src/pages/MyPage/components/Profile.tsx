@@ -27,7 +27,12 @@ const Profile = ({
   const navigate = useNavigate();
   const goToReservations = () => navigate('/profile/reservation');
   const goToEditProfile = () => navigate('/profile/edit');
-  const services = providedServices?.map((service) => service.codeDesc).join(' | ');
+  const extractBracketContent = (text: string) => {
+    const match = text.match(/\(([^)]+)\)/);
+    return match ? match[1].replace(/,/g, ' | ') : text;
+  };
+
+  const services = providedServices?.map((service) => extractBracketContent(service.codeDesc)).join(' | ');
   const breedMapping: { [key: string]: string } = {
     P1: '소형견',
     P2: '중형견',

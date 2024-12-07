@@ -166,7 +166,7 @@ const EditDesignerProfilePage = () => {
                 />
               </div>
               <button
-                className='h-[36px] w-[90px] rounded-lg bg-gray-100 text-gray-900 text-iconCaption hover:bg-gray-300'
+                className='h-[36px] w-[90px] rounded-lg bg-gray-100 text-gray-900 text-body3 hover:bg-gray-300'
                 onClick={() => {
                   console.log('사업자번호 인증하기');
                 }}
