@@ -50,7 +50,7 @@ const ProfileImgUploader = ({ image, setImage, initialImageUrl }: ProfileImgUplo
           uploadedLabel=' '
           label=' '
         >
-          <CameraIcon className='h-[3rem] w-[3rem]' />
+          <CameraIcon className='h-[3rem] w-[3rem]' isCircle color='#fff' />
         </FileUploader>
       </button>
     </div>

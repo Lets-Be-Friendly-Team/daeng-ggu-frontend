@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import ArrowDown from '../Icons/ArrowDown';
 import ArrowUp from '../Icons/ArrowUp';
@@ -6,20 +6,32 @@ import CheckedIcon from '../Icons/CheckedIcon';
 import UncheckedIcon from '../Icons/UncheckedIcon';
 
 interface IServiceCheckBoxProps {
+  initialSelectedItems?: string[];
   // eslint-disable-next-line no-unused-vars
   onChange?: (selectedItems: string[]) => void;
 }
 
-function ServiceCheckBox({ onChange }: IServiceCheckBoxProps) {
+function ServiceCheckBox({ initialSelectedItems = [], onChange }: IServiceCheckBoxProps) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedItems, setSelectedItems] = useState<Record<string, boolean>>({});
 
   const serviceOptions = [
-    { id: 'service1', label: '기본 서비스 (미용, 목욕)' },
-    { id: 'service2', label: '프리미엄 - 스파' },
-    { id: 'service3', label: '프리미엄 - 풀케어' },
-    { id: 'service4', label: '프리미엄 - 모니터링' },
+    { id: 'S1', label: '기본 서비스 (미용, 목욕)' },
+    { id: 'S2', label: '프리미엄 - 스파' },
+    { id: 'S3', label: '프리미엄 - 풀케어' },
+    { id: 's4', label: '프리미엄 - 모니터링' },
   ];
+
+  useEffect(() => {
+    const initialState = serviceOptions.reduce(
+      (acc, option) => {
+        acc[option.id] = initialSelectedItems.includes(option.id);
+        return acc;
+      },
+      {} as Record<string, boolean>,
+    );
+    setSelectedItems(initialState);
+  }, [initialSelectedItems]);
 
   const toggleDropdown = () => {
     setIsDropdownOpen((prev) => !prev);
@@ -51,7 +63,7 @@ function ServiceCheckBox({ onChange }: IServiceCheckBoxProps) {
     <div className='flex flex-col gap-[6px]'>
       <div
         onClick={toggleDropdown}
-        className='flex h-[36px] w-[280px] cursor-pointer items-center justify-between rounded-[8px] bg-gray-50 px-4 text-body3 text-gray-800'
+        className='flex h-[36px] w-full cursor-pointer items-center justify-between rounded-[8px] bg-gray-50 px-4 text-body3 text-gray-800'
       >
         <div>{selectedLabels || '서비스를 선택하세요'}</div>
         <div className='w-auto'>
@@ -60,7 +72,7 @@ function ServiceCheckBox({ onChange }: IServiceCheckBoxProps) {
       </div>
 
       {isDropdownOpen && (
-        <div className='z-10 w-[280px] rounded-lg'>
+        <div className='z-10 w-full rounded-lg'>
           <ul className='text-caption text-gray-500'>
             {serviceOptions.map((option, index) => (
               <li key={option.id}>

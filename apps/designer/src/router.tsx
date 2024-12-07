@@ -4,7 +4,8 @@ import { createBrowserRouter } from 'react-router-dom';
 import { LogContainer, RouterErrorFallback } from '@daeng-ggu/shared';
 
 // import '@/styles/sequenceAnimation.css';
-import ROUTES from '@/constants/routes';
+import ROUTES from '@/constrants/routes.ts';
+import EditDesignerProfilePage from '@/pages/EditDesignerProfilePage/EditDesignerProfilePage';
 import MainPage from '@/pages/MainPage';
 import MyPage from '@/pages/MyPage/MyPage';
 
@@ -31,6 +32,10 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.profile,
         element: <MyPage />,
+      },
+      {
+        path: ROUTES.profileEdit,
+        element: <EditDesignerProfilePage />,
       },
     ],
   },

@@ -33,6 +33,7 @@ import CloseIcon from './components/Icons/CloseIcon';
 import EmptyHeartIcon from './components/Icons/EmptyHeartIcon';
 import FeedIcon from './components/Icons/FeedIcon';
 import FilledHeartIcon from './components/Icons/FilledHeartIcon';
+import InfoIcon from './components/Icons/InfoIcon';
 import LockIcon from './components/Icons/LockIcon';
 import MapIcon from './components/Icons/MapIcon';
 import MoreIcon from './components/Icons/MoreIcon';
@@ -147,4 +148,5 @@ export {
   FullStarIcon,
   FullBookMarkIcon,
   EmptyBookMarkIcon,
+  InfoIcon,
 };
