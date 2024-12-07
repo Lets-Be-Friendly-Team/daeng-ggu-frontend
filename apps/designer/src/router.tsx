@@ -8,6 +8,7 @@ import ROUTES from '@/constrants/routes.ts';
 import EditDesignerProfilePage from '@/pages/EditDesignerProfilePage/EditDesignerProfilePage';
 import MainPage from '@/pages/MainPage';
 import MyPage from '@/pages/MyPage/MyPage';
+import ReviewDetailPage from '@/pages/ReviewDetailPage/ReviewDetailPage';
 
 import App from './App';
 
@@ -36,6 +37,10 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.profileEdit,
         element: <EditDesignerProfilePage />,
+      },
+      {
+        path: ROUTES.reviewDetail,
+        element: <ReviewDetailPage />,
       },
     ],
   },
