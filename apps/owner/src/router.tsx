@@ -1,7 +1,7 @@
 // router.jsx
 import { Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
-import { RouterErrorFallback } from '@daeng-ggu/shared';
+import { LogContainer, RouterErrorFallback } from '@daeng-ggu/shared';
 
 import App from '@/App';
 import ROUTES from '@/constants/routes';
@@ -18,9 +18,9 @@ import MyPage from '@/pages/MyPage/MyPage';
 import ProgressPage from '@/pages/ProgressPage/ProgressPage';
 import Request from '@/pages/Request/Request';
 import Test from '@/pages/Request/Test.tsx';
-import DetailDesigner from '@/pages/Status/DetailDesigner.tsx';
 import ReservationPage from '@/pages/ReservationPage/ReservationPage';
 import ReviewDetailPage from '@/pages/ReviewDetailPage/ReviewDetailPage';
+import DetailDesigner from '@/pages/Status/DetailDesigner.tsx';
 import DetailPage from '@/pages/Status/DetailPage.tsx';
 import Status from '@/pages/Status/Status.tsx';
 import Suggest from '@/pages/Suggest/Suggest.tsx';
@@ -37,7 +37,11 @@ export const router = createBrowserRouter([
         <App />
       </Suspense>
     ),
-    errorElement: <RouterErrorFallback />,
+    errorElement: (
+      <LogContainer log='owner app'>
+        <RouterErrorFallback />
+      </LogContainer>
+    ),
     children: [
       {
         index: true,
