@@ -10,6 +10,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import OwnerBottomTabBar from './components/BottomTabBar/OwnerBottomTabBar';
 
 function App() {
+  console.log('owner app');
   const { showToast } = useToast();
 
   const [queryClient] = useState(
