@@ -9,25 +9,28 @@ import MainPage from '@/pages/MainPage';
 
 import App from './App';
 
-export const router = createBrowserRouter([
-  {
-    path: ROUTES.main,
-    errorElement: (
-      <LogContainer log='guardian app'>
-        <RouterErrorFallback />
-      </LogContainer>
-    ),
-    element: (
-      <Suspense>
-        <App />
-      </Suspense>
-    ),
-    children: [
-      {
-        index: true,
-        element: <MainPage />,
-      },
-      { path: ROUTES.test, element: <div>ddddd</div> },
-    ],
-  },
-]);
+export const router = createBrowserRouter(
+  [
+    {
+      path: ROUTES.main,
+      errorElement: (
+        <LogContainer log='guardian app'>
+          <RouterErrorFallback />
+        </LogContainer>
+      ),
+      element: (
+        <Suspense>
+          <App />
+        </Suspense>
+      ),
+      children: [
+        {
+          index: true,
+          element: <MainPage />,
+        },
+        { path: ROUTES.test, element: <div>ddddd</div> },
+      ],
+    },
+  ],
+  { basename: '/guardian' },
+);
