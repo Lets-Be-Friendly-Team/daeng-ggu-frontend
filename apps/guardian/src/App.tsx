@@ -8,6 +8,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import DesignerBottomTabBar from '@/components/BottomTabBar/DesignerBottomTabBar.tsx';
 function App() {
+  console.log('guardian app');
   const { showToast } = useToast();
 
   const [queryClient] = useState(
