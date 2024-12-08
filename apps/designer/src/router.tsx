@@ -11,6 +11,7 @@ import MyPage from '@/pages/MyPage/MyPage';
 import ReservationPage from '@/pages/ReservationPage/ReservationPage';
 import ReviewDetailPage from '@/pages/ReviewDetailPage/ReviewDetailPage';
 
+import FeedPage from './pages/FeedPage/FeedPage';
 import App from './App';
 
 export const router = createBrowserRouter([
@@ -30,6 +31,10 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <MainPage />,
+      },
+      {
+        path: ROUTES.feed,
+        element: <FeedPage />,
       },
       {
         path: ROUTES.profile,

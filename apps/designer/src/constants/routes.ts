@@ -2,6 +2,7 @@ const ROUTES = {
   main: '/',
   progress: '/progress',
   bid: '/bid',
+  feed: '/feed',
   profile: '/profile',
   profileEdit: '/profile/edit',
   profileEditPortfolio: '/profile/edit/portfolio',
