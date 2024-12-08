@@ -2,17 +2,21 @@ import { useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router';
 import {
   CloseIcon,
+  DeleteIcon,
+  EditIcon,
   EmptyHeartIcon,
   FilledHeartIcon,
+  FullStarIcon,
   LockIcon,
+  Modal,
   MoreIcon,
-  StarFullIcon,
   UserProfileImage,
 } from '@daeng-ggu/design-system';
+import { useModalStore } from '@daeng-ggu/shared';
 import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import EditDeleteModal from './components/EditDeleteModal';
+import BottomSheetModal from './components/BottomSheetModal';
 
 import './swiperStyle.css';
 
@@ -35,6 +39,7 @@ const ReviewDetail = () => {
   const [expandedReviews, setExpandedReviews] = useState<{ [key: number]: boolean }>({});
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
+  const { show } = useModalStore();
   const { state } = useLocation();
   const { reviewId } = useParams();
   const navigate = useNavigate();
@@ -48,15 +53,41 @@ const ReviewDetail = () => {
   const navigateBack = () => {
     navigate('/profile');
   };
+  const handleEdit = () => {
+    setModalOpen(false);
+  };
 
+  const handleDelete = () => {
+    setModalOpen(false);
+    showDeleteConfirmationModal();
+  };
+
+  const modalOptions = [
+    { label: '수정하기', onClick: handleEdit, icon: <EditIcon className='h-[15px] w-[15px]' color='#454C53' /> },
+    {
+      label: '삭제하기',
+      onClick: handleDelete,
+      color: 'text-primary',
+      icon: <DeleteIcon className='h-[15px] w-[15px]' color='#FF6842' />,
+    },
+  ];
   const toggleModal = () => {
     setModalOpen((prev) => !prev);
   };
+  const showDeleteConfirmationModal = () => {
+    show(Modal, {
+      title: '리뷰 삭제',
+      description: '해당 리뷰를 삭제하시겠습니까?',
+      onConfirm: () => {},
+      confirmText: '네',
+      cancelText: '아니오',
+    });
+  };
 
   return (
-    <div className='relative flex h-[calc(100vh-65px)] w-full flex-col bg-gray-900'>
+    <div className='relative flex h-[calc(100vh-65px)] w-full flex-col'>
       {/* Fixed Profile and Icons */}
-      <div className='absolute left-0 right-0 top-0 z-10 flex h-[100px] items-center gap-[10px] bg-gradient-to-b from-black to-transparent px-5'>
+      <div className='absolute left-0 right-0 top-0 z-10 flex h-[100px] items-center gap-[10px] bg-gradient-to-b from-black px-5'>
         <div className='flex-shrink-0'>
           <UserProfileImage imageUrl={reviews[activeIndex]?.designerImgUrl} />
         </div>
@@ -73,12 +104,11 @@ const ReviewDetail = () => {
           </div>
         </div>
       </div>
-
       {/* 고정된 리뷰 내용 */}
-      <div className='absolute bottom-0 left-0 right-0 z-10 flex h-[360px] items-end gap-[18px] bg-gradient-to-t from-black via-transparent to-transparent px-5 pb-8'>
-        <div className='flex-1 pb-20 text-body2 text-secondary'>
+      <div className='absolute bottom-0 left-0 right-0 z-10 flex h-[25%] items-start justify-between bg-gradient-to-t from-black px-5'>
+        <div className='overflow-hidden pt-12 text-body2 leading-8 text-secondary'>
           {expandedReviews[currentReviewIndex] ? (
-            reviews[currentReviewIndex]?.reviewContents // 현재 리뷰 내용
+            reviews[currentReviewIndex]?.reviewContents
           ) : (
             <>
               {reviews[currentReviewIndex]?.reviewContents.slice(0, 50)}
@@ -98,17 +128,12 @@ const ReviewDetail = () => {
           )}
         </div>
 
-        <div className='flex flex-col gap-[10px]'>
-          {isModalOpen && <EditDeleteModal />}
+        <div className='flex flex-col gap-[10px] text-body2 text-gray-50'>
           <div className='flex flex-col items-center'>
-            <button className='pb-[10px]' onClick={toggleModal}>
-              <MoreIcon className='h-[30px] w-[30px]' color='#F2F4F5' />
-            </button>
-
             <button>
-              <StarFullIcon className='h-[30px] w-[30px]' />
+              <FullStarIcon color='#ffffff' size='w-[30px] h-[30px]' />
             </button>
-            <div className='text-body3 text-gray-50'>{reviews[activeIndex]?.reviewStar}</div>
+            <div>{reviews[activeIndex]?.reviewStar}</div>
           </div>
           <div className='flex flex-col items-center'>
             <button onClick={() => setIsLiked((prev) => !prev)}>
@@ -118,7 +143,13 @@ const ReviewDetail = () => {
                 <EmptyHeartIcon className='h-[30px] w-[30px]' color='#F2F4F5' />
               )}
             </button>
-            <div className='text-body3 text-gray-50'>{reviews[activeIndex]?.reviewLikeCnt}</div>
+            <div>{reviews[activeIndex]?.reviewLikeCnt}</div>
+            <div>
+              <button className='pt-[5px]' onClick={toggleModal}>
+                <MoreIcon className='h-[30px] w-[30px]' color='#F2F4F5' />
+              </button>
+              <BottomSheetModal isOpen={isModalOpen} onClose={() => setModalOpen(false)} options={modalOptions} />
+            </div>
           </div>
         </div>
       </div>
@@ -143,6 +174,7 @@ const ReviewDetail = () => {
               direction='horizontal'
               slidesPerView={1}
               pagination={{ clickable: true }}
+              spaceBetween={1}
               modules={[Pagination]}
               preventClicksPropagation={true}
               className='relative h-full'

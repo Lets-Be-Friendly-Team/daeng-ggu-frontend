@@ -12,7 +12,7 @@ const Modal = ({ onConfirm, description, onClose, confirmText, cancelText, title
         <section ref={targetRef} className='z-50 w-[80%] rounded-md bg-white px-[4rem] py-[2.4rem]'>
           <div className='flex w-full flex-col items-center justify-center gap-8'>
             <h3 className='text-sub_h2 font-semibold'>{title}</h3>
-            <span className='w-[15rem] text-body3 text-gray-700'>{description}</span>
+            <span className='w-[16rem] text-body3 text-gray-700'>{description}</span>
           </div>
           <div className='flex justify-center gap-[0.8rem]'>
             <TypeTwoButton
