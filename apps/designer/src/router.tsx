@@ -9,27 +9,24 @@ import MainPage from '@/pages/MainPage';
 
 import App from './App';
 
-export const router = createBrowserRouter(
-  [
-    {
-      path: ROUTES.main,
-      errorElement: (
-        <LogContainer log='designer app'>
-          <RouterErrorFallback />
-        </LogContainer>
-      ),
-      element: (
-        <Suspense>
-          <App />
-        </Suspense>
-      ),
-      children: [
-        {
-          index: true,
-          element: <MainPage />,
-        },
-      ],
-    },
-  ],
-  { basename: '/designer' },
-);
+export const router = createBrowserRouter([
+  {
+    path: ROUTES.main,
+    errorElement: (
+      <LogContainer log='designer app'>
+        <RouterErrorFallback />
+      </LogContainer>
+    ),
+    element: (
+      <Suspense>
+        <App />
+      </Suspense>
+    ),
+    children: [
+      {
+        index: true,
+        element: <MainPage />,
+      },
+    ],
+  },
+]);

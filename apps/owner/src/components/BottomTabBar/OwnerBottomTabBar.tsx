@@ -19,9 +19,16 @@ const ownerTabs = [
   { label: '마이페이지', icon: MyPageIcon, path: ROUTES.profile },
 ];
 
+const ownerHideTabbarRoutes = [
+  '/example',
+  // 숨기고 싶은 tabbar route 추가
+];
+
 const OwnerBottomTabBar = () => {
   const { activePath, setActivePath } = useOwnerBottomTabStore();
   const location = useLocation();
+
+  const shouldHideTabbar = ownerHideTabbarRoutes.some((route) => location.pathname.startsWith(route));
 
   // url 바뀔때마다 activePath update
   useEffect(() => {
@@ -35,17 +42,19 @@ const OwnerBottomTabBar = () => {
   }, [location.pathname, setActivePath]);
 
   return (
-    <BottomTabBar
-      items={ownerTabs}
-      activePath={activePath}
-      onTabChange={setActivePath}
-      renderTabItem={(tab, isActive) => (
-        <>
-          <tab.icon className={cn(isActive ? 'fill-primary' : '')} />
-          <span className={cn(isActive ? 'text-primary' : 'text-gray-300')}>{tab.label}</span>
-        </>
-      )}
-    />
+    !shouldHideTabbar && (
+      <BottomTabBar
+        items={ownerTabs}
+        activePath={activePath}
+        onTabChange={setActivePath}
+        renderTabItem={(tab, isActive) => (
+          <>
+            <tab.icon className={cn(isActive ? 'fill-primary' : '')} />
+            <span className={cn(isActive ? 'text-primary' : 'text-gray-300')}>{tab.label}</span>
+          </>
+        )}
+      />
+    )
   );
 };
 

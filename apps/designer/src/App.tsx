@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import DesignerBottomTabBar from '@/components/BottomTabBar/DesignerBottomTabBar.tsx';
+
 function App() {
   console.log('designer app');
   const { showToast } = useToast();

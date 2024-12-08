@@ -2,7 +2,7 @@ import { useLocation } from 'react-router';
 import { BottomTabBar, FeedIcon, MyPageIcon, RequestListIcon, ReservationIcon } from '@daeng-ggu/design-system';
 
 import { cn } from '@/lib/utils';
-import { useDesignerBottomTabStore } from '@/stores/bottomTabStore';
+import { useGuardianBottomTabStore } from '@/stores/bottomTabStore';
 
 // 로그인 상태에 따라 마이페이지/로그인 label 변경
 const designerTabs = [
@@ -12,16 +12,17 @@ const designerTabs = [
   { label: '마이페이지', icon: MyPageIcon, path: '/my' },
 ];
 
-const designerHideTabbarRoutes = [
+const guardianHideTabbarRoutes = [
   '/example',
   // 숨기고 싶은 tabbar route 추가
 ];
 
-const DesignerBottomTabBar = () => {
-  const { activePath, setActivePath } = useDesignerBottomTabStore();
+const GuardianBottomTabBar = () => {
+  const { activePath, setActivePath } = useGuardianBottomTabStore();
   const location = useLocation();
 
-  const shouldHideTabbar = designerHideTabbarRoutes.some((route) => location.pathname.startsWith(route));
+  const shouldHideTabbar = guardianHideTabbarRoutes.some((route) => location.pathname.startsWith(route));
+
   return (
     !shouldHideTabbar && (
       <BottomTabBar
@@ -39,4 +40,4 @@ const DesignerBottomTabBar = () => {
   );
 };
 
-export default DesignerBottomTabBar;
+export default GuardianBottomTabBar;
