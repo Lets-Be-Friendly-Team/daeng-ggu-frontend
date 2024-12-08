@@ -102,12 +102,12 @@ const MainCategoryTab = () => {
 
   return (
     <div className='flex h-full flex-col'>
-      <div className='sticky top-[13.6rem] z-10 bg-white shadow-md'>
+      <div className='sticky top-[11.5rem] z-10 bg-white shadow-md'>
         <div ref={containerRef} className='relative flex items-center justify-between px-[2rem]'>
           {tabs.map((tab, index) => (
             <div
               key={index}
-              className={`flex h-[7rem] w-[5rem] cursor-pointer flex-col items-center justify-between py-[0.8rem] text-body3 ${
+              className={`flex h-[6rem] w-[6rem] cursor-pointer flex-col items-center justify-between py-[0.8rem] text-iconCaption ${
                 activeIndex === index ? 'text-primary' : 'text-gray-600'
               }`}
               onClick={() => {
@@ -120,14 +120,14 @@ const MainCategoryTab = () => {
                 }
               }}
             >
-              <img src={tab.icon} alt={tab.label} className='w-[3rem]' />
+              <img src={tab.icon} alt={tab.label} className='w-[2.4rem]' />
               <div className=''>{tab.label}</div>
             </div>
           ))}
           <div
             className='absolute bottom-0 h-[2px] bg-primary transition-all duration-300 ease-in-out'
             style={{
-              width: '5rem',
+              width: '6rem',
               left: `${indicatorOffset}px`,
             }}
           ></div>

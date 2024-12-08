@@ -17,10 +17,11 @@ const Progress = React.forwardRef<React.ElementRef<typeof ProgressPrimitive.Root
 
     return (
       <div className='w-full flex-col justify-center px-[2rem]'>
-        <div className='mb-1 flex w-full items-center justify-between text-sub_h1 font-bold'>
+        <div className='mb-[1rem] flex w-full items-center justify-between text-sub_h1 font-bold'>
           <span>{text}</span>
-          <span className='text-gray-500'>
-            [{normalizedValue}/{maxStep}]
+          <span>
+            {normalizedValue}
+            <span className='text-gray-300'>/{maxStep}</span>
           </span>
         </div>
 
