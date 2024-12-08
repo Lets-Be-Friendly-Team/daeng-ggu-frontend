@@ -1,5 +1,5 @@
 import { useLocation } from 'react-router-dom';
-import { CategoryTab, Header } from '@daeng-ggu/design-system';
+import { CategoryTab, Header, PageContainer } from '@daeng-ggu/design-system';
 
 import CompletedRequest from '@/pages/Status/CompletedRequest';
 import PendingRequest from '@/pages/Status/PendingRequest';
@@ -409,10 +409,12 @@ const Status = () => {
 
   return (
     <div className='h-full w-full'>
-      <div className='w-full'>
-        <Header mode='main' title='견적 조회하기' />
-        <CategoryTab tabs={tabs} />
-      </div>
+      <PageContainer>
+        <div className='w-full'>
+          <Header mode='main' title='견적 조회하기' />
+          <CategoryTab tabs={tabs} />
+        </div>
+      </PageContainer>
     </div>
   );
 };

@@ -131,16 +131,16 @@ const DetailPage = () => {
   const buttonText = pageMode === 'user' ? '예약하기' : pageMode === 'designer' ? '견적 제안하기' : '예약 취소';
   return (
     <div>
-      <div className='mb-6 w-full'>
-        <Header
-          mode='customBack'
-          title={headerTitle}
-          onClick={() => {
-            window.history.back();
-          }}
-        />
-      </div>
       <PageContainer>
+        <div className='mb-6 w-full'>
+          <Header
+            mode='customBack'
+            title={headerTitle}
+            onClick={() => {
+              window.history.back();
+            }}
+          />
+        </div>
         <RequestReview {...processedData} pageMode={pageMode} />
       </PageContainer>
       <div className='fixed w-full' style={{ bottom: '7.5rem' }}>

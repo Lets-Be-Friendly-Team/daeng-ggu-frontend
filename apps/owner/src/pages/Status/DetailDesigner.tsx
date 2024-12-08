@@ -1,5 +1,5 @@
 import { useLocation } from 'react-router-dom';
-import { Header } from '@daeng-ggu/design-system';
+import { Header, PageContainer } from '@daeng-ggu/design-system';
 
 import SuggestReview from '@/pages/Status/SuggestReview.tsx';
 
@@ -62,7 +62,9 @@ const DetailDesigner = () => {
   return (
     <div className='h-full w-full'>
       <div className='w-full'>
-        <Header mode='back' title='견적 제안서 보기' />
+        <PageContainer>
+          <Header mode='back' title='견적 제안서 보기' />
+        </PageContainer>
         <SuggestReview data={modifiedData} />
       </div>
     </div>
