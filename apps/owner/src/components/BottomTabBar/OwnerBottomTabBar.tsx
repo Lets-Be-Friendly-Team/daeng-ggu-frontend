@@ -21,6 +21,7 @@ const ownerTabs = [
 
 const ownerHideTabbarRoutes = [
   '/example',
+  '/review',
   // 숨기고 싶은 tabbar route 추가
 ];
 
