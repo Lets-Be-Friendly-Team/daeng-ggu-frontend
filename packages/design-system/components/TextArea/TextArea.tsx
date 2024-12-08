@@ -71,12 +71,12 @@ const TextArea: FC<Props> = ({
   return (
     <div className={cn('flex flex-col', className)}>
       {label && (
-        <label htmlFor={id} className='mb-[0.4rem] block text-sub_h1 font-semibold text-gray-800'>
+        <label htmlFor={id} className='mb-[0.8rem] block text-body3 font-semibold text-gray-800'>
           {label}
         </label>
       )}
       <div
-        className={`${bgClass} ${bcClass} ${bwClass} rounded-md px-[1.6rem] py-4 focus:outline-none focus:ring-1 focus:ring-inset focus:ring-gray-500`}
+        className={`${bgClass} ${bcClass} ${bwClass} rounded-md px-[1.6rem] py-5 focus:outline-none focus:ring-1 focus:ring-inset focus:ring-gray-500`}
       >
         <textarea
           id={id}

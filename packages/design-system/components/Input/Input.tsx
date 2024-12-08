@@ -53,7 +53,7 @@ const Input = ({
   return (
     <div>
       {label && (
-        <label htmlFor={id} className='mb-[0.4rem] block text-body3 font-semibold text-gray-800'>
+        <label htmlFor={id} className='mb-[0.8rem] block text-body3 font-semibold text-gray-800'>
           {label}
         </label>
       )}
@@ -65,7 +65,7 @@ const Input = ({
         value={value}
         onChange={changeHandler}
         style={{ width: width || '100%', height: height || 'auto' }}
-        className='rounded-md bg-gray-50 px-[1.6rem] py-4 text-body3 focus:outline-none focus:ring-1 focus:ring-inset focus:ring-gray-500'
+        className='rounded-md bg-gray-50 px-[1.6rem] py-5 text-body3 focus:outline-none focus:ring-1 focus:ring-inset focus:ring-gray-500'
       ></input>
     </div>
   );
