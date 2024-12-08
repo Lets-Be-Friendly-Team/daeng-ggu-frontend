@@ -14,44 +14,47 @@ import ReviewDetailPage from '@/pages/ReviewDetailPage/ReviewDetailPage';
 import FeedPage from './pages/FeedPage/FeedPage';
 import App from './App';
 
-export const router = createBrowserRouter([
-  {
-    path: ROUTES.main,
-    errorElement: (
-      <LogContainer log='designer app'>
-        <RouterErrorFallback />
-      </LogContainer>
-    ),
-    element: (
-      <Suspense>
-        <App />
-      </Suspense>
-    ),
-    children: [
-      {
-        index: true,
-        element: <MainPage />,
-      },
-      {
-        path: ROUTES.feed,
-        element: <FeedPage />,
-      },
-      {
-        path: ROUTES.profile,
-        element: <MyPage />,
-      },
-      {
-        path: ROUTES.profileEdit,
-        element: <EditDesignerProfilePage />,
-      },
-      {
-        path: ROUTES.reviewDetail,
-        element: <ReviewDetailPage />,
-      },
-      {
-        path: ROUTES.reservation,
-        element: <ReservationPage />,
-      },
-    ],
-  },
-]);
+export const router = createBrowserRouter(
+  [
+    {
+      path: ROUTES.main,
+      errorElement: (
+        <LogContainer log='designer app'>
+          <RouterErrorFallback />
+        </LogContainer>
+      ),
+      element: (
+        <Suspense>
+          <App />
+        </Suspense>
+      ),
+      children: [
+        {
+          index: true,
+          element: <MainPage />,
+        },
+        {
+          path: ROUTES.feed,
+          element: <FeedPage />,
+        },
+        {
+          path: ROUTES.profile,
+          element: <MyPage />,
+        },
+        {
+          path: ROUTES.profileEdit,
+          element: <EditDesignerProfilePage />,
+        },
+        {
+          path: ROUTES.reviewDetail,
+          element: <ReviewDetailPage />,
+        },
+        {
+          path: ROUTES.reservation,
+          element: <ReservationPage />,
+        },
+      ],
+    },
+  ],
+  { basename: '/designer' },
+);
