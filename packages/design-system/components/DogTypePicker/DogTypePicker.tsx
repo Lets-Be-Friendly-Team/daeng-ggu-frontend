@@ -15,12 +15,13 @@ interface IDogTypePickerProps {
   onChange: (values: string[]) => void;
 }
 const DogTypePicker = ({ type, selectedValues, onChange }: IDogTypePickerProps) => {
-  const dogOprions: IDogTypeOption[] = [
+  const dogOptions: IDogTypeOption[] = [
     { label: '소형견', image: redPoodle, size: 'h-[32px] w-[32px]', gap: 'gap-[14px]' },
     { label: '중형견', image: shiba, size: 'h-[32px] w-[32px]', gap: 'gap-[14px]' },
     { label: '대형견', image: husky, size: 'h-[40px] w-[40px]', gap: 'gap-[6px]' },
     { label: '특수견', image: bichon, size: 'h-[36px] w-[36px]', gap: 'gap-[10px]' },
   ];
+
   const handleChange = (value: string) => {
     if (type === 'checkbox') {
       if (selectedValues.includes(value)) {
@@ -32,10 +33,11 @@ const DogTypePicker = ({ type, selectedValues, onChange }: IDogTypePickerProps) 
       onChange([value]);
     }
   };
+
   return (
-    <ul className='box-border flex w-full gap-1'>
-      {dogOprions.map((option, index) => (
-        <li key={index}>
+    <ul className='flex w-full flex-wrap gap-2'>
+      {dogOptions.map((option, index) => (
+        <li key={index} className='flex-1'>
           <input
             type={type}
             name={type === 'radio' ? 'dog-type' : `dog-type-${index}`}
@@ -46,9 +48,9 @@ const DogTypePicker = ({ type, selectedValues, onChange }: IDogTypePickerProps) 
           />
           <label
             htmlFor={`dog-type-${index}`}
-            className='box-border flex h-[80px] w-[68px] flex-col items-center justify-center rounded-[8px] bg-gray-50 py-3 text-gray-800 hover:cursor-pointer hover:bg-secondary peer-checked:border peer-checked:border-primary peer-checked:bg-secondary peer-checked:text-primary'
+            className='box-border flex h-[80px] w-full flex-col items-center justify-center rounded-[8px] bg-gray-50 py-3 text-gray-800 hover:cursor-pointer hover:bg-secondary peer-checked:border peer-checked:border-primary peer-checked:bg-secondary peer-checked:text-primary'
           >
-            <div className={`flex h-[80px] w-[68px] flex-col items-center justify-center ${option.gap}`}>
+            <div className={`flex flex-col items-center justify-center ${option.gap}`}>
               <img src={option.image} alt={option.label} className={`${option.size}`} />
               <div className='text-center text-iconCaption'>{option.label}</div>
             </div>

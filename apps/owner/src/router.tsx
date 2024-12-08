@@ -23,7 +23,9 @@ import ReviewDetailPage from '@/pages/ReviewDetailPage/ReviewDetailPage';
 import DetailDesigner from '@/pages/Status/DetailDesigner.tsx';
 import DetailPage from '@/pages/Status/DetailPage.tsx';
 import Status from '@/pages/Status/Status.tsx';
-import Suggest from '@/pages/Suggest/Suggest.tsx';
+import Suggest from '@/pages/Suggest/Suggest';
+
+import FeedPage from './pages/FeedPage/FeedPage';
 
 import SignUpPage from './pages/SignUp/SignUpPage';
 
@@ -54,6 +56,10 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.signup,
         children: [{ index: true, element: <SignUpPage /> }],
+      },
+      {
+        path: ROUTES.feed,
+        element: <FeedPage />,
       },
       {
         path: ROUTES.map,

@@ -9,7 +9,7 @@ const designerTabs = [
   { label: '예약 현황', icon: ReservationIcon, path: '/address/test' },
   { label: '요청서 조회', icon: RequestListIcon, path: '/input/test' },
   { label: '피드', icon: FeedIcon, path: '/feed' },
-  { label: '마이페이지', icon: MyPageIcon, path: '/my' },
+  { label: '마이페이지', icon: MyPageIcon, path: '/profile' },
 ];
 
 const designerHideTabbarRoutes = [
