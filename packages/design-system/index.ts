@@ -78,6 +78,7 @@ import TypeOneButton from './components/TypeOneButton/TypeOneButton';
 import TypeTwoButton from './components/TypeTwoButton/TypeTwoButton';
 import type { ModalProps } from './types/modal';
 import type { ToastType } from './types/toast';
+import SignupForm from './components/SignupForm/SignupForm';
 
 export {
   CategoryTab,
@@ -158,4 +159,5 @@ export {
   DeleteIcon,
   ExclamationIcon,
   BottomSheetModal,
+  SignupForm,
 };

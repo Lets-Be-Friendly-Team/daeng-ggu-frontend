@@ -7,14 +7,14 @@ import Input from '../Input/Input';
 import SearchAddress from './SearchAddress';
 
 export type AddressForm = {
-  address1: string;
-  address2: string;
+  address1?: string;
+  address2?: string;
 };
 
 interface Props {
   label?: string;
-  addressForm: AddressForm;
-  detailAddr: string;
+  addressForm?: AddressForm;
+  detailAddr?: string;
   setAddressForm: (_form: AddressForm) => void;
   setDetailAddr: (_detail: string) => void;
 }
