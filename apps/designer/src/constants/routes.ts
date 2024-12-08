@@ -6,6 +6,7 @@ const ROUTES = {
   profileEdit: '/profile/edit',
   profileEditPortfolio: '/profile/edit/portfolio',
   reviewDetail: '/profile/review/:reviewId',
+  reservation: '/profile/reservation',
 } as const;
 
 export default ROUTES;

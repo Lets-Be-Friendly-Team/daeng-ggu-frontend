@@ -1,7 +1,8 @@
 /* swiperStyle.css */
 
 .mySwiper2 .swiper-pagination {
-  padding-bottom: 140px;
+  position: absolute;
+  bottom: 25%;
   width: 100%;
   text-align: center;
   display: flex;
