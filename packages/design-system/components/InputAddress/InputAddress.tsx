@@ -53,6 +53,7 @@ const InputAddress = ({
           className='w-full bg-gray-50 text-body3 focus:outline-none'
           placeholder='주소 검색'
           value={addressForm.address2}
+          readOnly
         ></input>
         <MySearchIcon className='h-6 w-6' />
       </div>

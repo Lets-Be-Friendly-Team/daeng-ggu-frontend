@@ -9,17 +9,14 @@ const SignupPage = () => {
     gender: '',
     phone: '',
     nickname: '',
-    address1: '',
-    address2: '',
-    detailAddress: '',
   });
 
   //데이터 전송 핸들러
   const handleSubmit = () => {
     console.log(formData);
-    // alert('hi');
+    alert('hi');
   };
 
-  return <SignupForm formData={formData} setFormData={setFormData} handleSubmit={handleSubmit} userType='C' />;
+  return <SignupForm formData={formData} setFormData={setFormData} handleSubmit={handleSubmit} userType='D' />;
 };
 export default SignupPage;

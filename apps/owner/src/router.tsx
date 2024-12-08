@@ -27,10 +27,10 @@ import DetailPage from '@/pages/Status/DetailPage.tsx';
 import Status from '@/pages/Status/Status.tsx';
 import Suggest from '@/pages/Suggest/Suggest.tsx';
 
+import SignupPage from './pages/Signup/SignupPage';
 import DesignerProfilePage from './pages/DesignerProfilePage/DesignerProfilePage';
 import FeedPage from './pages/FeedPage/FeedPage';
 import PortfolioDetailPage from './pages/PortfolioDetailPage/PortfolioDetailPage';
-import SignUpPage from './pages/Signup/SignUpPage';
 
 import '@/styles/sequenceAnimation.css';
 
@@ -62,7 +62,7 @@ export const router = createBrowserRouter([
       },
       {
         path: ROUTES.signup,
-        children: [{ index: true, element: <SignUpPage /> }],
+        children: [{ index: true, element: <SignupPage /> }],
       },
       {
         path: ROUTES.feed,

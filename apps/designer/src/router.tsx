@@ -13,6 +13,7 @@ import ReviewDetailPage from '@/pages/ReviewDetailPage/ReviewDetailPage';
 // import '@/styles/sequenceAnimation.css';
 import FeedPage from './pages/FeedPage/FeedPage';
 import PortfolioDetailPage from './pages/PortfolioDetailPage/PortfolioDetailPage';
+import SignupPage from './pages/Signup/SignupPage';
 import App from './App';
 
 export const router = createBrowserRouter(
@@ -33,6 +34,10 @@ export const router = createBrowserRouter(
         {
           index: true,
           element: <MainPage />,
+        },
+        {
+          path: ROUTES.signup,
+          children: [{ index: true, element: <SignupPage /> }],
         },
         {
           path: ROUTES.feed,

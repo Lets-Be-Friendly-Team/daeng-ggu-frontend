@@ -1,4 +1,8 @@
 const ROUTES = {
+  // main: '',
+  // progress: 'progress',
+  // bid: 'bid',
+  signup: 'signup',
   main: '/',
   progress: '/progress',
   bid: '/bid',

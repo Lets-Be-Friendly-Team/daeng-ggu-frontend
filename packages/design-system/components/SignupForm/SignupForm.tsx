@@ -66,78 +66,81 @@ const SignupForm = ({ formData, setFormData, userType, handleSubmit }: SignupFor
 
   return (
     <div className='bg-white'>
-      <PageContainer>
-        <Header mode='back' title='회원가입' />
-        <div className='mt-8 flex flex-col gap-y-[2.4rem]'>
-          <h1 className='text-body1'>
-            <strong>회원정보</strong>를 입력 해주세요
-          </h1>
-          <Input label='이름' placeholder='이름 입력' name='name' value={formData.name} onChange={handleChange} />
-          <Input
-            label='생년월일'
-            placeholder='YYYYMMDD'
-            name='birth'
-            value={formData.birth}
-            onChange={(e) => handleNumChange(e, 8)}
-          />
-          <div>
-            <div className='mb-[0.4rem] block text-body3 font-semibold text-gray-800'>성별</div>
-            <div className='flex gap-1'>
-              <TypeTwoButton
-                text='남'
-                color={formData.gender === 'M' ? 'bg-secondary' : 'bg-gray-50'}
-                fontWeight='font-medium'
-                onClick={() => handleGenderChange('M')}
-              />
-              <TypeTwoButton
-                text='여'
-                color={formData.gender === 'F' ? 'bg-secondary' : 'bg-gray-50'}
-                onClick={() => handleGenderChange('F')}
-                fontWeight='font-medium'
-              />
-            </div>
-          </div>
-          <Input
-            type='tel'
-            label='휴대폰'
-            placeholder='숫자만 입력'
-            name='phone'
-            value={formData.phone}
-            onChange={(e) => handleNumChange(e, 11)}
-          />
-          <Input
-            label='닉네임'
-            placeholder='닉네임 입력'
-            name='nickname'
-            value={formData.nickname}
-            onChange={handleChange}
-          />
-          {userType === 'C' && (
-            <InputAddress
-              label='주소'
-              addressForm={{ address1: formData.address1, address2: formData.address2 }}
-              setAddressForm={({ address1, address2 }) => {
-                handleAddressChange(address1, address2);
-              }}
-              detailAddr={formData.detailAddress}
-              setDetailAddr={(value) => {
-                setFormData((prev) => ({
-                  ...prev,
-                  detailAddress: value,
-                }));
-              }}
+      <form>
+        <PageContainer>
+          <Header mode='back' title='회원가입' />
+          <div className='mt-8 flex flex-col gap-y-[2.4rem]'>
+            <h1 className='text-body1'>
+              <strong>회원정보</strong>를 입력 해주세요
+            </h1>
+            <Input label='이름' placeholder='이름 입력' name='name' value={formData.name} onChange={handleChange} />
+            <Input
+              label='생년월일'
+              placeholder='YYYYMMDD'
+              name='birth'
+              value={formData.birth}
+              onChange={(e) => handleNumChange(e, 8)}
             />
-          )}
-        </div>
-      </PageContainer>
-      {/* <div className='fixed bottom-[10rem] z-20 w-full'> */}
-      <TypeOneButton
-        text='입력 완료'
-        color={activeBtn ? 'bg-primary' : 'bg-gray-50'}
-        onClick={handleSubmit}
-        disabled={!activeBtn}
-      />
-      {/* </div> */}
+            <div>
+              <div className='mb-[0.8rem] block text-body3 font-semibold text-gray-800'>성별</div>
+              <div className='flex gap-1'>
+                <TypeTwoButton
+                  text='남'
+                  color={formData.gender === 'M' ? 'bg-secondary' : 'bg-gray-50'}
+                  fontWeight='font-medium'
+                  onClick={() => handleGenderChange('M')}
+                  type='button'
+                />
+                <TypeTwoButton
+                  text='여'
+                  color={formData.gender === 'F' ? 'bg-secondary' : 'bg-gray-50'}
+                  onClick={() => handleGenderChange('F')}
+                  fontWeight='font-medium'
+                  type='button'
+                />
+              </div>
+            </div>
+            <Input
+              type='tel'
+              label='휴대폰'
+              placeholder='숫자만 입력'
+              name='phone'
+              value={formData.phone}
+              onChange={(e) => handleNumChange(e, 11)}
+            />
+            <Input
+              label='닉네임'
+              placeholder='닉네임 입력'
+              name='nickname'
+              value={formData.nickname}
+              onChange={handleChange}
+            />
+            {userType === 'C' && (
+              <InputAddress
+                label='주소'
+                addressForm={{ address1: formData.address1, address2: formData.address2 }}
+                setAddressForm={({ address1, address2 }) => {
+                  handleAddressChange(address1, address2);
+                }}
+                detailAddr={formData.detailAddress}
+                setDetailAddr={(value) => {
+                  setFormData((prev) => ({
+                    ...prev,
+                    detailAddress: value,
+                  }));
+                }}
+              />
+            )}
+          </div>
+        </PageContainer>
+        <TypeOneButton
+          text='입력 완료'
+          color={activeBtn ? 'bg-primary' : 'bg-gray-50'}
+          onClick={handleSubmit}
+          disabled={!activeBtn}
+          type='submit'
+        />
+      </form>
     </div>
   );
 };

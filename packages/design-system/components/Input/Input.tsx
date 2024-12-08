@@ -14,6 +14,8 @@ interface Props {
   width?: string;
   height?: string;
   onChange?: (_ev: InputChangeEvent) => void;
+  readonly?: boolean;
+  required?: boolean;
 }
 
 /*
@@ -43,6 +45,8 @@ const Input = ({
   width = '',
   height = '',
   onChange,
+  readonly,
+  required,
 }: Props) => {
   const changeHandler = (_ev: InputChangeEvent) => {
     if (onChange) {
@@ -66,6 +70,8 @@ const Input = ({
         onChange={changeHandler}
         style={{ width: width || '100%', height: height || 'auto' }}
         className='rounded-md bg-gray-50 px-[1.6rem] py-5 text-body3 focus:outline-none focus:ring-1 focus:ring-inset focus:ring-gray-500'
+        readOnly={readonly}
+        required={required}
       ></input>
     </div>
   );
