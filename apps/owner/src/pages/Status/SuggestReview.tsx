@@ -67,9 +67,9 @@ const SuggestReview = ({ data }: SuggestReviewProps) => {
                 />
                 <div className='ml-6'>
                   <p className='text-gray-800'>{formatDate(data.createdAt)} 견적제안</p>
-                  <h3 className='text-sub_h3 font-semibold'>{data.designerName || '이름 없음'}</h3>
-                  <p className='text-sub_h2 font-bold'>{data.groomingFee.toLocaleString()}원</p>
-                  <p className='pb-2 text-iconCaption'>
+                  <h3 className='mt-1 text-sub_h3 font-semibold'>{data.designerName || '이름 없음'}</h3>
+                  <p className='mt-1 text-sub_h2 font-bold'>{data.groomingFee.toLocaleString()}원</p>
+                  <p className='mt-2 pb-2 text-iconCaption'>
                     <span className='mr-1 rounded-[4px] border border-primary px-2 py-[0.8px] text-primary'>
                       서비스
                     </span>
