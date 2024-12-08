@@ -6,7 +6,8 @@ import { useToast } from '@daeng-ggu/shared';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-import DesignerBottomTabBar from '@/components/BottomTabBar/DesignerBottomTabBar.tsx';
+import GuardianBottomTabBar from '@/components/BottomTabBar/GuardianBottomTabBar';
+
 function App() {
   console.log('guardian app');
   const { showToast } = useToast();
@@ -23,7 +24,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <NavermapsProvider ncpClientId={import.meta.env.VITE_NAVER_CLIENT_ID}>
-        <Layout tab={<DesignerBottomTabBar />}>
+        <Layout tab={<GuardianBottomTabBar />}>
           <ToastContainer />
           <ModalContainer />
           <Outlet />
