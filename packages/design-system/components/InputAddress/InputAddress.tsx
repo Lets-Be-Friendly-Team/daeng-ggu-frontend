@@ -47,8 +47,8 @@ const InputAddress = ({
   };
   return (
     <div>
-      {label && <label className='mb-[0.4rem] block text-body3 font-semibold text-gray-800'>{label}</label>}
-      <div className='mb-[0.8rem] flex rounded-md bg-gray-50 px-[1.6rem] py-4' onClick={handleOpen}>
+      {label && <label className='mb-[0.8rem] block text-body3 font-semibold text-gray-800'>{label}</label>}
+      <div className='mb-[0.8rem] flex rounded-md bg-gray-50 px-[1.6rem] py-5' onClick={handleOpen}>
         <input
           className='w-full bg-gray-50 text-body3 focus:outline-none'
           placeholder='주소 검색'

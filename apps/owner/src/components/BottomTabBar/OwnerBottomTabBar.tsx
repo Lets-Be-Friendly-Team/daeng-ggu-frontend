@@ -50,7 +50,7 @@ const OwnerBottomTabBar = () => {
         renderTabItem={(tab, isActive) => (
           <>
             <tab.icon className={cn(isActive ? 'fill-primary' : '')} />
-            <span className={cn(isActive ? 'text-primary' : 'text-gray-300')}>{tab.label}</span>
+            <span className={cn(isActive ? 'font-semibold text-primary' : 'text-gray-300')}>{tab.label}</span>
           </>
         )}
       />

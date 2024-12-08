@@ -7,6 +7,7 @@ interface ITab {
 
 interface CategoryTabProps {
   tabs: ITab[];
+  fontSize?: string;
 }
 
 /*
@@ -43,7 +44,7 @@ const Status = () => {
 };
 **/
 
-const CategoryTab = ({ tabs }: CategoryTabProps) => {
+const CategoryTab = ({ tabs, fontSize }: CategoryTabProps) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [indicatorStyles, setIndicatorStyles] = useState({ left: 0, width: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
@@ -70,7 +71,7 @@ const CategoryTab = ({ tabs }: CategoryTabProps) => {
           {tabs.map((tab, index) => (
             <div
               key={index}
-              className={`flex h-[33px] cursor-pointer justify-center py-[8px] text-sub_h2 ${
+              className={`flex h-[33px] cursor-pointer justify-center py-[8px] ${fontSize ? fontSize : 'text-sub_h2'} ${
                 activeIndex === index ? 'text-primary' : 'text-gray-600'
               }`}
               onClick={() => setActiveIndex(index)}

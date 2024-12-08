@@ -33,11 +33,11 @@ const SearchResultPage = () => {
       <PageContainer>
         <div className='sticky top-0 z-10'>
           <Header mode='main' />
-          <div className='py-8'>
+          <div className='py-4'>
             <SearchBar keyword={newKeyword} handleSearch={handleSearch} onChange={handleKeywordChange} />
           </div>
         </div>
-        <div className='mb-[6.5rem] pb-8'>
+        <div className='mb-[6.5rem] py-8'>
           <DesignerList dataList={searchResult} />
         </div>
       </PageContainer>
