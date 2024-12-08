@@ -5,7 +5,7 @@ interface BottomTabState {
   setActivePath: (_path: string) => void;
 }
 
-export const useDesignerBottomTabStore = create<BottomTabState>((set) => ({
+export const useGuardianBottomTabStore = create<BottomTabState>((set) => ({
   activePath: '',
   setActivePath: (_path) => set({ activePath: _path }),
 }));
