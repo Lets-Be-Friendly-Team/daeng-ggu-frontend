@@ -10,7 +10,7 @@ const ROUTES = {
   profileEditPet: 'profile/edit/:petId',
   profileAddPet: 'profile/pet/add',
   reviewDetail: 'profile/review/:reviewId',
-  reservation: 'reservation',
+  reservation: 'profile/reservation',
   review: 'review',
   login: 'login',
   signup: 'signup',

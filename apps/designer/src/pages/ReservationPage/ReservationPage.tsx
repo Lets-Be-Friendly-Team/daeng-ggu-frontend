@@ -49,7 +49,7 @@ const data = [
     reservationDate: '2024-12-31',
     dayOfWeek: '일요일',
     amPm: '오후',
-    startTime: 14, // 오후 2시
+    startTime: 2, // 오후 2시
     groomingFee: 60000,
     deliveryFee: 25000,
     monitoringFee: 15000,
