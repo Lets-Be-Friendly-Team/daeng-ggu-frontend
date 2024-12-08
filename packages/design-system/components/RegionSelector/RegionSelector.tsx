@@ -60,8 +60,8 @@ const RegionSelector = ({ onSelectionChange }: RegionSelectorProps) => {
   }, []);
 
   return (
-    <div className='mx-auto w-full max-w-md space-y-6 p-4'>
-      <div className='w-[260px]' ref={areaRef}>
+    <div className='mx-auto w-full space-y-6 py-4'>
+      <div className='w-full' ref={areaRef}>
         <button
           type='button'
           onClick={() => setIsAreaOpen((prev) => !prev)}
@@ -82,7 +82,7 @@ const RegionSelector = ({ onSelectionChange }: RegionSelectorProps) => {
         </button>
 
         {isAreaOpen && (
-          <ul className='absolute z-10 mt-2 max-h-60 w-[260px] overflow-auto rounded-md border border-gray-300 bg-white text-sub_h2 shadow-lg scrollbar-hide'>
+          <ul className='absolute z-10 mt-2 max-h-60 w-full max-w-[440px] overflow-auto rounded-md border border-gray-300 bg-white text-sub_h2 shadow-lg scrollbar-hide'>
             {areas.map((area) => (
               <li key={area.name}>
                 <button
@@ -110,7 +110,7 @@ const RegionSelector = ({ onSelectionChange }: RegionSelectorProps) => {
           <button
             type='button'
             onClick={() => setIsSubAreaOpen((prev) => !prev)}
-            className={`flex h-[48px] w-[260px] items-center justify-between rounded-md border border-primary px-4 py-2 text-left text-sub_h2 shadow-sm focus:outline-none focus:ring-1 focus:ring-primary ${
+            className={`flex h-[48px] w-full items-center justify-between rounded-md border border-primary px-4 py-2 text-left text-sub_h2 shadow-sm focus:outline-none focus:ring-1 focus:ring-primary ${
               isSubAreaOpen ? 'bg-secondary text-primary' : 'bg-white text-black'
             }`}
           >
@@ -127,7 +127,7 @@ const RegionSelector = ({ onSelectionChange }: RegionSelectorProps) => {
           </button>
 
           {isSubAreaOpen && (
-            <ul className='absolute z-10 mt-1 max-h-60 w-[260px] overflow-auto rounded-md border border-primary bg-white text-sub_h2 shadow-lg scrollbar-hide'>
+            <ul className='absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md border border-primary bg-white text-sub_h2 shadow-lg scrollbar-hide'>
               {subAreas.map((subArea) => (
                 <li key={subArea}>
                   <button

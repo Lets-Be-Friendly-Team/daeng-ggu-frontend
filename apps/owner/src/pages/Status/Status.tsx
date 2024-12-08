@@ -1,5 +1,5 @@
 import { useLocation } from 'react-router-dom';
-import { CategoryTab, Header } from '@daeng-ggu/design-system';
+import { CategoryTab, Header, PageContainer } from '@daeng-ggu/design-system';
 
 import CompletedRequest from '@/pages/Status/CompletedRequest';
 import PendingRequest from '@/pages/Status/PendingRequest';
@@ -164,6 +164,7 @@ const Status = () => {
           designerImageUrl: 'https://via.placeholder.com/100',
           estimatePrice: 180000,
           petId: 2,
+          designerAddress: '부산광역시 해운대구 달맞이길 미용타운54 202호',
           petName: '포돌이',
           createdAt: '2024-11-26T10:30:00',
         },
@@ -174,6 +175,7 @@ const Status = () => {
           designerImageUrl: 'https://via.placeholder.com/100',
           estimatePrice: 170000,
           petId: 2,
+          designerAddress: '부산광역시 해운대구 달맞이길 미용타운54 202호',
           petName: '포돌이',
           createdAt: '2024-11-26T11:00:00',
         },
@@ -213,6 +215,7 @@ const Status = () => {
           designerImageUrl: 'https://via.placeholder.com/100',
           estimatePrice: 200000,
           petId: 3,
+          designerAddress: '부산광역시 해운대구 달맞이길 미용타운54 202호',
           petName: '장군이',
           createdAt: '2024-11-25T09:45:00',
         },
@@ -223,6 +226,7 @@ const Status = () => {
           designerImageUrl: 'https://via.placeholder.com/100',
           estimatePrice: 210000,
           petId: 3,
+          designerAddress: '부산광역시 해운대구 달맞이길 미용타운54 202호',
           petName: '장군이',
           createdAt: '2024-11-25T10:00:00',
         },
@@ -262,6 +266,7 @@ const Status = () => {
           designerImageUrl: 'https://via.placeholder.com/100',
           estimatePrice: 120000,
           petId: 4,
+          designerAddress: '부산광역시 해운대구 달맞이길 미용타운54 202호',
           petName: '뽀삐',
           createdAt: '2024-11-28T15:00:00',
         },
@@ -272,6 +277,7 @@ const Status = () => {
           designerImageUrl: 'https://via.placeholder.com/100',
           estimatePrice: 130000,
           petId: 4,
+          designerAddress: '부산광역시 해운대구 달맞이길 미용타운54 202호',
           petName: '뽀삐',
           createdAt: '2024-11-28T15:30:00',
         },
@@ -409,10 +415,12 @@ const Status = () => {
 
   return (
     <div className='h-full w-full'>
-      <div className='w-full'>
-        <Header mode='main' title='견적 조회하기' />
-        <CategoryTab tabs={tabs} />
-      </div>
+      <PageContainer>
+        <div className='w-full'>
+          <Header mode='main' title='견적 조회하기' />
+          <CategoryTab tabs={tabs} />
+        </div>
+      </PageContainer>
     </div>
   );
 };

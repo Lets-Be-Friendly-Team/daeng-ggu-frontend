@@ -16,6 +16,9 @@ const Header = ({ mode, title, onClick }: IHeaderProps) => {
   const handleLogoClick = () => {
     navigate('/');
   };
+  const handleNotificationClick = () => {
+    navigate('/notification');
+  };
   const handleBackClick = () => {
     navigate(-1);
   };
@@ -28,7 +31,7 @@ const Header = ({ mode, title, onClick }: IHeaderProps) => {
             <button>
               <img src={textLogoImage} alt='logo image' className='h-[22px] w-[41px]' onClick={handleLogoClick} />
             </button>
-            <button>
+            <button onClick={handleNotificationClick}>
               <BellIcon className='ml-auto h-[20px] w-[20px]' />
             </button>
           </div>

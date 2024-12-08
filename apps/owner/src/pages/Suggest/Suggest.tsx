@@ -14,8 +14,19 @@ interface ImageWithId {
 
 const Suggest = () => {
   const location = useLocation();
-  const { petId, desiredDateOne, desiredDateTwo, desiredDateThree, customerName, phone, address } =
-    location.state || {};
+  const {
+    petId,
+    desiredDateOne,
+    desiredDateTwo,
+    desiredDateThree,
+    customerName,
+    phone,
+    address,
+    majorBreed,
+    desiredServiceCode,
+    isVisitRequired,
+    isMonitoringIncluded,
+  } = location.state || {};
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedTime, setSelectedTime] = useState<number | null>(null);
@@ -24,9 +35,8 @@ const Suggest = () => {
   const [price, setPrice] = useState<number | ''>('');
   const [, setImages] = useState<ImageWithId[]>([]);
 
-  // Dummy IDs for demonstration; replace with actual IDs as needed.
   const customerId = 123;
-  const designerId = 456; // Assuming a designerId is available or can be provided
+  const designerId = 456;
 
   const desiredDates = [desiredDateOne, desiredDateTwo, desiredDateThree]
     .filter(Boolean)
@@ -49,12 +59,10 @@ const Suggest = () => {
     }
   };
 
-  // Handle time selection
   const handleTimeSelectChange = (time: number) => {
     setSelectedTime(time);
   };
 
-  // Get available times for selected date
   const getAvailableTimes = () => {
     if (!selectedDate) return [];
     const selectedDateString = format(selectedDate, 'yyyy-MM-dd');
@@ -85,6 +93,50 @@ const Suggest = () => {
     return new File([u8arr], filename, { type: mime });
   };
 
+  const calculateCosts = (
+    majorBreed: string | undefined,
+    baseAmount: number,
+    isVisitRequired: boolean,
+    isMonitoringIncluded: boolean,
+  ): { movingCost: string; totalAmount: string } => {
+    let movingCost = 0;
+
+    switch (majorBreed) {
+      case '특수견':
+        movingCost = 70000;
+        break;
+      case '대형견':
+        movingCost = 50000;
+        break;
+      case '중형견':
+        movingCost = 40000;
+        break;
+      case '소형견':
+        movingCost = 20000;
+        break;
+      default:
+        movingCost = 0;
+    }
+
+    const additionalCost = baseAmount * 0.1;
+    let total = baseAmount + additionalCost;
+
+    if (isVisitRequired) {
+      total += movingCost;
+    }
+
+    if (isMonitoringIncluded) {
+      total += 20000;
+    }
+
+    return {
+      movingCost: movingCost.toString(),
+      totalAmount: total.toString(),
+    };
+  };
+
+  const { movingCost, totalAmount } = calculateCosts(majorBreed, price || 0, !!isVisitRequired, !!isMonitoringIncluded);
+
   const handleSubmit = async () => {
     console.log('handleSubmit called');
 
@@ -110,7 +162,7 @@ const Suggest = () => {
           const uniqueId = generateUniqueId(i);
 
           img.setAttribute('src', uniqueId);
-          const file = base64ToFile(src, `image-${imageCounter}.png`); // Adjust extension based on MIME type if needed
+          const file = base64ToFile(src, `image-${imageCounter}.png`);
           imagesWithIds.push({ id: uniqueId, file });
           console.log(`Processed Image ${i + 1}:`, {
             id: uniqueId,
@@ -131,7 +183,7 @@ const Suggest = () => {
         designerId,
         requestDetail: processedContent,
         requestDate: `${format(selectedDate, 'yyyy-MM-dd')} ${String(selectedTime).padStart(2, '0')}:00:00`,
-        requestPrice: price || 0,
+        requestPrice: Number(totalAmount),
       };
       console.log('Estimate Request Object:', estimateRequest);
 
@@ -139,7 +191,6 @@ const Suggest = () => {
         estimateImgUrl: image.file,
       }));
 
-      // Build the third list: estimateImgIdList
       const estimateImgIdList = imagesWithIds.map((image) => ({
         estimateTagId: image.id,
       }));
@@ -168,7 +219,6 @@ const Suggest = () => {
         }
       }
 
-      // Send the POST request
       const response = await fetch('http://localhost:8080/daengggu/bid/estimate', {
         method: 'POST',
         body: formData,
@@ -196,16 +246,16 @@ const Suggest = () => {
 
   return (
     <div>
-      <div className='mb-6 w-full'>
-        <Header
-          mode='customBack'
-          title='견적 제안하기'
-          onClick={() => {
-            window.history.back();
-          }}
-        />
-      </div>
       <PageContainer>
+        <div className='mb-6 w-full'>
+          <Header
+            mode='customBack'
+            title='견적 제안하기'
+            onClick={() => {
+              window.history.back();
+            }}
+          />
+        </div>
         <div className='mt-10'>
           <div className='items-start'>
             <h2 className='mb-4 text-h3 font-bold text-gray-800'>제안서 상세</h2>
@@ -251,7 +301,6 @@ const Suggest = () => {
                     </div>
                   </div>
                 </div>
-
                 <div className='mt-6 w-full bg-secondary'>
                   <div>
                     <div className='flex flex-col justify-center rounded-[8px] bg-white py-4 pl-6'>
@@ -259,11 +308,20 @@ const Suggest = () => {
                       <div className='mt-3 flex items-center text-sub_h1'>
                         <div>
                           <input
-                            className='w-full border-b focus:outline-none'
+                            className={`w-full border-b focus:outline-none ${price !== '' ? 'text-right' : ''}`}
                             placeholder='₩ 가격'
-                            type='number'
-                            value={price}
-                            onChange={(e) => setPrice(e.target.value ? Number(e.target.value) : '')}
+                            type='text'
+                            value={price !== '' ? Number(price).toLocaleString() : ''}
+                            onChange={(e) => {
+                              const rawValue = e.target.value.replace(/,/g, '');
+                              const numericValue = Number(rawValue);
+                              // Ensure valid number and prevent NaN
+                              if (!isNaN(numericValue)) {
+                                setPrice(rawValue ? numericValue : '');
+                              } else {
+                                setPrice('');
+                              }
+                            }}
                           />
                         </div>
                         <span className='ml-2'>원</span>
@@ -275,7 +333,7 @@ const Suggest = () => {
             </BorderContainer>
           </div>
 
-          <div className='mb-56 w-full'>
+          <div className='mb-10 w-full'>
             <div className='mt-6 items-start'>
               <h2 className='mb-4 text-h3 font-bold text-gray-800'>댕송지 정보</h2>
             </div>
@@ -287,9 +345,38 @@ const Suggest = () => {
               </div>
             </BorderContainer>
           </div>
+          <div className='mb-[160px] w-full'>
+            <div className='mt-6 items-start'>
+              <h2 className='mb-4 text-h3 font-bold text-gray-800'>결제 정보</h2>
+            </div>
+            <BorderContainer innerPadding='p-3'>
+              <div className='flex-col items-start p-2 text-gray-800'>
+                {isVisitRequired && (
+                  <div className='mb-2 flex justify-between'>
+                    <span>댕동비({location.state ? majorBreed : '정보 없음'})</span>
+                    <span>{Math.round(Number(movingCost)).toLocaleString()}원</span>
+                  </div>
+                )}
+                {isMonitoringIncluded && (
+                  <div className='mb-2 flex justify-between'>
+                    <span>모니터링 비용</span>
+                    <span>{(20000).toLocaleString()}원</span>
+                  </div>
+                )}
+                <div className='mb-2 flex justify-between'>
+                  <span>미용비({desiredServiceCode})</span>
+                  <span>{Math.round(Number(price)).toLocaleString()}원</span>
+                </div>
+
+                <div className='mt-2 flex justify-between border-t pt-2 text-lg font-bold'>
+                  <span>결제금액(수수료 포함)</span>
+                  <span>{Math.round(Number(totalAmount)).toLocaleString()}원</span>
+                </div>
+              </div>
+            </BorderContainer>
+          </div>
         </div>
       </PageContainer>
-
       <div className='fixed w-full' style={{ bottom: '7.5rem' }}>
         <TypeOneButton
           text='제안하기'

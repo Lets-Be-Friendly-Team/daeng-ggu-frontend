@@ -3,6 +3,7 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import {
   Calendar,
   Header,
+  PageContainer,
   Progress,
   RadioGroup,
   RadioGroupItem,
@@ -13,6 +14,7 @@ import {
 } from '@daeng-ggu/design-system';
 import { format } from 'date-fns';
 
+import editIcon from '@/assets/edit.svg';
 import ProfileButton from '@/pages/Request/ProfileButton';
 import ProfileViewer from '@/pages/Request/ProfileViewer';
 import RequestReview from '@/pages/Request/RequestReview';
@@ -71,8 +73,10 @@ const StepByStep = ({ stepCount, profileData = [], onProfileSelect }: StepByStep
     subArea: '',
   });
 
+  // For Step 9
   const [userInput, setUserInput] = useState<string>('');
 
+  // For Step 6 - show 3 buttons and allow date/time selection per button
   const [showDateSelector, setShowDateSelector] = useState<boolean>(false);
   const [selectedDateTimes, setSelectedDateTimes] = useState<SelectedDateTime[]>([
     { dateStr: '', selectedDate: null, selectedTime: null },
@@ -201,13 +205,15 @@ const StepByStep = ({ stepCount, profileData = [], onProfileSelect }: StepByStep
     if (activeDateIndex === null) return;
     const newDateTimes = [...selectedDateTimes];
     const chosenDate = newDateTimes[activeDateIndex].selectedDate;
-    if (!chosenDate) return;
+    if (!chosenDate) return; // date not chosen yet
     newDateTimes[activeDateIndex].selectedTime = time;
+    // Now store full date and time in dateStr
     const datePart = format(chosenDate, 'yyyy-MM-dd');
     const timePart = String(time).padStart(2, '0') + ':00:00';
     newDateTimes[activeDateIndex].dateStr = `${datePart} ${timePart}`;
     setSelectedDateTimes(newDateTimes);
 
+    // Close selection
     setShowCalendar(false);
     setShowTimeSelect(false);
     setActiveDateIndex(null);
@@ -215,21 +221,28 @@ const StepByStep = ({ stepCount, profileData = [], onProfileSelect }: StepByStep
 
   const renderDateSelector = () => {
     return (
-      <div className='m-auto mt-4 flex w-full flex-col items-center gap-2'>
-        <h3 className='mb-2 text-sub_h3 font-bold'>날짜와 시간을 선택해주세요.</h3>
-        <div className='flex w-full flex-col gap-2'>
+      <div className='m-auto mt-4 flex w-full flex-col gap-2'>
+        <h3 className='mt-6 border-t py-6 text-start text-sub_h3 font-bold'>날짜와 시간을 선택해주세요.</h3>
+        <div className='flex w-full flex-col gap-4'>
           {selectedDateTimes.map((item, index) => (
             <TypeTwoButton
               key={index}
-              text={item.dateStr || '0 date'}
-              color='bg-secondary'
+              text={
+                <span className='flex gap-2'>
+                  {item.dateStr || '일정 정하기'}
+                  <img src={editIcon} alt='Edit' className='h-6 w-6' style={{ cursor: 'pointer' }} />
+                </span>
+              }
+              color='bg-gray-50 w-full'
               onClick={() => handleDateTimeButtonClick(index)}
             />
           ))}
         </div>
+
         {activeDateIndex !== null && showCalendar && (
           <div className='mt-4 w-full'>
             <Calendar
+              mode='single'
               selected={selectedDateTimes[activeDateIndex].selectedDate || undefined}
               onSelect={handleDateSelect}
               disabled={() => false}
@@ -363,109 +376,111 @@ const StepByStep = ({ stepCount, profileData = [], onProfileSelect }: StepByStep
     }
 
     return (
-      <div className='pt-8 text-center'>
-        <RadioGroup
-          className='flex flex-col items-center gap-4'
-          value={selectedOptions[currentStep] || ''}
-          onValueChange={(value: string) => {
-            setSelectedOptions((prev) => ({ ...prev, [currentStep]: value }));
-            if (currentStep === 9 && value !== '지금 작성할게요.') {
-              setUserInput('');
-            }
-            if (
-              !((currentStep === 5 && value === '지역 선택하기') || (currentStep === 6 && value === '날짜 선택하기'))
-            ) {
-              handleNextStep();
-            }
-          }}
-        >
-          {currentStepData?.options.map((option) => (
-            <div
-              key={option}
-              ref={option === '무관' && currentStep === 5 ? neutralButtonRef : undefined}
-              className={`flex h-auto w-[260px] cursor-pointer flex-col items-start gap-2 rounded-md border p-6 font-bold transition-all duration-300 ease-in-out ${
-                selectedOptions[currentStep] === option ? 'border-primary bg-secondary' : 'border-gray-400'
-              } ${
-                option === '무관' &&
-                ((showRegionSelector && currentStep === 5) || (showDateSelector && currentStep === 6))
-                  ? 'pointer-events-none opacity-50'
-                  : ''
-              }`}
-              onClick={() => {
-                setSelectedOptions((prev) => ({
-                  ...prev,
-                  [currentStep]: option,
-                }));
-                if (currentStep === 5 && option === '지역 선택하기') {
-                  if (neutralButtonRef.current) {
-                    neutralButtonRef.current.classList.add('pointer-events-none', 'opacity-50');
-                    neutralButtonRef.current.style.display = 'none';
-                  }
-                  setShowRegionSelector(true);
-                } else if (currentStep === 6 && option === '날짜 선택하기') {
-                  setShowDateSelector(true);
-                } else if (currentStep === 9 && option === '지금 작성할게요.') {
-                  // no-op
-                } else {
-                  handleNextStep();
-                }
-              }}
-            >
-              <div className='flex items-center gap-2'>
-                <RadioGroupItem
-                  value={option}
-                  size={0.8}
-                  className='pointer-events-none flex h-[16px] w-[16px] items-center justify-center rounded-full border border-gray-400 text-gray-400 data-[state=checked]:border-primary data-[state=checked]:text-primary'
-                >
-                  <span className='h-[6px] w-[6px] rounded-full bg-gray-400 data-[state=checked]:bg-primary' />
-                </RadioGroupItem>
-                <label
-                  className={`cursor-pointer text-sub_h2 transition-all duration-300 ease-in-out ${
-                    selectedOptions[currentStep] === option ? 'text-primary' : 'text-gray-700'
-                  }`}
-                >
-                  {option}
-                </label>
-              </div>
-
-              {currentStep === 9 &&
-                selectedOptions[currentStep] === '지금 작성할게요.' &&
-                option === '지금 작성할게요.' && (
-                  <div
-                    className='w-full overflow-hidden transition-all duration-300 ease-in-out'
-                    style={{ height: 'auto' }}
-                  >
-                    <textarea
-                      rows={6}
-                      className='mt-2 max-h-[160px] min-h-[40px] w-full rounded-md border border-primary p-2 text-gray-700 scrollbar-hide focus:border-primary focus:outline-none'
-                      placeholder='내용을 작성해주세요.'
-                      value={userInput}
-                      onChange={(e) => setUserInput(e.target.value)}
-                    />
-                    <TypeTwoButton text='다음 단계로 가기' color='bg-secondary' onClick={handleNextStep} />
-                  </div>
-                )}
-            </div>
-          ))}
-        </RadioGroup>
-        {showRegionSelector && (
-          <div>
-            <RegionSelector
-              onSelectionChange={(selection: { area: string; subArea: string }) => {
-                setRegionSelection(selection);
-                console.log(`시 ${selection.area}, 구,군 - ${selection.subArea}`);
-                setShowRegionSelector(false);
-                if (neutralButtonRef.current) {
-                  neutralButtonRef.current.classList.remove('pointer-events-none', 'opacity-50');
-                }
+      <PageContainer>
+        <div className='pt-8 text-center'>
+          <RadioGroup
+            className='flex flex-col items-center gap-4'
+            value={selectedOptions[currentStep] || ''}
+            onValueChange={(value: string) => {
+              setSelectedOptions((prev) => ({ ...prev, [currentStep]: value }));
+              if (currentStep === 9 && value !== '지금 작성할게요.') {
+                setUserInput('');
+              }
+              if (
+                !((currentStep === 5 && value === '지역 선택하기') || (currentStep === 6 && value === '날짜 선택하기'))
+              ) {
                 handleNextStep();
-              }}
-            />
-          </div>
-        )}
+              }
+            }}
+          >
+            {currentStepData?.options.map((option) => (
+              <div
+                key={option}
+                ref={option === '무관' && currentStep === 5 ? neutralButtonRef : undefined}
+                className={`flex h-auto w-full cursor-pointer flex-col items-start gap-2 rounded-md border p-6 font-bold transition-all duration-300 ease-in-out ${
+                  selectedOptions[currentStep] === option ? 'border-primary bg-secondary' : 'border-gray-400'
+                } ${
+                  option === '무관' &&
+                  ((showRegionSelector && currentStep === 5) || (showDateSelector && currentStep === 6))
+                    ? 'pointer-events-none opacity-50'
+                    : ''
+                }`}
+                onClick={() => {
+                  setSelectedOptions((prev) => ({
+                    ...prev,
+                    [currentStep]: option,
+                  }));
+                  if (currentStep === 5 && option === '지역 선택하기') {
+                    if (neutralButtonRef.current) {
+                      neutralButtonRef.current.classList.add('pointer-events-none', 'opacity-50');
+                      neutralButtonRef.current.style.display = 'none';
+                    }
+                    setShowRegionSelector(true);
+                  } else if (currentStep === 6 && option === '날짜 선택하기') {
+                    setShowDateSelector(true);
+                  } else if (currentStep === 9 && option === '지금 작성할게요.') {
+                    // no-op
+                  } else {
+                    handleNextStep();
+                  }
+                }}
+              >
+                <div className='flex items-center gap-2'>
+                  <RadioGroupItem
+                    value={option}
+                    size={0.8}
+                    className='pointer-events-none flex h-[16px] w-[16px] items-center justify-center rounded-full border border-gray-400 text-gray-400 data-[state=checked]:border-primary data-[state=checked]:text-primary'
+                  >
+                    <span className='h-[6px] w-[6px] rounded-full bg-gray-400 data-[state=checked]:bg-primary' />
+                  </RadioGroupItem>
+                  <label
+                    className={`cursor-pointer text-sub_h2 transition-all duration-300 ease-in-out ${
+                      selectedOptions[currentStep] === option ? 'text-primary' : 'text-gray-700'
+                    }`}
+                  >
+                    {option}
+                  </label>
+                </div>
 
-        {showDateSelector && renderDateSelector()}
-      </div>
+                {currentStep === 9 &&
+                  selectedOptions[currentStep] === '지금 작성할게요.' &&
+                  option === '지금 작성할게요.' && (
+                    <div
+                      className='w-full overflow-hidden transition-all duration-300 ease-in-out'
+                      style={{ height: 'auto' }}
+                    >
+                      <textarea
+                        rows={6}
+                        className='mt-2 max-h-[160px] min-h-[40px] w-full rounded-md border border-primary p-2 text-gray-700 scrollbar-hide focus:border-primary focus:outline-none'
+                        placeholder='내용을 작성해주세요.'
+                        value={userInput}
+                        onChange={(e) => setUserInput(e.target.value)}
+                      />
+                      <TypeTwoButton text='다음 단계로 가기' color='bg-secondary' onClick={handleNextStep} />
+                    </div>
+                  )}
+              </div>
+            ))}
+          </RadioGroup>
+          {showRegionSelector && (
+            <div>
+              <RegionSelector
+                onSelectionChange={(selection: { area: string; subArea: string }) => {
+                  setRegionSelection(selection);
+                  console.log(`시 ${selection.area}, 구,군 - ${selection.subArea}`);
+                  setShowRegionSelector(false);
+                  if (neutralButtonRef.current) {
+                    neutralButtonRef.current.classList.remove('pointer-events-none', 'opacity-50');
+                  }
+                  handleNextStep();
+                }}
+              />
+            </div>
+          )}
+
+          {showDateSelector && renderDateSelector()}
+        </div>
+      </PageContainer>
     );
   };
 
@@ -487,10 +502,13 @@ const StepByStep = ({ stepCount, profileData = [], onProfileSelect }: StepByStep
 
   return (
     <div>
-      <div className='w-full'>
-        <Header mode='customBack' title='견적 요청하기' onClick={currentStep === 1 ? undefined : handlePrevStep} />
-      </div>
-      <div className='flex h-full w-full flex-col items-center justify-center p-4'>
+      <PageContainer>
+        <div className='w-full'>
+          <Header mode='customBack' title='견적 요청하기' onClick={currentStep === 1 ? undefined : handlePrevStep} />
+        </div>
+      </PageContainer>
+
+      <div className='flex h-full w-full flex-col items-center justify-center'>
         <Progress
           value={currentStep}
           maxStep={stepCount}
@@ -509,13 +527,15 @@ const StepByStep = ({ stepCount, profileData = [], onProfileSelect }: StepByStep
           className='relative mt-6 w-full overflow-hidden transition-all duration-300'
           style={{
             height:
-              currentStep === 10
-                ? isDynamicHeight
-                  ? 'auto'
-                  : containerHeight
-                    ? `${containerHeight}px`
-                    : 'auto'
-                : '1000px',
+              currentStep === 6
+                ? '1200px'
+                : currentStep === 10
+                  ? isDynamicHeight
+                    ? 'auto'
+                    : containerHeight
+                      ? `${containerHeight}px`
+                      : 'auto'
+                  : '400px',
             marginBottom: currentStep === 10 ? '60px' : '',
           }}
         >

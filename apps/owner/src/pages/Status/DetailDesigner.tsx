@@ -1,5 +1,5 @@
 import { useLocation } from 'react-router-dom';
-import { Header } from '@daeng-ggu/design-system';
+import { Header, PageContainer } from '@daeng-ggu/design-system';
 
 import SuggestReview from '@/pages/Status/SuggestReview.tsx';
 
@@ -35,7 +35,7 @@ const DetailDesigner = () => {
     estimateId: 1,
     designerId: 7,
     designerName: '상세미용조회맨',
-    codeId: 'S1', // Make sure this is a string
+    codeId: 'S1',
     designerImageUrl: 'https://via.placeholder.com/500',
     createdAt: '2024-12-06T15:30:00',
     estimateDetail:
@@ -44,7 +44,11 @@ const DetailDesigner = () => {
     customerName: '장미맘',
     phone: '010-1232-2322',
     address: '서울시 강남구 테헤란로 123 포돌빌딩 1304호',
+    designerAddress: '서울특별시 강남구 대치동 889-41 미용빌딩',
     groomingFee: 120000,
+    monitoringFee: 120000,
+    deliveryFee: 120000,
+    estimatePrice: 360000,
     estimateImgList: [
       {
         estimateImageUrl: 'https://letsbefriendly.s3.ap-northeast-2.amazonaws.com/image-1-123-dummy.webp',
@@ -62,7 +66,9 @@ const DetailDesigner = () => {
   return (
     <div className='h-full w-full'>
       <div className='w-full'>
-        <Header mode='back' title='견적 제안서 보기' />
+        <PageContainer>
+          <Header mode='back' title='견적 제안서 보기' />
+        </PageContainer>
         <SuggestReview data={modifiedData} />
       </div>
     </div>

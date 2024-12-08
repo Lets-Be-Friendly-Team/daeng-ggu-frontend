@@ -71,28 +71,28 @@ export const router = createBrowserRouter([
             element: <Status />,
           },
           {
-            path: 'request',
+            path: ROUTES.bidRequest,
             element: <Request />,
           },
           {
-            path: 'detail',
+            path: ROUTES.bidDetail,
             element: <DetailPage />,
           },
           {
-            path: 'test',
+            path: ROUTES.bidTest,
             element: <Test />,
           },
 
           {
-            path: 'designer',
+            path: ROUTES.bidDesigner,
             element: <Status />,
           },
           {
-            path: 'suggest',
+            path: ROUTES.bidSuggest,
             element: <Suggest />,
           },
           {
-            path: 'detailDesigner',
+            path: ROUTES.bidDetailDesigner,
             element: <DetailDesigner />,
           },
         ],
