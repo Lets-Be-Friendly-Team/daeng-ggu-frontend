@@ -7,6 +7,7 @@ import { LogContainer, RouterErrorFallback } from '@daeng-ggu/shared';
 import ROUTES from '@/constants/routes';
 import MainPage from '@/pages/MainPage';
 
+import SignupPage from './pages/Signup/SignupPage';
 import App from './App';
 
 export const router = createBrowserRouter([
@@ -26,6 +27,10 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <MainPage />,
+      },
+      {
+        path: ROUTES.signup,
+        children: [{ index: true, element: <SignupPage /> }],
       },
     ],
   },
