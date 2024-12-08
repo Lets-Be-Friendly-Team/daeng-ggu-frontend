@@ -16,7 +16,11 @@ interface DesignerData {
   customerName: string;
   phone: string;
   address: string;
+  designerAddress: string;
   groomingFee: number;
+  deliveryFee: number;
+  monitoringFee: number;
+  estimatePrice: number;
   estimateImgList: EstimateImg[];
   serviceDescription?: string;
 }
@@ -102,6 +106,18 @@ const SuggestReview = ({ data }: SuggestReviewProps) => {
             </div>
           </BorderContainer>
         </div>
+        <div className='mt-6 items-start'>
+          <h2 className='mb-4 text-h3 font-bold text-gray-800'>미용실 정보</h2>
+        </div>
+        <div className='mb-6 mt-6'>
+          <BorderContainer innerPadding='p-3'>
+            <div className='flex-col items-start p-2 text-gray-800'>
+              <p className='text-sub_h2 font-bold'>{data ? data.customerName : '정보 없음'}</p>
+              <p className='text-body3 font-bold text-gray-800'>{data ? data.phone : '정보 없음'}</p>
+              <p className='pt-1 text-caption'>{data ? data.designerAddress : '정보 없음'}</p>
+            </div>
+          </BorderContainer>
+        </div>
         <div className='mb-56'>
           <div className='mt-6 items-start'>
             <h2 className='mb-4 text-h3 font-bold text-gray-800'>결제 정보</h2>
@@ -109,13 +125,20 @@ const SuggestReview = ({ data }: SuggestReviewProps) => {
           <BorderContainer innerPadding='p-3'>
             <div className='flex-col items-start p-2 text-gray-800'>
               <div className='mb-2 flex justify-between'>
+                <span>댕동비</span>
+                <span>{data ? data.deliveryFee.toLocaleString() : '정보 없음'}원</span>
+              </div>
+              <div className='mb-2 flex justify-between'>
+                <span>모니터링비</span>
+                <span>{data ? data.monitoringFee.toLocaleString() : '정보 없음'}원</span>
+              </div>
+              <div className='mb-2 flex justify-between'>
                 <span>미용비</span>
                 <span>{data ? data.groomingFee.toLocaleString() : '정보 없음'}원</span>
-                {/*<span>{movingCost}</span>*/}
               </div>
               <div className='mt-2 flex justify-between border-t pt-2 text-lg font-bold'>
                 <span>결제 금액</span>
-                <span>{data.groomingFee.toLocaleString()}원</span>
+                <span>{data.estimatePrice.toLocaleString()}원</span>
               </div>
             </div>
           </BorderContainer>

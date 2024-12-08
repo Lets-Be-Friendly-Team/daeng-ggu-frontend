@@ -49,36 +49,36 @@ const defaultStepData: StepData[] = [
 /**
  * 비용계산 함수는 그대로 유지
  */
-const calculateCosts = (
-  majorBreed: string | undefined,
-  baseAmount: number,
-): { movingCost: string; totalAmount: string } => {
-  let movingCost = 0;
-
-  switch (majorBreed) {
-    case '특수견':
-      movingCost = 70000;
-      break;
-    case '대형견':
-      movingCost = 50000;
-      break;
-    case '중형견':
-      movingCost = 40000;
-      break;
-    case '소형견':
-      movingCost = 20000;
-      break;
-    default:
-      movingCost = 0;
-  }
-
-  const totalAmount = baseAmount + movingCost;
-
-  return {
-    movingCost: movingCost.toLocaleString() + '원',
-    totalAmount: totalAmount.toLocaleString() + '원',
-  };
-};
+// const calculateCosts = (
+//   majorBreed: string | undefined,
+//   baseAmount: number,
+// ): { movingCost: string; totalAmount: string } => {
+//   let movingCost = 0;
+//
+//   switch (majorBreed) {
+//     case '특수견':
+//       movingCost = 70000;
+//       break;
+//     case '대형견':
+//       movingCost = 50000;
+//       break;
+//     case '중형견':
+//       movingCost = 40000;
+//       break;
+//     case '소형견':
+//       movingCost = 20000;
+//       break;
+//     default:
+//       movingCost = 0;
+//   }
+//
+//   const totalAmount = baseAmount + movingCost;
+//
+//   return {
+//     movingCost: movingCost.toLocaleString() + '원',
+//     totalAmount: totalAmount.toLocaleString() + '원',
+//   };
+// };
 
 const RequestReview = ({
   selectedPet,
@@ -95,8 +95,8 @@ const RequestReview = ({
   const [editingStep, setEditingStep] = useState<number | null>(null);
   const selectedProfile = profileData.find((profile) => profile.petId === selectedPet);
 
-  const baseAmount = 0;
-  const { movingCost, totalAmount } = calculateCosts(selectedProfile?.majorBreed, baseAmount);
+  // const baseAmount = 0;
+  // const { movingCost, totalAmount } = calculateCosts(selectedProfile?.majorBreed, baseAmount);
 
   const handleEdit = (step: number) => {
     if (mode === 'detail') return;
@@ -212,7 +212,7 @@ const RequestReview = ({
 
               {pageMode === 'user' && (
                 <>
-                  <div>
+                  <div className='mb-16'>
                     <div className='mt-6 items-start'>
                       <h2 className='mb-4 text-h3 font-bold text-gray-800'>댕송지 정보</h2>
                     </div>
@@ -229,25 +229,25 @@ const RequestReview = ({
                     </BorderContainer>
                   </div>
 
-                  {mode == 'detail' && (
-                    <>
-                      <div className='mt-6 items-start'>
-                        <h2 className='mb-4 text-h3 font-bold text-gray-800'>결제 정보</h2>
-                      </div>
-                      <BorderContainer innerPadding='p-3'>
-                        <div className='flex-col items-start p-2 text-gray-800'>
-                          <div className='mb-2 flex justify-between'>
-                            <span>댕동비({selectedProfile ? selectedProfile.majorBreed : '정보 없음'})</span>
-                            <span>{movingCost}</span>
-                          </div>
-                          <div className='mt-2 flex justify-between border-t pt-2 text-lg font-bold'>
-                            <span>결제 금액</span>
-                            <span>{totalAmount}</span>
-                          </div>
-                        </div>
-                      </BorderContainer>
-                    </>
-                  )}
+                  {/*{mode == 'detail' && (*/}
+                  {/*  <>*/}
+                  {/*    <div className='mt-6 items-start'>*/}
+                  {/*      <h2 className='mb-4 text-h3 font-bold text-gray-800'>결제 정보</h2>*/}
+                  {/*    </div>*/}
+                  {/*    <BorderContainer innerPadding='p-3'>*/}
+                  {/*      <div className='flex-col items-start p-2 text-gray-800'>*/}
+                  {/*        <div className='mb-2 flex justify-between'>*/}
+                  {/*          <span>댕동비({selectedProfile ? selectedProfile.majorBreed : '정보 없음'})</span>*/}
+                  {/*          <span>{movingCost}</span>*/}
+                  {/*        </div>*/}
+                  {/*        <div className='mt-2 flex justify-between border-t pt-2 text-lg font-bold'>*/}
+                  {/*          <span>결제 금액</span>*/}
+                  {/*          <span>{totalAmount}</span>*/}
+                  {/*        </div>*/}
+                  {/*      </div>*/}
+                  {/*    </BorderContainer>*/}
+                  {/*  </>*/}
+                  {/*)}*/}
                 </>
               )}
 
@@ -256,13 +256,15 @@ const RequestReview = ({
                   <div className='mt-6 items-start'>
                     <h2 className='mb-4 text-h3 font-bold text-gray-800'>댕송지 정보</h2>
                   </div>
-                  <BorderContainer innerPadding='p-3'>
-                    <div className='flex-col items-start p-2 text-gray-800'>
-                      <p className='text-sub_h2 font-bold'>{selectedProfile.customerName || '정보 없음'}</p>
-                      <p className='text-body3 font-bold text-gray-800'>{selectedProfile.phone || '정보 없음'}</p>
-                      <p className='pt-1 text-caption'>{selectedProfile.address || '정보 없음'}</p>
-                    </div>
-                  </BorderContainer>
+                  <div className='mb-28'>
+                    <BorderContainer innerPadding='p-3'>
+                      <div className='flex-col items-start p-2 text-gray-800'>
+                        <p className='text-sub_h2 font-bold'>{selectedProfile.customerName || '정보 없음'}</p>
+                        <p className='text-body3 font-bold text-gray-800'>{selectedProfile.phone || '정보 없음'}</p>
+                        <p className='pt-1 text-caption'>{selectedProfile.address || '정보 없음'}</p>
+                      </div>
+                    </BorderContainer>
+                  </div>
                 </>
               )}
 

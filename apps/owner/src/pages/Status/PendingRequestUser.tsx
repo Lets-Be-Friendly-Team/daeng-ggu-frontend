@@ -114,6 +114,10 @@ const PendingRequestUser = ({ data }: PendingRequestUserProps) => {
           </RequestContainer>
         </div>
 
+        {/*<div className='mt-6 items-start'>*/}
+        {/*  <h2 className='mb-4 text-h3 font-bold text-gray-800'>견적제안 리스트</h2>*/}
+        {/*</div>*/}
+
         {activePet.estimateList && activePet.estimateList.length > 0 ? (
           <div className='h-full w-full'>
             <BorderContainer>
@@ -121,11 +125,14 @@ const PendingRequestUser = ({ data }: PendingRequestUserProps) => {
                 {activePet.estimateList.map((estimate, index) => (
                   <li key={estimate.estimateId} className='relative w-full'>
                     <div
-                      className={`mx-auto flex min-h-[90px] w-full rounded-[8px] bg-white ${
+                      className={`mx-auto flex min-h-[90px] w-full flex-col rounded-[8px] bg-white ${
                         index !== activePet.estimateList.length - 1 ? 'mb-4' : ''
                       }`}
                     >
-                      <div className='flex items-center bg-white px-[15px] py-4'>
+                      <div className='ml-6 pt-4'>
+                        <p className='text-sub_h2 font-bold'>견적 제안</p>
+                      </div>
+                      <div className='flex items-center rounded-[8px] bg-white px-[15px] pb-4'>
                         <Avatar
                           mode='designerCard'
                           imageUrl={estimate.designerImageUrl}

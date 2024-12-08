@@ -56,7 +56,7 @@ const DetailPage = () => {
     desiredDate3: '2024-12-17T09:00:00',
     desiredRegion: '서울, 강남구',
     isVisitRequired: true,
-    isMonitoringIncluded: false,
+    isMonitoringIncluded: true,
     additionalRequest: '잘 물어요',
     createdAt: '2024-11-27T15:30:00',
     majorBreedCode: 'S',
@@ -141,8 +141,8 @@ const DetailPage = () => {
             }}
           />
         </div>
-        <RequestReview {...processedData} pageMode={pageMode} />
       </PageContainer>
+      <RequestReview {...processedData} pageMode={pageMode} />
       <div className='fixed w-full' style={{ bottom: '7.5rem' }}>
         <TypeOneButton
           text={buttonText}
@@ -160,6 +160,10 @@ const DetailPage = () => {
                   desiredDateThree: selectedData.desiredDate3,
                   address: selectedData.address,
                   phone: selectedData.phone,
+                  majorBreed: selectedData.majorBreed,
+                  desiredServiceCode: selectedData.desiredServiceCode,
+                  isVisitRequired: selectedData.isVisitRequired,
+                  isMonitoringIncluded: selectedData.isMonitoringIncluded,
                 },
               });
             } else if (pageMode === 'reservation') {
