@@ -90,7 +90,7 @@ const TextArea: FC<Props> = ({
         ></textarea>
       </div>
       {maxLength && (
-        <div className='ml-auto mt-[0.4rem] text-caption'>
+        <div className='ml-auto mt-[0.4rem] text-iconCaption'>
           {inputCount >= maxLength ? (
             <span className='font-semibold text-primary'>
               {inputCount}/{maxLength}자

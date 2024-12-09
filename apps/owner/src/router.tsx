@@ -26,6 +26,7 @@ import Status from '@/pages/Status/Status.tsx';
 import Suggest from '@/pages/Suggest/Suggest.tsx';
 
 import SignupPage from './pages/Signup/SignupPage';
+import SignupSuccessPage from './pages/Signup/SignupSuccessPage';
 
 import '@/styles/sequenceAnimation.css';
 
@@ -53,7 +54,10 @@ export const router = createBrowserRouter([
       },
       {
         path: ROUTES.signup,
-        children: [{ index: true, element: <SignupPage /> }],
+        children: [
+          { index: true, element: <SignupPage /> },
+          { path: ROUTES.signupSuccess, element: <SignupSuccessPage /> },
+        ],
       },
       {
         path: ROUTES.map,

@@ -83,7 +83,7 @@ const SignupForm = ({ formData, setFormData, userType, handleSubmit }: SignupFor
             />
             <div>
               <div className='mb-[0.8rem] block text-body3 font-semibold text-gray-800'>성별</div>
-              <div className='flex gap-1'>
+              <div className='flex gap-2'>
                 <TypeTwoButton
                   text='남'
                   color={formData.gender === 'M' ? 'bg-secondary' : 'bg-gray-50'}

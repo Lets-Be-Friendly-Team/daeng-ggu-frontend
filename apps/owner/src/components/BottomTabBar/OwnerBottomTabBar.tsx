@@ -22,6 +22,7 @@ const ownerTabs = [
 const ownerHideTabbarRoutes = [
   '/example',
   '/signup',
+  '/profile/pet/add',
   // 숨기고 싶은 tabbar route 추가
 ];
 

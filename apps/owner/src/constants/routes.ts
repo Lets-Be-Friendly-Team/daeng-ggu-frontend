@@ -14,6 +14,7 @@ const ROUTES = {
   review: 'review',
   login: 'login',
   signup: 'signup',
+  signupSuccess: 'success',
   bidDetail: 'detail',
   bidRequest: 'request',
   bidTest: 'test',

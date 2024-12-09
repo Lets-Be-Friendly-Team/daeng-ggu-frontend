@@ -22,6 +22,7 @@ const DogTypePicker = ({ type, selectedValues, onChange }: IDogTypePickerProps) 
     { label: '특수견', image: bichon, size: 'h-[36px] w-[36px]', gap: 'gap-[10px]' },
   ];
   const handleChange = (value: string) => {
+    console.log([value]);
     if (type === 'checkbox') {
       if (selectedValues.includes(value)) {
         onChange(selectedValues.filter((item) => item !== value));
@@ -33,9 +34,9 @@ const DogTypePicker = ({ type, selectedValues, onChange }: IDogTypePickerProps) 
     }
   };
   return (
-    <ul className='box-border flex w-full gap-1'>
+    <ul className='box-border flex w-full gap-2'>
       {dogOprions.map((option, index) => (
-        <li key={index}>
+        <li key={index} className='w-1/4'>
           <input
             type={type}
             name={type === 'radio' ? 'dog-type' : `dog-type-${index}`}
@@ -46,9 +47,9 @@ const DogTypePicker = ({ type, selectedValues, onChange }: IDogTypePickerProps) 
           />
           <label
             htmlFor={`dog-type-${index}`}
-            className='box-border flex h-[80px] w-[68px] flex-col items-center justify-center rounded-[8px] bg-gray-50 py-3 text-gray-800 hover:cursor-pointer hover:bg-secondary peer-checked:border peer-checked:border-primary peer-checked:bg-secondary peer-checked:text-primary'
+            className='box-border flex w-full flex-col items-center justify-center rounded-[8px] bg-gray-50 py-[2rem] text-gray-800 hover:cursor-pointer hover:bg-secondary peer-checked:border peer-checked:border-primary peer-checked:bg-secondary peer-checked:text-primary'
           >
-            <div className={`flex h-[80px] w-[68px] flex-col items-center justify-center ${option.gap}`}>
+            <div className={`flex w-full flex-col items-center justify-center ${option.gap}`}>
               <img src={option.image} alt={option.label} className={`${option.size}`} />
               <div className='text-center text-iconCaption'>{option.label}</div>
             </div>
