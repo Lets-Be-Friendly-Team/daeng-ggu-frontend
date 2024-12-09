@@ -3,6 +3,7 @@ import { NavermapsProvider } from 'react-naver-maps';
 import { Outlet } from 'react-router';
 import { Layout, ToastContainer } from '@daeng-ggu/design-system';
 import { ModalContainer } from '@daeng-ggu/design-system';
+// import { SSEHandler, useToast } from '@daeng-ggu/shared';
 import { useToast } from '@daeng-ggu/shared';
 import { QueryClient, QueryClientProvider, QueryErrorResetBoundary } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
@@ -26,6 +27,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <QueryErrorResetBoundary>
         <NavermapsProvider ncpClientId={import.meta.env.VITE_NAVER_CLIENT_ID}>
+          {/*<SSEHandler />*/}
           <Layout tab={<OwnerBottomTabBar />}>
             <ToastContainer />
             <ModalContainer />

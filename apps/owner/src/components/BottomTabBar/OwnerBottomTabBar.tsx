@@ -21,6 +21,7 @@ const ownerTabs = [
 
 const ownerHideTabbarRoutes = [
   '/example',
+  '/bid/request',
   '/review',
   '/signup',
   '/profile/pet/add',

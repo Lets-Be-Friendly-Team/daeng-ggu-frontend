@@ -376,111 +376,111 @@ const StepByStep = ({ stepCount, profileData = [], onProfileSelect }: StepByStep
     }
 
     return (
-      // <PageContainer>
-      <div className='pt-8 text-center'>
-        <RadioGroup
-          className='flex flex-col items-center gap-4'
-          value={selectedOptions[currentStep] || ''}
-          onValueChange={(value: string) => {
-            setSelectedOptions((prev) => ({ ...prev, [currentStep]: value }));
-            if (currentStep === 9 && value !== '지금 작성할게요.') {
-              setUserInput('');
-            }
-            if (
-              !((currentStep === 5 && value === '지역 선택하기') || (currentStep === 6 && value === '날짜 선택하기'))
-            ) {
-              handleNextStep();
-            }
-          }}
-        >
-          {currentStepData?.options.map((option) => (
-            <div
-              key={option}
-              ref={option === '무관' && currentStep === 5 ? neutralButtonRef : undefined}
-              className={`flex h-auto w-full cursor-pointer flex-col items-start gap-2 rounded-md border p-6 font-bold transition-all duration-300 ease-in-out ${
-                selectedOptions[currentStep] === option ? 'border-primary bg-secondary' : 'border-gray-400'
-              } ${
-                option === '무관' &&
-                ((showRegionSelector && currentStep === 5) || (showDateSelector && currentStep === 6))
-                  ? 'pointer-events-none opacity-50'
-                  : ''
-              }`}
-              onClick={() => {
-                setSelectedOptions((prev) => ({
-                  ...prev,
-                  [currentStep]: option,
-                }));
-                if (currentStep === 5 && option === '지역 선택하기') {
-                  if (neutralButtonRef.current) {
-                    neutralButtonRef.current.classList.add('pointer-events-none', 'opacity-50');
-                    neutralButtonRef.current.style.display = 'none';
-                  }
-                  setShowRegionSelector(true);
-                } else if (currentStep === 6 && option === '날짜 선택하기') {
-                  setShowDateSelector(true);
-                } else if (currentStep === 9 && option === '지금 작성할게요.') {
-                  // no-op
-                } else {
-                  handleNextStep();
-                }
-              }}
-            >
-              <div className='flex items-center gap-2'>
-                <RadioGroupItem
-                  value={option}
-                  size={0.8}
-                  className='pointer-events-none flex h-[16px] w-[16px] items-center justify-center rounded-full border border-gray-400 text-gray-400 data-[state=checked]:border-primary data-[state=checked]:text-primary'
-                >
-                  <span className='h-[6px] w-[6px] rounded-full bg-gray-400 data-[state=checked]:bg-primary' />
-                </RadioGroupItem>
-                <label
-                  className={`cursor-pointer text-sub_h2 transition-all duration-300 ease-in-out ${
-                    selectedOptions[currentStep] === option ? 'text-primary' : 'text-gray-700'
-                  }`}
-                >
-                  {option}
-                </label>
-              </div>
-
-              {currentStep === 9 &&
-                selectedOptions[currentStep] === '지금 작성할게요.' &&
-                option === '지금 작성할게요.' && (
-                  <div
-                    className='w-full overflow-hidden transition-all duration-300 ease-in-out'
-                    style={{ height: 'auto' }}
-                  >
-                    <textarea
-                      rows={6}
-                      className='mt-2 max-h-[160px] min-h-[40px] w-full rounded-md border border-primary p-2 text-gray-700 scrollbar-hide focus:border-primary focus:outline-none'
-                      placeholder='내용을 작성해주세요.'
-                      value={userInput}
-                      onChange={(e) => setUserInput(e.target.value)}
-                    />
-                    <TypeTwoButton text='다음 단계로 가기' color='bg-secondary' onClick={handleNextStep} />
-                  </div>
-                )}
-            </div>
-          ))}
-        </RadioGroup>
-        {showRegionSelector && (
-          <div>
-            <RegionSelector
-              onSelectionChange={(selection: { area: string; subArea: string }) => {
-                setRegionSelection(selection);
-                console.log(`시 ${selection.area}, 구,군 - ${selection.subArea}`);
-                setShowRegionSelector(false);
-                if (neutralButtonRef.current) {
-                  neutralButtonRef.current.classList.remove('pointer-events-none', 'opacity-50');
-                }
+      <PageContainer>
+        <div className='pt-8 text-center'>
+          <RadioGroup
+            className='flex flex-col items-center gap-4'
+            value={selectedOptions[currentStep] || ''}
+            onValueChange={(value: string) => {
+              setSelectedOptions((prev) => ({ ...prev, [currentStep]: value }));
+              if (currentStep === 9 && value !== '지금 작성할게요.') {
+                setUserInput('');
+              }
+              if (
+                !((currentStep === 5 && value === '지역 선택하기') || (currentStep === 6 && value === '날짜 선택하기'))
+              ) {
                 handleNextStep();
-              }}
-            />
-          </div>
-        )}
+              }
+            }}
+          >
+            {currentStepData?.options.map((option) => (
+              <div
+                key={option}
+                ref={option === '무관' && currentStep === 5 ? neutralButtonRef : undefined}
+                className={`flex h-auto w-full cursor-pointer flex-col items-start gap-2 rounded-md border p-6 font-bold transition-all duration-300 ease-in-out ${
+                  selectedOptions[currentStep] === option ? 'border-primary bg-secondary' : 'border-gray-400'
+                } ${
+                  option === '무관' &&
+                  ((showRegionSelector && currentStep === 5) || (showDateSelector && currentStep === 6))
+                    ? 'pointer-events-none opacity-50'
+                    : ''
+                }`}
+                onClick={() => {
+                  setSelectedOptions((prev) => ({
+                    ...prev,
+                    [currentStep]: option,
+                  }));
+                  if (currentStep === 5 && option === '지역 선택하기') {
+                    if (neutralButtonRef.current) {
+                      neutralButtonRef.current.classList.add('pointer-events-none', 'opacity-50');
+                      neutralButtonRef.current.style.display = 'none';
+                    }
+                    setShowRegionSelector(true);
+                  } else if (currentStep === 6 && option === '날짜 선택하기') {
+                    setShowDateSelector(true);
+                  } else if (currentStep === 9 && option === '지금 작성할게요.') {
+                    // no-op
+                  } else {
+                    handleNextStep();
+                  }
+                }}
+              >
+                <div className='flex items-center gap-2'>
+                  <RadioGroupItem
+                    value={option}
+                    size={0.8}
+                    className='pointer-events-none flex h-[16px] w-[16px] items-center justify-center rounded-full border border-gray-400 text-gray-400 data-[state=checked]:border-primary data-[state=checked]:text-primary'
+                  >
+                    <span className='h-[6px] w-[6px] rounded-full bg-gray-400 data-[state=checked]:bg-primary' />
+                  </RadioGroupItem>
+                  <label
+                    className={`cursor-pointer text-sub_h2 transition-all duration-300 ease-in-out ${
+                      selectedOptions[currentStep] === option ? 'text-primary' : 'text-gray-700'
+                    }`}
+                  >
+                    {option}
+                  </label>
+                </div>
 
-        {showDateSelector && renderDateSelector()}
-      </div>
-      // </PageContainer>
+                {currentStep === 9 &&
+                  selectedOptions[currentStep] === '지금 작성할게요.' &&
+                  option === '지금 작성할게요.' && (
+                    <div
+                      className='w-full overflow-hidden transition-all duration-300 ease-in-out'
+                      style={{ height: 'auto' }}
+                    >
+                      <textarea
+                        rows={6}
+                        className='mt-2 max-h-[160px] min-h-[40px] w-full rounded-md border border-primary p-2 text-gray-700 scrollbar-hide focus:border-primary focus:outline-none'
+                        placeholder='내용을 작성해주세요.'
+                        value={userInput}
+                        onChange={(e) => setUserInput(e.target.value)}
+                      />
+                      <TypeTwoButton text='다음 단계로 가기' color='bg-secondary' onClick={handleNextStep} />
+                    </div>
+                  )}
+              </div>
+            ))}
+          </RadioGroup>
+          {showRegionSelector && (
+            <div>
+              <RegionSelector
+                onSelectionChange={(selection: { area: string; subArea: string }) => {
+                  setRegionSelection(selection);
+                  console.log(`시 ${selection.area}, 구,군 - ${selection.subArea}`);
+                  setShowRegionSelector(false);
+                  if (neutralButtonRef.current) {
+                    neutralButtonRef.current.classList.remove('pointer-events-none', 'opacity-50');
+                  }
+                  handleNextStep();
+                }}
+              />
+            </div>
+          )}
+
+          {showDateSelector && renderDateSelector()}
+        </div>
+      </PageContainer>
     );
   };
 
@@ -506,55 +506,54 @@ const StepByStep = ({ stepCount, profileData = [], onProfileSelect }: StepByStep
         <div className='w-full'>
           <Header mode='customBack' title='견적 요청하기' onClick={currentStep === 1 ? undefined : handlePrevStep} />
         </div>
-
-        <div className='flex h-full w-full flex-col items-center justify-center'>
-          <Progress
-            value={currentStep}
-            maxStep={stepCount}
-            text={
-              currentStep === 1
-                ? '미용을 받을 반려견을 선택 해주세요.'
-                : currentStep === 2
-                  ? '반려견 프로필 확인'
-                  : currentStep === 10
-                    ? '예약 확인 해주세요'
-                    : currentStepData?.title || ''
-            }
-          />
-
-          <div
-            className='relative mt-6 w-full overflow-hidden transition-all duration-300'
-            style={{
-              height:
-                currentStep === 6
-                  ? '1200px'
-                  : currentStep === 10
-                    ? isDynamicHeight
-                      ? 'auto'
-                      : containerHeight
-                        ? `${containerHeight}px`
-                        : 'auto'
-                    : '400px',
-              marginBottom: currentStep === 10 ? '60px' : '',
-            }}
-          >
-            <TransitionGroup component={null}>
-              <CSSTransition
-                key={currentStep}
-                nodeRef={getNodeRef(currentStep)}
-                timeout={500}
-                classNames={direction === 'forward' ? 'slide-forward' : 'slide-backward'}
-              >
-                <div ref={getNodeRef(currentStep)}>
-                  {currentStep === 1 ? renderStepOne() : currentStep === 2 ? renderStepTwo() : renderOtherSteps()}
-                </div>
-              </CSSTransition>
-            </TransitionGroup>
-          </div>
-        </div>
       </PageContainer>
 
-      <div className='button-container fixed w-full' style={{ bottom: '7.5rem' }}>
+      <div className='flex h-full w-full flex-col items-center justify-center'>
+        <Progress
+          value={currentStep}
+          maxStep={stepCount}
+          text={
+            currentStep === 1
+              ? '미용을 받을 반려견을 선택 해주세요.'
+              : currentStep === 2
+                ? '반려견 프로필 확인'
+                : currentStep === 10
+                  ? '예약 확인 해주세요'
+                  : currentStepData?.title || ''
+          }
+        />
+
+        <div
+          className='relative mt-6 w-full overflow-hidden transition-all duration-300'
+          style={{
+            height:
+              currentStep === 6
+                ? '1200px'
+                : currentStep === 10
+                  ? isDynamicHeight
+                    ? 'auto'
+                    : containerHeight
+                      ? `${containerHeight}px`
+                      : 'auto'
+                  : '400px',
+            marginBottom: currentStep === 10 ? '60px' : '',
+          }}
+        >
+          <TransitionGroup component={null}>
+            <CSSTransition
+              key={currentStep}
+              nodeRef={getNodeRef(currentStep)}
+              timeout={500}
+              classNames={direction === 'forward' ? 'slide-forward' : 'slide-backward'}
+            >
+              <div ref={getNodeRef(currentStep)}>
+                {currentStep === 1 ? renderStepOne() : currentStep === 2 ? renderStepTwo() : renderOtherSteps()}
+              </div>
+            </CSSTransition>
+          </TransitionGroup>
+        </div>
+      </div>
+      <div className='button-container fixed w-full' style={{ bottom: '0rem' }}>
         <CSSTransition in={currentStep === 10} timeout={500} classNames='slide-up' unmountOnExit nodeRef={buttonRef}>
           <div ref={buttonRef} className='relative'>
             <TypeOneButton text={'예약하기'} onClick={handleReservation} color='bg-secondary' />
