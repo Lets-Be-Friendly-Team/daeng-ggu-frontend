@@ -41,7 +41,7 @@ const ReviewDetail = () => {
       <div className='absolute left-0 right-0 top-0 z-10 flex h-[100px] items-center gap-[10px] bg-gradient-to-b from-black px-5'>
         <div className='flex w-full justify-end'>
           <button onClick={navigateBack}>
-            <CloseIcon className='h-[20px] w-[20px]' color='#F2F4F5' />
+            <CloseIcon className='h-[20px] w-[20px] stroke-gray-50' />
           </button>
         </div>
       </div>
