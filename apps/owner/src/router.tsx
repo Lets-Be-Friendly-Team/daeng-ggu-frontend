@@ -2,6 +2,7 @@
 import { Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import { LogContainer, RouterErrorFallback } from '@daeng-ggu/shared';
+import { Notification } from '@daeng-ggu/shared';
 
 import App from '@/App';
 import ROUTES from '@/constants/routes';
@@ -26,7 +27,6 @@ import Status from '@/pages/Status/Status.tsx';
 import Suggest from '@/pages/Suggest/Suggest';
 
 import FeedPage from './pages/FeedPage/FeedPage';
-
 import SignUpPage from './pages/SignUp/SignUpPage';
 
 import '@/styles/sequenceAnimation.css';
@@ -68,6 +68,10 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.search,
         element: <SearchResultPage />,
+      },
+      {
+        path: ROUTES.notification,
+        element: <Notification />,
       },
       {
         path: ROUTES.bid,

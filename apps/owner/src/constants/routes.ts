@@ -20,6 +20,7 @@ const ROUTES = {
   bidDesigner: 'designer',
   bidSuggest: 'suggest',
   bidDetailDesigner: 'detailDesigner',
+  notification: 'notification',
 } as const;
 
 export default ROUTES;

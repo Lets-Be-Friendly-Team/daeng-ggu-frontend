@@ -33,6 +33,7 @@ import CloseIcon from './components/Icons/CloseIcon';
 import DeleteIcon from './components/Icons/DeleteIcon';
 import EditIcon from './components/Icons/EditIcon';
 import EmptyHeartIcon from './components/Icons/EmptyHeartIcon';
+import ExclamationIcon from './components/Icons/ExclamationIcon';
 import FeedIcon from './components/Icons/FeedIcon';
 import FilledHeartIcon from './components/Icons/FilledHeartIcon';
 import InfoIcon from './components/Icons/InfoIcon';
@@ -76,6 +77,7 @@ import TypeOneButton from './components/TypeOneButton/TypeOneButton';
 import TypeTwoButton from './components/TypeTwoButton/TypeTwoButton';
 import type { ModalProps } from './types/modal';
 import type { ToastType } from './types/toast';
+
 export {
   CategoryTab,
   CircleScissorIcon,
@@ -153,4 +155,5 @@ export {
   InfoIcon,
   EditIcon,
   DeleteIcon,
+  ExclamationIcon,
 };
