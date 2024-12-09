@@ -25,7 +25,7 @@ const ReviewList = ({ reviews, onReviewClick }: IReviewListProps) => {
         <div key={review.reviewId} className='w-full'>
           <div className='relative' style={{ paddingTop: '100%' }} onClick={() => onReviewClick(review.reviewId)}>
             <img
-              src={review.reviewImgUrl1}
+              src={review.reviewImgUrl1 || undefined}
               alt={`img-${review.reviewId}`}
               className='absolute left-0 top-0 h-full w-full rounded-md object-cover hover:cursor-pointer'
             />

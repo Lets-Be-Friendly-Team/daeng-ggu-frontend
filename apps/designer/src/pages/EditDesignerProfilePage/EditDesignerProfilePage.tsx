@@ -193,7 +193,7 @@ const EditDesignerProfilePage = () => {
                       }}
                       className='absolute top-1 right-1 flex items-center justify-center'
                     >
-                      <CloseIcon className='w-[15px] h-[15px]' color='#fff' />
+                      <CloseIcon className='w-[15px] h-[15px] stroke-gray-50' />
                     </button>
                   </div>
                 </div>
