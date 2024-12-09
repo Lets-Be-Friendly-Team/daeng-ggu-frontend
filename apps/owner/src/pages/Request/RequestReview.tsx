@@ -209,7 +209,6 @@ const RequestReview = ({
                   ))}
                 </ul>
               </BorderContainer>
-
               {pageMode === 'user' && (
                 <>
                   <div className='mb-16'>
