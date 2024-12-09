@@ -5,10 +5,11 @@ interface IBookmarkItemProps {
   imageUrl: string;
   address: string;
   breeds: string[];
+  onClick?: () => void;
 }
-const BookmarkItem = ({ nickname, imageUrl, address, breeds }: IBookmarkItemProps) => {
+const BookmarkItem = ({ nickname, imageUrl, address, breeds, onClick }: IBookmarkItemProps) => {
   return (
-    <div className='flex h-[80px] w-auto items-center gap-6'>
+    <div className='flex h-[80px] w-auto items-center gap-6 hover:cursor-pointer' onClick={onClick}>
       <UserProfileImage imageUrl={imageUrl} size='small' />
       <div className='w-auto'>
         <div className='text-body2 text-primary'>{nickname}</div>

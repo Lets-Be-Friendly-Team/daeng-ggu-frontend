@@ -12,6 +12,7 @@ const ROUTES = {
   reviewDetail: 'profile/review/:reviewId',
   portfolioDetail: 'profile/portfolio/:portfolioId',
   reservation: 'profile/reservation',
+  designerProfile: 'profile/:designerId',
   review: 'review',
   login: 'login',
   signup: 'signup',
