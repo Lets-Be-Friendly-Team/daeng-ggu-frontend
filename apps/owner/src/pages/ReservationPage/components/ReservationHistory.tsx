@@ -57,8 +57,9 @@ const ReservationHistory = ({ reservationList }: ReservationHistoryProps) => {
       {reservationList.map((reservation) => (
         <>
           <div className='flex items-center justify-between'>
-            <div className='text-sub_h2 font-bold text-gray-800'>
-              {reservation.reservationDate} {reservation.dayOfWeek} | {reservation.amPm} {reservation.startTime}시
+            <div className='text-sub_h3 font-bold text-gray-800'>
+              {reservation.reservationDate.slice(2)} {reservation.dayOfWeek[0]} | {reservation.amPm}{' '}
+              {reservation.startTime}시
             </div>
             <MiniButton
               text={isDateBeforeToday(reservation.reservationDate) ? '예약 취소' : '진행 현황 조회'}

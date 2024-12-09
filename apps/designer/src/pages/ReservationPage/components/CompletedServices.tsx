@@ -54,12 +54,13 @@ const CompletedServices = ({ completedGroomingList }: ICompletedHistoryProps) =>
           <div className='flex items-center justify-between'>
             <div className='flex gap-3'>
               <div>
-                <UserProfileImage />
+                <UserProfileImage size='small' />
               </div>
               <div className='flex flex-col justify-center gap-2'>
                 <div className='text-black text-caption'>{reservation.nickname}</div>
                 <div className='text-gray-300 text-iconCaption'>
-                  {reservation.reservationDate} {reservation.dayOfWeek} | {reservation.amPm} {reservation.startTime}시
+                  {reservation.reservationDate.slice(2)} {reservation.dayOfWeek[0]} | {reservation.amPm}{' '}
+                  {reservation.startTime}시
                 </div>
               </div>
             </div>

@@ -55,8 +55,9 @@ const CompletedServices = ({ completedGroomingList }: ICompletedHistoryProps) =>
       {completedGroomingList.map((reservation) => (
         <>
           <div className='flex items-center justify-between'>
-            <div className='text-sub_h2 font-bold text-gray-800'>
-              {reservation.reservationDate} {reservation.dayOfWeek} | {reservation.amPm} {reservation.startTime}시
+            <div className='text-sub_h3 font-bold text-gray-800'>
+              {reservation.reservationDate.slice(2)} {reservation.dayOfWeek[0]} | {reservation.amPm}{' '}
+              {reservation.startTime}시
             </div>
             <div className='flex gap-2'>
               <MiniButton text='재요청' />
