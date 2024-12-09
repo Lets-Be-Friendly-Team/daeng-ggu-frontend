@@ -2,7 +2,7 @@ import { APIClient } from '@daeng-ggu/shared';
 
 import { LoginContentProps } from '@/pages/LoginPage/LoginContent';
 
-interface LoginResponse {
+export interface LoginResponse {
   data: string;
   status: string;
   message: string;
