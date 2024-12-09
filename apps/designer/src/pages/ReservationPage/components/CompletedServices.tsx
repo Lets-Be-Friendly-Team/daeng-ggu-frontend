@@ -19,7 +19,7 @@ interface IReservation {
   reservationDate: string;
   dayOfWeek: string;
   amPm: string;
-  startTime: string;
+  startTime: number;
   groomingFee: number;
   deliveryFee: number;
   monitoringFee: number;
