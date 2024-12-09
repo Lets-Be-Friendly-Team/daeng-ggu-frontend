@@ -28,6 +28,7 @@ import Status from '@/pages/Status/Status.tsx';
 import Suggest from '@/pages/Suggest/Suggest.tsx';
 
 import SignupPage from './pages/Signup/SignupPage';
+import SignupSuccessPage from './pages/Signup/SignupSuccessPage';
 import DesignerProfilePage from './pages/DesignerProfilePage/DesignerProfilePage';
 import FeedPage from './pages/FeedPage/FeedPage';
 import PortfolioDetailPage from './pages/PortfolioDetailPage/PortfolioDetailPage';
@@ -62,7 +63,10 @@ export const router = createBrowserRouter([
       },
       {
         path: ROUTES.signup,
-        children: [{ index: true, element: <SignupPage /> }],
+        children: [
+          { index: true, element: <SignupPage /> },
+          { path: ROUTES.signupSuccess, element: <SignupSuccessPage /> },
+        ],
       },
       {
         path: ROUTES.feed,

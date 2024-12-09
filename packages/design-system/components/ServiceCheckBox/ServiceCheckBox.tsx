@@ -63,7 +63,7 @@ function ServiceCheckBox({ initialSelectedItems = [], onChange }: IServiceCheckB
     <div className='flex flex-col gap-[6px]'>
       <div
         onClick={toggleDropdown}
-        className='flex h-[36px] w-full cursor-pointer items-center justify-between rounded-[8px] bg-gray-50 px-4 text-body3 text-gray-800'
+        className='flex w-full cursor-pointer items-center justify-between rounded-md bg-gray-50 px-[1.6rem] py-5 text-body3 text-gray-800'
       >
         <div>{selectedLabels || '서비스를 선택하세요'}</div>
         <div className='w-auto'>
@@ -78,7 +78,7 @@ function ServiceCheckBox({ initialSelectedItems = [], onChange }: IServiceCheckB
               <li key={option.id}>
                 <div
                   onClick={() => handleItemClick(option.id)}
-                  className={`flex h-[34px] cursor-pointer items-center p-[6px] ${
+                  className={`flex cursor-pointer items-center px-[1rem] py-[1.2rem] ${
                     selectedItems[option.id] ? 'bg-secondary text-primary' : 'hover:bg-secondary hover:text-primary'
                   } ${index !== serviceOptions.length - 1 ? 'border-b border-gray-100' : ''}`}
                 >

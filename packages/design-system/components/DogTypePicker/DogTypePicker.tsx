@@ -23,6 +23,7 @@ const DogTypePicker = ({ type, selectedValues, onChange }: IDogTypePickerProps) 
   ];
 
   const handleChange = (value: string) => {
+    console.log([value]);
     if (type === 'checkbox') {
       if (selectedValues.includes(value)) {
         onChange(selectedValues.filter((item) => item !== value));
@@ -48,9 +49,9 @@ const DogTypePicker = ({ type, selectedValues, onChange }: IDogTypePickerProps) 
           />
           <label
             htmlFor={`dog-type-${index}`}
-            className='box-border flex h-[80px] w-full flex-col items-center justify-center rounded-[8px] bg-gray-50 py-3 text-gray-800 hover:cursor-pointer hover:bg-secondary peer-checked:border peer-checked:border-primary peer-checked:bg-secondary peer-checked:text-primary'
+            className='box-border flex w-full flex-col items-center justify-center rounded-[8px] bg-gray-50 py-[2rem] text-gray-800 hover:cursor-pointer hover:bg-secondary peer-checked:border peer-checked:border-primary peer-checked:bg-secondary peer-checked:text-primary'
           >
-            <div className={`flex flex-col items-center justify-center ${option.gap}`}>
+            <div className={`flex w-full flex-col items-center justify-center ${option.gap}`}>
               <img src={option.image} alt={option.label} className={`${option.size}`} />
               <div className='text-center text-iconCaption'>{option.label}</div>
             </div>
