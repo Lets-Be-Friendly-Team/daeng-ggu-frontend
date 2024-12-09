@@ -12,6 +12,7 @@ import ReviewDetailPage from '@/pages/ReviewDetailPage/ReviewDetailPage';
 
 // import '@/styles/sequenceAnimation.css';
 import FeedPage from './pages/FeedPage/FeedPage';
+import PortfolioDetailPage from './pages/PortfolioDetailPage/PortfolioDetailPage';
 import App from './App';
 
 export const router = createBrowserRouter([
@@ -51,6 +52,10 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.reservation,
         element: <ReservationPage />,
+      },
+      {
+        path: ROUTES.portfolioDetail,
+        element: <PortfolioDetailPage />,
       },
     ],
   },

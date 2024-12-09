@@ -48,14 +48,22 @@ const data = {
       portfolioId: 5,
       title: '소형견 포트폴리오',
       videoUrl: 'https://daeng-ggu-test.s3.ap-northeast-2.amazonaws.com/example_video.mp4',
-      imgUrlList: ['https://daeng-ggu-test.s3.ap-northeast-2.amazonaws.com/portfolio5-1.jpg'],
+      imgUrlList: [
+        'https://i.pinimg.com/736x/06/a9/cf/06a9cff5c518dfc786736014e90f2f61.jpg',
+        'https://i.pinimg.com/736x/cb/57/3f/cb573f3a49c0322ce18aca27b3fdcad0.jpg',
+        'https://i.pinimg.com/736x/cc/98/5e/cc985e9670921e5ed30be658122f70c8.jpg',
+      ],
       contents: '포메라니안, 요크셔테리어 등의 소형견 미용 작업을 보여주는 포트폴리오입니다.',
     },
     {
       portfolioId: 6,
       title: '중형견 포트폴리오',
       videoUrl: 'https://daeng-ggu-test.s3.ap-northeast-2.amazonaws.com/example_video.mp4',
-      imgUrlList: ['https://daeng-ggu-test.s3.ap-northeast-2.amazonaws.com/portfolio6-1.jpg'],
+      imgUrlList: [
+        'https://i.pinimg.com/736x/06/a9/cf/06a9cff5c518dfc786736014e90f2f61.jpg',
+        'https://i.pinimg.com/736x/cb/57/3f/cb573f3a49c0322ce18aca27b3fdcad0.jpg',
+        'https://i.pinimg.com/736x/cc/98/5e/cc985e9670921e5ed30be658122f70c8.jpg',
+      ],
       contents: '시바견, 코카스페니얼, 프렌치 불독 등의 중형견 미용 작업을 보여주는 포트폴리오입니다.',
     },
     {
@@ -63,9 +71,9 @@ const data = {
       title: '대형견 포트폴리오',
       videoUrl: 'https://daeng-ggu-test.s3.ap-northeast-2.amazonaws.com/example_video.mp4',
       imgUrlList: [
-        'https://daeng-ggu-test.s3.ap-northeast-2.amazonaws.com/portfolio7-1.jpg',
-        'https://letsbefriendly.s3.ap-northeast-2.amazonaws.com/portfolio/20241202134427portfolio',
-        'https://letsbefriendly.s3.ap-northeast-2.amazonaws.com/portfolio/20241204110544portfolio',
+        'https://i.pinimg.com/736x/06/a9/cf/06a9cff5c518dfc786736014e90f2f61.jpg',
+        'https://i.pinimg.com/736x/cb/57/3f/cb573f3a49c0322ce18aca27b3fdcad0.jpg',
+        'https://i.pinimg.com/736x/cc/98/5e/cc985e9670921e5ed30be658122f70c8.jpg',
       ],
       contents:
         '시베리안 허스키, 알래스카 말라뮤트, 올드 잉글리시 쉽독 등의 대형견 미용 작업을 보여주는 포트폴리오입니다.',
@@ -137,7 +145,15 @@ const MyPage = () => {
   const tabs = [
     {
       label: '포트폴리오',
-      content: <Portfolio portfolioList={data.portfolioList} certifications={data.certifications} />,
+      content: (
+        <Portfolio
+          portfolioList={data.portfolioList}
+          certifications={data.certifications}
+          onPortfolioClick={(portfolioId: number) =>
+            navigate(`/profile/portfolio/${portfolioId}`, { state: { reviews: data.portfolioList } })
+          }
+        />
+      ),
     },
     {
       label: '리뷰',

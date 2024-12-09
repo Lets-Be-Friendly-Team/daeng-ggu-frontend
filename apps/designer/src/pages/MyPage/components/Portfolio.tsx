@@ -11,9 +11,11 @@ interface IPortfolio {
 interface IPortfolioProps {
   portfolioList: IPortfolio[];
   certifications: string[];
+  // eslint-disable-next-line no-unused-vars
+  onPortfolioClick: (portfolioId: number) => void;
 }
 
-const Portfolio = ({ portfolioList, certifications }: IPortfolioProps) => {
+const Portfolio = ({ portfolioList, certifications, onPortfolioClick }: IPortfolioProps) => {
   return (
     <div className='flex flex-col gap-6 py-5'>
       {/* 포트폴리오 섹션 */}
@@ -21,7 +23,11 @@ const Portfolio = ({ portfolioList, certifications }: IPortfolioProps) => {
         <h2 className='text-sub_h2 text-gray-800'>스타일</h2>
         <div className='grid grid-cols-2 gap-4'>
           {portfolioList.map((portfolio) => (
-            <div key={portfolio.portfolioId} className='relative flex flex-col items-center justify-center rounded-md'>
+            <div
+              key={portfolio.portfolioId}
+              className='relative flex flex-col items-center justify-center rounded-md hover:cursor-pointer'
+              onClick={() => onPortfolioClick(portfolio.portfolioId)}
+            >
               {/* 이미지 */}
               <img
                 src={portfolio.imgUrlList[0]}

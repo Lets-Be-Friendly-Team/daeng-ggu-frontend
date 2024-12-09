@@ -27,6 +27,7 @@ import Status from '@/pages/Status/Status.tsx';
 import Suggest from '@/pages/Suggest/Suggest';
 
 import FeedPage from './pages/FeedPage/FeedPage';
+import PortfolioDetailPage from './pages/PortfolioDetailPage/PortfolioDetailPage';
 import SignUpPage from './pages/SignUp/SignUpPage';
 
 import '@/styles/sequenceAnimation.css';
@@ -157,6 +158,10 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.reservation,
         element: <ReservationPage />,
+      },
+      {
+        path: ROUTES.portfolioDetail,
+        element: <PortfolioDetailPage />,
       },
     ],
   },
