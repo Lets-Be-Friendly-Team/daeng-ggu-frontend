@@ -11,6 +11,7 @@ import CreateReviewPage from '@/pages/CreateReviewPage/CreateReviewPage';
 import EditPetProfilePage from '@/pages/EditPetProfilePage/EditPetProfilePage';
 import EditUserProfilePage from '@/pages/EditUserProfilePage/EditUserProfilePage';
 import InputTest from '@/pages/InputTest/InputTest';
+import KakaoCallback from '@/pages/KakaoCallback/KakaoCallback';
 import LoginPage from '@/pages/LoginPage/LoginPage';
 import { MainPage } from '@/pages/MainPage';
 import SearchResultPage from '@/pages/MainPage/SearchResultPage';
@@ -51,9 +52,13 @@ export const router = createBrowserRouter([
         index: true,
         element: <MainPage />,
       },
+
       {
         path: ROUTES.login,
-        children: [{ index: true, element: <LoginPage /> }],
+        children: [
+          { index: true, element: <LoginPage /> },
+          { path: ROUTES.loginCallback, element: <KakaoCallback /> },
+        ],
       },
       {
         path: ROUTES.signup,

@@ -9,7 +9,7 @@ const LoginContent = ({ userType }: LoginContentProps) => {
   return (
     <PageContainer>
       <div className='flex flex-col items-center gap-y-[2.4rem] py-[8rem]'>
-        <img src={LogoImage} className='w-[10rem]' />
+        <img src={LogoImage} className='w-[10rem]' alt='로고 이미지' />
         <div>
           <div className='text-h1 font-bold'>
             <span className='text-primary'>댕꾸</span>
