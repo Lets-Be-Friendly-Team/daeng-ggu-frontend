@@ -143,7 +143,7 @@ const DetailPage = () => {
         </div>
       </PageContainer>
       <RequestReview {...processedData} pageMode={pageMode} />
-      <div className='fixed w-full' style={{ bottom: '7.5rem' }}>
+      <div className='fixed w-full' style={{ bottom: '64px' }}>
         <TypeOneButton
           text={buttonText}
           onClick={() => {

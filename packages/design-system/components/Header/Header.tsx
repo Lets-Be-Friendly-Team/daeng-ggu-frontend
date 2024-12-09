@@ -1,7 +1,10 @@
+// Header.tsx
 import { useNavigate } from 'react-router-dom';
+import { useNotificationStore } from '@daeng-ggu/shared';
 
 import textLogoImage from '../../assets/images/textLogo.png';
 import BackIcon from '../Icons/BackIcon';
+import BellAlertIcon from '../Icons/BellAlertIcon';
 import BellIcon from '../Icons/BellIcon';
 import CloseIcon from '../Icons/CloseIcon';
 
@@ -13,6 +16,8 @@ interface IHeaderProps {
 
 const Header = ({ mode, title, onClick }: IHeaderProps) => {
   const navigate = useNavigate();
+  const unreadCount = useNotificationStore((state) => state.unreadCount);
+
   const handleLogoClick = () => {
     navigate('/');
   };
@@ -28,11 +33,15 @@ const Header = ({ mode, title, onClick }: IHeaderProps) => {
       <div className='relative mx-auto flex h-auto w-full max-w-[1200px] items-center py-4'>
         {mode === 'main' && (
           <div className='flex w-full items-center justify-between'>
-            <button>
-              <img src={textLogoImage} alt='logo image' className='h-[22px] w-[41px]' onClick={handleLogoClick} />
+            <button onClick={handleLogoClick}>
+              <img src={textLogoImage} alt='logo image' className='h-[22px] w-[41px]' />
             </button>
             <button onClick={handleNotificationClick}>
-              <BellIcon className='ml-auto h-[20px] w-[20px]' />
+              {unreadCount > 0 ? (
+                <BellAlertIcon className='ml-auto h-[20px] w-[20px]' />
+              ) : (
+                <BellIcon className='ml-auto h-[20px] w-[20px]' />
+              )}
             </button>
           </div>
         )}
