@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router';
+
 import BookmarkItem from './BookmarkItem';
 
 interface IDesignerItem {
@@ -13,6 +15,10 @@ interface IDesignerListProps {
 }
 
 const LikedList = ({ bookmarkList }: IDesignerListProps) => {
+  const navigate = useNavigate();
+  const navigateDesignerProfile = (designerId: number) => {
+    navigate(`/profile/${designerId}`);
+  };
   return (
     <div className='py-4'>
       {bookmarkList.map((designer) => (
@@ -22,6 +28,7 @@ const LikedList = ({ bookmarkList }: IDesignerListProps) => {
           imageUrl={designer.designerImgUrl}
           address={designer.designerAddress}
           breeds={designer.possibleBreed}
+          onClick={() => navigateDesignerProfile(designer.designerId)}
         />
       ))}
     </div>

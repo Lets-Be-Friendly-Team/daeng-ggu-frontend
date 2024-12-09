@@ -5,66 +5,91 @@ import ReservationHistory from './components/ReservationHistory';
 
 const data = [
   {
-    reservationId: 1, // 에약 id
-    petName: '장군이', // 반려견 이름
-    reservationType: '', // 예약 종류
-    isFinished: false, // 예약 프로세스 완료 여부
-    isCanceled: false, // 예약 결제 취소 완료
-    reservationDate: '2025.01.01', // 예약 일자
-    startTime: '', // 예약 시작 시간
-    groomingFee: 50000, // 미용비
-    deliveryFee: 30000, // 댕동비
-    monitoringFee: 20000, // 모니터링비
-    totalPayment: 100000, // 총결제비
-    estimateDetail: '', // 견적서 상세 내용
+    reservationId: 1,
+    petName: '장군이',
+    majorBreedCode: 'P1',
+    majorBreed: '소형견',
+    subBreedCode: 'SB1',
+    subBreed: '푸들',
+    reservationType: 'R1', // 직접예약
+    isFinished: false,
+    isCanceled: false,
+    reservationDate: '2025-01-01',
+    dayOfWeek: '월요일',
+    amPm: '오전',
+    startTime: 10, // 오전 10시
+    groomingFee: 50000,
+    deliveryFee: 30000,
+    monitoringFee: 20000,
+    totalPayment: 100000,
+    estimateDetail: '견적서 상세 내용입니다.',
     requestDetail: {
-      desiredService: '', // 원하는 서비스
-      lastGroomingDate: '', // 마지막 미용 시기
-      isDelivery: true, // 반려견 픽업 여부
-      isMonitoring: true, // 모니터링 서비스 여부
-      additionalRequest: '따로 논의하겠습니다.', // 추가 요청 사항
+      desiredService: '미용 및 목욕',
+      lastGroomingDate: '2024-12-01',
+      isDelivery: true,
+      desiredRegion: '서울특별시 강남구',
+      isMonitoring: true,
+      additionalRequest: '따로 논의하겠습니다.',
     },
   },
   {
     reservationId: 2,
-    petName: '장군이',
-    reservationType: '',
+    petName: '짱구',
+    nickname: '박짱구',
+    customerImgUrl: 'https://example.com/customer2.jpg',
+    majorBreedCode: 'P2',
+    majorBreed: '중형견',
+    subBreedCode: 'SB2',
+    subBreed: '시바견',
+    reservationType: 'R2', // 입찰예약
     isFinished: true,
     isCanceled: false,
-    reservationDate: '2024.01.01',
-    startTime: '',
-    groomingFee: 50000,
-    deliveryFee: 30000,
-    monitoringFee: 20000,
+    reservationDate: '2024-12-31',
+    dayOfWeek: '일요일',
+    amPm: '오후',
+    startTime: 2, // 오후 2시
+    groomingFee: 60000,
+    deliveryFee: 25000,
+    monitoringFee: 15000,
     totalPayment: 100000,
-    estimateDetail: '',
+    estimateDetail: '견적서 상세 내용입니다.',
     requestDetail: {
-      desiredService: '',
-      lastGroomingDate: '',
-      isDelivery: true,
-      isMonitoring: true,
-      additionalRequest: '따로 논의하겠습니다.',
+      desiredService: '전체 미용',
+      lastGroomingDate: '2024-11-15',
+      isDelivery: false,
+      desiredRegion: '경기도 성남시 분당구',
+      isMonitoring: false,
+      additionalRequest: '추가 요청사항은 없습니다.',
     },
   },
   {
     reservationId: 3,
-    petName: '장군이',
-    reservationType: '',
+    petName: '바둑이',
+    nickname: '이바둑',
+    customerImgUrl: 'https://example.com/customer3.jpg',
+    majorBreedCode: 'P3',
+    majorBreed: '대형견',
+    subBreedCode: 'SB3',
+    subBreed: '리트리버',
+    reservationType: 'R1', // 직접예약
     isFinished: false,
-    isCanceled: false,
-    reservationDate: '2024.01.01',
-    startTime: '',
-    groomingFee: 50000,
-    deliveryFee: 30000,
-    monitoringFee: 20000,
-    totalPayment: 100000,
-    estimateDetail: '',
+    isCanceled: true,
+    reservationDate: '2024-12-20',
+    dayOfWeek: '수요일',
+    amPm: '오전',
+    startTime: 9, // 오전 9시
+    groomingFee: 80000,
+    deliveryFee: 40000,
+    monitoringFee: 30000,
+    totalPayment: 150000,
+    estimateDetail: '견적서 상세 내용입니다.',
     requestDetail: {
-      desiredService: '',
-      lastGroomingDate: '',
+      desiredService: '목욕만',
+      lastGroomingDate: '2024-10-10',
       isDelivery: true,
+      desiredRegion: '서울특별시 송파구',
       isMonitoring: true,
-      additionalRequest: '따로 논의하겠습니다.',
+      additionalRequest: '피부 관리가 필요합니다.',
     },
   },
 ];

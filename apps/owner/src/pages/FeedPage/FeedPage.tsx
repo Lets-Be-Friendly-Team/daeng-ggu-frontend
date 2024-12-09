@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { EmptyHeartIcon, FilledHeartIcon, FullStarIcon, UserProfileImage } from '@daeng-ggu/design-system';
 import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -93,6 +93,7 @@ const FeedPage = () => {
       feedExposureYn: 'Y',
     },
   ];
+  const navigate = useNavigate();
 
   const currentReviewIndex = Math.max(
     reviews.findIndex((review) => review.reviewId === Number(reviewId)),
@@ -100,9 +101,16 @@ const FeedPage = () => {
   );
   const [activeIndex, setActiveIndex] = useState(currentReviewIndex);
 
+  const navigateDesignerProfile = (designerId: number) => {
+    navigate(`/profile/${designerId}`);
+  };
+
   return (
     <div className='relative flex h-[calc(100vh-65px)] w-full flex-col bg-gray-900'>
-      <div className='absolute left-0 right-0 top-0 z-10 flex h-[100px] items-center gap-[10px] bg-gradient-to-b from-black px-5'>
+      <div
+        className='absolute left-0 right-0 top-0 z-10 flex h-[100px] items-center gap-[10px] bg-gradient-to-b from-black px-5 hover:cursor-pointer'
+        onClick={() => navigateDesignerProfile(reviews[activeIndex].designerId)}
+      >
         <div className='flex-shrink-0'>
           <UserProfileImage imageUrl={reviews[activeIndex]?.designerImgUrl} />
         </div>

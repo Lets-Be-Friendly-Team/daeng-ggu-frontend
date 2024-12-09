@@ -18,7 +18,7 @@ const Profile = ({ nickname, customerImgUrl }: IProfileProps) => {
       </div>
       <div className='flex w-full gap-4 pt-[10px]'>
         <TypeTwoButton text='예약 조회' color='bg-secondary' onClick={goToReservations} />
-        <TypeTwoButton text='프로필 수정' onClick={goToEditProfile} />
+        <TypeTwoButton text='프로필 수정' onClick={goToEditProfile} className='bg-gray-50' />
       </div>
     </div>
   );

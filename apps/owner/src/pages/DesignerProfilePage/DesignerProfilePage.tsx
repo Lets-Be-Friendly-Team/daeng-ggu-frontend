@@ -140,7 +140,7 @@ const data = {
   ],
 };
 
-const MyPage = () => {
+const DesignerProfilePage = () => {
   const navigate = useNavigate();
   const tabs = [
     {
@@ -167,13 +167,13 @@ const MyPage = () => {
       ),
     },
   ];
-  const handleNavigateMain = () => {
-    navigate('/');
+  const navigateDesignerProfile = (designerId: number) => {
+    navigate(`/profile/${designerId}`);
   };
   return (
     <div className='pb-[185px]'>
       <PageContainer>
-        <Header mode='back' title='마이페이지' onClick={handleNavigateMain} />
+        <Header mode='back' title='디자이너 프로필' onClick={() => navigateDesignerProfile(data.designerId)} />
         <Profile
           nickname={data.nickname}
           designerImgUrl={data.designerImgUrl}
@@ -192,4 +192,4 @@ const MyPage = () => {
   );
 };
 
-export default MyPage;
+export default DesignerProfilePage;

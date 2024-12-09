@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BulbIcon, FilledHeartIcon, FullStarIcon, TypeTwoButton, UserProfileImage } from '@daeng-ggu/design-system';
 interface IProfileProps {
@@ -26,7 +27,7 @@ const Profile = ({
 }: IProfileProps) => {
   const navigate = useNavigate();
   const goToReservations = () => navigate('/profile/reservation');
-  const goToEditProfile = () => navigate('/profile/edit');
+  const [isLiked, setIsLiked] = useState<boolean>(false);
   const extractBracketContent = (text: string) => {
     const match = text.match(/\(([^)]+)\)/);
     return match ? match[1].replace(/,/g, ' | ') : text;
@@ -42,24 +43,26 @@ const Profile = ({
   const breeds = possibleBreeds?.map((breed) => breedMapping[breed.breedCode] || '특수 견종').join(' | ');
   return (
     <div>
-      <div className='w-full flex flex-col gap-2'>
+      <div className='flex w-full flex-col gap-2'>
         <div className='flex gap-6 py-2'>
           <UserProfileImage size='large' imageUrl={designerImgUrl} />
           <div className='flex flex-col px-3'>
             <div className='flex gap-3'>
               <div className='flex text-sub_h2 text-black'>{nickname}</div>
-              <div className='flex gap-[10px] items-center'>
-                <div className='flex items-center w-auto h-[15px] gap-1'>
+              <div className='flex items-center gap-[10px]'>
+                <div className='flex h-[15px] w-auto items-center gap-1'>
                   <FullStarIcon size='w-[15px] h-[15px]' color='#AAB1B9' />
                   {reviewStarAvg}
                 </div>
-                <div className='flex items-center w-auto h-[15px] gap-1'>
-                  <FilledHeartIcon className='w-[15px] h-[15px]' color='#AAB1B9' />
+                <div className='flex h-[15px] w-auto items-center gap-1'>
+                  <button onClick={() => setIsLiked((prev) => !prev)}>
+                    <FilledHeartIcon className='h-[15px] w-[15px]' color={isLiked ? '#ff6842' : '#AAB1B9'} />
+                  </button>
                   {reviewLikeCntAll}
                 </div>
               </div>
             </div>
-            <div className='text-caption text-gray-700'>
+            <div className='flex flex-col gap-2 text-caption text-gray-700'>
               <div className='py-2'>{address}</div>
               <div className='flex flex-col gap-1'>
                 <div className='text-gray-500'>{services}</div>
@@ -69,19 +72,18 @@ const Profile = ({
           </div>
         </div>
         <div className='flex flex-col gap-3 text-gray-900'>
-          <div className='h-[22px] w-full bg-secondary text-caption rounded-[8px] flex items-center px-2'>
+          <div className='flex h-[22px] w-full items-center rounded-[8px] bg-secondary px-2 text-caption'>
             {introduction}
           </div>
-          <div className='h-[22px] w-full bg-secondary text-caption rounded-[8px] flex items-center px-2 gap-1'>
+          <div className='flex h-[22px] w-full items-center gap-1 rounded-[8px] bg-secondary px-2 text-caption'>
             <div>
-              <BulbIcon className='w-[15px] h-[15px]' />
+              <BulbIcon className='h-[15px] w-[15px]' />
             </div>
             {workExperience}
           </div>
         </div>
-        <div className='flex w-full gap-4'>
-          <TypeTwoButton text='예약 조회' color='bg-secondary' onClick={goToReservations} />
-          <TypeTwoButton text='프로필 수정' onClick={goToEditProfile} className='bg-gray-50' />
+        <div className='flex w-full pt-2'>
+          <TypeTwoButton text='1 : 1 다이렉트 예약하기' color='bg-secondary' onClick={goToReservations} />
         </div>
       </div>
     </div>

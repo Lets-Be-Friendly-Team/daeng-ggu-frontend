@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowDown, ArrowUp } from '@daeng-ggu/design-system';
+import { ArrowDown, ArrowUp, UserProfileImage } from '@daeng-ggu/design-system';
 import MiniButton from '@daeng-ggu/design-system/components/Buttons/MiniButton';
 import BulbIcon from '@daeng-ggu/design-system/components/Icons/BulbIcon';
 import ScissorIcon from '@daeng-ggu/design-system/components/Icons/ScissorIcon';
@@ -7,10 +7,18 @@ import ScissorIcon from '@daeng-ggu/design-system/components/Icons/ScissorIcon';
 interface IReservation {
   reservationId: number;
   petName: string;
+  nickname: string;
+  customerImgUrl: string;
+  majorBreedCode: string;
+  majorBreed: string;
+  subBreedCode: string;
+  subBreed: string;
   reservationType: string;
   isFinished: boolean;
   isCanceled: boolean;
   reservationDate: string;
+  dayOfWeek: string;
+  amPm: string;
   startTime: string;
   groomingFee: number;
   deliveryFee: number;
@@ -21,6 +29,7 @@ interface IReservation {
     desiredService: string;
     lastGroomingDate: string;
     isDelivery: boolean;
+    desiredRegion: string;
     isMonitoring: boolean;
     additionalRequest: string;
   };
@@ -44,20 +53,32 @@ const ReservationHistory = ({ reservationList }: ReservationHistoryProps) => {
       {reservationList.map((reservation) => (
         <>
           <div className='flex items-center justify-between'>
-            <div className='text-sub_h2 font-bold text-gray-800'>
-              {reservation.reservationDate} | {reservation.startTime || '오후 1:00'}
+            <div className='flex gap-3'>
+              <div>
+                <UserProfileImage size='small' />
+              </div>
+              <div className='flex flex-col justify-center gap-2'>
+                <div className='text-black text-caption'>{reservation.nickname}</div>
+                <div className='text-gray-300 text-iconCaption'>
+                  {reservation.reservationDate.slice(2)} {reservation.dayOfWeek[0]} | {reservation.amPm}{' '}
+                  {reservation.startTime}시
+                </div>
+              </div>
             </div>
-            <MiniButton text='예약 취소' />
+            <div className='flex gap-2'>
+              <MiniButton text='예약 취소' />
+              {reservation.isCanceled && <MiniButton text='취소된 예약' isActive />}
+            </div>
           </div>
           <div key={reservation.reservationId} className='rounded-md bg-secondary p-5 shadow-sm'>
-            <div className='mt-4 rounded-md bg-white p-4 text-caption'>
+            <div className='rounded-md bg-white p-4 text-caption flex flex-col gap-2'>
               <div className='flex gap-2'>
                 <div className='flex items-center justify-center'>
                   <BulbIcon className={'h-[10px] w-[10px]'} />
                 </div>
                 <div className='text-gray-600'>미용 고객:</div>
                 <div className='text-gray-800'>
-                  {reservation.petName}({reservation.reservationType || '강아지'})
+                  {reservation.petName} ({reservation.subBreed})
                 </div>
               </div>
               <div className='flex gap-2'>
@@ -65,7 +86,7 @@ const ReservationHistory = ({ reservationList }: ReservationHistoryProps) => {
                   <ScissorIcon className={'h-[10px] w-[10px]'} />
                 </div>
                 <div className='text-gray-600'>서비스 스타일:</div>
-                <div className='text-gray-800'>{reservation.requestDetail.desiredService || '전체 미용'}</div>
+                <div className='text-gray-800'>{reservation.requestDetail.desiredService}</div>
               </div>
             </div>
             <div className='mt-4 rounded-md bg-white p-4 text-caption'>
@@ -79,27 +100,27 @@ const ReservationHistory = ({ reservationList }: ReservationHistoryProps) => {
               <>
                 <div className='mt-4 rounded-md bg-white p-4'>
                   <div className='text-sub_h2 text-gray-800'>요청 상세</div>
-                  <div className='mt-3 flex flex-col gap-4 text-caption text-gray-800'>
-                    <div className='flex flex-col'>
+                  <div className='mt-3 flex flex-col gap-5 text-caption text-gray-800'>
+                    <div className='flex flex-col gap-2'>
                       <div className='text-gray-600'>원하는 서비스가 무엇인가요?</div>
                       <div className='text-body3'>{reservation.requestDetail.desiredService || '미용'}</div>
                     </div>
-                    <div className='flex flex-col'>
+                    <div className='flex flex-col gap-2'>
                       <div className='text-gray-600'>마지막 미용 시기가 언제인가요? </div>
                       <div>{reservation.requestDetail.lastGroomingDate || '첫 미용'}</div>
                     </div>
-                    <div className='flex flex-col'>
-                      <div className='text-gray-600'>어떻게 진행하기를 원하시나요?</div>
-                      <div>{reservation.requestDetail.isDelivery ? '집 (출장 서비스)' : '없음'}</div>
+                    <div className='flex flex-col gap-2'>
+                      <div className='text-gray-600'>댕동 서비스를 원하시나요?</div>
+                      <div>{reservation.requestDetail.isDelivery ? '네' : '아니오'}</div>
                     </div>
-                    <div className='flex flex-col'>
+                    <div className='flex flex-col gap-2'>
                       <div className='text-gray-600'>추가 요청사항이 있나요?</div>
                       <div>{reservation.requestDetail.additionalRequest}</div>
                     </div>
                   </div>
                 </div>
                 <div className='mt-4 rounded-md bg-white p-4'>
-                  <div className='text-caption text-gray-700'>
+                  <div className='text-caption text-gray-700 flex flex-col gap-2'>
                     <div className='flex justify-between'>
                       <span>미용비</span>
                       <span>{reservation.groomingFee.toLocaleString()}원</span>
@@ -108,7 +129,7 @@ const ReservationHistory = ({ reservationList }: ReservationHistoryProps) => {
                       <span>모니터링 비용</span>
                       <span>{reservation.monitoringFee.toLocaleString()}원</span>
                     </div>
-                    <div className='flex justify-between border-b pb-1'>
+                    <div className='flex justify-between border-b pb-2'>
                       <span>댕동비</span>
                       <span>{reservation.deliveryFee.toLocaleString()}원</span>
                     </div>

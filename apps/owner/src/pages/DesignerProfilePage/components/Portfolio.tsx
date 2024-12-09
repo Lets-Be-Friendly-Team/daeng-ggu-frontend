@@ -35,7 +35,7 @@ const Portfolio = ({ portfolioList, certifications, onPortfolioClick }: IPortfol
                 className='h-[160px] w-full rounded-md object-cover'
               />
               {/* 포트폴리오 제목과 배경 */}
-              <div className='absolute bottom-0 rounded-b-md left-0 w-full bg-gradient-to-t from-gray-500 to-transparent py-4 text-center text-caption text-white'>
+              <div className='absolute bottom-0 left-0 w-full rounded-b-md bg-gradient-to-t from-gray-500 to-transparent py-4 text-center text-caption text-white'>
                 {portfolio.title}
               </div>
             </div>
@@ -43,7 +43,7 @@ const Portfolio = ({ portfolioList, certifications, onPortfolioClick }: IPortfol
           {/* 추가 버튼 */}
           <div className='flex h-[160px] w-full items-center justify-center rounded-md bg-gray-50'>
             <span className=''>
-              <PlusIcon className='w-[24px] h-[24px]' />
+              <PlusIcon className='h-[24px] w-[24px]' />
             </span>
           </div>
         </div>

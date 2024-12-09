@@ -59,6 +59,7 @@ import StarIcon from './components/Icons/StarIcon';
 import Input from './components/Input/Input';
 import InputAddress from './components/InputAddress/InputAddress';
 import Layout from './components/Layout/Layout';
+import BottomSheetModal from './components/Modal/BottomSheetModal';
 import Modal from './components/Modal/Modal';
 import ModalContainer from './components/Modal/ModalContainer';
 import PageContainer from './components/PageContainer/PageContainer';
@@ -156,4 +157,5 @@ export {
   EditIcon,
   DeleteIcon,
   ExclamationIcon,
+  BottomSheetModal,
 };

@@ -1,0 +1,26 @@
+/* swiperStyle.css */
+
+.mySwiper2 .swiper-pagination {
+  position: absolute;
+  bottom: 25%;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.mySwiper2 .swiper-pagination-bullet {
+  background: rgba(var(--secondary));
+  opacity: 1;
+  width: 12px;
+  height: 12px;
+  outline: none;
+  border-width: 0;
+  border: none;
+  box-shadow: none;
+}
+
+.mySwiper2 .swiper-pagination-bullet-active {
+  background: rgba(var(--primary));
+}

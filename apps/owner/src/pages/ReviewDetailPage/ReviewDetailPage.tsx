@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router';
 import {
+  BottomSheetModal,
   CloseIcon,
   DeleteIcon,
   EditIcon,
@@ -15,8 +16,6 @@ import {
 import { useModalStore } from '@daeng-ggu/shared';
 import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-
-import BottomSheetModal from './components/BottomSheetModal';
 
 import './swiperStyle.css';
 
@@ -88,6 +87,7 @@ const ReviewDetail = () => {
     <div className='relative flex h-[calc(100vh-65px)] w-full flex-col'>
       {/* Fixed Profile and Icons */}
       <div className='absolute left-0 right-0 top-0 z-10 flex h-[100px] items-center gap-[10px] bg-gradient-to-b from-black px-5'>
+        {/* <div className='hover:cursor-pointer' onClick={() => console.log(reviews[activeIndex])}> */}
         <div className='flex-shrink-0'>
           <UserProfileImage imageUrl={reviews[activeIndex]?.designerImgUrl} />
         </div>
@@ -103,6 +103,7 @@ const ReviewDetail = () => {
             </button>
           </div>
         </div>
+        {/* </div> */}
       </div>
       {/* 고정된 리뷰 내용 */}
       <div className='absolute bottom-0 left-0 right-0 z-10 flex h-[25%] items-start justify-between bg-gradient-to-t from-black px-5'>
