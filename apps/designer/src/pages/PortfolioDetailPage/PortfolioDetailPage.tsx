@@ -1,5 +1,7 @@
-import { useNavigate } from 'react-router';
-import { CloseIcon, MoreIcon } from '@daeng-ggu/design-system';
+import { useState } from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router';
+import { BottomSheetModal, CloseIcon, DeleteIcon, EditIcon, Modal, MoreIcon } from '@daeng-ggu/design-system';
+import { useModalStore } from '@daeng-ggu/shared';
 import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -15,21 +17,45 @@ interface IPortfolioItem {
 
 const PortfolioDetailPage = () => {
   const navigate = useNavigate();
-
-  const portfolio: IPortfolioItem = {
-    portfolioId: 1,
-    title: '비숑 기본 스포팅',
-    videoUrl: '',
-    imgUrlList: [
-      'https://i.pinimg.com/736x/06/a9/cf/06a9cff5c518dfc786736014e90f2f61.jpg',
-      'https://i.pinimg.com/736x/cb/57/3f/cb573f3a49c0322ce18aca27b3fdcad0.jpg',
-      'https://i.pinimg.com/736x/cc/98/5e/cc985e9670921e5ed30be658122f70c8.jpg',
-    ],
-    contents: '2024년에 작업한 비숑 기본 스포팅',
-  };
+  const { state } = useLocation();
+  const { portfolioId } = useParams();
+  const [isModalOpen, setModalOpen] = useState<boolean>(false);
+  const { show } = useModalStore();
+  const portfolios: IPortfolioItem[] = state?.portfolios || [];
+  const currentPortfolioIndex = portfolios.findIndex((portfolio) => portfolio.portfolioId === Number(portfolioId));
+  const portfolio = portfolios[currentPortfolioIndex];
 
   const navigateBack = () => {
     navigate('/profile');
+  };
+  const handleEdit = () => {
+    setModalOpen(false);
+  };
+
+  const handleDelete = () => {
+    setModalOpen(false);
+    showDeleteConfirmationModal();
+  };
+  const modalOptions = [
+    { label: '수정하기', onClick: handleEdit, icon: <EditIcon className='h-[15px] w-[15px]' color='#454C53' /> },
+    {
+      label: '삭제하기',
+      onClick: handleDelete,
+      color: 'text-primary',
+      icon: <DeleteIcon className='h-[15px] w-[15px]' color='#FF6842' />,
+    },
+  ];
+  const toggleModal = () => {
+    setModalOpen((prev) => !prev);
+  };
+  const showDeleteConfirmationModal = () => {
+    show(Modal, {
+      title: '리뷰 삭제',
+      description: '해당 포트폴리오를 삭제하시겠습니까?',
+      onConfirm: () => {},
+      confirmText: '네',
+      cancelText: '아니오',
+    });
   };
 
   return (
@@ -37,31 +63,32 @@ const PortfolioDetailPage = () => {
       {/* Header */}
       <div className='absolute left-0 right-0 top-0 z-10 flex h-[100px] items-center gap-[10px] bg-gradient-to-b from-black px-5'>
         <div className='flex w-full justify-between'>
-          <div className='text-body2 text-secondary'>{portfolio.title}</div>
+          <div className='text-h3 text-secondary'>{portfolio?.title}</div>
           <div className='flex flex-col gap-5'>
             <button onClick={navigateBack}>
-              <CloseIcon className='h-[20px] w-[20px]' />
+              <CloseIcon className='h-[20px] w-[20px] stroke-gray-50' />
             </button>
-            <button>
-              <MoreIcon className='h-[20px] w-[20px]' color='#F2F4F5' />
+            <button onClick={toggleModal}>
+              <MoreIcon className='h-[20px] w-[20px] font-extrabold' color='#F2F4F5' />
             </button>
           </div>
         </div>
       </div>
 
       {/* Bottom Content */}
-      <div className='absolute bottom-0 left-0 right-0 z-10 flex h-[25%] items-start bg-gradient-to-t from-black px-5'>
+      <div className='absolute bottom-0 left-0 right-0 z-10 flex h-[20%] items-center bg-gradient-to-t from-black px-5'>
         <div className='flex flex-col gap-2'>
-          <div className='text-body2 text-secondary'>{portfolio.contents}</div>
+          <div className='text-body2 text-secondary break-keep'>{portfolio?.contents}</div>
         </div>
       </div>
+      <BottomSheetModal isOpen={isModalOpen} onClose={() => setModalOpen(false)} options={modalOptions} />
 
       {/* Image Swiper */}
       <Swiper
         direction='horizontal'
         slidesPerView={1}
         pagination={{ clickable: true }}
-        className='relative h-full'
+        className='mySwiper2 relative h-full'
         modules={[Pagination]}
       >
         {portfolio.imgUrlList.map((imageUrl, index) => (

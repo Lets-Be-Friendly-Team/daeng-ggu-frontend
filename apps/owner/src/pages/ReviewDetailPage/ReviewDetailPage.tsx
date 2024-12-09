@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router';
 import {
+  BottomSheetModal,
   CloseIcon,
   DeleteIcon,
   EditIcon,
@@ -15,8 +16,6 @@ import {
 import { useModalStore } from '@daeng-ggu/shared';
 import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-
-import BottomSheetModal from './components/BottomSheetModal';
 
 import './swiperStyle.css';
 

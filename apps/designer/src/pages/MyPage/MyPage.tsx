@@ -150,7 +150,7 @@ const MyPage = () => {
           portfolioList={data.portfolioList}
           certifications={data.certifications}
           onPortfolioClick={(portfolioId: number) =>
-            navigate(`/profile/portfolio/${portfolioId}`, { state: { reviews: data.portfolioList } })
+            navigate(`/profile/portfolio/${portfolioId}`, { state: { portfolios: data.portfolioList } })
           }
         />
       ),
