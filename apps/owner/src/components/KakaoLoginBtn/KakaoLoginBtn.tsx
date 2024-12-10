@@ -1,11 +1,12 @@
+import getLogin from '@/apis/login/getLogin';
 import { LoginContentProps } from '@/pages/LoginPage/LoginContent';
 
 import KakaoIcon from './KakaoIcon';
 
 const KakaoLoginBtn = ({ userType }: LoginContentProps) => {
-  const handleClickLogin = () => {
-    // 서버에 userType 보내주기
-    console.log(userType);
+  const handleClickLogin = async () => {
+    const data = await getLogin({ userType });
+    window.location.href = data.data;
   };
   return (
     <div

@@ -1,10 +1,11 @@
 const ROUTES = {
-  main: '',
+  main: '/',
   progress: 'progress',
   bid: 'bid',
   feed: 'feed',
   map: 'map',
   search: 'search',
+  loginCallback: 'callback',
   profile: 'profile',
   profileEdit: 'profile/edit',
   profileEditPet: 'profile/edit/:petId',

@@ -79,7 +79,7 @@ class APIFetch implements APIFetchType {
       if (error instanceof HTTPError) {
         throw error;
       }
-      throw new HTTPError(404, '인터넷');
+      throw new HTTPError(404, '인터넷 연결을 확인해주세요!');
     }
   }
 

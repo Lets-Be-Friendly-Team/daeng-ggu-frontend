@@ -27,9 +27,7 @@ const CreateReviewPage = () => {
           placeholder='미용은 어떠셨나요? 다른 분들에게 도움이 되도록 리뷰를 작성하고 피드도 꾸며보세요!'
         />
       </PageContainer>
-      <div className='fixed bottom-[6.5rem] w-full'>
-        <TypeOneButton text='저장하기' color='bg-secondary' onClick={() => {}} />
-      </div>
+      <TypeOneButton text='저장하기' color='bg-secondary' onClick={() => {}} />
     </>
   );
 };

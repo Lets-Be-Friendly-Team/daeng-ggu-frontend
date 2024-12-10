@@ -15,48 +15,51 @@ import FeedPage from './pages/FeedPage/FeedPage';
 import PortfolioDetailPage from './pages/PortfolioDetailPage/PortfolioDetailPage';
 import App from './App';
 
-export const router = createBrowserRouter([
-  {
-    path: ROUTES.main,
-    errorElement: (
-      <LogContainer log='designer app'>
-        <RouterErrorFallback />
-      </LogContainer>
-    ),
-    element: (
-      <Suspense>
-        <App />
-      </Suspense>
-    ),
-    children: [
-      {
-        index: true,
-        element: <MainPage />,
-      },
-      {
-        path: ROUTES.feed,
-        element: <FeedPage />,
-      },
-      {
-        path: ROUTES.profile,
-        element: <MyPage />,
-      },
-      {
-        path: ROUTES.profileEdit,
-        element: <EditDesignerProfilePage />,
-      },
-      {
-        path: ROUTES.reviewDetail,
-        element: <ReviewDetailPage />,
-      },
-      {
-        path: ROUTES.reservation,
-        element: <ReservationPage />,
-      },
-      {
-        path: ROUTES.portfolioDetail,
-        element: <PortfolioDetailPage />,
-      },
-    ],
-  },
-]);
+export const router = createBrowserRouter(
+  [
+    {
+      path: ROUTES.main,
+      errorElement: (
+        <LogContainer log='designer app'>
+          <RouterErrorFallback />
+        </LogContainer>
+      ),
+      element: (
+        <Suspense>
+          <App />
+        </Suspense>
+      ),
+      children: [
+        {
+          index: true,
+          element: <MainPage />,
+        },
+        {
+          path: ROUTES.feed,
+          element: <FeedPage />,
+        },
+        {
+          path: ROUTES.profile,
+          element: <MyPage />,
+        },
+        {
+          path: ROUTES.profileEdit,
+          element: <EditDesignerProfilePage />,
+        },
+        {
+          path: ROUTES.reviewDetail,
+          element: <ReviewDetailPage />,
+        },
+        {
+          path: ROUTES.reservation,
+          element: <ReservationPage />,
+        },
+        {
+          path: ROUTES.portfolioDetail,
+          element: <PortfolioDetailPage />,
+        },
+      ],
+    },
+  ],
+  { basename: '/designer' },
+);

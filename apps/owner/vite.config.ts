@@ -7,6 +7,9 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 export default defineConfig({
   plugins: [react(), tsconfigPaths()],
   assetsInclude: ['**/*.woff2'],
+  server: {
+    port: 5173,
+  },
   resolve: {
     alias: {
       '@': path.resolve('src'),
