@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 
-import getUserInfo from '@/apis/login/GetUserInfo';
+import getUserInfo from '@/apis/login/getUserInfo';
 import ROUTES from '@/constants/routes';
 
 const KakaoCallback = () => {

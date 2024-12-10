@@ -4,7 +4,7 @@ interface IInfoIconProps {
 const InfoIcon = ({ className }: IInfoIconProps) => {
   return (
     <svg viewBox='0 0 10 10' fill='none' xmlns='http://www.w3.org/2000/svg' className={className}>
-      <g clip-path='url(#clip0_322_4546)'>
+      <g clipPath='url(#clip0_322_4546)'>
         <path
           d='M5 0.625C2.58398 0.625 0.625 2.58398 0.625 5C0.625 7.41602 2.58398 9.375 5 9.375C7.41602 9.375 9.375 7.41602 9.375 5C9.375 2.58398 7.41602 0.625 5 0.625ZM5 8.63281C2.99414 8.63281 1.36719 7.00586 1.36719 5C1.36719 2.99414 2.99414 1.36719 5 1.36719C7.00586 1.36719 8.63281 2.99414 8.63281 5C8.63281 7.00586 7.00586 8.63281 5 8.63281Z'
           fill='#C2C7CD'
