@@ -44,21 +44,36 @@ const EditUserProfilePage = () => {
   };
   const submitFormData = () => {
     try {
-      const payload = {
-        ...formData,
-        // address: `${formData.address1} ${formData.address2} ${formData.detailAddress}`,
-        newCustomerImgFile: profileImage || '',
-        preCustomerImgUrl: formData.customerImgUrl,
-      };
+      // const payload = {
+      //   ...formData,
+      //   address: `${formData.address1} ${formData.address2} ${formData.detailAddress}`,
+      //   newCustomerImgFile: profileImage || '',
+      //   preCustomerImgUrl: formData.customerImgUrl,
+      // };
 
-      // 데이터를 localStorage에 저장 (테스트용)
-      localStorage.setItem('userProfile', JSON.stringify(payload));
+      const formPayload = new FormData();
+      formPayload.append('customerId', formData.customerId.toString());
+      formPayload.append('customerName', formData.customerName);
+      formPayload.append('birthDate', formData.birthDate);
+      formPayload.append('gender', formData.gender);
+      formPayload.append('phone', formData.phone);
+      formPayload.append('nickname', formData.nickname);
+      formPayload.append('address1', formData.address1);
+      formPayload.append('address2', formData.address2);
+      formPayload.append('detailAddress', formData.detailAddress);
+      formPayload.append('preCustomerImgUrl', formData.customerImgUrl);
 
-      alert('프로필이 저장되었습니다.');
-      navigate(-1);
-      updateProfileMutation.mutate(payload, {
+      // 파일이 있을 경우에만 append
+      if (profileImage) {
+        formPayload.append('newCustomerImgFile', profileImage);
+      } else {
+        // 파일이 없다면 빈 문자열 대신 서버가 이를 허용하는지 확인 필요
+        formPayload.append('newCustomerImgFile', '');
+      }
+      updateProfileMutation.mutate(formPayload, {
         onSuccess: () => {
           alert('업데이트 성공');
+          navigate(-1);
         },
         onError: (error) => {
           alert('오류 발생');
