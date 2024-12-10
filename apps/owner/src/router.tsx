@@ -20,13 +20,12 @@ import Request from '@/pages/Request/Request';
 import Test from '@/pages/Request/Test.tsx';
 import ReservationPage from '@/pages/ReservationPage/ReservationPage';
 import ReviewDetailPage from '@/pages/ReviewDetailPage/ReviewDetailPage';
+import SignupPage from '@/pages/Signup/SignupPage';
+import SignupSuccessPage from '@/pages/Signup/SignupSuccessPage';
 import DetailDesigner from '@/pages/Status/DetailDesigner.tsx';
 import DetailPage from '@/pages/Status/DetailPage.tsx';
 import Status from '@/pages/Status/Status.tsx';
 import Suggest from '@/pages/Suggest/Suggest.tsx';
-
-import SignupPage from './pages/Signup/SignupPage';
-import SignupSuccessPage from './pages/Signup/SignupSuccessPage';
 
 import '@/styles/sequenceAnimation.css';
 

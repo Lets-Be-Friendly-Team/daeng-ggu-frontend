@@ -4,23 +4,23 @@ import { Header, LogoImage, PageContainer, RightIcon, TypeTwoButton } from '@dae
 const SignupSuccessPage = () => {
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate('/profile/pet/add');
+    navigate('/register/profile');
   };
   return (
     <PageContainer>
       {/* <div className='relative h-[100vh]'> */}
       <Header mode='main' />
       <div className='mb-[4rem] mt-[10rem] px-4'>
-        <img src={LogoImage} className='w-1/4' />
+        <img src={LogoImage} className='w-1/4' alt='댕꾸로고' />
         <h1 className='mt-[2rem] text-h1 font-bold'>
-          <p>장군엄마님,</p>
+          <p>김댕꾸님,</p>
           <p className='mt-[0.4rem]'>반가워요!</p>
         </h1>
         <div className='mt-[4rem] text-body2 text-gray-500'>
-          <p>
-            <span className='text-primary'>반려견을 등록</span>하고
+          <p>더 많은 고객들이 디자이너님을 찾을 수 있도록</p>
+          <p className='mt-[0.4rem]'>
+            <span className='text-primary'>프로필을 완성</span>해주세요
           </p>
-          <p className='mt-[0.4rem]'>맞춤 견적서를 받아보세요</p>
         </div>
       </div>
 
@@ -28,8 +28,8 @@ const SignupSuccessPage = () => {
         <TypeTwoButton
           color='bg-primary'
           text={
-            <div className='flex w-full items-center justify-center gap-x-[1rem]'>
-              <p>반려견 등록</p>
+            <div className='flex gap-x-[1rem] items-center w-full justify-center'>
+              <p>프로필 작성</p>
               <RightIcon size='w-[1.4rem]' color='fill-white' />
             </div>
           }

@@ -13,6 +13,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from './components/Dropdown-menu/Dropdown-menu';
+import DropdownCheckBox from './components/DropdownCheckBox/DropdownCheckBox';
 import ImageSlider from './components/FileUploader/ImageSlider';
 import ImageUploader from './components/FileUploader/ImageUploader';
 import ProfileImgUploader from './components/FileUploader/ProfileImgUploader';
@@ -150,4 +151,5 @@ export {
   FullBookMarkIcon,
   EmptyBookMarkIcon,
   SignupForm,
+  DropdownCheckBox,
 };
