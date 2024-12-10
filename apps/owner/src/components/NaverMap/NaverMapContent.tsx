@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode } from 'react';
+import { ReactElement, ReactNode, Suspense } from 'react';
 import { Container as MapDiv, Marker, NaverMap, useNavermaps } from 'react-naver-maps';
 
 interface NaverMapContentProps {
@@ -14,11 +14,13 @@ const NaverMapContent = ({ className, children, mapLat, mapLng }: NaverMapConten
 
   return (
     <div>
-      <MapDiv className={`w-full ${className}`}>
-        <NaverMap defaultCenter={new navermaps.LatLng(mapLat, mapLng)} defaultZoom={15}>
-          {children}
-        </NaverMap>
-      </MapDiv>
+      <Suspense fallback={null}>
+        <MapDiv className={`w-full ${className}`}>
+          <NaverMap defaultCenter={new navermaps.LatLng(mapLat, mapLng)} defaultZoom={15}>
+            {children}
+          </NaverMap>
+        </MapDiv>
+      </Suspense>
     </div>
   );
 };

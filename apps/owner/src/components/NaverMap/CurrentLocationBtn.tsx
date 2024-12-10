@@ -1,7 +1,11 @@
 import { useEffect } from 'react';
 import { useMap, useNavermaps } from 'react-naver-maps';
 
-const CurrentLocationBtn = () => {
+interface CurrentLocationBtnProps {
+  lat: number;
+  lng: number;
+}
+const CurrentLocationBtn = ({ lat, lng }: CurrentLocationBtnProps) => {
   const map = useMap(); // 네이버 지도 객체
   const navermaps = useNavermaps(); // 네이버 맵스 객체
 
@@ -12,7 +16,7 @@ const CurrentLocationBtn = () => {
     }
 
     const locationBtnHtml = `
-      <a href="#" 
+      <a href="#"
         style="
           z-index: 100;
           overflow: hidden;
@@ -51,7 +55,9 @@ const CurrentLocationBtn = () => {
     // 클릭 이벤트 추가
     const domElement = customControl.getElement();
     const handleClick = () => {
-      map.setCenter(new navermaps.LatLng(37.3595953, 127.1053971));
+      if (lat && lng) {
+        map.setCenter(new navermaps.LatLng(lat, lng));
+      }
     };
     domElement.addEventListener('click', handleClick);
 
@@ -60,7 +66,7 @@ const CurrentLocationBtn = () => {
       domElement.removeEventListener('click', handleClick);
       customControl.setMap(null); // 지도에서 제거
     };
-  }, [map, navermaps]);
+  }, [lat, lng, map, navermaps]);
 
   return null; // DOM에 렌더링하지 않음
 };

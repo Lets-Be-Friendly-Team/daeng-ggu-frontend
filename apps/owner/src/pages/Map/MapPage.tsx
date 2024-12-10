@@ -2,7 +2,9 @@ import { ChangeEvent, useState } from 'react';
 import { Header, SearchBar } from '@daeng-ggu/design-system';
 import { useUserLocation } from '@daeng-ggu/shared';
 
+import CurrentLocationBtn from '@/components/NaverMap/CurrentLocationBtn';
 import CustomMarker from '@/components/NaverMap/CustomMarker';
+import MyMarker from '@/components/NaverMap/MyMarker';
 import NaverMapContent from '@/components/NaverMap/NaverMapContent';
 
 const MapPage = () => {
@@ -36,6 +38,8 @@ const MapPage = () => {
         mapLat={location.coordinates.lat}
         mapLng={location.coordinates.lng}
       >
+        <MyMarker location={location} />
+        <CurrentLocationBtn lat={location.coordinates.lat} lng={location.coordinates.lng} />
         <CustomMarker
           markerList={[
             { designerId: 1, lat: 37.3595704, lng: 127.105399, nickname: 'test' },
