@@ -96,10 +96,9 @@ jobs:
         if: needs.detect-changes.outputs.owner == 'true'
         run: |
           cd apps/owner
-          echo "VITE_CLIENT_ID=${{ secrets.VITE_OWNER_CLIENT_ID }}" > .env
-          echo "VITE_KAKAO_REDIRECT_URI=${{ secrets.VITE_OWNER_KAKAO_REDIRECT_URI }}" >> .env
-          echo "VITE_SERVER_API=${{ secrets.VITE_OWNER_SERVER_API }}" >> .env
-          echo "VITE_TOSS_CLIENT_KEY=${{ secrets.VITE_OWNER_TOSS_CLIENT_KEY }}" >> .env
+          echo "VITE_NAVER_CLIENT_ID=${{ secrets.VITE_NAVER_CLIENT_ID }}" > .env
+          echo "VITE_BASE_URL=${{ secrets.VITE_BASE_URL }}" >> .env
+          echo "VITE_SENTRY_DSN=${{ secrets.VITE_SENTRY_DSN }}" >> .env
 
       - name: 프론트엔드 빌드 (Owner)
         if: needs.detect-changes.outputs.owner == 'true'
@@ -134,10 +133,9 @@ jobs:
         if: needs.detect-changes.outputs.designer == 'true'
         run: |
           cd apps/designer
-          echo "VITE_CLIENT_ID=${{ secrets.VITE_DESIGNER_CLIENT_ID }}" > .env
-          echo "VITE_KAKAO_REDIRECT_URI=${{ secrets.VITE_DESIGNER_KAKAO_REDIRECT_URI }}" >> .env
-          echo "VITE_SERVER_API=${{ secrets.VITE_DESIGNER_SERVER_API }}" >> .env
-          echo "VITE_TOSS_CLIENT_KEY=${{ secrets.VITE_DESIGNER_TOSS_CLIENT_KEY }}" >> .env
+          echo "VITE_NAVER_CLIENT_ID=${{ secrets.VITE_NAVER_CLIENT_ID }}" > .env
+          echo "VITE_BASE_URL=${{ secrets.VITE_BASE_URL }}" >> .env
+          echo "VITE_SENTRY_DSN=${{ secrets.VITE_SENTRY_DSN }}" >> .env
 
       - name: 프론트엔드 빌드 (Designer)
         if: needs.detect-changes.outputs.designer == 'true'
@@ -172,10 +170,9 @@ jobs:
         if: needs.detect-changes.outputs.guardian == 'true'
         run: |
           cd apps/guardian
-          echo "VITE_CLIENT_ID=${{ secrets.VITE_GUARDIAN_CLIENT_ID }}" > .env
-          echo "VITE_KAKAO_REDIRECT_URI=${{ secrets.VITE_GUARDIAN_KAKAO_REDIRECT_URI }}" >> .env
-          echo "VITE_SERVER_API=${{ secrets.VITE_GUARDIAN_SERVER_API }}" >> .env
-          echo "VITE_TOSS_CLIENT_KEY=${{ secrets.VITE_GUARDIAN_TOSS_CLIENT_KEY }}" >> .env
+          echo "VITE_NAVER_CLIENT_ID=${{ secrets.VITE_NAVER_CLIENT_ID }}" > .env
+          echo "VITE_BASE_URL=${{ secrets.VITE_BASE_URL }}" >> .env
+          echo "VITE_SENTRY_DSN=${{ secrets.VITE_SENTRY_DSN }}" >> .env
 
       - name: 프론트엔드 빌드 (Guardian)
         if: needs.detect-changes.outputs.guardian == 'true'
