@@ -3,8 +3,9 @@ import { DropdownCheckBox } from '@daeng-ggu/design-system';
 interface DayOffCheckBoxProps {
   // eslint-disable-next-line no-unused-vars
   onChange?: (selectedItems: string[]) => void;
+  selectedItems: string[];
 }
-const DayOffCheckBox = ({ onChange }: DayOffCheckBoxProps) => {
+const DayOffCheckBox = ({ onChange, selectedItems }: DayOffCheckBoxProps) => {
   const weekdayOptions = [
     { id: '월', label: '월' },
     { id: '화', label: '화' },
@@ -15,7 +16,12 @@ const DayOffCheckBox = ({ onChange }: DayOffCheckBoxProps) => {
     { id: '일', label: '일' },
   ];
   return (
-    <DropdownCheckBox options={weekdayOptions} onChange={onChange} placeholder='휴무 요일 선택'></DropdownCheckBox>
+    <DropdownCheckBox
+      selectedItems={selectedItems}
+      options={weekdayOptions}
+      onChange={onChange}
+      placeholder='휴무 요일 선택'
+    ></DropdownCheckBox>
   );
 };
 export default DayOffCheckBox;

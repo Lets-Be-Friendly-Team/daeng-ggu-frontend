@@ -5,18 +5,19 @@ import ArrowUp from '../Icons/ArrowUp';
 import CheckedIcon from '../Icons/CheckedIcon';
 import UncheckedIcon from '../Icons/UncheckedIcon';
 
-type option = { id: string; label: string };
+type Option = { id: string; label: string };
 
 interface CheckBoxProps {
   // eslint-disable-next-line no-unused-vars
   onChange?: (selectedItems: string[]) => void;
   placeholder?: string;
-  options: option[];
+  options: Option[];
+  selectedItems: string[];
 }
 
-function DropdownCheckBox({ onChange, placeholder, options }: CheckBoxProps) {
+function DropdownCheckBox({ onChange, placeholder, options, selectedItems }: CheckBoxProps) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [selectedItems, setSelectedItems] = useState<Record<string, boolean>>({});
+  // const [selectedItems, setSelectedItems] = useState<Record<string, boolean>>({});
 
   //   const options = [
   //     { id: 'service1', label: '기본 서비스 (미용, 목욕)' },
@@ -30,24 +31,20 @@ function DropdownCheckBox({ onChange, placeholder, options }: CheckBoxProps) {
   };
 
   const handleItemClick = (id: string) => {
-    setSelectedItems((prev) => {
-      const newState = { ...prev, [id]: !prev[id] };
-      if (onChange) {
-        const selectedIds = Object.keys(newState).filter((key) => newState[key]);
-        onChange(selectedIds);
-      }
-      return newState;
-    });
+    const isSelected = selectedItems.includes(id);
+    const updatedItems = isSelected
+      ? selectedItems.filter((item) => item !== id) // 선택 해제
+      : [...selectedItems, id]; // 선택 추가
+
+    if (onChange) {
+      onChange(updatedItems);
+    }
   };
 
-  const selectedLabels = Object.keys(selectedItems)
-    .filter((key) => selectedItems[key])
-    .map((key) => {
-      const option = options.find((opt) => opt.id === key);
-      if (option?.id === 'S1') {
-        return '기본';
-      }
-      return option?.label.split(' - ')[1] || option?.label;
+  const selectedLabels = selectedItems
+    .map((id) => {
+      const option = options.find((opt) => opt.id === id);
+      return option?.label;
     })
     .join('/');
 
@@ -77,11 +74,13 @@ function DropdownCheckBox({ onChange, placeholder, options }: CheckBoxProps) {
                 <div
                   onClick={() => handleItemClick(option.id)}
                   className={`flex cursor-pointer items-center px-[1rem] py-[1.2rem] ${
-                    selectedItems[option.id] ? 'bg-secondary text-primary' : 'hover:bg-secondary hover:text-primary'
+                    selectedItems.includes(option.id)
+                      ? 'bg-secondary text-primary'
+                      : 'hover:bg-secondary hover:text-primary'
                   } ${index !== options.length - 1 ? 'border-b border-gray-100' : ''}`}
                 >
                   <div className='flex h-4 w-4 items-center justify-center'>
-                    {selectedItems[option.id] ? (
+                    {selectedItems.includes(option.id) ? (
                       <CheckedIcon className='h-4 w-4 text-primary' />
                     ) : (
                       <UncheckedIcon className='h-4 w-4' />

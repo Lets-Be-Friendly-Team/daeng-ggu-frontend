@@ -19,7 +19,7 @@ export interface Breed {
 export interface Portfolio {
   portfolioId: number;
   title: string;
-  video: File;
+  video: File | null;
   imgList: File[];
   contents: string;
 }

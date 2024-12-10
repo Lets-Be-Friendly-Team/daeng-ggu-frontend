@@ -10,7 +10,8 @@ import MyPage from '@/pages/MyPage/MyPage';
 import ReservationPage from '@/pages/ReservationPage/ReservationPage';
 import ReviewDetailPage from '@/pages/ReviewDetailPage/ReviewDetailPage';
 
-import AddPortfolioPage from './pages/AddPortfolioPage/AddPortfolioPage';
+import AddPortfolioInRegister from './pages/AddPortfolioPage/AddPortfolioInRegister';
+// import AddPortfolioPage from './pages/AddPortfolioPage/AddPortfolioPage';
 import MembershipPage from './pages/Membership/MembershipPage';
 import RegisterStep from './pages/RegisterProfile/RegisterStep';
 
@@ -56,7 +57,7 @@ export const router = createBrowserRouter(
         },
         {
           path: ROUTES.portfolio,
-          children: [{ path: ROUTES.portfolioAdd, element: <AddPortfolioPage /> }],
+          children: [{ path: ROUTES.portfolioAdd, element: <AddPortfolioInRegister /> }],
         },
         {
           path: ROUTES.feed,
