@@ -62,8 +62,8 @@ const EditPetProfilePage = () => {
     }
   };
   const handleImageDelete = () => {
-    setProfileImage(null);
-    setFormData((prev) => ({ ...prev, prePetImgUrl: '' }));
+    setProfileImage(undefined);
+    setFormData((prev) => ({ ...prev, petImgUrl: '' }));
   };
 
   return (
@@ -100,15 +100,15 @@ const EditPetProfilePage = () => {
             <div className='flex gap-1'>
               <TypeTwoButton
                 text='남'
-                className={formData.gender === 'M' ? 'bg-secondary text-primary' : 'bg-gray-50'}
+                className={formData.gender === 'M' ? 'bg-secondary' : 'bg-gray-50'}
                 onClick={() => handleChange('gender', 'M')}
-                border={formData.gender === 'M' ? 'border border-primary' : ''}
-                color='bg-gray-50'
+                fontWeight='font-medium'
               />
               <TypeTwoButton
                 text='여'
-                color={formData.gender === 'W' ? 'bg-secondary' : ''}
+                color={formData.gender === 'F' ? 'bg-secondary' : 'bg-gray-50'}
                 onClick={() => handleChange('gender', 'W')}
+                fontWeight='font-medium'
               />
             </div>
           </div>
@@ -117,12 +117,12 @@ const EditPetProfilePage = () => {
             <div className='flex gap-1'>
               <TypeTwoButton
                 text='O'
-                color={formData.isNeutered === 'Y' ? 'bg-secondary' : ''}
+                color={formData.isNeutered === 'Y' ? 'bg-secondary' : 'bg-gray-50'}
                 onClick={() => handleChange('isNeutered', 'Y')}
               />
               <TypeTwoButton
                 text='X'
-                color={formData.isNeutered === 'N' ? 'bg-secondary' : ''}
+                color={formData.isNeutered === 'N' ? 'bg-secondary' : 'bg-gray-50'}
                 onClick={() => handleChange('isNeutered', 'N')}
               />
             </div>
