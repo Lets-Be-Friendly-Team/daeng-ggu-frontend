@@ -11,9 +11,15 @@ export const REVIEW_QUERY_KEYS = {
   //   DETAILS: (id: string) => ['userDetails', id],
 } as const;
 
-export const USER_QUERY_KEYS = {
-  //   GET_USER: ['getUser'],
+export const CUSTOMER_QUERY_KEYS = {
+  GET_PROFILE: (customerId: number) => ['getProfile', customerId],
+  UPDATE_PROFILE: ['updateProfile'],
+  GET_PROFILE_DETAIL: (customerId: number) => ['getProfileDetail', customerId],
   //   GET_USER_LIST: ['getUserList'],
   //   POST_USER: ['postUser'],
   //   DELETE_USER: ['delete]
+} as const;
+
+export const PET_QUERY_KEYS = {
+  GET_PET_PROFILE_DETAIL: (customerId: number, petId: number) => ['getPetProfileDetail', customerId, petId],
 } as const;

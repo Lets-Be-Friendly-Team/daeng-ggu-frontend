@@ -21,3 +21,6 @@ const BookmarkItem = ({ nickname, imageUrl, address, breeds, onClick }: IBookmar
 };
 
 export default BookmarkItem;
+// 주소 두개 합쳐져서 나옴
+// possiblebreed 설명 추가
+// 닉네임 빠져있음
