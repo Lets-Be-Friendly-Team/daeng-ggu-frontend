@@ -16,6 +16,7 @@ interface ImageUploaderProps {
   video?: File | null;
   setVideo?: Dispatch<SetStateAction<File | null>>;
   label?: string;
+  subLabel?: string;
 }
 
 const ImageUploader = ({
@@ -27,6 +28,7 @@ const ImageUploader = ({
   video = null,
   setVideo,
   label = '',
+  subLabel = '',
 }: ImageUploaderProps) => {
   const fileTypes =
     mode === 'img' ? ['jpg', 'png', 'jpeg', 'gif'] : ['jpg', 'png', 'jpeg', 'gif', 'avi', 'mp4', 'mov', 'wmv'];
@@ -99,7 +101,10 @@ const ImageUploader = ({
 
   return (
     <div>
-      <label className='text-sub_h1 font-semibold text-gray-800'>{label}</label>
+      <div className='mb-[0.8rem] text-body3 font-semibold text-gray-800'>
+        <p>{label}</p>
+        <p className='mt-[0.6rem] text-iconCaption text-gray-700'>{subLabel}</p>
+      </div>
       {/* 슬라이더 */}
       {sliderList.length > 0 ? (
         <ImageSlider list={sliderList} />

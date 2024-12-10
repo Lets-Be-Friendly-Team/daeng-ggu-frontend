@@ -48,7 +48,7 @@ const AddPetProfilePage = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState<PetData>(petData);
-  const [profileImage, setProfileImage] = useState<File | undefined>(undefined);
+  const [profileImage, setProfileImage] = useState<File | null>(null);
   const [selectedBreed, setSelectedBreed] = useState<string[]>([]);
   const [activeBtn, setActiveBtn] = useState(false);
 
@@ -102,7 +102,7 @@ const AddPetProfilePage = () => {
     }
   };
   const handleImageDelete = () => {
-    setProfileImage(undefined);
+    setProfileImage(null);
     // setFormData((prev) => ({ ...prev, prePetImgUrl: '' }));
   };
 
@@ -147,7 +147,7 @@ const AddPetProfilePage = () => {
             onChange={(e) => handleChange('petName', e.target.value)}
           />
           <div className='flex flex-col gap-y-[0.8rem]'>
-            <div className='block text-body3 font-semibold text-gray-800'>견종</div>
+            <div className='text-body3 font-semibold text-gray-800'>견종</div>
             <DogTypePicker type='radio' selectedValues={selectedBreed} onChange={handleChangeMajorBreed} />
             <SubBreedSelector options={breedList[selectedBreed[0]]?.sub} onChange={handleChangeSubBreed} />
           </div>

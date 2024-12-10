@@ -15,9 +15,10 @@ interface SignupFormProps {
   setFormData: Dispatch<SetStateAction<SignupFormData>>;
   userType: 'C' | 'D';
   handleSubmit: () => void;
+  handleClose: () => void;
 }
 
-const SignupForm = ({ formData, setFormData, userType, handleSubmit }: SignupFormProps) => {
+const SignupForm = ({ formData, setFormData, userType, handleSubmit, handleClose }: SignupFormProps) => {
   const [activeBtn, setActiveBtn] = useState(false);
 
   //입력 핸들러
@@ -68,7 +69,7 @@ const SignupForm = ({ formData, setFormData, userType, handleSubmit }: SignupFor
     <div className='bg-white'>
       <form>
         <PageContainer>
-          <Header mode='back' title='회원가입' />
+          <Header mode='close' title='회원가입' onClick={handleClose} />
           <div className='mt-8 flex flex-col gap-y-[2.4rem]'>
             <h1 className='text-body1'>
               <strong>회원정보</strong>를 입력 해주세요

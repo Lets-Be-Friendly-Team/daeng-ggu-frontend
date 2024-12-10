@@ -13,6 +13,11 @@ const ROUTES = {
   portfolioDetail: '/profile/portfolio/:portfolioId',
   reviewDetail: '/profile/review/:reviewId',
   reservation: '/profile/reservation',
+  signupSuccess: 'success',
+  membership: 'membership',
+  registerProfile: 'register/profile',
+  portfolio: 'portfolio',
+  portfolioAdd: 'add',
 } as const;
 
 export default ROUTES;

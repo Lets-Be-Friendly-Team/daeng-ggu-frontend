@@ -15,7 +15,7 @@ const InputTest = () => {
   ];
   const [video, setVideo] = useState<File | null>(null);
   const initialVideo = 'https://cdnvod.yonhapnews.co.kr/yonhapnewsvod/202412/MYH20241205018500704_700M1.mp4';
-  const [image, setImage] = useState<File | undefined>(undefined);
+  const [image, setImage] = useState<File | null>(null);
   const initialProfileImg = 'https://blog.malcang.com/wp-content/uploads/2024/03/1-1.png';
 
   const handleChange = (ev: React.ChangeEvent<HTMLInputElement>) => {

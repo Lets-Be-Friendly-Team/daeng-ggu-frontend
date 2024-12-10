@@ -10,12 +10,16 @@ import MyPage from '@/pages/MyPage/MyPage';
 import ReservationPage from '@/pages/ReservationPage/ReservationPage';
 import ReviewDetailPage from '@/pages/ReviewDetailPage/ReviewDetailPage';
 
-// import '@/styles/sequenceAnimation.css';
+import AddPortfolioPage from './pages/AddPortfolioPage/AddPortfolioPage';
+import MembershipPage from './pages/Membership/MembershipPage';
+import RegisterStep from './pages/RegisterProfile/RegisterStep';
+
 import FeedPage from './pages/FeedPage/FeedPage';
 import PortfolioDetailPage from './pages/PortfolioDetailPage/PortfolioDetailPage';
 import SignupPage from './pages/Signup/SignupPage';
+import SignupSuccessPage from './pages/Signup/SignupSuccessPage';
 import App from './App';
-
+// import '@/styles/sequenceAnimation.css';
 export const router = createBrowserRouter(
   [
     {
@@ -37,7 +41,22 @@ export const router = createBrowserRouter(
         },
         {
           path: ROUTES.signup,
-          children: [{ index: true, element: <SignupPage /> }],
+          children: [
+            { index: true, element: <SignupPage /> },
+            { path: ROUTES.signupSuccess, element: <SignupSuccessPage /> },
+          ],
+        },
+        {
+          path: ROUTES.membership,
+          children: [{ index: true, element: <MembershipPage /> }],
+        },
+        {
+          path: ROUTES.registerProfile,
+          children: [{ index: true, element: <RegisterStep /> }],
+        },
+        {
+          path: ROUTES.portfolio,
+          children: [{ path: ROUTES.portfolioAdd, element: <AddPortfolioPage /> }],
         },
         {
           path: ROUTES.feed,

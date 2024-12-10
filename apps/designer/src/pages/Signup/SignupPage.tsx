@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router';
 import { SignupForm } from '@daeng-ggu/design-system';
 import { SignupFormData } from '@daeng-ggu/design-system/components/SignupForm/SignupForm';
 
@@ -11,12 +12,28 @@ const SignupPage = () => {
     nickname: '',
   });
 
+  const navigate = useNavigate();
+
+  //헤더의 X버튼 클릭시 처리 (추후 수정)
+  const handleClose = () => {
+    navigate('/');
+  };
+
   //데이터 전송 핸들러
   const handleSubmit = () => {
     console.log(formData);
-    alert('hi');
+    // alert('hi');
+    navigate('/membership');
   };
 
-  return <SignupForm formData={formData} setFormData={setFormData} handleSubmit={handleSubmit} userType='D' />;
+  return (
+    <SignupForm
+      formData={formData}
+      setFormData={setFormData}
+      handleSubmit={handleSubmit}
+      userType='D'
+      handleClose={handleClose}
+    />
+  );
 };
 export default SignupPage;
