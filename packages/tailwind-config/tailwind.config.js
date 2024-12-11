@@ -8,9 +8,14 @@ export default {
           '0%': { transform: 'translate(-50%, -100%)', opacity: '0' },
           '100%': { transform: 'translate(-50%, 0%)', opacity: '1' },
         },
+        rotate: {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
+        },
       },
       animation: {
         'slide-up': 'slideUp 0.2s ease-in-out',
+        rotate: 'rotate 0.5s spring',
       },
       borderRadius: {
         sm: '0.4rem',

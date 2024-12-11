@@ -8,6 +8,7 @@ import getHomeMap, { DesignerInfo, HomeMapParams } from '@/apis/home/getHomeMap'
 import DesignerInfoWindow from '@/components/NaverMap/DesignerInfoWindow';
 import DesignerMarker from '@/components/NaverMap/DesignerMarker';
 import Marker from '@/components/NaverMap/Marker';
+import RefreshDesignerMarkerButton from '@/components/NaverMap/RefreshDesignerMarkerButton';
 import UserLocationButton from '@/components/NaverMap/UserLocationButton';
 import { cn } from '@/lib/utils';
 
@@ -169,6 +170,7 @@ const NaverMapContent = ({
     <>
       <div className={cn('relative h-full w-full', className)} ref={mapContainerRef}>
         <UserLocationButton map={mapRef.current} location={{ loaded, coordinates, permissionGranted }} />
+        <RefreshDesignerMarkerButton handleDesignerMap={handleDesignerMap} map={mapRef.current} />
       </div>
     </>
   );
