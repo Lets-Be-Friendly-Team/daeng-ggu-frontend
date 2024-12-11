@@ -50,7 +50,7 @@ const EditPetProfilePage = () => {
     }
   };
   const handleImageDelete = () => {
-    setProfileImage(undefined);
+    setProfileImage(null);
     setFormData((prev) => ({ ...prev, prePetImgUrl: '' }));
   };
 
