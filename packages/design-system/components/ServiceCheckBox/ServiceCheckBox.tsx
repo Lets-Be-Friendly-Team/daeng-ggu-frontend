@@ -3,11 +3,12 @@ import { useState } from 'react';
 import DropdownCheckBox from '../DropdownCheckBox/DropdownCheckBox';
 
 interface ServiceCheckBoxProps {
-  // eslint-disable-next-line no-unused-vars
-  onChange?: (selectedItems: string[]) => void;
+  initialSelectedItems?: string[];
+
+  onChange?: (_selectedItems: string[]) => void;
 }
-const ServiceCheckBox = ({ onChange }: ServiceCheckBoxProps) => {
-  const [selectedServices, setSelectedServices] = useState<string[]>([]);
+const ServiceCheckBox = ({ initialSelectedItems = [], onChange }: ServiceCheckBoxProps) => {
+  const [selectedServices, setSelectedServices] = useState<string[]>(initialSelectedItems);
   const handleChange = (selectedItems: string[]) => {
     setSelectedServices(selectedItems);
     if (onChange) {
