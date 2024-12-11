@@ -1,42 +1,28 @@
+import { LogoImage } from '@daeng-ggu/design-system';
+
 import Designer from './Designer';
 import { DesignerType } from './DesignerData';
-
 interface DesignerListProps {
   // category: string;
   dataList: DesignerType[];
 }
 // const DesignerList = ({ category }: DesignerListProps) => {
 const DesignerList = ({ dataList }: DesignerListProps) => {
-  /* api 연동
-   * get은 한번(searchWord에 빈값 넣어서 전체 조회)
-   * category마다 다른 column 가져와서 dataList 변수에 저장
-   */
-  // const [dataList, setDataList] = useState<DesignerType[]>([]);
-  // const dataListName = `${category}dataList`;
-  // useEffect(() => {
-  //   switch (category) {
-  //     case 'total':
-  //       setDataList(designerList);
-  //       break;
-  //     case 'popular':
-  //       setDataList(popularList);
-  //       break;
-  //     case 'spa':
-  //       setDataList(premiumSpList);
-  //       break;
-  //     case 'fullcare':
-  //       setDataList(premiumFcList);
-  //       break;
-  //     case 'streaming':
-  //       setDataList(premiumStList);
-  //       break;
-  //   }
-  // });
   return (
     <div className='flex flex-col gap-y-[5rem]'>
-      {dataList.map((designer, index) => (
-        <Designer key={index} designer={designer} />
-      ))}
+      {dataList.length > 0 ? (
+        dataList.map((designer, index) => {
+          if (designer.nickname) {
+            //프로필 작성한 디자이너만 메인에 노출
+            return <Designer key={index} designer={designer} />;
+          }
+        })
+      ) : (
+        <div className='flex w-full flex-col items-center gap-y-[2rem] pt-[3rem]'>
+          <img src={LogoImage} className='w-1/5'></img>
+          <p className='text-body3 text-gray-700'>해당하는 디자이너가 없습니다</p>
+        </div>
+      )}
     </div>
   );
 };

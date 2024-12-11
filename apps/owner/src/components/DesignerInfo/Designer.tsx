@@ -13,7 +13,7 @@ const Designer = ({ designer }: { designer: DesignerType }) => {
           <p className='text-sub_h1 font-bold text-primary'>{designer.nickname}</p>
 
           <div className='flex gap-x-1'>
-            <FullStarIcon size='w-[1.2rem] h-[1.2rem]' color='fill-[#FFC90A]' />
+            <FullStarIcon size='w-[1.2rem] h-[1.2rem]' color='#FFC90A' />
             <p>{designer.reviewStarAvg}</p>
           </div>
           <div className='flex gap-x-1'>
@@ -25,7 +25,7 @@ const Designer = ({ designer }: { designer: DesignerType }) => {
         <div className='flex gap-x-1'>
           {designer.possibleBreed.map((breed, index) => (
             <div key={index} className='flex items-center gap-x-1'>
-              <p>{breed}</p>
+              <p>{breed.codeDesc.substring(0, 3)}</p>
               {index < designer.possibleBreed.length - 1 && <div className='font-semibold'>|</div>}
             </div>
           ))}

@@ -2,7 +2,7 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { Header, PageContainer, SearchBar } from '@daeng-ggu/design-system';
 
-import { designerList, DesignerType } from '@/components/DesignerInfo/DesignerData';
+import { DesignerType } from '@/components/DesignerInfo/DesignerData';
 import DesignerList from '@/components/DesignerInfo/DesignerList';
 
 const SearchResultPage = () => {
@@ -25,7 +25,7 @@ const SearchResultPage = () => {
   // api 연동
   const [searchResult, setSearchResult] = useState<DesignerType[]>([]);
   useEffect(() => {
-    setSearchResult(designerList);
+    setSearchResult([]);
   }, []);
 
   return (
