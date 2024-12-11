@@ -1,27 +1,176 @@
-import { ReactElement, ReactNode, Suspense } from 'react';
-import { Container as MapDiv, Marker, NaverMap, useNavermaps } from 'react-naver-maps';
+import { ReactNode, useEffect, useRef, useState } from 'react';
+import ReactDOMServer from 'react-dom/server';
+import { useNavigate } from 'react-router';
+import { MyLocationIcon } from '@daeng-ggu/design-system';
+import { LocationState } from '@daeng-ggu/shared';
+
+import getHomeMap, { DesignerInfo, HomeMapParams } from '@/apis/home/getHomeMap';
+import DesignerInfoWindow from '@/components/NaverMap/DesignerInfoWindow';
+import DesignerMarker from '@/components/NaverMap/DesignerMarker';
+import Marker from '@/components/NaverMap/Marker';
+import UserLocationButton from '@/components/NaverMap/UserLocationButton';
+import { cn } from '@/lib/utils';
 
 interface NaverMapContentProps {
-  mapLat: number;
-  mapLng: number;
-  children: ReactElement<typeof Marker> | ReactElement<typeof Marker>[];
+  userLocation?: LocationState;
   className?: string;
   subButton?: ReactNode;
 }
 
-const NaverMapContent = ({ className, children, mapLat, mapLng }: NaverMapContentProps) => {
-  const navermaps = useNavermaps();
+const NaverMapContent = ({
+  className,
+  userLocation = {
+    loaded: false,
+    coordinates: { lat: 37.413294, lng: 126.734086 },
+    permissionGranted: false,
+  },
+}: NaverMapContentProps) => {
+  const { naver } = window;
+  const { loaded, coordinates, permissionGranted } = userLocation;
+  const navigate = useNavigate();
+
+  const mapContainerRef = useRef<HTMLDivElement | null>(null);
+  const mapRef = useRef<naver.maps.Map | undefined>(undefined);
+  const activeInfoWindowRef = useRef<naver.maps.InfoWindow | null>(null);
+
+  const [designerList, setDesignerList] = useState<DesignerInfo[]>([]);
+
+  const handleDesignerMap = async (location: HomeMapParams) => {
+    const response = await getHomeMap(location);
+    setDesignerList(response.data);
+  };
+
+  useEffect(() => {
+    const handleNaverMap = async () => {
+      if (!naver || !mapContainerRef.current) return;
+
+      // 지도 초기화
+      mapRef.current = new naver.maps.Map(mapContainerRef.current, {
+        zoom: 14,
+      });
+
+      // 사용자가 위치 권한을 허용한 경우 지도 중심 설정 및 마커 추가
+      if (permissionGranted) {
+        const location = new naver.maps.LatLng(coordinates.lat, coordinates.lng);
+        mapRef.current.setCenter(location);
+        mapRef.current.setZoom(18);
+
+        new naver.maps.Marker({
+          position: location,
+          icon: {
+            content: ReactDOMServer.renderToString(
+              <Marker>
+                <MyLocationIcon />
+              </Marker>,
+            ),
+          },
+          map: mapRef.current,
+        });
+      }
+
+      // 현재 지도 범위 가져오기 및 디자이너 데이터 불러오기
+      const mapBounds = mapRef.current.getBounds();
+      if (loaded && mapBounds) {
+        await handleDesignerMap({
+          minX: mapBounds.minX(),
+          maxX: mapBounds.maxX(),
+          minY: mapBounds.minY(),
+          maxY: mapBounds.maxY(),
+        });
+      }
+
+      // 지도 클릭 시 InfoWindow 닫기
+      naver.maps.Event.addListener(mapRef.current, 'click', () => {
+        if (activeInfoWindowRef.current) {
+          activeInfoWindowRef.current.close();
+          activeInfoWindowRef.current = null;
+        }
+      });
+    };
+
+    handleNaverMap();
+  }, [loaded, permissionGranted, coordinates, naver]);
+
+  useEffect(() => {
+    if (designerList.length > 0 && mapRef.current) {
+      designerList.forEach((designerInfo) => {
+        const { nickname, lng, lat, designerId } = designerInfo;
+        const location = new naver.maps.LatLng(lat, lng);
+
+        // InfoWindow 생성
+        const windowInfo = new naver.maps.InfoWindow({
+          content: ReactDOMServer.renderToString(<DesignerInfoWindow designerInfo={designerInfo} />),
+          borderWidth: 0,
+          anchorSkew: false,
+          backgroundColor: 'transparent',
+          disableAnchor: true,
+          disableAutoPan: true,
+          pixelOffset: new naver.maps.Point(0, -10),
+        });
+
+        // 마커 생성
+        const marker = new naver.maps.Marker({
+          position: location,
+          icon: {
+            content: ReactDOMServer.renderToString(
+              <Marker>
+                <DesignerMarker title={nickname} />
+              </Marker>,
+            ),
+          },
+          map: mapRef.current,
+        });
+
+        const addButtonEventListener = () => {
+          const profileButton = document.getElementById(`profile-btn-${designerId}`);
+          if (profileButton) {
+            console.log('efw');
+            profileButton.addEventListener('click', () => {
+              navigate(`/profile/${designerId}`);
+            });
+          }
+
+          // 예약하기 버튼 클릭 시 예약 페이지로 이동 구현
+          const reservationButton = document.getElementById(`reservation-btn-${designerId}`);
+          if (reservationButton) {
+            reservationButton.addEventListener('click', () => {
+              navigate(`/reservation/${designerId}`);
+            });
+          }
+        };
+
+        // 마커 클릭 시 InfoWindow 열기
+        naver.maps.Event.addListener(marker, 'click', (e) => {
+          if (!mapRef.current) return;
+          if (activeInfoWindowRef.current) {
+            activeInfoWindowRef.current.close();
+          }
+          windowInfo.open(mapRef.current, marker);
+          activeInfoWindowRef.current = windowInfo;
+
+          mapRef.current.panTo(e.coord, { duration: 500 });
+          addButtonEventListener();
+        });
+        naver.maps.Event.addListener(marker, 'mouseover', () => {
+          if (!mapRef.current) return;
+          if (activeInfoWindowRef.current) {
+            activeInfoWindowRef.current.close();
+          }
+          windowInfo.open(mapRef.current, marker);
+          activeInfoWindowRef.current = windowInfo;
+          addButtonEventListener();
+        });
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [designerList, navigate]);
 
   return (
-    <div>
-      <Suspense fallback={null}>
-        <MapDiv className={`w-full ${className}`}>
-          <NaverMap defaultCenter={new navermaps.LatLng(mapLat, mapLng)} defaultZoom={15}>
-            {children}
-          </NaverMap>
-        </MapDiv>
-      </Suspense>
-    </div>
+    <>
+      <div className={cn('relative h-full w-full', className)} ref={mapContainerRef}>
+        <UserLocationButton map={mapRef.current} location={{ loaded, coordinates, permissionGranted }} />
+      </div>
+    </>
   );
 };
 

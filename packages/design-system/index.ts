@@ -41,6 +41,7 @@ import InfoIcon from './components/Icons/InfoIcon';
 import LockIcon from './components/Icons/LockIcon';
 import MapIcon from './components/Icons/MapIcon';
 import MoreIcon from './components/Icons/MoreIcon';
+import MyLocationIcon from './components/Icons/MyLocationIcon';
 import MyPageIcon from './components/Icons/MyPageIcon';
 import MySearchIcon from './components/Icons/MySearchIcon';
 import PlusIcon from './components/Icons/PlusIcon';
@@ -83,6 +84,7 @@ import SignupForm from './components/SignupForm/SignupForm';
 
 export {
   CategoryTab,
+  MyLocationIcon,
   CircleScissorIcon,
   StarRating,
   StarIcon,

@@ -6,4 +6,5 @@ export { default as useToast } from './hooks/useToast';
 export { default as useUserLocation } from './hooks/useUserLocation';
 export { default as LogContainer } from './components/LogContainer/LogContainer';
 export { default as Notification } from './components/Notification/Notification';
+export type { LocationState } from './hooks/useUserLocation';
 export { APIClient } from './apis/APIClient';
