@@ -12,7 +12,7 @@ import { useOwnerBottomTabStore } from '@/stores/bottomTabStore';
  */
 
 const ownerTabs = [
-  { label: '디자이너 찾기', icon: MapIcon, path: ROUTES.main },
+  { label: '디자이너 찾기', icon: MapIcon, path: '' },
   { label: '피드', icon: FeedIcon, path: ROUTES.feed },
   { label: '견적 요청', icon: SendIcon, path: ROUTES.bid },
   { label: '예약 현황', icon: ReservationIcon, path: ROUTES.reservation },

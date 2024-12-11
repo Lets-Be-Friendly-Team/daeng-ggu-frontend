@@ -28,7 +28,7 @@ const petData = {
 const EditPetProfilePage = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState(petData);
-  const [profileImage, setProfileImage] = useState<File | undefined>(undefined);
+  const [profileImage, setProfileImage] = useState<File | null>(null);
   const handleChange = (field: string, value: string | File | null) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
