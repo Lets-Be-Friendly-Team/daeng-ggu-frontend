@@ -51,7 +51,7 @@ const EditDesignerProfilePage = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState(data);
-  const [profileImage, setProfileImage] = useState<File | undefined>(undefined);
+  const [profileImage, setProfileImage] = useState<File | null>(null);
   const [selectedServices, setSelectedServices] = useState<string[]>(data.providedServices);
   const [selectedBreeds, setSelectedBreeds] = useState<string[]>(
     data.possibleBreeds.map((breed) => {
@@ -61,7 +61,7 @@ const EditDesignerProfilePage = () => {
       return '특수견';
     }),
   );
-  const handleChange = (field: string, value: string | File | null) => {
+  const handleChange = (field: string, value: string | File | null | undefined) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
   const submitFormData = () => {
@@ -86,7 +86,7 @@ const EditDesignerProfilePage = () => {
   };
 
   const handleImageDelete = () => {
-    setProfileImage(undefined);
+    setProfileImage(null);
     setFormData((prev) => ({ ...prev, preImgUrl: '' }));
   };
   return (
