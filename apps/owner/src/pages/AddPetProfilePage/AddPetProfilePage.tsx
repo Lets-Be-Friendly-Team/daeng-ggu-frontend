@@ -12,8 +12,7 @@ import {
 } from '@daeng-ggu/design-system';
 
 import SubBreedSelector from '@/components/SubBreedSelector/SubBreedSelector';
-
-import { breedList } from './breedList';
+import { breedList } from '@/constants/breedList';
 
 interface PetData {
   petName: string;
