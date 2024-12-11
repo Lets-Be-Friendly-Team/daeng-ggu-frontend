@@ -1,7 +1,7 @@
 interface ProfileData {
   petId: number;
   petName: string;
-  petImgUrl: string;
+  petImageUrl: string;
   petImgName?: string;
   subBreed: string;
   birthDate: string;
@@ -24,7 +24,7 @@ const ProfileViewer = ({
   profile = {
     petId: 0,
     petName: 'Unknown',
-    petImgUrl: '',
+    petImageUrl: '',
     subBreed: 'Unknown',
     birthDate: 'N/A',
     gender: 'N/A',
@@ -33,13 +33,13 @@ const ProfileViewer = ({
     specialNotes: '',
   },
 }: ProfileViewerProps) => {
-  const { petImgUrl, petName, subBreed, weight, gender, isNeutered, birthDate } = profile;
+  const { petImageUrl, petName, subBreed, weight, gender, isNeutered, birthDate } = profile;
 
   return (
     <div className='flex w-full justify-center rounded-[8px] border-primary bg-white p-6'>
       <div className='flex items-center'>
         <img
-          src={petImgUrl || 'https://via.placeholder.com/100'}
+          src={petImageUrl || 'https://via.placeholder.com/100'}
           alt={petName || 'Unknown Pet'}
           className='h-28 w-28 rounded-full border border-gray-300'
         />

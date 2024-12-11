@@ -38,6 +38,8 @@ const PendingRequestUser = ({ data }: PendingRequestUserProps) => {
     console.log('closed');
   };
 
+  console.log('hi hello and goodbye', data);
+
   const getDeliveryStatus = (majorBreedCode: string) => {
     switch (majorBreedCode) {
       case 'S':
@@ -66,7 +68,7 @@ const PendingRequestUser = ({ data }: PendingRequestUserProps) => {
             {data.map((pet, index) => (
               <Avatar
                 key={pet.petId}
-                imageUrl={pet.petImgUrl}
+                imageUrl={pet.petImageUrl}
                 name={pet.petName || '이름 없음'}
                 mode='avatar'
                 isActive={activePetIndex === index}
@@ -88,7 +90,7 @@ const PendingRequestUser = ({ data }: PendingRequestUserProps) => {
             handleRequestDelete={handleRequestDelete}
             titleText='견적 요청중'
             mode='request'
-            imageUrl={activePet.petImgUrl}
+            imageUrl={activePet.petImageUrl}
           >
             <p className='pb-2 text-gray-800'>{formatDate(activePet.createdAt)} 견적요청</p>
             <h3 className='pb-2 text-sub_h3 font-semibold'>{activePet.petName || '이름 없음'}</h3>
