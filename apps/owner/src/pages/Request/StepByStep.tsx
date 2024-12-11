@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import {
   Calendar,
@@ -47,6 +48,8 @@ const StepByStep = ({ stepCount, profileData, onProfileSelect }: StepByStepProps
   const [selectedOptions, setSelectedOptions] = useState<{ [key: number]: string }>({});
   const [containerHeight, setContainerHeight] = useState<number | null>(null);
   const [isDynamicHeight, setIsDynamicHeight] = useState<boolean>(false);
+  const navigate = useNavigate();
+  console.log('yoyoyo', profileData);
 
   const [showRegionSelector, setShowRegionSelector] = useState<boolean>(false);
   const [regionSelection, setRegionSelection] = useState<{ area: string; subArea: string }>({
@@ -304,7 +307,9 @@ const StepByStep = ({ stepCount, profileData, onProfileSelect }: StepByStepProps
               color='bg-secondary'
               onClick={() => {
                 if (window.confirm('프로필을 수정하면 견적서를 다시 요청해야 합니다. 진행하시겠습니까?')) {
-                  console.log('Profile editing confirmed');
+                  navigate(`/profile/edit/:${selectedPet}`);
+
+                  console.log('Profile editing confirmed', selectedPet);
                 } else {
                   console.log('Profile editing canceled');
                 }
