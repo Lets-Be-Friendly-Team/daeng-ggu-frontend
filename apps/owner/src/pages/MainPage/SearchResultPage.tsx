@@ -24,7 +24,13 @@ const SearchResultPage = () => {
 
   // api 연동
   const [searchResult, setSearchResult] = useState<DesignerType[]>([]);
+
   useEffect(() => {
+    // const fetchDataAndSetData = async ()=>{
+    //   try{
+    // const data =
+    //   }
+    // }
     setSearchResult([]);
   }, []);
 

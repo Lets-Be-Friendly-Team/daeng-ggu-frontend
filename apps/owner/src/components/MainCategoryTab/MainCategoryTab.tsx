@@ -4,15 +4,14 @@ import { useNavigate } from 'react-router';
 import { useSearchParams } from 'react-router-dom';
 import { PageContainer } from '@daeng-ggu/design-system';
 
-import getTotalDesigner from '@/apis/searchDesigner/getTotalDesigner';
 import map from '@/assets/images/MainCategoryTab/map.png';
 import popular from '@/assets/images/MainCategoryTab/popular.png';
 import premium from '@/assets/images/MainCategoryTab/premium.png';
 import total from '@/assets/images/MainCategoryTab/total.png';
-import { DesignerListType } from '@/components/DesignerInfo/DesignerData';
 import PopularList from '@/components/DesignerInfo/PopularList';
 import PremiumList from '@/components/DesignerInfo/PremiumList';
 import TotalList from '@/components/DesignerInfo/TotalList';
+import { useGetTotalDesigners } from '@/hooks/queries/DesignerList/useGetTotalDesigners';
 import useDesignerListStore from '@/stores/designerListStore';
 
 const MainCategoryTab = () => {
@@ -20,32 +19,62 @@ const MainCategoryTab = () => {
    * get은 한번(searchWord에 빈값 넣어서 전체 조회)
    * category마다 다른 column 가져와서 dataList 변수에 저장
    */
-  const getData = async (): Promise<DesignerListType> => {
-    const data = await getTotalDesigner();
-    console.log(data);
-    return data.data;
-  };
   const setLists = useDesignerListStore((state) => state.setLists);
+
+  const { data, error } = useGetTotalDesigners();
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [indicatorOffset, setIndicatorOffset] = useState(40);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
+  const [query, setQuery] = useSearchParams();
+
   useEffect(() => {
-    const fetchDataAndSetLists = async () => {
-      try {
-        const list = await getData();
-        console.log(list);
+    if (data) {
+      setLists({
+        designerList: data.data.allDesignerList,
+        popularList: data.data.popularList,
+        premiumSpList: data.data.premiumSpList,
+        premiumFcList: data.data.premiumFcList,
+        premiumStList: data.data.premiumStList,
+      });
+    }
+  }, [data, setLists]);
 
-        setLists({
-          designerList: list.allDesignerList,
-          popularList: list.popularList,
-          premiumSpList: list.premiumSpList,
-          premiumFcList: list.premiumFcList,
-          premiumStList: list.premiumStList,
-        });
-      } catch (error) {
-        console.log('Failed to fetch data', error);
+  useEffect(() => {
+    if (containerRef.current) {
+      const buttons = Array.from(containerRef.current.children) as HTMLElement[];
+      const activeButton = buttons[activeIndex];
+
+      if (activeButton) {
+        // 레이아웃 계산이 완료된 후 위치값을 업데이트
+        setTimeout(() => {
+          setIndicatorOffset(activeButton.offsetLeft);
+        }, 0);
       }
-    };
+    }
+  }, [activeIndex]);
 
-    fetchDataAndSetLists();
-  }, [setLists]);
+  useEffect(() => {
+    console.log(query.get('category'));
+    const category = query.get('category');
+    switch (category) {
+      case null:
+        setActiveIndex(0);
+        break;
+      case 'total':
+        setActiveIndex(0);
+        break;
+      case 'popular':
+        setActiveIndex(1);
+        break;
+      case 'premium':
+        setActiveIndex(2);
+        break;
+    }
+  }, [query]);
+
+  if (error) return <p>Error: {error.message}</p>;
+
   const tabs = [
     {
       icon: total,
@@ -72,43 +101,6 @@ const MainCategoryTab = () => {
       // content: ,
     },
   ];
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [indicatorOffset, setIndicatorOffset] = useState(40);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (containerRef.current) {
-      const buttons = Array.from(containerRef.current.children) as HTMLElement[];
-      const activeButton = buttons[activeIndex];
-
-      if (activeButton) {
-        // 레이아웃 계산이 완료된 후 위치값을 업데이트
-        setTimeout(() => {
-          setIndicatorOffset(activeButton.offsetLeft);
-        }, 0);
-      }
-    }
-  }, [activeIndex]);
-  const [query, setQuery] = useSearchParams();
-  useEffect(() => {
-    console.log(query.get('category'));
-    const category = query.get('category');
-    switch (category) {
-      case null:
-        setActiveIndex(0);
-        break;
-      case 'total':
-        setActiveIndex(0);
-        break;
-      case 'popular':
-        setActiveIndex(1);
-        break;
-      case 'premium':
-        setActiveIndex(2);
-        break;
-    }
-  }, [query]);
 
   return (
     <div className='flex h-full flex-col'>
