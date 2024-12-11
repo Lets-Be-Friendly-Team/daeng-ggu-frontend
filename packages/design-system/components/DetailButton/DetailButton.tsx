@@ -10,7 +10,7 @@ const DetailButton = ({ text = '상세보기', onClick }: DetailButtonProps) => 
     <p className='flex items-center'>
       <span>{text}</span>
       <span>
-        <RightIcon className='h-[9px] w-[8px] pb-[1px]' />
+        <RightIcon size='h-[9px] w-[8px] pb-[1px]' />
       </span>
     </p>
   </button>
