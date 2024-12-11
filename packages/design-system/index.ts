@@ -13,6 +13,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from './components/Dropdown-menu/Dropdown-menu';
+import DropdownCheckBox from './components/DropdownCheckBox/DropdownCheckBox';
 import ImageSlider from './components/FileUploader/ImageSlider';
 import ImageUploader from './components/FileUploader/ImageUploader';
 import ProfileImgUploader from './components/FileUploader/ProfileImgUploader';
@@ -78,6 +79,7 @@ import TypeOneButton from './components/TypeOneButton/TypeOneButton';
 import TypeTwoButton from './components/TypeTwoButton/TypeTwoButton';
 import type { ModalProps } from './types/modal';
 import type { ToastType } from './types/toast';
+import SignupForm from './components/SignupForm/SignupForm';
 
 export {
   CategoryTab,
@@ -158,4 +160,6 @@ export {
   DeleteIcon,
   ExclamationIcon,
   BottomSheetModal,
+  SignupForm,
+  DropdownCheckBox,
 };

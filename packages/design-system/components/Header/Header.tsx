@@ -28,17 +28,21 @@ const Header = ({ mode, title, onClick }: IHeaderProps) => {
       <div className='relative mx-auto flex h-auto w-full max-w-[1200px] items-center py-4'>
         {mode === 'main' && (
           <div className='flex w-full items-center justify-between'>
-            <button>
+            <button type='button'>
               <img src={textLogoImage} alt='logo image' className='h-[22px] w-[41px]' onClick={handleLogoClick} />
             </button>
-            <button onClick={handleNotificationClick}>
+            <button onClick={handleNotificationClick} type='button'>
               <BellIcon className='ml-auto h-[20px] w-[20px]' />
             </button>
           </div>
         )}
         {(mode === 'back' || mode === 'close' || mode === 'customBack') && (
           <>
-            <button onClick={onClick || handleBackClick} className='absolute left-0 flex h-[50px] items-center'>
+            <button
+              type='button'
+              onClick={onClick || handleBackClick}
+              className='absolute left-0 flex h-[50px] items-center'
+            >
               {mode === 'close' ? (
                 <CloseIcon className='h-[2.2rem] w-[2.2rem]' />
               ) : (

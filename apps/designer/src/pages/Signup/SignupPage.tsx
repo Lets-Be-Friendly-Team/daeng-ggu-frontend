@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router';
 import { SignupForm } from '@daeng-ggu/design-system';
 import { SignupFormData } from '@daeng-ggu/design-system/components/SignupForm/SignupForm';
 
-import ROUTES from '@/constants/routes';
-
 const SignupPage = () => {
   const [formData, setFormData] = useState<SignupFormData>({
     name: '',
@@ -12,23 +10,20 @@ const SignupPage = () => {
     gender: '',
     phone: '',
     nickname: '',
-    address1: '',
-    address2: '',
-    detailAddress: '',
   });
 
   const navigate = useNavigate();
 
   //헤더의 X버튼 클릭시 처리 (추후 수정)
   const handleClose = () => {
-    navigate('/login');
+    navigate('/');
   };
 
   //데이터 전송 핸들러
   const handleSubmit = () => {
     console.log(formData);
     // alert('hi');
-    navigate(ROUTES.signupSuccess);
+    navigate('/membership');
   };
 
   return (
@@ -36,7 +31,7 @@ const SignupPage = () => {
       formData={formData}
       setFormData={setFormData}
       handleSubmit={handleSubmit}
-      userType='C'
+      userType='D'
       handleClose={handleClose}
     />
   );

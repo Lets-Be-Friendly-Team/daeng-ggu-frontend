@@ -9,9 +9,10 @@ interface TypeTwoButtonProps {
   className?: string;
   fontWeight?: string;
   border?: string;
+  type?: 'button' | 'submit' | 'reset' | undefined;
 }
 
-const TypeTwoButton = ({ className, text, color, onClick, fontWeight, border }: TypeTwoButtonProps) => {
+const TypeTwoButton = ({ className, text, color, onClick, fontWeight, border, type }: TypeTwoButtonProps) => {
   const textColor =
     color === 'bg-primary'
       ? 'text-white'
@@ -27,6 +28,7 @@ const TypeTwoButton = ({ className, text, color, onClick, fontWeight, border }: 
         className,
       )}
       onClick={onClick}
+      type={type}
     >
       <p className='text-body3'>{text ? text : '내용없음'}</p>
     </button>

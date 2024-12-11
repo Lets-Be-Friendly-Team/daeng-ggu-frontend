@@ -6,15 +6,16 @@ import logo from '../../assets/images/logoImage.webp';
 import CameraIcon from '../Icons/CameraIcon';
 
 interface ProfileImgUploaderProps {
-  image?: File | undefined;
-  setImage?: Dispatch<SetStateAction<File | undefined>>;
+  image?: File | null;
+  setImage?: Dispatch<SetStateAction<File | null>>;
+  handleUpload?: (_file: File) => void;
   initialImageUrl?: string; // 서버에서 가져온 초기 이미지 URL
 }
 
 // 허용 파일 타입 설정
 const fileTypes = ['jpg', 'png', 'jpeg'];
 
-const ProfileImgUploader = ({ image, setImage, initialImageUrl }: ProfileImgUploaderProps) => {
+const ProfileImgUploader = ({ image, setImage, handleUpload, initialImageUrl }: ProfileImgUploaderProps) => {
   // image 추가 핸들러
   const imgRegistHandler = (file: File) => {
     setImage?.(file);
@@ -42,7 +43,7 @@ const ProfileImgUploader = ({ image, setImage, initialImageUrl }: ProfileImgUplo
 
       <button className='absolute -bottom-1 -right-1 border-none focus:outline-none'>
         <FileUploader
-          handleChange={imgRegistHandler}
+          handleChange={handleUpload || imgRegistHandler}
           name='file'
           types={fileTypes}
           hoverTitle=' '

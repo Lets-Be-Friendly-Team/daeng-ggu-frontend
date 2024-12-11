@@ -8,8 +8,10 @@ import App from '@/App';
 import ROUTES from '@/constants/routes';
 import AddPetProfilePage from '@/pages/AddPetProfilePage/AddPetProfilePage';
 import CreateReviewPage from '@/pages/CreateReviewPage/CreateReviewPage';
+import DesignerProfilePage from '@/pages/DesignerProfilePage/DesignerProfilePage';
 import EditPetProfilePage from '@/pages/EditPetProfilePage/EditPetProfilePage';
 import EditUserProfilePage from '@/pages/EditUserProfilePage/EditUserProfilePage';
+import FeedPage from '@/pages/FeedPage/FeedPage';
 import InputTest from '@/pages/InputTest/InputTest';
 import KakaoCallback from '@/pages/KakaoCallback/KakaoCallback';
 import LoginPage from '@/pages/LoginPage/LoginPage';
@@ -17,20 +19,18 @@ import { MainPage } from '@/pages/MainPage';
 import SearchResultPage from '@/pages/MainPage/SearchResultPage';
 import MapPage from '@/pages/Map/MapPage';
 import MyPage from '@/pages/MyPage/MyPage';
+import PortfolioDetailPage from '@/pages/PortfolioDetailPage/PortfolioDetailPage';
 import ProgressPage from '@/pages/ProgressPage/ProgressPage';
 import Request from '@/pages/Request/Request';
 import Test from '@/pages/Request/Test.tsx';
 import ReservationPage from '@/pages/ReservationPage/ReservationPage';
 import ReviewDetailPage from '@/pages/ReviewDetailPage/ReviewDetailPage';
+import SignupPage from '@/pages/Signup/SignupPage';
+import SignupSuccessPage from '@/pages/Signup/SignupSuccessPage';
 import DetailDesigner from '@/pages/Status/DetailDesigner.tsx';
 import DetailPage from '@/pages/Status/DetailPage.tsx';
 import Status from '@/pages/Status/Status.tsx';
-import Suggest from '@/pages/Suggest/Suggest';
-
-import DesignerProfilePage from './pages/DesignerProfilePage/DesignerProfilePage';
-import FeedPage from './pages/FeedPage/FeedPage';
-import PortfolioDetailPage from './pages/PortfolioDetailPage/PortfolioDetailPage';
-import SignUpPage from './pages/SignUp/SignUpPage';
+import Suggest from '@/pages/Suggest/Suggest.tsx';
 
 import '@/styles/sequenceAnimation.css';
 
@@ -62,12 +62,16 @@ export const router = createBrowserRouter([
       },
       {
         path: ROUTES.signup,
-        children: [{ index: true, element: <SignUpPage /> }],
+        children: [
+          { index: true, element: <SignupPage /> },
+          { path: ROUTES.signupSuccess, element: <SignupSuccessPage /> },
+        ],
       },
       {
         path: ROUTES.feed,
         element: <FeedPage />,
       },
+
       {
         path: ROUTES.map,
         children: [{ index: true, element: <MapPage /> }],

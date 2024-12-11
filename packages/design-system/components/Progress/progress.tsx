@@ -16,7 +16,7 @@ const Progress = React.forwardRef<React.ElementRef<typeof ProgressPrimitive.Root
     const percentage = (normalizedValue / maxStep) * 100;
 
     return (
-      <div className='w-full flex-col justify-center px-[2rem]'>
+      <div className='w-full flex-col justify-center'>
         <div className='mb-[1rem] flex w-full items-center justify-between text-sub_h1 font-bold'>
           <span>{text}</span>
           <span>
