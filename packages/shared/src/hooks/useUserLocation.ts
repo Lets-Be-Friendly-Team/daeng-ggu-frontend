@@ -7,15 +7,17 @@ interface Coordinates {
   lng: number;
 }
 
-interface LocationState {
+export interface LocationState {
   loaded: boolean;
   coordinates: Coordinates;
+  permissionGranted: boolean;
 }
 
 const useUserLocation = (): { location: LocationState } => {
   const [location, setLocation] = useState<LocationState>({
     loaded: false,
     coordinates: { lat: 37.413294, lng: 126.734086 },
+    permissionGranted: false,
   });
   const { showToast } = useToast();
 
@@ -24,6 +26,7 @@ const useUserLocation = (): { location: LocationState } => {
     setLocation({
       loaded: true,
       coordinates: { lat: latitude, lng: longitude },
+      permissionGranted: true,
     });
   };
 
@@ -31,6 +34,7 @@ const useUserLocation = (): { location: LocationState } => {
     setLocation({
       loaded: true,
       coordinates: { lat: 37.413294, lng: 126.734086 },
+      permissionGranted: false,
     });
     showToast({ message: '현재 위치를 불러올 수 없습니다!', type: 'warning' });
   };

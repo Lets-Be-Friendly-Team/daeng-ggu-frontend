@@ -2,9 +2,6 @@ import { ChangeEvent, useState } from 'react';
 import { Header, SearchBar } from '@daeng-ggu/design-system';
 import { useUserLocation } from '@daeng-ggu/shared';
 
-import CurrentLocationBtn from '@/components/NaverMap/CurrentLocationBtn';
-import CustomMarker from '@/components/NaverMap/CustomMarker';
-import MyMarker from '@/components/NaverMap/MyMarker';
 import NaverMapContent from '@/components/NaverMap/NaverMapContent';
 
 const MapPage = () => {
@@ -17,10 +14,10 @@ const MapPage = () => {
   const handleSearch = () => {
     console.log('검색 실행:', keyword);
   };
-  const { location } = useUserLocation();
+  const { location: userLocation } = useUserLocation();
 
   return (
-    <div className='relative'>
+    <div className='relative h-[calc(100vh-6.4rem)] w-full flex-col'>
       {/* <div className='px-8'>
           <Header mode='back' title='지도로 검색' />
         </div> */}
@@ -33,21 +30,7 @@ const MapPage = () => {
         </div>
       </div>
       {/* <div className='absolute top-0 mb-[6.5rem] h-[calc(100vh-50px)]'> */}
-      <NaverMapContent
-        className='absolute top-0 h-[calc(100vh-75px)]'
-        mapLat={location.coordinates.lat}
-        mapLng={location.coordinates.lng}
-      >
-        <MyMarker location={location} />
-        <CurrentLocationBtn lat={location.coordinates.lat} lng={location.coordinates.lng} />
-        <CustomMarker
-          markerList={[
-            { designerId: 1, lat: 37.3595704, lng: 127.105399, nickname: 'test' },
-            { designerId: 2, lat: 35.3595704, lng: 122.105399, nickname: 'test' },
-            { designerId: 3, lat: 36.3595704, lng: 125.105399, nickname: 'test' },
-          ]}
-        />
-      </NaverMapContent>
+      <NaverMapContent userLocation={userLocation} />
       {/* </div> */}
     </div>
   );

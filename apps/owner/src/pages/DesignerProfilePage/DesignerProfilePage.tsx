@@ -167,13 +167,10 @@ const DesignerProfilePage = () => {
       ),
     },
   ];
-  const navigateDesignerProfile = (designerId: number) => {
-    navigate(`/profile/${designerId}`);
-  };
   return (
     <div className='pb-[185px]'>
       <PageContainer>
-        <Header mode='back' title='디자이너 프로필' onClick={() => navigateDesignerProfile(data.designerId)} />
+        <Header mode='back' title='디자이너 프로필' />
         <Profile
           nickname={data.nickname}
           designerImgUrl={data.designerImgUrl}

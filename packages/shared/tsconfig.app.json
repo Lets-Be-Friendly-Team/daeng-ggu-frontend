@@ -9,5 +9,11 @@
       "@daeng-ggu/design-system": ["packages/design-system/*"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.json"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.json",
+    "../../apps/owner/src/hooks/useNavigateInMap.ts"
+  ]
 }
