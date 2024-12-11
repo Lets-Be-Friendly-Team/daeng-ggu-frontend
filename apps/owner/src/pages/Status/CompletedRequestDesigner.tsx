@@ -42,7 +42,7 @@ const CompletedRequestDesigner = ({ data }: CompletedRequestDesignerProps) => {
                       </div>
                       <div className='flex w-full items-center justify-center rounded-[8px] bg-white pb-10 pl-10 pt-4'>
                         <Avatar
-                          imageUrl={request.petImgUrl}
+                          imageUrl={request.petImageUrl}
                           mode='designerCard'
                           containerClassName='h-[70px] w-[70px]'
                         />

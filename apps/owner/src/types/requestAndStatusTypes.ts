@@ -5,7 +5,7 @@ export type PageMode = 'user' | 'designer' | 'reservation';
 export interface ProfileData {
   petId: number;
   petName: string;
-  petImgUrl: string;
+  petImageUrl: string;
   petImgName: string;
   birthDate: string;
   gender: string;
@@ -101,7 +101,7 @@ export interface Estimate {
 export interface PendingPet {
   petId: number;
   petName: string;
-  petImgUrl: string;
+  petImageUrl: string;
   desiredServiceCode?: string;
   isVisitRequired: boolean;
   lastGroomingDate?: string;
@@ -134,7 +134,7 @@ export interface CompletedRequest {
   requestId: number;
   petId: number;
   petName: string;
-  petImgUrl: string;
+  petImageUrl: string;
   desiredServiceCode: string;
   isVisitRequired: boolean;
   createdAt: string;
@@ -149,7 +149,7 @@ export interface CompletedData {
 export interface DesignerCompletedRequest {
   petId: number;
   petName: string;
-  petImgUrl: string;
+  petImageUrl: string;
   desiredServiceCode: string;
   lastGroomingDate: string;
   desiredDate1: string;

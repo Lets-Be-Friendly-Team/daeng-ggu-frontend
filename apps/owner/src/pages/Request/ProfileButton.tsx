@@ -1,11 +1,11 @@
 interface ProfileButtonProps {
   petName: string;
-  petImgUrl: string;
+  petImageUrl: string;
   isRequested: boolean;
   onClick: () => void;
 }
 
-const ProfileButton = ({ petName, petImgUrl, isRequested, onClick }: ProfileButtonProps) => {
+const ProfileButton = ({ petName, petImageUrl, isRequested, onClick }: ProfileButtonProps) => {
   return (
     <button
       onClick={onClick}
@@ -16,7 +16,7 @@ const ProfileButton = ({ petName, petImgUrl, isRequested, onClick }: ProfileButt
           요청 완료
         </div>
       )}
-      <img src={petImgUrl} alt={petName} className={`h-20 w-20 rounded-full ${isRequested ? 'opacity-50' : ''}`} />
+      <img src={petImageUrl} alt={petName} className={`h-20 w-20 rounded-full ${isRequested ? 'opacity-50' : ''}`} />
       <span className='mt-2 text-sm font-semibold'>{petName}</span>
     </button>
   );

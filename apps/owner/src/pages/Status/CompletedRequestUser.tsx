@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { BorderContainer } from '@daeng-ggu/design-system';
 
 import EmptyState from '@/pages/Status/EmptyState.tsx';
-import { CompletedData } from '@/types/requestAndStatusTypes';
+import { CompletedRequest } from '@/types/requestAndStatusTypes';
 
 interface CompletedRequestUserProps {
-  data: CompletedData;
+  data: CompletedRequest[];
 }
 
 const CompletedRequestUser = ({ data }: CompletedRequestUserProps) => {
@@ -27,6 +27,8 @@ const CompletedRequestUser = ({ data }: CompletedRequestUserProps) => {
     }
   };
 
+  console.log('goof morning, good afternoon', data);
+
   const formatDate = (dateString: string): string => {
     const match = dateString.match(/-(\d{2})-(\d{2})/);
     if (match) {
@@ -37,17 +39,13 @@ const CompletedRequestUser = ({ data }: CompletedRequestUserProps) => {
 
   return (
     <div className='mx-auto mb-[100px] flex w-full flex-col items-center pt-10'>
-      {data.requestList.length > 0 ? (
+      {data.length > 0 ? (
         <div className='w-full'>
           <BorderContainer>
             <ul className='w-full bg-secondary'>
-              {data.requestList.map((request, index) => (
+              {data?.map((request, index) => (
                 <li key={request.requestId} className='relative'>
-                  <div
-                    className={`mx-auto flex rounded-[8px] bg-white ${
-                      index !== data.requestList.length - 1 ? 'mb-4' : ''
-                    }`}
-                  >
+                  <div className={`mx-auto flex rounded-[8px] bg-white ${index !== data.length - 1 ? 'mb-4' : ''}`}>
                     <div>
                       <div className='ml-6 pt-4'>
                         <p className='text-sub_h2 font-bold text-gray-300'>
@@ -56,7 +54,7 @@ const CompletedRequestUser = ({ data }: CompletedRequestUserProps) => {
                       </div>
                       <div className='flex w-full items-center justify-center rounded-[8px] bg-white pb-10 pl-10 pt-4'>
                         <img
-                          src={request.petImgUrl}
+                          src={request.petImageUrl}
                           alt={request.petName || '펫 이미지'}
                           className='mr-10 h-[50px] w-[50px] rounded-full'
                         />

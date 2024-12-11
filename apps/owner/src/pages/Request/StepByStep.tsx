@@ -14,6 +14,7 @@ import {
 } from '@daeng-ggu/design-system';
 import { format } from 'date-fns';
 
+import { GetOwnerPetProfileResponse } from '@/apis/request/getOwnerPetProfile';
 import editIcon from '@/assets/edit.svg';
 import ProfileButton from '@/pages/Request/ProfileButton';
 import ProfileViewer from '@/pages/Request/ProfileViewer';
@@ -28,26 +29,6 @@ interface StepData {
   options: string[];
 }
 
-interface ProfileData {
-  petId: number;
-  petName: string;
-  petImgUrl: string;
-  petImgName: string;
-  birthDate: string;
-  gender: string;
-  isNeutered: boolean;
-  weight: number;
-  majorBreedCode: string;
-  majorBreed: string;
-  subBreedCode: string;
-  subBreed: string;
-  specialNotes?: string;
-  isRequested: boolean;
-  customerName: string;
-  phone: string;
-  address: string;
-}
-
 interface SelectedDateTime {
   dateStr: string;
   selectedDate: Date | null;
@@ -56,11 +37,11 @@ interface SelectedDateTime {
 
 interface StepByStepProps {
   stepCount: number;
-  profileData: ProfileData[];
+  profileData: GetOwnerPetProfileResponse[];
   onProfileSelect: (_petId: number) => void;
 }
 
-const StepByStep = ({ stepCount, profileData = [], onProfileSelect }: StepByStepProps) => {
+const StepByStep = ({ stepCount, profileData, onProfileSelect }: StepByStepProps) => {
   const { currentStep, nextStep, prevStep, setDirection, direction } = useStepStore();
   const [selectedPet, setSelectedPet] = useState<number | null>(null);
   const [selectedOptions, setSelectedOptions] = useState<{ [key: number]: string }>({});
@@ -76,7 +57,7 @@ const StepByStep = ({ stepCount, profileData = [], onProfileSelect }: StepByStep
   // For Step 9
   const [userInput, setUserInput] = useState<string>('');
 
-  // For Step 6 - show 3 buttons and allow date/time selection per button
+  // For Step 6
   const [showDateSelector, setShowDateSelector] = useState<boolean>(false);
   const [selectedDateTimes, setSelectedDateTimes] = useState<SelectedDateTime[]>([
     { dateStr: '', selectedDate: null, selectedTime: null },
@@ -205,15 +186,13 @@ const StepByStep = ({ stepCount, profileData = [], onProfileSelect }: StepByStep
     if (activeDateIndex === null) return;
     const newDateTimes = [...selectedDateTimes];
     const chosenDate = newDateTimes[activeDateIndex].selectedDate;
-    if (!chosenDate) return; // date not chosen yet
+    if (!chosenDate) return;
     newDateTimes[activeDateIndex].selectedTime = time;
-    // Now store full date and time in dateStr
     const datePart = format(chosenDate, 'yyyy-MM-dd');
     const timePart = String(time).padStart(2, '0') + ':00:00';
     newDateTimes[activeDateIndex].dateStr = `${datePart} ${timePart}`;
     setSelectedDateTimes(newDateTimes);
 
-    // Close selection
     setShowCalendar(false);
     setShowTimeSelect(false);
     setActiveDateIndex(null);
@@ -251,7 +230,7 @@ const StepByStep = ({ stepCount, profileData = [], onProfileSelect }: StepByStep
               <>
                 <h3 className='my-4 text-sub_h3 font-bold'>시간을 선택해주세요:</h3>
                 <TimeSelect
-                  availableTimes={Array.from({ length: 12 }, (_, i) => i + 9)} // 9:00 to 20:00
+                  availableTimes={Array.from({ length: 12 }, (_, i) => i + 9)}
                   selectValue={selectedDateTimes[activeDateIndex].selectedTime}
                   onSelectChange={handleTimeSelectChange}
                 />
@@ -281,7 +260,7 @@ const StepByStep = ({ stepCount, profileData = [], onProfileSelect }: StepByStep
           <ProfileButton
             key={profile.petId}
             petName={profile.petName}
-            petImgUrl={profile.petImgUrl}
+            petImageUrl={profile.petImageUrl}
             isRequested={profile.isRequested}
             onClick={() => handleProfileClick(profile.petId)}
           />
@@ -302,15 +281,16 @@ const StepByStep = ({ stepCount, profileData = [], onProfileSelect }: StepByStep
                 petProfile || {
                   petId: 0,
                   petName: 'Unknown',
-                  petImgUrl: '',
+                  petImageUrl: '',
                   petImgName: 'No Image',
-                  subBreed: 'Unknown',
                   birthDate: 'N/A',
                   gender: 'N/A',
                   isNeutered: false,
                   weight: 0,
-                  isRequested: false,
+                  majorBreed: '',
+                  subBreed: '',
                   specialNotes: '',
+                  isRequested: false,
                   customerName: '',
                   phone: '',
                   address: '',
@@ -419,7 +399,7 @@ const StepByStep = ({ stepCount, profileData = [], onProfileSelect }: StepByStep
                   } else if (currentStep === 6 && option === '날짜 선택하기') {
                     setShowDateSelector(true);
                   } else if (currentStep === 9 && option === '지금 작성할게요.') {
-                    // no-op
+                    // do nothing here; handled below
                   } else {
                     handleNextStep();
                   }
@@ -522,7 +502,6 @@ const StepByStep = ({ stepCount, profileData = [], onProfileSelect }: StepByStep
                   : currentStepData?.title || ''
           }
         />
-
         <div
           className='relative mt-6 w-full overflow-hidden transition-all duration-300'
           style={{
