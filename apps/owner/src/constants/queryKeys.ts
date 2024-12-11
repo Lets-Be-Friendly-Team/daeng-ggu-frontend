@@ -17,3 +17,7 @@ export const USER_QUERY_KEYS = {
   //   POST_USER: ['postUser'],
   //   DELETE_USER: ['delete]
 } as const;
+
+export const DESIGNER_QUERY_KEYS = {
+  TOTAL_DESIGNERS: ['totalDesigners'],
+} as const;
