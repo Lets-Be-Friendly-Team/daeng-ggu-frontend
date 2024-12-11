@@ -26,8 +26,8 @@ export interface GetOwnerPetProfileGroupResponse {
   petList: GetOwnerPetProfileResponse[];
 }
 
-const getOwnerPetProfile = async (): Promise<GetOwnerPetProfileGroupResponse[]> => {
-  const responses = await APIClient.get<DefaultResponse<GetOwnerPetProfileGroupResponse>>('/daengggu/bid/request/pet');
+const getOwnerPetProfile = async (): Promise<GetOwnerPetProfileResponse[]> => {
+  const responses = await APIClient.get<DefaultResponse<GetOwnerPetProfileResponse>>('/daengggu/bid/request/pet');
   console.log('hi this is me', responses);
   return responses.data;
 };
