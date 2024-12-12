@@ -538,7 +538,6 @@ __metadata:
     quill-image-uploader: "npm:^1.3.0"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
-    react-naver-maps: "npm:^0.1.3"
     react-quill: "npm:^2.0.0"
     react-router: "npm:^6.28.0"
     react-router-dom: "npm:^6.28.0"

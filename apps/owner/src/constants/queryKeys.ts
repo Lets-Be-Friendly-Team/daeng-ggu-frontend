@@ -21,3 +21,7 @@ export const USER_QUERY_KEYS = {
 export const DESIGNER_QUERY_KEYS = {
   TOTAL_DESIGNERS: ['totalDesigners'],
 } as const;
+
+export const SEARCH_QUERY_KEYS = {
+  SEARCH_DESIGNERS: (keyword: string) => ['searchedDesigners', keyword],
+} as const;

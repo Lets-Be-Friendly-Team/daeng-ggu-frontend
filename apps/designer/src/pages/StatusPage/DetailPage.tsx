@@ -48,8 +48,6 @@ const DetailPage = () => {
   const { data: postData } = usePostDetailPage({ requestId: customerId ? Number(customerId) : undefined });
 
   console.log('so... what is this?: ', postData);
-  // By this point, since we're using suspense, we know `postData` is loaded
-  // Convert 'Y'/'N' to boolean for isNeutered
   const isNeuteredBoolean = postData.isNeutered === 'Y';
 
   const profile: ProfileData = {

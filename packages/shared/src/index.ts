@@ -9,4 +9,5 @@ export { default as Notification } from './components/Notification/Notification'
 export { default as useNotificationStore } from './stores/useNotificationStores';
 export { default as SSEHandler } from './components/SSEHandler/SSEHandler';
 export { default as APIFetch } from '../src/apis/APIFetch';
+export type { LocationState } from './hooks/useUserLocation';
 export { APIClient } from './apis/APIClient';

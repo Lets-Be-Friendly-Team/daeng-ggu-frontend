@@ -1,4 +1,3 @@
-// router.jsx
 import { Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import { LogContainer, RouterErrorFallback } from '@daeng-ggu/shared';

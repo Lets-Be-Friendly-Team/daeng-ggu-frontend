@@ -13,8 +13,8 @@ export interface BidRequestResponse {
   petImageUrl: string;
   petImageName: string;
   birthDate: string;
-  gender: string; // "M" or "F"
-  isNeutered: string; // "Y" or "N"
+  gender: string;
+  isNeutered: string;
   weight: number;
   majorBreedCode: string;
   majorBreed: string;
