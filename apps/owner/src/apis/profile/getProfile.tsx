@@ -10,12 +10,16 @@ export interface Review {
   reviewId: number;
   reviewImgUrl: string;
 }
-
+export interface PossibleBreed {
+  breedCode: string;
+  codeDesc: string;
+}
 export interface Bookmark {
   designerId: number;
+  nickname: string;
   designerImgUrl: string;
   designerAddress: string;
-  possibleBreed: string[];
+  possibleBreeds: PossibleBreed[];
 }
 
 export interface ProfileData {

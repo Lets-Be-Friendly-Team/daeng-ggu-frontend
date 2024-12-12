@@ -8,7 +8,10 @@ import {
   TypeTwoButton,
   UserProfileImage,
 } from '@daeng-ggu/design-system';
+
+import getBookmark from '@/apis/profile/getBookmark';
 interface IProfileProps {
+  designerId: number;
   designerName?: string; // 디자이너 이름
   nickname: string; // 닉네임
   designerImgUrl: string; // 프로필 이미지 URL
@@ -22,6 +25,7 @@ interface IProfileProps {
   workExperience?: string; // 경력
 }
 const Profile = ({
+  designerId,
   nickname,
   designerImgUrl,
   providedServices,
@@ -33,13 +37,29 @@ const Profile = ({
   workExperience,
 }: IProfileProps) => {
   const navigate = useNavigate();
+  const customerId = 2;
+
   const goToReservations = () => navigate('/profile/reservation');
-  const [isLiked, setIsLiked] = useState<boolean>(false);
+  const [isBookmarked, setIsBookmarked] = useState<boolean>(false);
   const extractBracketContent = (text: string) => {
     const match = text.match(/\(([^)]+)\)/);
     return match ? match[1].replace(/,/g, ' | ') : text;
   };
 
+  const handleBookmarkToggle = async () => {
+    try {
+      const updatedStatus = !isBookmarked;
+      const result = await getBookmark({
+        customerId,
+        designerId,
+        bookmarkYn: isBookmarked,
+      });
+      console.log(result);
+      setIsBookmarked(updatedStatus);
+    } catch (error) {
+      console.error('Failed to toggle bookmark:', error);
+    }
+  };
   const services = providedServices?.map((service) => extractBracketContent(service.codeDesc)).join(' | ');
   const breedMapping: { [key: string]: string } = {
     P1: '소형견',
@@ -62,16 +82,15 @@ const Profile = ({
                   {reviewStarAvg}
                 </div>
                 <div className='flex h-[15px] w-auto items-center gap-1'>
-                  <button onClick={() => setIsLiked((prev) => !prev)}>
+                  <button>
                     <FilledHeartIcon className='h-[15px] w-[15px]' color='#AAB1B9' />
                   </button>
                   {reviewLikeCntAll}
                 </div>
                 <div className='flex h-[15px] w-auto items-center gap-1'>
-                  <button onClick={() => setIsLiked((prev) => !prev)}>
-                    <BookmarkFillIcon className='h-[15px] w-[15px]' color={isLiked ? '#ff6842' : '#AAB1B9'} />
+                  <button onClick={handleBookmarkToggle}>
+                    <BookmarkFillIcon className='h-[15px] w-[15px]' color={isBookmarked ? '#ff6842' : '#AAB1B9'} />
                   </button>
-                  {reviewLikeCntAll}
                 </div>
               </div>
             </div>

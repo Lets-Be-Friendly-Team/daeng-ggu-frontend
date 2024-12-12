@@ -11,7 +11,7 @@ interface IDesignerItem {
   nickname: string;
   designerImgUrl: string;
   designerAddress: string;
-  possibleBreed: IBreed[];
+  possibleBreeds: IBreed[];
 }
 
 interface IDesignerListProps {
@@ -32,7 +32,7 @@ const LikedList = ({ bookmarkList }: IDesignerListProps) => {
           nickname={designer.nickname}
           imageUrl={designer.designerImgUrl}
           address={designer.designerAddress}
-          breeds={designer.possibleBreed}
+          breeds={designer.possibleBreeds}
           onClick={() => navigateDesignerProfile(designer.designerId)}
         />
       ))}

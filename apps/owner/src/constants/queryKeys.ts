@@ -15,6 +15,12 @@ export const CUSTOMER_QUERY_KEYS = {
   GET_PROFILE: (customerId: number) => ['getProfile', customerId],
   UPDATE_PROFILE: ['updateProfile'],
   GET_PROFILE_DETAIL: (customerId: number) => ['getProfileDetail', customerId],
+  GET_BOOKMARK: (customerId: number, designerId: number, bookmarkYn: boolean) => [
+    'getBookmark',
+    customerId,
+    designerId,
+    bookmarkYn,
+  ],
   //   GET_USER_LIST: ['getUserList'],
   //   POST_USER: ['postUser'],
   //   DELETE_USER: ['delete]

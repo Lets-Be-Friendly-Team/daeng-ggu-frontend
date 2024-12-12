@@ -49,6 +49,7 @@ const MyPage = () => {
       <PageContainer>
         <Header mode='back' title='디자이너 프로필' onClick={() => navigateDesignerProfile(data.designerId)} />
         <Profile
+          designerId={designerProfileData.designerId}
           nickname={designerProfileData.nickname}
           designerImgUrl={designerProfileData.designerImgUrl}
           designerImgName={designerProfileData.designerImgName}
