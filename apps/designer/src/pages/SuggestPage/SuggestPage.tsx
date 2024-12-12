@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { BorderContainer, Calendar, Header, PageContainer, TimeSelect, TypeOneButton } from '@daeng-ggu/design-system';
-import TextEditor from '@daeng-ggu/owner/src/pages/Suggest/TextEditor.tsx';
 import { format } from 'date-fns';
+
+import TextEditor from '@/pages/SuggestPage/TextEditor.tsx';
 
 import '@/styles/TextEditor.css';
 
@@ -376,7 +377,7 @@ const SuggestPage = () => {
           </div>
         </div>
       </PageContainer>
-      <div className='fixed w-full' style={{ bottom: '7.5rem' }}>
+      <div className='fixed w-full' style={{ bottom: '65px' }}>
         <TypeOneButton
           text='제안하기'
           color='bg-secondary'
