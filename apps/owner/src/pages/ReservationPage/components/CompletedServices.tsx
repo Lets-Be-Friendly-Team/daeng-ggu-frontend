@@ -35,7 +35,7 @@ interface IReservation {
 }
 
 interface ICompletedHistoryProps {
-  completedGroomingList: IReservation[];
+  completedGroomingList: IReservation[] | undefined;
 }
 
 const CompletedServices = ({ completedGroomingList }: ICompletedHistoryProps) => {
@@ -52,7 +52,7 @@ const CompletedServices = ({ completedGroomingList }: ICompletedHistoryProps) =>
   };
   return (
     <div className='flex flex-col gap-6 px-5 py-5'>
-      {completedGroomingList.map((reservation) => (
+      {completedGroomingList?.map((reservation) => (
         <>
           <div className='flex items-center justify-between'>
             <div className='text-sub_h3 font-bold text-gray-800'>

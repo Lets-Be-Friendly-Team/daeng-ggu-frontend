@@ -8,3 +8,4 @@ export { default as LogContainer } from './components/LogContainer/LogContainer'
 export { default as Notification } from './components/Notification/Notification';
 export type { LocationState } from './hooks/useUserLocation';
 export { APIClient } from './apis/APIClient';
+export { default as APIFetch } from './apis/APIFetch';

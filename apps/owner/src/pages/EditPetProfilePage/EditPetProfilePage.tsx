@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router';
 import {
   Header,
   Input,
@@ -10,25 +10,38 @@ import {
   TypeTwoButton,
 } from '@daeng-ggu/design-system';
 
-const petData = {
-  petId: 1, // 반려견 아이디
-  petName: '장군이', // 반려견 이름
-  newPetImgFile: null, // 신규 반려견 이미지 파일 (실제로는 파일 업로드와 관련된 객체이므로 더미 데이터에서는 null로 설정)
-  prePetImgUrl: 'https://daeng-ggu-test.s3.ap-northeast-2.amazonaws.com/janggun.jpg', // 변경전 이미지 Url
-  majorBreedCode: '01', // 견종 대분류 코드 (예: '01' = 소형견)
-  majorBreed: '소형견', // 견종 대분류명
-  subBreedCode: '0101', // 견종 소분류 코드 (예: '0101' = 푸들)
-  subBreed: '푸들', // 견종 소분류명
-  birthDate: '20220101', // 생년월일 (YYYYMMDD)
-  gender: 'M', // 성별 (M = 수컷, W = 암컷)
-  isNeutered: 'Y', // 중성화 여부 (Y = 중성화, N = 미중성화)
-  weight: 6.5, // 몸무게 (kg)
-  specialNotes: '활발하고 사람을 좋아함', // 특이사항
-};
+import useGetPetProfileDetail from '@/hooks/queries/PetProfile/useGetPetProfileDetail';
+
 const EditPetProfilePage = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState(petData);
-  const [profileImage, setProfileImage] = useState<File | null>(null);
+  const params = useParams();
+  const petId = params.petId;
+  const customerId = 2;
+  const { data: petData } = useGetPetProfileDetail(customerId, Number(petId));
+  console.log(petData);
+  const [formData, setFormData] = useState({
+    petId: 0,
+    petName: '',
+    petImgUrl: '',
+    majorBreedCode: '',
+    majorBreed: '',
+    subBreedCode: '',
+    subBreed: '',
+    birthDate: '',
+    gender: '',
+    isNeutered: '',
+    weight: 0,
+    specialNotes: '',
+  });
+  const [profileImage, setProfileImage] = useState<File | undefined>(undefined);
+
+  useEffect(() => {
+    if (petData) {
+      setFormData(petData);
+      setProfileImage(undefined);
+    }
+  }, [petData]);
+  console.log(petData);
   const handleChange = (field: string, value: string | File | null) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
@@ -50,16 +63,16 @@ const EditPetProfilePage = () => {
     }
   };
   const handleImageDelete = () => {
-    setProfileImage(null);
-    setFormData((prev) => ({ ...prev, prePetImgUrl: '' }));
+    setProfileImage(undefined);
+    setFormData((prev) => ({ ...prev, petImgUrl: '' }));
   };
 
   return (
     <div className='pb-[185px]'>
       <PageContainer>
-        <Header mode='back' title={`${petData.petName} 프로필 수정`} />
+        <Header mode='back' title={`${formData.petName} 프로필 수정`} />
         <div className='flex h-[180px] w-full flex-col items-center justify-center gap-[15px]'>
-          <ProfileImgUploader image={profileImage} setImage={setProfileImage} initialImageUrl={formData.prePetImgUrl} />
+          <ProfileImgUploader image={profileImage} setImage={setProfileImage} initialImageUrl={formData.petImgUrl} />
           <button className='block text-caption text-gray-400' onClick={handleImageDelete}>
             프로필 사진 삭제
           </button>
@@ -67,19 +80,19 @@ const EditPetProfilePage = () => {
         <div className='flex flex-col gap-5'>
           <Input
             label='이름'
-            placeholder={petData.petName}
+            placeholder='반려견 이름을 입력해주세요'
             value={formData.petName}
             onChange={(e) => handleChange('petName', e.target.value)}
           />
           <Input
             label='견종'
-            placeholder={petData.subBreed}
+            placeholder='견종을 입력해주세요'
             value={formData.subBreed}
             onChange={(e) => handleChange('subBreed', e.target.value)}
           />
           <Input
             label='생일'
-            placeholder={petData.birthDate}
+            placeholder='생일을 입력해주세요'
             value={formData.birthDate}
             onChange={(e) => handleChange('birthDate', e.target.value)}
           />
@@ -88,13 +101,15 @@ const EditPetProfilePage = () => {
             <div className='flex gap-1'>
               <TypeTwoButton
                 text='남'
-                color={formData.gender === 'M' ? 'bg-secondary' : ''}
+                className={formData.gender === 'M' ? 'bg-secondary' : 'bg-gray-50'}
                 onClick={() => handleChange('gender', 'M')}
+                fontWeight='font-medium'
               />
               <TypeTwoButton
                 text='여'
-                color={formData.gender === 'W' ? 'bg-secondary' : ''}
+                color={formData.gender === 'F' ? 'bg-secondary' : 'bg-gray-50'}
                 onClick={() => handleChange('gender', 'W')}
+                fontWeight='font-medium'
               />
             </div>
           </div>
@@ -103,25 +118,25 @@ const EditPetProfilePage = () => {
             <div className='flex gap-1'>
               <TypeTwoButton
                 text='O'
-                color={formData.isNeutered === 'Y' ? 'bg-secondary' : ''}
+                color={formData.isNeutered === 'Y' ? 'bg-secondary' : 'bg-gray-50'}
                 onClick={() => handleChange('isNeutered', 'Y')}
               />
               <TypeTwoButton
                 text='X'
-                color={formData.isNeutered === 'N' ? 'bg-secondary' : ''}
+                color={formData.isNeutered === 'N' ? 'bg-secondary' : 'bg-gray-50'}
                 onClick={() => handleChange('isNeutered', 'N')}
               />
             </div>
           </div>
           <Input
             label='몸무게 (kg 단위)'
-            placeholder={petData.weight.toString()}
+            placeholder='몸무게를 입력해주세요'
             value={formData.weight}
             onChange={(e) => handleChange('weight', e.target.value)}
           />
           <TextArea
             label='특이사항 (입질, 아픈 곳, 예민한 곳)'
-            placeholder={petData.specialNotes}
+            placeholder='특이사항을 입력해주세요'
             value={formData.specialNotes}
             onChange={(e) => handleChange('specialNotes', e.target.value)}
           />

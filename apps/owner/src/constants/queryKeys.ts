@@ -11,8 +11,16 @@ export const REVIEW_QUERY_KEYS = {
   //   DETAILS: (id: string) => ['userDetails', id],
 } as const;
 
-export const USER_QUERY_KEYS = {
-  //   GET_USER: ['getUser'],
+export const CUSTOMER_QUERY_KEYS = {
+  GET_PROFILE: (customerId: number) => ['getProfile', customerId],
+  UPDATE_PROFILE: ['updateProfile'],
+  GET_PROFILE_DETAIL: (customerId: number) => ['getProfileDetail', customerId],
+  GET_BOOKMARK: (customerId: number, designerId: number, bookmarkYn: boolean) => [
+    'getBookmark',
+    customerId,
+    designerId,
+    bookmarkYn,
+  ],
   //   GET_USER_LIST: ['getUserList'],
   //   POST_USER: ['postUser'],
   //   DELETE_USER: ['delete]
@@ -20,8 +28,16 @@ export const USER_QUERY_KEYS = {
 
 export const DESIGNER_QUERY_KEYS = {
   TOTAL_DESIGNERS: ['totalDesigners'],
+  GET_DESIGNER_PROFILE: (designerId: number) => ['getDesignerProfile', designerId],
 } as const;
 
 export const SEARCH_QUERY_KEYS = {
   SEARCH_DESIGNERS: (keyword: string) => ['searchedDesigners', keyword],
 } as const;
+
+export const RESERVATION_QUERY_KEYS = {
+  GET_RESERVATION: (customerId: number) => ['getReservation', customerId],
+} as const;
+export const PET_QUERY_KEYS = {
+  GET_PET_PROFILE_DETAIL: (customerId: number, petId: number) => ['getPetProfileDetail', customerId, petId],
+};
