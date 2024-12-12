@@ -11,21 +11,27 @@ const KakaoCallback = () => {
   useEffect(() => {
     if (data?.status === 'SUCCESS') {
       const userInfo = data.data;
-      localStorage.setItem('T', userInfo.refreshToken);
       if (userInfo.userType === 'C') {
         //보호자일 경우
         console.log(data);
+        //가입 되어있는 유저면 로컬스토리지에 토큰 저장후 메인으로 이동
         if (data.data.joinYn === 'Y') {
-          window.location.href = import.meta.env.VITE_OWNER_MAIN_URL;
+          localStorage.setItem('T', userInfo.refreshToken);
+          // window.location.href = import.meta.env.VITE_OWNER_MAIN_URL;
+          navigate(ROUTES.main);
         } else {
+          //아니면 회원가입 페이지로 이동
           navigate(`/${ROUTES.signup}`);
         }
       } else if (userInfo.userType === 'D') {
         //디자이너일 경우
         console.log(data);
+        //가입 되어있는 유저면 로컬스토리지에 토큰 저장후 디자이너 메인으로 이동
         if (data.data.joinYn === 'Y') {
+          localStorage.setItem('T', userInfo.refreshToken);
           window.location.href = import.meta.env.VITE_DESIGNER_MAIN_URL;
         } else {
+          //아니면 디자이너 회원가입 페이지로 이동
           window.location.href = `${import.meta.env.VITE_DESIGNER_MAIN_URL}/signup`;
         }
       }
