@@ -7,7 +7,7 @@ const useReservation = (customerId: number) => {
   return useQuery({
     queryKey: RESERVATION_QUERY_KEYS.GET_RESERVATION(customerId),
     queryFn: () => getReservations({ customerId }),
-    select: (data) => data.data,
+    select: (response) => response.data,
   });
 };
 export default useReservation;
