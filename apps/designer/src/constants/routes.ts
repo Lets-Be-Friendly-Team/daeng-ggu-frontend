@@ -18,6 +18,12 @@ const ROUTES = {
   registerProfile: 'register/profile',
   portfolio: 'portfolio',
   portfolioAdd: 'add',
+  bidDetail: 'detail',
+  bidRequest: 'request',
+  bidTest: 'test',
+  bidDesigner: 'designer',
+  bidSuggest: 'suggest',
+  bidDetailDesigner: 'detailDesigner',
 } as const;
 
 export default ROUTES;

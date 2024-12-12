@@ -20,7 +20,7 @@ const DetailPage = () => {
   const tempDataUser = {
     petId: 1,
     petName: '이전견적맨',
-    petImgUrl: 'https://via.placeholder.com/100',
+    petImageUrl: 'https://via.placeholder.com/100',
     desiredServiceCode: '부분미용',
     lastGroomingDate: '한달전',
     desiredDate1: '2023-10-15T10:00:00',
@@ -48,7 +48,7 @@ const DetailPage = () => {
   const tempDataDesigner = {
     petId: 1,
     petName: '견적요청맨',
-    petImgUrl: 'https://via.placeholder.com/100',
+    petImageUrl: 'https://via.placeholder.com/100',
     desiredServiceCode: '부분미용',
     lastGroomingDate: '한달전',
     desiredDate1: '2024-12-15T10:00:00',
@@ -143,7 +143,7 @@ const DetailPage = () => {
         </div>
       </PageContainer>
       <RequestReview {...processedData} pageMode={pageMode} />
-      <div className='fixed w-full' style={{ bottom: '7.5rem' }}>
+      <div className='fixed w-full' style={{ bottom: '64px' }}>
         <TypeOneButton
           text={buttonText}
           onClick={() => {
