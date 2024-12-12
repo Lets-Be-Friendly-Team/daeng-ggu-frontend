@@ -51,7 +51,7 @@ const EditDesignerProfilePage = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState(data);
-  const [profileImage, setProfileImage] = useState<File | null>(null);
+  const [profileImage, setProfileImage] = useState<File | undefined>(undefined);
   const [selectedServices, setSelectedServices] = useState<string[]>(data.providedServices);
   const [selectedBreeds, setSelectedBreeds] = useState<string[]>(
     data.possibleBreeds.map((breed) => {
