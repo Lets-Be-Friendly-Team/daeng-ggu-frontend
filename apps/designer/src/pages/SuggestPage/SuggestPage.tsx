@@ -377,7 +377,7 @@ const SuggestPage = () => {
           </div>
         </div>
       </PageContainer>
-      <div className='fixed w-full' style={{ bottom: '7.5rem' }}>
+      <div className='fixed w-full' style={{ bottom: '65px' }}>
         <TypeOneButton
           text='제안하기'
           color='bg-secondary'
