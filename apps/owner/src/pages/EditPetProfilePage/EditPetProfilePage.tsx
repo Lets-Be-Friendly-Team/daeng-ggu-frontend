@@ -18,6 +18,7 @@ const EditPetProfilePage = () => {
   const petId = params.petId;
   const customerId = 2;
   const { data: petData } = useGetPetProfileDetail(customerId, Number(petId));
+  console.log(petData);
   const [formData, setFormData] = useState({
     petId: 0,
     petName: '',

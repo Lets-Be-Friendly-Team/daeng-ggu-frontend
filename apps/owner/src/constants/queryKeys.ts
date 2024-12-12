@@ -27,3 +27,10 @@ export const DESIGNER_QUERY_KEYS = {
 export const SEARCH_QUERY_KEYS = {
   SEARCH_DESIGNERS: (keyword: string) => ['searchedDesigners', keyword],
 } as const;
+
+export const RESERVATION_QUERY_KEYS = {
+  GET_RESERVATION: (customerId: number) => ['getReservation', customerId],
+} as const;
+export const DESIGNER_QUERY_KEYS = {
+  GET_DESIGNER_PROFILE: (designerId: number) => ['getDesignerProfile', designerId],
+} as const;

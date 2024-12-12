@@ -17,7 +17,6 @@ export interface PreProfileDataResponse {
   data: PreProfileData;
 }
 const getProfileDetail = async ({ customerId }: { customerId: number }): Promise<PreProfileDataResponse> => {
-  const url = '/daengggu/customer/profile/detail';
-  return await APIClient.get(url, { customerId: customerId.toString() });
+  return await APIClient.get('/daengggu/customer/profile/detail', { customerId: customerId.toString() });
 };
 export default getProfileDetail;

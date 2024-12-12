@@ -1,6 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BulbIcon, FilledHeartIcon, FullStarIcon, TypeTwoButton, UserProfileImage } from '@daeng-ggu/design-system';
+import {
+  BookmarkFillIcon,
+  BulbIcon,
+  FilledHeartIcon,
+  FullStarIcon,
+  TypeTwoButton,
+  UserProfileImage,
+} from '@daeng-ggu/design-system';
 interface IProfileProps {
   designerName?: string; // 디자이너 이름
   nickname: string; // 닉네임
@@ -56,7 +63,13 @@ const Profile = ({
                 </div>
                 <div className='flex h-[15px] w-auto items-center gap-1'>
                   <button onClick={() => setIsLiked((prev) => !prev)}>
-                    <FilledHeartIcon className='h-[15px] w-[15px]' color={isLiked ? '#ff6842' : '#AAB1B9'} />
+                    <FilledHeartIcon className='h-[15px] w-[15px]' color='#AAB1B9' />
+                  </button>
+                  {reviewLikeCntAll}
+                </div>
+                <div className='flex h-[15px] w-auto items-center gap-1'>
+                  <button onClick={() => setIsLiked((prev) => !prev)}>
+                    <BookmarkFillIcon className='h-[15px] w-[15px]' color={isLiked ? '#ff6842' : '#AAB1B9'} />
                   </button>
                   {reviewLikeCntAll}
                 </div>

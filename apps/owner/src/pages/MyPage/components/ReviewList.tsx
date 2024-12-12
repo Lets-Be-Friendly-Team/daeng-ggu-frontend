@@ -1,16 +1,6 @@
 interface IReviewItem {
   reviewId: number;
   reviewImgUrl: string;
-  // reviewImgUrl2: string | null;
-  // reviewImgUrl3: string | null;
-  // designerId: number;
-  // designerImgUrl: string;
-  // designerAddress: string;
-  // reviewContents: string;
-  // reviewStar: number;
-  // reviewLikeCnt: number;
-  // feedExposure: boolean;
-  // nickname: string;
 }
 interface IReviewListProps {
   reviews: IReviewItem[];

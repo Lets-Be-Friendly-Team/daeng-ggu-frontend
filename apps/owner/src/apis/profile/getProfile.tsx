@@ -36,8 +36,7 @@ export interface ProfileResponse {
 }
 
 const getProfile = async ({ customerId }: { customerId: number }): Promise<ProfileResponse> => {
-  const url = '/daengggu/customer/profile';
-  return await APIClient.get(url, { customerId: customerId.toString() });
+  return await APIClient.get('/daengggu/customer/profile', { customerId: customerId.toString() });
 };
 
 export default getProfile;
