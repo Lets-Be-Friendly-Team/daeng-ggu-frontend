@@ -7,7 +7,7 @@ const useGetDesignerProfile = (designerId: number) => {
   return useQuery({
     queryKey: DESIGNER_QUERY_KEYS.GET_DESIGNER_PROFILE(designerId),
     queryFn: () => getDesignerProfile({ designerId }),
-    select: (data) => data.data,
+    select: (response) => response.data,
   });
 };
 

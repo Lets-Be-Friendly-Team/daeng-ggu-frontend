@@ -1,6 +1,6 @@
 import { PlusIcon } from '@daeng-ggu/design-system';
 
-interface IPortfolio {
+export interface IPortfolio {
   portfolioId: number;
   title: string;
   videoUrl: string;

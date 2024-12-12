@@ -36,6 +36,7 @@ export const CUSTOMER_QUERY_KEYS = {
 export const DESIGNER_QUERY_KEYS = {
   TOTAL_DESIGNERS: ['totalDesigners'],
   GET_DESIGNER_PROFILE: (designerId: number) => ['getDesignerProfile', designerId],
+  GET_PORTFOLIO_DETAIL: (designerId: number, portfolioId: number) => ['getPortfolioDetail', designerId, portfolioId],
 } as const;
 
 export const SEARCH_QUERY_KEYS = {

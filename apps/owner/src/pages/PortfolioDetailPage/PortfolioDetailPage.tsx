@@ -1,30 +1,23 @@
 import { useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { BottomSheetModal, CloseIcon, DeleteIcon, EditIcon, Modal, MoreIcon } from '@daeng-ggu/design-system';
 import { useModalStore } from '@daeng-ggu/shared';
 import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import './swiperStyle.css';
+import useGetPortfolioDetail from '@/hooks/queries/DesignerProfile/useGetPortfolioDetail';
 
-interface IPortfolioItem {
-  portfolioId: number;
-  title: string;
-  videoUrl: string;
-  imgUrlList: string[];
-  contents: string;
-}
+import './swiperStyle.css';
 
 const PortfolioDetailPage = () => {
   const navigate = useNavigate();
-  const { state } = useLocation();
   const { portfolioId } = useParams();
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
   const { show } = useModalStore();
-  const portfolios: IPortfolioItem[] = state?.portfolios || [];
-  const currentPortfolioIndex = portfolios.findIndex((portfolio) => portfolio.portfolioId === Number(portfolioId));
-  const portfolio = portfolios[currentPortfolioIndex];
 
+  const designerId = 2;
+  const { data: portfolioData } = useGetPortfolioDetail(designerId, Number(portfolioId));
+  console.log('portfolio', portfolioData);
   const navigateBack = () => {
     navigate(-1);
   };
@@ -63,7 +56,7 @@ const PortfolioDetailPage = () => {
       {/* Header */}
       <div className='absolute left-0 right-0 top-0 z-10 flex h-[100px] items-center gap-[10px] bg-gradient-to-b from-black px-5'>
         <div className='flex w-full justify-between'>
-          <div className='text-h3 text-secondary'>{portfolio?.title}</div>
+          <div className='text-h3 text-secondary'>{portfolioData?.title}</div>
           <div className='flex flex-col gap-5'>
             <button onClick={navigateBack}>
               <CloseIcon className='h-[20px] w-[20px] stroke-gray-50' />
@@ -78,7 +71,7 @@ const PortfolioDetailPage = () => {
       {/* Bottom Content */}
       <div className='absolute bottom-0 left-0 right-0 z-10 flex h-[20%] items-center bg-gradient-to-t from-black px-5'>
         <div className='flex flex-col gap-2'>
-          <div className='break-keep text-body2 text-secondary'>{portfolio?.contents}</div>
+          <div className='break-keep text-body2 text-secondary'>{portfolioData?.contents}</div>
         </div>
       </div>
       <BottomSheetModal isOpen={isModalOpen} onClose={() => setModalOpen(false)} options={modalOptions} />
@@ -91,7 +84,7 @@ const PortfolioDetailPage = () => {
         className='mySwiper2 relative h-full'
         modules={[Pagination]}
       >
-        {portfolio.imgUrlList.map((imageUrl, index) => (
+        {portfolioData?.imgUrlList.map((imageUrl, index) => (
           <SwiperSlide key={index}>
             <div className='relative h-full w-full overflow-hidden'>
               <img
