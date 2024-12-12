@@ -7,7 +7,7 @@ import CameraIcon from '../Icons/CameraIcon';
 
 interface ProfileImgUploaderProps {
   image?: File | null;
-  setImage?: Dispatch<SetStateAction<File | undefined>>;
+  setImage?: Dispatch<SetStateAction<File | null>>;
   handleUpload?: (_file: File) => void;
   initialImageUrl?: string; // 서버에서 가져온 초기 이미지 URL
 }
