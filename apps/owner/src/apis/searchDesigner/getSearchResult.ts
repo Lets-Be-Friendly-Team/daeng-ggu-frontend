@@ -1,15 +1,16 @@
 import { APIClient } from '@daeng-ggu/shared';
 
 import { DesignerListType } from '@/components/DesignerInfo/DesignerData';
-export interface DesignerResponse {
+import { SearchKeyword } from '@/pages/MainPage/SearchResultPage';
+export interface SearchResponse {
   data: DesignerListType;
   status: string;
   message: string;
 }
-interface SearchKeyword {
-  keyword: string;
-}
-const getSearchResult = async ({ keyword }: SearchKeyword): Promise<DesignerResponse> => {
-  return await APIClient.get('/daengggu/home', { keyword });
+// interface SearchKeyword {
+//   keyword: string;
+// }
+const getSearchResult = async ({ searchWord }: SearchKeyword): Promise<SearchResponse> => {
+  return await APIClient.get('/daengggu/home', { searchWord });
 };
 export default getSearchResult;

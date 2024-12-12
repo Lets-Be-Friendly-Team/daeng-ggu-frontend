@@ -11,7 +11,7 @@ import total from '@/assets/images/MainCategoryTab/total.png';
 import PopularList from '@/components/DesignerInfo/PopularList';
 import PremiumList from '@/components/DesignerInfo/PremiumList';
 import TotalList from '@/components/DesignerInfo/TotalList';
-import { useGetTotalDesigners } from '@/hooks/queries/DesignerList/useGetTotalDesigners';
+import useGetTotalDesigners from '@/hooks/queries/DesignerList/useGetTotalDesigners';
 import useDesignerListStore from '@/stores/designerListStore';
 
 const MainCategoryTab = () => {

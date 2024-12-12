@@ -16,11 +16,11 @@ const MainPage = () => {
   const navigate = useNavigate();
   // 검색시 수행할 함수
   const handleSearch = () => {
-    navigate(`/search?keyword=${keyword}`, {
-      state: {
-        keyword,
-      },
-    });
+    const searchword = keyword.trim(); // 검색어 앞뒤 공백 제거
+    setKeyword(searchword);
+    if (searchword) {
+      navigate(`/search?keyword=${searchword}`);
+    }
   };
   return (
     <>
