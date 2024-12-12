@@ -23,6 +23,7 @@ import RequestReview from '@/pages/Request/RequestReview';
 import { useStepStore } from '@/stores/useStepStore';
 
 import '@/styles/sequenceAnimation.css';
+// import useCreateBidRequest from '@/hooks/queries/Request/useCreateBidRequest';
 
 interface StepData {
   step: number;
@@ -44,13 +45,11 @@ interface StepByStepProps {
 
 const StepByStep = ({ stepCount, profileData, onProfileSelect }: StepByStepProps) => {
   const { currentStep, nextStep, prevStep, setDirection, direction } = useStepStore();
-  const [selectedPet, setSelectedPet] = useState<number | null>(null);
+  const [selectedPet, setSelectedPet] = useState<number>(0);
   const [selectedOptions, setSelectedOptions] = useState<{ [key: number]: string }>({});
   const [containerHeight, setContainerHeight] = useState<number | null>(null);
   const [isDynamicHeight, setIsDynamicHeight] = useState<boolean>(false);
   const navigate = useNavigate();
-  console.log('yoyoyo', profileData);
-
   const [showRegionSelector, setShowRegionSelector] = useState<boolean>(false);
   const [regionSelection, setRegionSelection] = useState<{ area: string; subArea: string }>({
     area: '',
@@ -469,6 +468,7 @@ const StepByStep = ({ stepCount, profileData, onProfileSelect }: StepByStepProps
     );
   };
 
+  // const createBidRequestMutation = useCreateBidRequest();
   const handleReservation = () => {
     const data = {
       petId: selectedPet,
@@ -482,6 +482,7 @@ const StepByStep = ({ stepCount, profileData, onProfileSelect }: StepByStepProps
       isMonitoringIncluded: selectedOptions[8] === '원해요',
       additionalRequest: userInput,
     };
+    // createBidRequestMutation.mutate(data);
     console.log(JSON.stringify(data));
   };
 
@@ -491,9 +492,6 @@ const StepByStep = ({ stepCount, profileData, onProfileSelect }: StepByStepProps
         <div className='w-full'>
           <Header mode='customBack' title='견적 요청하기' onClick={currentStep === 1 ? undefined : handlePrevStep} />
         </div>
-      </PageContainer>
-
-      <div className='flex h-full w-full flex-col items-center justify-center'>
         <Progress
           value={currentStep}
           maxStep={stepCount}
@@ -507,6 +505,9 @@ const StepByStep = ({ stepCount, profileData, onProfileSelect }: StepByStepProps
                   : currentStepData?.title || ''
           }
         />
+      </PageContainer>
+
+      <div className='flex h-full w-full flex-col items-center justify-center'>
         <div
           className='relative mt-6 w-full overflow-hidden transition-all duration-300'
           style={{

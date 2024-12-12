@@ -27,7 +27,7 @@ import ReviewDetailPage from '@/pages/ReviewDetailPage/ReviewDetailPage';
 import SignupPage from '@/pages/Signup1/SignupPage1';
 import SignupSuccessPage from '@/pages/Signup1/SignupSuccessPage';
 import DetailDesigner from '@/pages/Status/DetailDesigner.tsx';
-import DetailPage from '@/pages/Status/DetailPage.tsx';
+import DetailPage from '@/pages/Status/DetailPage';
 import Status from '@/pages/Status/Status.tsx';
 import Suggest from '@/pages/Suggest/Suggest.tsx';
 
