@@ -42,31 +42,29 @@ const EditUserProfilePage = () => {
   const handleChange = (field: string, value: string | File | null | undefined) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
+
   const submitFormData = () => {
     try {
       const formPayload = new FormData();
-      formPayload.append(
-        'data',
-        JSON.stringify({
-          customerId: formData.customerId,
-          customerName: formData.customerName,
-          birthDate: formData.birthDate,
-          gender: formData.gender,
-          phone: formData.phone,
-          nickname: formData.nickname,
-          address1: formData.address1,
-          address2: formData.address2,
-          detailAddress: formData.detailAddress,
-          preCustomerImgUrl: formData.customerImgUrl,
-        }),
-      );
+      formPayload.append('customerId', String(formData.customerId));
+      formPayload.append('customerName', formData.customerName);
+      formPayload.append('birthDate', formData.birthDate);
+      formPayload.append('gender', formData.gender);
+      formPayload.append('phone', formData.phone);
+      formPayload.append('nickname', formData.nickname);
+      formPayload.append('address1', formData.address1);
+      formPayload.append('address2', formData.address2);
+      formPayload.append('detailAddress', formData.detailAddress);
+      formPayload.append('preCustomerImgUrl', formData.customerImgUrl);
 
-      // formPayload.append('data', JSON.stringify(jsonPayload));
-      // 파일 데이터 추가
+      // 파일이 있을 경우에만 append
       if (profileImage) {
         formPayload.append('newCustomerImgFile', profileImage);
+      } else {
+        // 파일이 없다면 빈 문자열 대신 서버가 이를 허용하는지 확인 필요
+        formPayload.append('newCustomerImgFile', '');
       }
-      console.log('formdata>>>>', formPayload);
+
       console.log('FormData Content:', [...formPayload.entries()]);
       updateProfileMutation.mutate(formPayload, {
         onSuccess: () => {
@@ -83,45 +81,6 @@ const EditUserProfilePage = () => {
       console.error(error);
     }
   };
-
-  // const submitFormData = () => {
-  //   try {
-  //     const formPayload = new FormData();
-  //     formPayload.append('customerId', String(formData.customerId));
-  //     formPayload.append('customerName', formData.customerName);
-  //     formPayload.append('birthDate', formData.birthDate);
-  //     formPayload.append('gender', formData.gender);
-  //     formPayload.append('phone', formData.phone);
-  //     formPayload.append('nickname', formData.nickname);
-  //     formPayload.append('address1', formData.address1);
-  //     formPayload.append('address2', formData.address2);
-  //     formPayload.append('detailAddress', formData.detailAddress);
-  //     formPayload.append('preCustomerImgUrl', formData.customerImgUrl);
-
-  //     // 파일이 있을 경우에만 append
-  //     if (profileImage) {
-  //       formPayload.append('newCustomerImgFile', profileImage);
-  //     } else {
-  //       // 파일이 없다면 빈 문자열 대신 서버가 이를 허용하는지 확인 필요
-  //       formPayload.append('newCustomerImgFile', '');
-  //     }
-
-  //     console.log('FormData Content:', [...formPayload.entries()]);
-  //     updateProfileMutation.mutate(formPayload, {
-  //       onSuccess: () => {
-  //         alert('업데이트 성공');
-  //         navigate(-1);
-  //       },
-  //       onError: (error) => {
-  //         alert('오류 발생');
-  //         console.error(error);
-  //       },
-  //     });
-  //   } catch (error) {
-  //     alert('프로필 저장에 실패했습니다.');
-  //     console.error(error);
-  //   }
-  // };
   const handleImageDelete = () => {
     setProfileImage(undefined);
     setFormData((prev) => ({ ...prev, customerImgUrl: '' }));

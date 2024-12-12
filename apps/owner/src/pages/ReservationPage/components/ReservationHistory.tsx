@@ -34,7 +34,7 @@ export interface IReservation {
 }
 
 interface ReservationHistoryProps {
-  reservationList: IReservation[];
+  reservationList: IReservation[] | undefined;
 }
 
 const ReservationHistory = ({ reservationList }: ReservationHistoryProps) => {
@@ -54,7 +54,7 @@ const ReservationHistory = ({ reservationList }: ReservationHistoryProps) => {
 
   return (
     <div className='flex flex-col gap-6 px-5 py-5'>
-      {reservationList.map((reservation) => (
+      {reservationList?.map((reservation) => (
         <>
           <div className='flex items-center justify-between'>
             <div className='text-sub_h3 font-bold text-gray-800'>

@@ -6,7 +6,7 @@ const useGetProfile = (customerId: number) => {
   return useQuery({
     queryKey: CUSTOMER_QUERY_KEYS.GET_PROFILE(customerId),
     queryFn: () => getProfile({ customerId }),
-    select: (data) => data.data,
+    select: (response) => response.data,
   });
 };
 
