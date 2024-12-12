@@ -107,15 +107,18 @@ const FeedPage = () => {
 
   return (
     <div className='relative flex h-[calc(100vh-65px)] w-full flex-col bg-gray-900'>
-      <div
-        className='absolute left-0 right-0 top-0 z-10 flex h-[100px] items-center gap-[10px] bg-gradient-to-b from-black px-5 hover:cursor-pointer'
-        onClick={() => navigateDesignerProfile(reviews[activeIndex].designerId)}
-      >
-        <div className='flex-shrink-0'>
+      <div className='absolute left-0 right-0 top-0 z-10 flex h-[100px] items-center gap-[10px] bg-gradient-to-b from-black px-5'>
+        <div
+          className='hover: flex-shrink-0 cursor-pointer'
+          onClick={() => navigateDesignerProfile(reviews[activeIndex].designerId)}
+        >
           <UserProfileImage imageUrl={reviews[activeIndex]?.designerImgUrl} />
         </div>
         <div className='flex w-full justify-between'>
-          <div className='flex flex-col'>
+          <div
+            className='flex flex-col hover:cursor-pointer'
+            onClick={() => navigateDesignerProfile(reviews[activeIndex].designerId)}
+          >
             <div className='text-sub_h2 text-secondary'>{reviews[activeIndex]?.nickname}</div>
             <div className='text-caption text-secondary'>{reviews[activeIndex]?.designerAddress}</div>
           </div>

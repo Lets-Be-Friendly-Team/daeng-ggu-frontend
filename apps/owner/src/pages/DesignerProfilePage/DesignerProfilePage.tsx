@@ -47,7 +47,7 @@ const MyPage = () => {
   return (
     <div className='pb-[185px]'>
       <PageContainer>
-        <Header mode='back' title='마이페이지' onClick={handleNavigateMain} />
+        <Header mode='back' title='디자이너 페이지' onClick={handleNavigateMain} />
         <Profile
           designerId={designerProfileData.designerId}
           nickname={designerProfileData.nickname}

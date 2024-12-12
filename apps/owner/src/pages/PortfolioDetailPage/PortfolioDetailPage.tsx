@@ -17,7 +17,7 @@ const PortfolioDetailPage = () => {
 
   const designerId = 2;
   const { data: portfolioData } = useGetPortfolioDetail(designerId, Number(portfolioId));
-  console.log('portfolio', portfolioData);
+
   const navigateBack = () => {
     navigate(-1);
   };

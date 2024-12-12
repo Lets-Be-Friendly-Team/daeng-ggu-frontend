@@ -7,8 +7,7 @@ export const REVIEW_QUERY_KEYS = {
   //   GET_REVIEW: ['getReview'],
   //   GET_REVIEW_LIST: ['getReviewList'],
   //   POST_REVIEW: ['postReview'],
-  //   DELETE_REVIEW: ['deleteReview'],
-  //   DETAILS: (id: string) => ['userDetails', id],
+  GET_REVIEW_DETAIL: (reviewId: number) => ['getReviewDetail', reviewId],
 } as const;
 
 export const USER_QUERY_KEYS = {

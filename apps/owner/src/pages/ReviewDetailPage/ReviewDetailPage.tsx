@@ -19,7 +19,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 import './swiperStyle.css';
 
-interface IReviewItem {
+export interface IReviewItem {
   reviewId: number;
   reviewImgUrl1: string | null | undefined;
   reviewImgUrl2: string | null | undefined;
