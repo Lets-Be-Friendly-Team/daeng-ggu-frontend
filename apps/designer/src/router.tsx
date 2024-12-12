@@ -20,6 +20,7 @@ import ReviewDetailPage from '@/pages/ReviewDetailPage/ReviewDetailPage';
 import SignupPage from '@/pages/Signup/SignupPage';
 import SignupSuccessPage from '@/pages/Signup/SignupSuccessPage';
 import DetailPage from '@/pages/StatusPage/DetailPage.tsx';
+import SuggestPage from '@/pages/SuggestPage/SuggestPage.tsx';
 
 // import '@/styles/sequenceAnimation.css';
 export const router = createBrowserRouter(
@@ -99,10 +100,10 @@ export const router = createBrowserRouter(
             //   path: ROUTES.bidTest,
             //   element: <Test />,
             // },
-            // {
-            //   path: ROUTES.bidSuggest,
-            //   element: <Suggest />,
-            // },
+            {
+              path: ROUTES.bidSuggest,
+              element: <SuggestPage />,
+            },
             // {
             //   path: ROUTES.bidDetailDesigner,
             //   element: <DetailDesigner />,

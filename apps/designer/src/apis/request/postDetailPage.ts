@@ -1,21 +1,20 @@
-// src/apis/bidRequest.ts
-
 import { APIClient } from '@daeng-ggu/shared';
+
+import { SecondDefaultResponse } from '@/types/api';
 
 // request
 export interface BidRequest {
-  customerId: number;
+  requestId: number;
 }
 
-// response data
 export interface BidRequestResponse {
   petId: number;
   petName: string;
   petImageUrl: string;
-  petImgName: string;
+  petImageName: string;
   birthDate: string;
-  gender: string;
-  isNeutered: boolean;
+  gender: string; // "M" or "F"
+  isNeutered: string; // "Y" or "N"
   weight: number;
   majorBreedCode: string;
   majorBreed: string;
@@ -23,12 +22,30 @@ export interface BidRequestResponse {
   subBreed: string;
   specialNotes?: string;
   isRequested: boolean;
+  customerId: number;
   customerName: string;
   phone: string;
   address: string;
   desiredServiceCode?: string;
+  lastGroomingDate?: string;
+  desiredDate1?: string;
+  desiredDate2?: string;
+  desiredDate3?: string;
+  desiredRegion?: string;
+  isVisitRequired?: boolean;
+  isMonitoringIncluded?: boolean;
+  additionalRequest?: string;
+  deliveryFee?: number;
+  monitoringFee?: number;
 }
 
-export const postDetailPage = async (data: BidRequest): Promise<BidRequestResponse> => {
-  return await APIClient.post<BidRequestResponse>('/daengggu/bid/request', data);
+export interface IPostDetailPage {
+  (_data: BidRequest): Promise<BidRequestResponse>;
+}
+
+export const postDetailPage: IPostDetailPage = async (_data) => {
+  const response = await APIClient.post<SecondDefaultResponse<BidRequestResponse>>('/daengggu/bid/request', _data);
+  console.log('Full response:', response.data);
+
+  return response.data;
 };

@@ -1,28 +1,32 @@
 // src/pages/Bid/DetailPage.tsx
-
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Header, PageContainer, TypeOneButton } from '@daeng-ggu/design-system';
-import { ProfileData } from '@daeng-ggu/owner/src/types/requestAndStatusTypes.ts';
 
+import usePostDetailPage from '@/hooks/queries/Request/usePostDetailPage';
 import RequestReview from '@/pages/RequestPage/RequestReview';
 
-export interface DesignerProcessedData {
-  selectedPet: number;
-  selectedOptions: { [key: number]: string };
-  profileData: ProfileData[]; // Using ProfileData directly
-  userInput: string;
-  mode: 'detail';
+export interface ProfileData {
+  petId: number;
+  petName: string;
+  petImageUrl: string;
+  petImgName: string;
+  birthDate: string;
+  gender: string;
+  isNeutered: boolean;
+  weight: number;
+  majorBreedCode: string;
+  majorBreed: string;
+  subBreedCode: string;
+  subBreed: string;
+  specialNotes?: string;
+  isRequested: boolean;
+  customerName: string;
+  phone: string;
+  address: string;
+  desiredServiceCode?: string;
 }
 
-export type PageMode = 'designer';
-export interface ReservationProcessedData {
-  selectedPet: number;
-  selectedOptions: { [key: number]: string };
-  profileData: ProfileData[]; // Using ProfileData directly
-  userInput: string;
-  mode: 'detail';
-}
-export interface UserProcessedData {
+export interface DesignerProcessedData {
   selectedPet: number;
   selectedOptions: { [key: number]: string };
   profileData: ProfileData[];
@@ -30,79 +34,79 @@ export interface UserProcessedData {
   mode: 'detail';
 }
 
-const DetailPage = (customerId: number) => {
-  const location = useLocation();
-  const data = location.state?.data;
-  const pageMode: PageMode = 'designer';
-  const navigate = useNavigate();
-  console.log(pageMode);
+export type PageMode = 'designer';
 
-  const tempDataDesigner = {
-    petId: { customerId },
-    petName: '견적요청맨',
-    petImageUrl: 'https://via.placeholder.com/100',
-    desiredServiceCode: '부분미용',
-    lastGroomingDate: '한달전',
-    desiredDate1: '2024-12-15T10:00:00',
-    desiredDate2: '2024-12-16T14:00:00',
-    desiredDate3: '2024-12-17T09:00:00',
-    desiredRegion: '서울, 강남구',
-    isVisitRequired: true,
-    isMonitoringIncluded: true,
-    additionalRequest: '잘 물어요',
-    createdAt: '2024-11-27T15:30:00',
-    majorBreedCode: 'S',
-    subBreed: 'Podolski',
-    birthDate: '2018-01-15',
-    gender: 'male',
-    isNeutered: true,
-    weight: 68,
-    majorBreed: '대형견',
-    specialNotes: '활발하며 사교성이 좋습니다.',
-    isRequested: true,
-    customerName: '김철수',
-    phone: '010-1234-5678',
-    address: '서울시 강남구 테헤란로 123 포돌빌딩 1304호',
+const DetailPage = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const pageMode: PageMode = 'designer';
+
+  const customerId = location.state?.customerId;
+  console.log('CustomerId:', customerId);
+
+  // Using the query hook with suspense
+  const { data: postData } = usePostDetailPage({ requestId: customerId ? Number(customerId) : undefined });
+
+  console.log('so... what is this?: ', postData);
+  // By this point, since we're using suspense, we know `postData` is loaded
+  // Convert 'Y'/'N' to boolean for isNeutered
+  const isNeuteredBoolean = postData.isNeutered === 'Y';
+
+  const profile: ProfileData = {
+    petId: postData.petId,
+    petName: postData.petName,
+    petImageUrl: postData.petImageUrl,
+    petImgName: postData.petImageName,
+    birthDate: postData.birthDate,
+    gender: postData.gender,
+    isNeutered: isNeuteredBoolean,
+    weight: postData.weight,
+    majorBreedCode: postData.majorBreedCode,
+    majorBreed: postData.majorBreed,
+    subBreedCode: postData.subBreedCode,
+    subBreed: postData.subBreed,
+    specialNotes: postData.specialNotes,
+    isRequested: postData.isRequested,
+    customerName: postData.customerName,
+    phone: postData.phone,
+    address: postData.address,
+    desiredServiceCode: postData.desiredServiceCode,
   };
 
-  const tempDataReservation = {};
-
-  const selectedData = pageMode === 'designer' ? tempDataDesigner : data || tempDataReservation;
+  const lastGroomingDate = postData.lastGroomingDate || '정보 없음';
+  const desiredDate1 = postData.desiredDate1 || '';
+  const desiredDate2 = postData.desiredDate2 || '';
+  const desiredDate3 = postData.desiredDate2 || '';
+  const desiredRegion = postData.desiredRegion || '정보 없음';
+  const additionalRequest = postData.additionalRequest || '정보 없음';
+  const isVisitRequired = postData.isVisitRequired ?? false;
+  const isMonitoringIncluded = postData.isMonitoringIncluded ?? false;
 
   const getSelectedOptions = (): { [key: number]: string } => {
     return {
-      3: selectedData.desiredServiceCode || '정보 없음',
-      4: selectedData.lastGroomingDate || '정보 없음',
-      5: selectedData.desiredRegion || '정보 없음',
-      6:
-        [selectedData.desiredDate1, selectedData.desiredDate2, selectedData.desiredDate3].filter(Boolean).join(', ') ||
-        '정보 없음',
-      7: selectedData.isVisitRequired ? '원해요' : '괜찮아요',
-      8: selectedData.isMonitoringIncluded ? '원해요' : '괜찮아요',
-      9: selectedData.additionalRequest || '정보 없음',
+      3: profile.desiredServiceCode || '정보 없음',
+      4: lastGroomingDate,
+      5: desiredRegion,
+      6: [desiredDate1, desiredDate2, desiredDate3].filter(Boolean).join(', ') || '정보 없음',
+      7: isVisitRequired ? '원해요' : '괜찮아요',
+      8: isMonitoringIncluded ? '원해요' : '괜찮아요',
+      9: additionalRequest,
     };
   };
 
-  const processedData =
-    pageMode === 'designer'
-      ? ({
-          selectedPet: selectedData.petId,
-          selectedOptions: getSelectedOptions(),
-          profileData: [selectedData],
-          userInput: selectedData.specialNotes || '',
-          mode: 'detail',
-        } as DesignerProcessedData)
-      : ({
-          selectedPet: selectedData.petId,
-          selectedOptions: {},
-          profileData: [selectedData],
-          userInput: '',
-          mode: 'detail',
-        } as ReservationProcessedData);
+  const processedData: DesignerProcessedData = {
+    selectedPet: profile.petId,
+    selectedOptions: getSelectedOptions(),
+    profileData: [profile],
+    userInput: profile.specialNotes || '',
+    mode: 'detail',
+  };
 
-  const headerTitle = pageMode === 'designer' ? '견적요청서 상세보기 (디자이너)' : '예약 상세보기';
+  const headerTitle = '견적요청서 상세보기 (디자이너)';
+  const buttonText = '견적 제안하기';
 
-  const buttonText = pageMode === 'designer' ? '견적 제안하기' : '예약 취소';
+  console.log('lets check this: ', profile);
+
   return (
     <div>
       <PageContainer>
@@ -121,23 +125,21 @@ const DetailPage = (customerId: number) => {
         <TypeOneButton
           text={buttonText}
           onClick={() => {
-            if (pageMode === 'designer') {
-              navigate('/bid/suggest', {
-                state: {
-                  petId: selectedData.petId,
-                  customerName: selectedData.customerName,
-                  desiredDateOne: selectedData.desiredDate1,
-                  desiredDateTwo: selectedData.desiredDate2,
-                  desiredDateThree: selectedData.desiredDate3,
-                  address: selectedData.address,
-                  phone: selectedData.phone,
-                  majorBreed: selectedData.majorBreed,
-                  desiredServiceCode: selectedData.desiredServiceCode,
-                  isVisitRequired: selectedData.isVisitRequired,
-                  isMonitoringIncluded: selectedData.isMonitoringIncluded,
-                },
-              });
-            }
+            navigate('/bid/suggest', {
+              state: {
+                petId: profile.petId,
+                customerName: profile.customerName,
+                desiredDateOne: desiredDate1,
+                desiredDateTwo: desiredDate2,
+                desiredDateThree: desiredDate3,
+                address: profile.address,
+                phone: profile.phone,
+                majorBreed: profile.majorBreed,
+                desiredServiceCode: profile.desiredServiceCode,
+                isVisitRequired,
+                isMonitoringIncluded,
+              },
+            });
           }}
           color='bg-secondary'
         />
