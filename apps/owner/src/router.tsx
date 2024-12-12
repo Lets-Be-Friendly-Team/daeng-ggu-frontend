@@ -11,7 +11,6 @@ import DesignerProfilePage from '@/pages/DesignerProfilePage/DesignerProfilePage
 import EditPetProfilePage from '@/pages/EditPetProfilePage/EditPetProfilePage';
 import EditUserProfilePage from '@/pages/EditUserProfilePage/EditUserProfilePage';
 import FeedPage from '@/pages/FeedPage/FeedPage';
-import InputTest from '@/pages/InputTest/InputTest';
 import KakaoCallback from '@/pages/KakaoCallback/KakaoCallback';
 import LoginPage from '@/pages/LoginPage/LoginPage';
 import { MainPage } from '@/pages/MainPage';
@@ -114,15 +113,6 @@ export const router = createBrowserRouter([
           {
             path: ROUTES.bidDetailDesigner,
             element: <DetailDesigner />,
-          },
-        ],
-      },
-      {
-        path: 'input/test',
-        children: [
-          {
-            index: true,
-            element: <InputTest />,
           },
         ],
       },

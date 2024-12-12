@@ -1,6 +1,6 @@
 interface IReviewItem {
   reviewId: number;
-  reviewImgUrl: string | null | undefined;
+  reviewImgUrl?: string | null;
 }
 interface IReviewListProps {
   reviews: IReviewItem[];

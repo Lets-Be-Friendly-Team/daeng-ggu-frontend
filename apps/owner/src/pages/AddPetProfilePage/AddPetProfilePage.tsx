@@ -47,7 +47,7 @@ const AddPetProfilePage = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState<PetData>(petData);
-  const [profileImage, setProfileImage] = useState<File | null>(null);
+  const [profileImage, setProfileImage] = useState<File | undefined>(undefined);
   const [selectedBreed, setSelectedBreed] = useState<string[]>([]);
   const [activeBtn, setActiveBtn] = useState(false);
 
@@ -101,7 +101,7 @@ const AddPetProfilePage = () => {
     }
   };
   const handleImageDelete = () => {
-    setProfileImage(null);
+    setProfileImage(undefined);
     // setFormData((prev) => ({ ...prev, prePetImgUrl: '' }));
   };
 
