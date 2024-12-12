@@ -2,7 +2,8 @@
 
 import { useMutation, UseMutationResult } from '@tanstack/react-query';
 
-import { BidRequestData, BidRequestResponse, postCreateBidRequest } from '@/apis/request/postCreateBidRequest'; // Corrected import path
+import { BidRequestData, BidRequestResponse, postCreateBidRequest } from '@/apis/request/postCreateBidRequest';
+// import { useToast } from '@daeng-ggu/shared'; // Corrected import path
 
 /**
  * Custom hook to create a bid request using React Query's useMutation.
@@ -10,6 +11,7 @@ import { BidRequestData, BidRequestResponse, postCreateBidRequest } from '@/apis
  * @returns A mutation object containing mutate function and mutation state.
  */
 const useCreateBidRequest = (): UseMutationResult<BidRequestResponse, Error, BidRequestData> => {
+  // const { showToast } = useToast();
   return useMutation<BidRequestResponse, Error, BidRequestData>({
     mutationFn: (data: BidRequestData) => postCreateBidRequest(data),
     onSuccess: (data) => {
