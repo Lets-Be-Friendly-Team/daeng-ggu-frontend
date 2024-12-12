@@ -23,5 +23,5 @@ export const DESIGNER_QUERY_KEYS = {
 } as const;
 
 export const SEARCH_QUERY_KEYS = {
-  SEARCH_DESIGNERS: ['searchDesigners'],
+  SEARCH_DESIGNERS: (keyword: string) => ['searchedDesigners', keyword],
 } as const;
