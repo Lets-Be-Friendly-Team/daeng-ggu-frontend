@@ -1,6 +1,7 @@
 // router.jsx
 import { Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
+import StatusPage from '@daeng-ggu/designer/src/pages/StatusPage/StatusPage';
 import { LogContainer, RouterErrorFallback } from '@daeng-ggu/shared';
 
 import App from '@/App';
@@ -18,6 +19,8 @@ import ReservationPage from '@/pages/ReservationPage/ReservationPage';
 import ReviewDetailPage from '@/pages/ReviewDetailPage/ReviewDetailPage';
 import SignupPage from '@/pages/Signup/SignupPage';
 import SignupSuccessPage from '@/pages/Signup/SignupSuccessPage';
+import DetailPage from '@/pages/StatusPage/DetailPage.tsx';
+
 // import '@/styles/sequenceAnimation.css';
 export const router = createBrowserRouter(
   [
@@ -80,6 +83,31 @@ export const router = createBrowserRouter(
         {
           path: ROUTES.portfolioDetail,
           element: <PortfolioDetailPage />,
+        },
+        {
+          path: ROUTES.bid,
+          children: [
+            {
+              index: true,
+              element: <StatusPage />,
+            },
+            {
+              path: ROUTES.bidDetail,
+              element: <DetailPage />,
+            },
+            // {
+            //   path: ROUTES.bidTest,
+            //   element: <Test />,
+            // },
+            // {
+            //   path: ROUTES.bidSuggest,
+            //   element: <Suggest />,
+            // },
+            // {
+            //   path: ROUTES.bidDetailDesigner,
+            //   element: <DetailDesigner />,
+            // },
+          ],
         },
       ],
     },
