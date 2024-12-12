@@ -26,6 +26,12 @@ const SignupPage = () => {
     navigate('/membership');
   };
 
+  // useEffect(() => {
+  //   const get = async () => {
+  //     console.log(await getUserInfo());
+  //   };
+  //   get();
+  // }, []);
   return (
     <SignupForm
       formData={formData}
