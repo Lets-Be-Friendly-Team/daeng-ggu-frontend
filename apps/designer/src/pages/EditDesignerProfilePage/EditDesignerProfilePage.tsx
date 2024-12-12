@@ -86,7 +86,7 @@ const EditDesignerProfilePage = () => {
   };
 
   const handleImageDelete = () => {
-    setProfileImage(null);
+    setProfileImage(undefined);
     setFormData((prev) => ({ ...prev, preImgUrl: '' }));
   };
   return (
