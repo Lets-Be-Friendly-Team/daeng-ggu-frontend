@@ -1,8 +1,7 @@
 import { ChangeEvent, useState } from 'react';
 import { Header, SearchBar } from '@daeng-ggu/design-system';
-import { useUserLocation } from '@daeng-ggu/shared';
 
-import NaverMapContent from '@/components/NaverMap/NaverMapContent';
+import NaverDesignerMap from '@/components/NaverMap/NaverDesignerMap';
 
 const MapPage = () => {
   const [keyword, setKeyword] = useState('');
@@ -14,7 +13,6 @@ const MapPage = () => {
   const handleSearch = () => {
     console.log('검색 실행:', keyword);
   };
-  const { location: userLocation } = useUserLocation();
 
   return (
     <div className='relative h-[calc(100vh-6.4rem)] w-full flex-col'>
@@ -30,7 +28,7 @@ const MapPage = () => {
         </div>
       </div>
       {/* <div className='absolute top-0 mb-[6.5rem] h-[calc(100vh-50px)]'> */}
-      <NaverMapContent userLocation={userLocation} />
+      <NaverDesignerMap />
       {/* </div> */}
     </div>
   );

@@ -1,6 +1,6 @@
 import { LocationState, useToast } from '@daeng-ggu/shared';
 
-const UserLocationButton = ({ map, location }: { map: naver.maps.Map | undefined; location: LocationState }) => {
+const GoLocationButton = ({ map, location }: { map: naver.maps.Map | undefined; location: LocationState }) => {
   const { showToast } = useToast();
   const handleMoveToUserLocation = () => {
     if (!navigator.geolocation) {
@@ -35,4 +35,4 @@ const UserLocationButton = ({ map, location }: { map: naver.maps.Map | undefined
   );
 };
 
-export default UserLocationButton;
+export default GoLocationButton;
