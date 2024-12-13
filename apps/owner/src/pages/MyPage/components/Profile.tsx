@@ -1,6 +1,8 @@
 import { useNavigate } from 'react-router';
 import { TypeTwoButton, UserProfileImage } from '@daeng-ggu/design-system';
 
+import ROUTES from '@/constants/routes';
+
 interface IProfileProps {
   nickname: string;
   customerImgUrl: string;
@@ -8,7 +10,7 @@ interface IProfileProps {
 }
 const Profile = ({ nickname, customerImgUrl }: IProfileProps) => {
   const navigate = useNavigate();
-  const goToReservations = () => navigate('/profile/reservation');
+  const goToReservations = () => navigate(`/${ROUTES.reservation}`);
   const goToEditProfile = () => navigate('/profile/edit');
   return (
     <div className='w-full'>

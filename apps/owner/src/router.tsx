@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, Outlet } from 'react-router-dom';
 import { LogContainer, RouterErrorFallback } from '@daeng-ggu/shared';
 import { Notification } from '@daeng-ggu/shared';
 
@@ -30,7 +30,11 @@ import DetailPage from '@/pages/Status/DetailPage';
 import Status from '@/pages/Status/Status.tsx';
 import Suggest from '@/pages/Suggest/Suggest.tsx';
 
+import PrivateWrapper from './components/RouteGuard/PrivateWrapper'; //로그인 안된 상태면 접근 제한
+import PublicRoute from './components/RouteGuard/PublicRoute'; //로그인 된 상태면 접근 제한
+
 import '@/styles/sequenceAnimation.css';
+const isAuthenticated = Boolean(localStorage.getItem('ownerIdStorage')); //로그인 상태 확인
 
 export const router = createBrowserRouter([
   {
@@ -54,14 +58,14 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.login,
         children: [
-          { index: true, element: <LoginPage /> },
+          { index: true, element: <PublicRoute element={<LoginPage />} isAuthenticated={isAuthenticated} /> },
           { path: ROUTES.loginCallback, element: <KakaoCallback /> },
         ],
       },
       {
         path: ROUTES.signup,
         children: [
-          { index: true, element: <SignupPage /> },
+          { index: true, element: <PublicRoute element={<SignupPage />} isAuthenticated={isAuthenticated} /> },
           { path: ROUTES.signupSuccess, element: <SignupSuccessPage /> },
         ],
       },
@@ -80,10 +84,20 @@ export const router = createBrowserRouter([
       },
       {
         path: ROUTES.notification,
-        element: <Notification />,
+        element: (
+          <PrivateWrapper isAuthenticated={isAuthenticated}>
+            <Outlet />
+          </PrivateWrapper>
+        ),
+        children: [{ index: true, element: <Notification /> }],
       },
       {
         path: ROUTES.bid,
+        element: (
+          <PrivateWrapper isAuthenticated={isAuthenticated}>
+            <Outlet />
+          </PrivateWrapper>
+        ),
         children: [
           {
             index: true,
@@ -118,6 +132,11 @@ export const router = createBrowserRouter([
       },
       {
         path: ROUTES.progress,
+        element: (
+          <PrivateWrapper isAuthenticated={isAuthenticated}>
+            <Outlet />
+          </PrivateWrapper>
+        ),
         children: [
           {
             index: true,
@@ -127,6 +146,11 @@ export const router = createBrowserRouter([
       },
       {
         path: ROUTES.review,
+        element: (
+          <PrivateWrapper isAuthenticated={isAuthenticated}>
+            <Outlet />
+          </PrivateWrapper>
+        ),
         children: [
           {
             index: true,
@@ -135,37 +159,85 @@ export const router = createBrowserRouter([
         ],
       },
       {
-        path: ROUTES.profile,
-        element: <MyPage />,
-      },
-      {
-        path: ROUTES.profileEdit,
-        element: <EditUserProfilePage />,
-      },
-      {
-        path: ROUTES.profileEditPet,
-        element: <EditPetProfilePage />,
-      },
-      {
-        path: ROUTES.profileAddPet,
-        element: <AddPetProfilePage />,
-      },
-      {
-        path: ROUTES.reviewDetail,
-        element: <ReviewDetailPage />,
-      },
-      {
         path: ROUTES.reservation,
-        element: <ReservationPage />,
+        element: (
+          <PrivateWrapper isAuthenticated={isAuthenticated}>
+            <Outlet />
+          </PrivateWrapper>
+        ),
+        children: [{ index: true, element: <ReservationPage /> }],
       },
       {
-        path: ROUTES.portfolioDetail,
-        element: <PortfolioDetailPage />,
+        path: ROUTES.profile,
+        element: (
+          <PrivateWrapper isAuthenticated={isAuthenticated}>
+            <Outlet />
+          </PrivateWrapper>
+        ),
+        children: [
+          {
+            index: true,
+            element: <MyPage />,
+          },
+          {
+            path: ROUTES.profileEdit,
+            element: <EditUserProfilePage />,
+          },
+          {
+            path: ROUTES.profileEditPet,
+            element: <EditPetProfilePage />,
+          },
+          {
+            path: ROUTES.profileAddPet,
+            element: <AddPetProfilePage />,
+          },
+          {
+            path: ROUTES.reviewDetail,
+            element: <ReviewDetailPage />,
+          },
+
+          {
+            path: ROUTES.portfolioDetail,
+            element: <PortfolioDetailPage />,
+          },
+          {
+            path: ROUTES.designerProfile,
+            element: <DesignerProfilePage />,
+          },
+        ],
       },
-      {
-        path: ROUTES.designerProfile,
-        element: <DesignerProfilePage />,
-      },
+      // {
+      //   path: ROUTES.profile,
+      //   element: <MyPage />,
+      // },
+      // {
+      //   path: ROUTES.profileEdit,
+      //   element: <EditUserProfilePage />,
+      // },
+      // {
+      //   path: ROUTES.profileEditPet,
+      //   element: <EditPetProfilePage />,
+      // },
+      // {
+      //   path: ROUTES.profileAddPet,
+      //   element: <AddPetProfilePage />,
+      // },
+      // {
+      //   path: ROUTES.reviewDetail,
+      //   element: <ReviewDetailPage />,
+      // },
+      // {
+      //   path: ROUTES.reservation,
+      //   element: <ReservationPage />,
+      // },
+      // {
+      //   path: ROUTES.portfolioDetail,
+      //   element: <PortfolioDetailPage />,
+      // },
+      // {
+      //   path: ROUTES.designerProfile,
+      //   element: <DesignerProfilePage />,
+      // },
     ],
   },
 ]);

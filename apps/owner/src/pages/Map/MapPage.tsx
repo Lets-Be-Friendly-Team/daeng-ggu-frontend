@@ -21,7 +21,7 @@ const MapPage = () => {
         </div> */}
       <div className='absolute z-10 w-full'>
         <div className='bg-white px-8'>
-          <Header mode='back' title='지도로 검색' />
+          <Header mode='back' title='지도에서 찾기' />
         </div>
         <div className='p-8'>
           <SearchBar keyword={keyword} onChange={handleKeywordChange} handleSearch={handleSearch} />
