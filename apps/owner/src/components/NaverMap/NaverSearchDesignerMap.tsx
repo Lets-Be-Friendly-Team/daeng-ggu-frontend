@@ -1,38 +1,29 @@
-import { ReactNode, useEffect, useRef, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { useNavigate } from 'react-router';
 import { MyLocationIcon } from '@daeng-ggu/design-system';
-import { LocationState } from '@daeng-ggu/shared';
+import { useInitNavermap, useUserLocation } from '@daeng-ggu/shared';
 
 import getHomeMap, { DesignerInfo, HomeMapParams } from '@/apis/home/getHomeMap';
 import DesignerInfoWindow from '@/components/NaverMap/DesignerInfoWindow';
 import DesignerMarker from '@/components/NaverMap/DesignerMarker';
+import GoLocationButton from '@/components/NaverMap/LocationButton';
 import Marker from '@/components/NaverMap/Marker';
 import RefreshDesignerMarkerButton from '@/components/NaverMap/RefreshDesignerMarkerButton';
-import UserLocationButton from '@/components/NaverMap/UserLocationButton';
 import { cn } from '@/lib/utils';
 
 interface NaverMapContentProps {
-  userLocation?: LocationState;
   className?: string;
   subButton?: ReactNode;
 }
 
-const NaverMapContent = ({
-  className,
-  userLocation = {
-    loaded: false,
-    coordinates: { lat: 37.413294, lng: 126.734086 },
-    permissionGranted: false,
-  },
-}: NaverMapContentProps) => {
+const NaverSearchDesignerMap = ({ className }: NaverMapContentProps) => {
   const { naver } = window;
+  const { location: userLocation } = useUserLocation();
   const { loaded, coordinates, permissionGranted } = userLocation;
   const navigate = useNavigate();
 
-  const mapContainerRef = useRef<HTMLDivElement | null>(null);
-  const mapRef = useRef<naver.maps.Map | undefined>(undefined);
-  const activeInfoWindowRef = useRef<naver.maps.InfoWindow | null>(null);
+  const { mapContainerRef, mapRef, activeInfoWindowRef } = useInitNavermap();
 
   const [designerList, setDesignerList] = useState<DesignerInfo[]>([]);
 
@@ -43,21 +34,16 @@ const NaverMapContent = ({
 
   useEffect(() => {
     const handleNaverMap = async () => {
-      if (!naver || !mapContainerRef.current) return;
-
-      // 지도 초기화
-      mapRef.current = new naver.maps.Map(mapContainerRef.current, {
-        zoom: 14,
-      });
+      if (!naver || !mapRef.current) return;
 
       // 사용자가 위치 권한을 허용한 경우 지도 중심 설정 및 마커 추가
       if (permissionGranted) {
-        const location = new naver.maps.LatLng(coordinates.lat, coordinates.lng);
-        mapRef.current.setCenter(location);
+        const position = new naver.maps.LatLng(coordinates.lat, coordinates.lng);
+        mapRef.current.setCenter(position);
         mapRef.current.setZoom(18);
 
         new naver.maps.Marker({
-          position: location,
+          position,
           icon: {
             content: ReactDOMServer.renderToString(
               <Marker>
@@ -90,7 +76,7 @@ const NaverMapContent = ({
     };
 
     handleNaverMap();
-  }, [loaded, permissionGranted, coordinates, naver]);
+  }, [loaded, permissionGranted, coordinates, naver, mapContainerRef, mapRef, activeInfoWindowRef]);
 
   useEffect(() => {
     if (designerList.length > 0 && mapRef.current) {
@@ -169,11 +155,11 @@ const NaverMapContent = ({
   return (
     <>
       <div className={cn('relative h-full w-full', className)} ref={mapContainerRef}>
-        <UserLocationButton map={mapRef.current} location={{ loaded, coordinates, permissionGranted }} />
+        <GoLocationButton map={mapRef.current} location={{ loaded, coordinates, permissionGranted }} />
         <RefreshDesignerMarkerButton handleDesignerMap={handleDesignerMap} map={mapRef.current} />
       </div>
     </>
   );
 };
 
-export default NaverMapContent;
+export default NaverSearchDesignerMap;

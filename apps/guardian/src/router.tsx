@@ -6,6 +6,7 @@ import { LogContainer, RouterErrorFallback } from '@daeng-ggu/shared';
 // import '@/styles/sequenceAnimation.css';
 import ROUTES from '@/constants/routes';
 import MainPage from '@/pages/MainPage';
+import ProgressPage from '@/pages/ProgressPage/ProgressPage';
 
 import App from './App';
 
@@ -29,6 +30,7 @@ export const router = createBrowserRouter(
           element: <MainPage />,
         },
         { path: ROUTES.test, element: <div>ddddd</div> },
+        { path: ROUTES.progress, element: <ProgressPage /> },
       ],
     },
   ],

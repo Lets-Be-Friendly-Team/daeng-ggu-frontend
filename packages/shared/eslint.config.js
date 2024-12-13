@@ -18,7 +18,10 @@ export default tseslint.config(
     languageOptions: {
       ecmaVersion: 2020,
       sourceType: 'module', // 모듈 유형
-      globals: globals.browser,
+      globals: {
+        ...globals.browser,
+        naver: 'readonly',
+      },
     },
     settings: {
       react: {

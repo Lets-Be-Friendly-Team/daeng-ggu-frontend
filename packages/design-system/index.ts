@@ -37,6 +37,7 @@ import EmptyHeartIcon from './components/Icons/EmptyHeartIcon';
 import ExclamationIcon from './components/Icons/ExclamationIcon';
 import FeedIcon from './components/Icons/FeedIcon';
 import FilledHeartIcon from './components/Icons/FilledHeartIcon';
+import GuardianIcon from './components/Icons/guardianIcon';
 import InfoIcon from './components/Icons/InfoIcon';
 import LockIcon from './components/Icons/LockIcon';
 import MapIcon from './components/Icons/MapIcon';
@@ -119,6 +120,7 @@ export {
   TypeTwoButton,
   TypeOneButton,
   Avatar,
+  GuardianIcon,
   InputAddress,
   TimeSelect,
   BottomTabBar,

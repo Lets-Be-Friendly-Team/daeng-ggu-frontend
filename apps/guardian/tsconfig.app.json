@@ -10,5 +10,5 @@
       "@daeng-ggu/owner": ["../owner/src/*"],
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.json"]
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.json", "../../packages/shared/src/apis/APISocket.ts", "../../packages/shared/src/apis/websocket/guardianlocationWebSocket.ts"]
 }

@@ -1,8 +1,12 @@
 import { LogoImage, TypeTwoButton } from '@daeng-ggu/design-system';
 
-const RouterErrorFallback = () => {
+interface RouterErrorFallbackProps {
+  href?: string;
+}
+
+const RouterErrorFallback = ({ href }: RouterErrorFallbackProps) => {
   const goMain = () => {
-    window.location.href = '/';
+    window.location.href = `/${href || ''}`;
   };
   return (
     <section className='flex h-[80vh] w-full flex-col items-center justify-center gap-[2rem] font-pretendard'>
