@@ -8,7 +8,8 @@ import { useOwnerBottomTabStore } from '@/stores/bottomTabStore';
 
 //로그인 여부에 따라 label 동적으로 설정
 const getDynamicOwnerTabs = () => {
-  const isLoggedin = !!localStorage.getItem('ownerIdStorage'); //owner id 값 존재하면 로그인 상태로 간주
+  // const isLoggedin = !!localStorage.getItem('ownerIdStorage'); //owner id 값 존재하면 로그인 상태로 간주
+  const isLoggedin = true; //true로 임시 설정
 
   return [
     { label: '디자이너 찾기', icon: MapIcon, path: '' },
