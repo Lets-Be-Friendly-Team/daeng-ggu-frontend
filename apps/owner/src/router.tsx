@@ -131,7 +131,7 @@ export const router = createBrowserRouter([
         ],
       },
       {
-        path: ROUTES.progress,
+        path: ROUTES.progress(),
         element: (
           <PrivateWrapper isAuthenticated={isAuthenticated}>
             <Outlet />
