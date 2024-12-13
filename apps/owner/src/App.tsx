@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { NavermapsProvider } from 'react-naver-maps';
 import { Outlet } from 'react-router';
 import { Layout, ToastContainer } from '@daeng-ggu/design-system';
 import { ModalContainer } from '@daeng-ggu/design-system';
@@ -26,15 +25,13 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <QueryErrorResetBoundary>
-        <NavermapsProvider ncpClientId={import.meta.env.VITE_NAVER_CLIENT_ID}>
-          {/*<SSEHandler />*/}
-          <Layout tab={<OwnerBottomTabBar />}>
-            <ToastContainer />
-            <ModalContainer />
-            <Outlet />
-            <ReactQueryDevtools initialIsOpen={false} />
-          </Layout>
-        </NavermapsProvider>
+        {/*<SSEHandler />*/}
+        <Layout tab={<OwnerBottomTabBar />}>
+          <ToastContainer />
+          <ModalContainer />
+          <Outlet />
+          <ReactQueryDevtools initialIsOpen={false} />
+        </Layout>
       </QueryErrorResetBoundary>
     </QueryClientProvider>
   );
