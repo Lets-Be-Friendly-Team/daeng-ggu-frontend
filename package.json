@@ -37,7 +37,8 @@
     "prettier": "^3.3.3",
     "turbo": "^2.3.1",
     "typescript": "^5.7.2",
-    "typescript-eslint": "^8.16.0"
+    "typescript-eslint": "^8.16.0",
+    "vite": "^6.0.1"
   },
   "name": "daeng-ggu-frontend",
   "packageManager": "yarn@4.5.3",
