@@ -11,7 +11,7 @@ const KakaoLoginBtn = ({ userType }: LoginContentProps) => {
   return (
     <div
       onClick={handleClickLogin}
-      className='flex cursor-pointer items-center gap-x-[2.4rem] rounded-md bg-[#FEE500] px-[3rem] py-[1.6rem] text-body2'
+      className='flex cursor-pointer items-center gap-x-[2.4rem] rounded-md bg-[#FEE500] px-[3rem] py-[1.6rem] text-body1'
     >
       <KakaoIcon />
       카카오로 시작하기

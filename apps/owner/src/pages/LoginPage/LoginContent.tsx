@@ -8,14 +8,14 @@ export interface LoginContentProps {
 const LoginContent = ({ userType }: LoginContentProps) => {
   return (
     <PageContainer>
-      <div className='flex flex-col items-center gap-y-[2.4rem] py-[8rem]'>
+      <div className='flex flex-col items-center gap-y-[3rem] py-[10rem]'>
         <img src={LogoImage} className='w-[10rem]' alt='로고 이미지' />
-        <div>
-          <div className='text-h1 font-bold'>
+        <div className='mb-[2rem]'>
+          <div className='text-h2 font-bold'>
             <span className='text-primary'>댕꾸</span>
             <span>에 오신걸 환영해요!</span>
           </div>
-          <div className='mt-[1.5rem] flex flex-col items-center gap-y-2 text-body3'>
+          <div className='mt-[2.4rem] flex flex-col items-center gap-y-2 text-body2 text-gray-800'>
             {userType === 'C' ? (
               <>
                 <p>댕꾸만의 견적서를 받아보고</p>

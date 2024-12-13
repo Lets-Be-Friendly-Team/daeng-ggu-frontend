@@ -96,7 +96,7 @@ const MainCategoryTab = () => {
     },
     {
       icon: map,
-      label: '지도검색',
+      label: '지도',
       path: '',
       // content: ,
     },
