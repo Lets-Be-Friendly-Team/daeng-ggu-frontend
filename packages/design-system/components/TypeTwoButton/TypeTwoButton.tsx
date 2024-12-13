@@ -31,7 +31,7 @@ const TypeTwoButton = ({ className, text, color, onClick, fontWeight, border, ty
       onClick={onClick}
       type={type}
     >
-      <p className='text-body3'>{text ? text : '내용없음'}</p>
+      <p className='text-ellipsis whitespace-nowrap text-body3'>{text ? text : '내용없음'}</p>
     </button>
   );
 };
