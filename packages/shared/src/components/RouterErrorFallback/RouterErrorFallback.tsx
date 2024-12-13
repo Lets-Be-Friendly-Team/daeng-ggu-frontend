@@ -2,7 +2,7 @@ import { LogoImage, TypeTwoButton } from '@daeng-ggu/design-system';
 
 const RouterErrorFallback = () => {
   const goMain = () => {
-    window.location.href = '/designer';
+    window.location.href = '/';
   };
   return (
     <section className='flex h-[80vh] w-full flex-col items-center justify-center gap-[2rem] font-pretendard'>

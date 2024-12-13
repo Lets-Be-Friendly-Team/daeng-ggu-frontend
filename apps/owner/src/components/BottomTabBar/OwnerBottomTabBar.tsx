@@ -5,19 +5,18 @@ import { BottomTabBar, FeedIcon, MapIcon, MyPageIcon, ReservationIcon, SendIcon 
 import ROUTES from '@/constants/routes';
 import { cn } from '@/lib/utils';
 import { useOwnerBottomTabStore } from '@/stores/bottomTabStore';
-/* to-do
 
-* 로그인 상태에 따라 마이페이지/로그인 label 변경
-
- */
-
-const ownerTabs = [
-  { label: '디자이너 찾기', icon: MapIcon, path: '' },
-  { label: '피드', icon: FeedIcon, path: ROUTES.feed },
-  { label: '견적 요청', icon: SendIcon, path: ROUTES.bid },
-  { label: '예약 현황', icon: ReservationIcon, path: ROUTES.reservation },
-  { label: '마이페이지', icon: MyPageIcon, path: ROUTES.profile },
-];
+//로그인 여부에 따라 label 동적으로 설정
+const getDynamicOwnerTabs = () => {
+  const isLoggedin = !!localStorage.getItem('T'); //리프레시 토큰값 존재하면 로그인 상태로 간주
+  return [
+    { label: '디자이너 찾기', icon: MapIcon, path: '' },
+    { label: '피드', icon: FeedIcon, path: ROUTES.feed },
+    { label: '견적 요청', icon: SendIcon, path: ROUTES.bid },
+    { label: '예약 현황', icon: ReservationIcon, path: ROUTES.reservation },
+    { label: isLoggedin ? '마이페이지' : '로그인', icon: MyPageIcon, path: isLoggedin ? ROUTES.profile : ROUTES.login },
+  ];
+};
 
 const ownerHideTabbarRoutes = [
   '/example',
@@ -33,6 +32,7 @@ const OwnerBottomTabBar = () => {
   const location = useLocation();
 
   const shouldHideTabbar = ownerHideTabbarRoutes.some((route) => location.pathname.startsWith(route));
+  const ownerTabs = getDynamicOwnerTabs(); //로그인 상태에 따라 탭 구성 가져오기
 
   // url 바뀔때마다 activePath update
   useEffect(() => {
