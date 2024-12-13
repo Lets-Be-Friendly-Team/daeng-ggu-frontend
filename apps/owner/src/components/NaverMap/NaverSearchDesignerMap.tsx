@@ -2,7 +2,7 @@ import { ReactNode, useEffect, useState } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { useNavigate } from 'react-router';
 import { MyLocationIcon } from '@daeng-ggu/design-system';
-import { useUserLocation } from '@daeng-ggu/shared';
+import { useInitNavermap, useUserLocation } from '@daeng-ggu/shared';
 
 import getHomeMap, { DesignerInfo, HomeMapParams } from '@/apis/home/getHomeMap';
 import DesignerInfoWindow from '@/components/NaverMap/DesignerInfoWindow';
@@ -10,7 +10,6 @@ import DesignerMarker from '@/components/NaverMap/DesignerMarker';
 import GoLocationButton from '@/components/NaverMap/LocationButton';
 import Marker from '@/components/NaverMap/Marker';
 import RefreshDesignerMarkerButton from '@/components/NaverMap/RefreshDesignerMarkerButton';
-import useInitNavermap from '@/components/NaverMap/useInitNavermap';
 import { cn } from '@/lib/utils';
 
 interface NaverMapContentProps {
@@ -18,7 +17,7 @@ interface NaverMapContentProps {
   subButton?: ReactNode;
 }
 
-const NaverDesignerMap = ({ className }: NaverMapContentProps) => {
+const NaverSearchDesignerMap = ({ className }: NaverMapContentProps) => {
   const { naver } = window;
   const { location: userLocation } = useUserLocation();
   const { loaded, coordinates, permissionGranted } = userLocation;
@@ -39,12 +38,12 @@ const NaverDesignerMap = ({ className }: NaverMapContentProps) => {
 
       // 사용자가 위치 권한을 허용한 경우 지도 중심 설정 및 마커 추가
       if (permissionGranted) {
-        const location = new naver.maps.LatLng(coordinates.lat, coordinates.lng);
-        mapRef.current.setCenter(location);
+        const position = new naver.maps.LatLng(coordinates.lat, coordinates.lng);
+        mapRef.current.setCenter(position);
         mapRef.current.setZoom(18);
 
         new naver.maps.Marker({
-          position: location,
+          position,
           icon: {
             content: ReactDOMServer.renderToString(
               <Marker>
@@ -163,4 +162,4 @@ const NaverDesignerMap = ({ className }: NaverMapContentProps) => {
   );
 };
 
-export default NaverDesignerMap;
+export default NaverSearchDesignerMap;

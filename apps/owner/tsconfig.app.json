@@ -10,7 +10,6 @@
       "@daeng-ggu/design-system": ["packages/design-system/*"],
       "@daeng-ggu/shared": ["packages/shared/*"],
       "@daeng-ggu/designer": ["../owner/src/*"]
-
     }
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.json"]

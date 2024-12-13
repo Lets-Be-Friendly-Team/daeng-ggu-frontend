@@ -1,7 +1,7 @@
 import { ChangeEvent, useState } from 'react';
 import { Header, SearchBar } from '@daeng-ggu/design-system';
 
-import NaverDesignerMap from '@/components/NaverMap/NaverDesignerMap';
+import NaverSearchDesignerMap from '@/components/NaverMap/NaverSearchDesignerMap';
 
 const MapPage = () => {
   const [keyword, setKeyword] = useState('');
@@ -28,7 +28,7 @@ const MapPage = () => {
         </div>
       </div>
       {/* <div className='absolute top-0 mb-[6.5rem] h-[calc(100vh-50px)]'> */}
-      <NaverDesignerMap />
+      <NaverSearchDesignerMap />
       {/* </div> */}
     </div>
   );
