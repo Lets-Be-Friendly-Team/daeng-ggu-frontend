@@ -7,8 +7,8 @@ import ROUTES from '@/constants/routes';
 
 const SignupPage = () => {
   const [formData, setFormData] = useState<SignupFormData>({
-    name: '',
-    birth: '',
+    customerName: '',
+    birthDate: '',
     gender: '',
     phone: '',
     nickname: '',
@@ -28,6 +28,7 @@ const SignupPage = () => {
   const handleSubmit = () => {
     console.log(formData);
     // alert('hi');
+
     navigate(ROUTES.signupSuccess);
   };
 

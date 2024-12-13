@@ -5,8 +5,8 @@ import { SignupFormData } from '@daeng-ggu/design-system/components/SignupForm/S
 
 const SignupPage = () => {
   const [formData, setFormData] = useState<SignupFormData>({
-    name: '',
-    birth: '',
+    customerName: '',
+    birthDate: '',
     gender: '',
     phone: '',
     nickname: '',

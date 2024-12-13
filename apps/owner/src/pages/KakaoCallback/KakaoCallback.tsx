@@ -18,7 +18,7 @@ const KakaoCallback = () => {
         //보호자일 경우
         console.log(data);
         //가입 되어있는 유저면 로컬스토리지에 토큰 및 id 저장후 메인으로 이동
-        if (data.data.joinYn === 'N') {
+        if (data.data.joinYn === 'Y') {
           localStorage.setItem('T', userInfo.refreshToken);
           setOwnerId(userInfo.id);
           navigate(ROUTES.main);

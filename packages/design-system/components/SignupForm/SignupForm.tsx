@@ -1,8 +1,8 @@
 import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Header, Input, InputAddress, PageContainer, TypeOneButton, TypeTwoButton } from '@daeng-ggu/design-system';
 export type SignupFormData = {
-  name: string;
-  birth: string;
+  customerName: string;
+  birthDate: string;
   gender: string;
   phone: string;
   nickname: string;
@@ -70,16 +70,22 @@ const SignupForm = ({ formData, setFormData, userType, handleSubmit, handleClose
       <form>
         <PageContainer>
           <Header mode='close' title='회원가입' onClick={handleClose} />
-          <div className='mt-8 flex flex-col gap-y-[2.4rem]'>
+          <div className='mb-[6rem] flex flex-col gap-y-[2.4rem] py-[2rem]'>
             <h1 className='text-body1'>
               <strong>회원정보</strong>를 입력 해주세요
             </h1>
-            <Input label='이름' placeholder='이름 입력' name='name' value={formData.name} onChange={handleChange} />
+            <Input
+              label='이름'
+              placeholder='이름 입력'
+              name='name'
+              value={formData.customerName}
+              onChange={handleChange}
+            />
             <Input
               label='생년월일'
               placeholder='YYYYMMDD'
               name='birth'
-              value={formData.birth}
+              value={formData.birthDate}
               onChange={(e) => handleNumChange(e, 8)}
             />
             <div>
