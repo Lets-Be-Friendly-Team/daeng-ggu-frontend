@@ -8,7 +8,7 @@ const Modal = ({ onConfirm, description, onClose, confirmText, cancelText, title
 
   return (
     <>
-      <div className='fixed z-40 flex h-[100vh] w-full min-w-[32rem] max-w-[48rem] flex-col items-center justify-center bg-black/20'>
+      <div className='fixed z-[99999] flex h-[100vh] w-full min-w-[32rem] max-w-[48rem] flex-col items-center justify-center bg-black/20'>
         <section ref={targetRef} className='z-50 flex w-[80%] flex-col gap-8 rounded-md bg-white px-[4rem] py-[2.4rem]'>
           <div className='flex w-full flex-col items-center justify-center gap-8'>
             <h3 className='text-sub_h2 font-semibold'>{title}</h3>

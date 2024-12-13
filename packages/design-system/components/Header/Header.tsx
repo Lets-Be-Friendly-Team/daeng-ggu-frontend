@@ -2,8 +2,9 @@ import { useNavigate } from 'react-router-dom';
 
 import textLogoImage from '../../assets/images/textLogo.png';
 import BackIcon from '../Icons/BackIcon';
-import BellIcon from '../Icons/BellIcon';
 import CloseIcon from '../Icons/CloseIcon';
+
+import BellIconButton from './BellIconButton';
 
 interface IHeaderProps {
   mode: 'main' | 'back' | 'close' | 'customBack';
@@ -31,9 +32,7 @@ const Header = ({ mode, title, onClick }: IHeaderProps) => {
             <button type='button'>
               <img src={textLogoImage} alt='logo image' className='h-[22px] w-[41px]' onClick={handleLogoClick} />
             </button>
-            <button onClick={handleNotificationClick} type='button'>
-              <BellIcon className='ml-auto h-[20px] w-[20px]' />
-            </button>
+            <BellIconButton onClick={handleNotificationClick} />
           </div>
         )}
         {(mode === 'back' || mode === 'close' || mode === 'customBack') && (

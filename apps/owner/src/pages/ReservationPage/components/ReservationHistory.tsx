@@ -1,8 +1,12 @@
 import { useState } from 'react';
-import { ArrowDown, ArrowUp } from '@daeng-ggu/design-system';
+import { useNavigate } from 'react-router';
+import { ArrowDown, ArrowUp, Modal } from '@daeng-ggu/design-system';
 import MiniButton from '@daeng-ggu/design-system/components/Buttons/MiniButton';
 import BulbIcon from '@daeng-ggu/design-system/components/Icons/BulbIcon';
 import ScissorIcon from '@daeng-ggu/design-system/components/Icons/ScissorIcon';
+import { useModalStore } from '@daeng-ggu/shared';
+
+import ROUTES from '@/constants/routes';
 
 export interface IReservation {
   reservationId: number;
@@ -39,6 +43,8 @@ interface ReservationHistoryProps {
 
 const ReservationHistory = ({ reservationList }: ReservationHistoryProps) => {
   const [expandedReservations, setExpandedReservations] = useState<{ [key: number]: boolean }>({});
+  const navigate = useNavigate();
+  const { show } = useModalStore();
   const toggleDetails = (id: number) => {
     setExpandedReservations((prev) => ({
       ...prev,
@@ -50,6 +56,22 @@ const ReservationHistory = ({ reservationList }: ReservationHistoryProps) => {
 
     const reservationDate = new Date(dateString.replace(/\./g, '-'));
     return reservationDate < today;
+  };
+
+  const handleMiniButton = (reservationId: number, reservationDate: string) => {
+    if (isDateBeforeToday(reservationDate)) {
+      show(Modal, {
+        title: '예약을 취소하시겠습니까?',
+        description: '예약을 취소하면 되돌릴 수 없습니다.',
+        onConfirm: () => {
+          // 예약 취소 API 호출
+        },
+        confirmText: '예약 취소',
+        cancelText: '취소',
+      });
+      return;
+    }
+    navigate('/' + ROUTES.progress(reservationId));
   };
 
   return (
@@ -64,6 +86,9 @@ const ReservationHistory = ({ reservationList }: ReservationHistoryProps) => {
             <MiniButton
               text={isDateBeforeToday(reservation.reservationDate) ? '예약 취소' : '진행 현황 조회'}
               isActive={!isDateBeforeToday(reservation.reservationDate)}
+              onClick={() => {
+                handleMiniButton(reservation.reservationId, reservation.reservationDate);
+              }}
             />
           </div>
           <div key={reservation.reservationId} className='rounded-md bg-secondary p-5 shadow-sm'>

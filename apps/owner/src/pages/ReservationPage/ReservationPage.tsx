@@ -11,7 +11,7 @@ const ReservationPage = () => {
   const unfiinishedReservations = reservationData?.filter((item: IReservation) => !item.isFinished);
   const completedReservations = reservationData?.filter((item: IReservation) => item.isFinished);
 
-  if (isError || !reservationData) {
+  if (isError) {
     return <div>예약 내역 정보를 가져오는 중 오류가 발생했습니다.</div>;
   }
   console.log('reservationData', reservationData);
