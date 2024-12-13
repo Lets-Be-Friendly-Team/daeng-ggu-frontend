@@ -24,5 +24,7 @@ export interface BidRequestResponse {
 }
 
 export const postCreateBidRequest = async (data: BidRequestData): Promise<BidRequestResponse> => {
-  return await APIClient.post<BidRequestResponse>('/daengggu/bid/request', data);
+  const request = await APIClient.put<BidRequestResponse>('/daengggu/bid/request', data);
+  console.log(request);
+  return request;
 };
