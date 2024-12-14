@@ -1,7 +1,8 @@
 // CompletedRequestDesigner.tsx
-import { useNavigate } from 'react-router-dom';
-import { Avatar, BorderContainer, DetailButton } from '@daeng-ggu/design-system';
+// import { useNavigate } from 'react-router-dom';
+import { Avatar, BorderContainer } from '@daeng-ggu/design-system';
 
+// import { Avatar, BorderContainer, DetailButton } from '@daeng-ggu/design-system';
 import EmptyState from '@/pages/StatusPage/EmptyState.tsx';
 
 export interface DesignerCompletedRequest {
@@ -17,6 +18,7 @@ export interface DesignerCompletedRequest {
   isVisitRequired: boolean;
   isMonitoringIncluded: boolean;
   additionalRequest: string;
+  mode?: string;
 }
 
 interface CompletedRequestDesignerProps {
@@ -24,7 +26,7 @@ interface CompletedRequestDesignerProps {
 }
 
 const CompletedRequestDesigner = ({ data }: CompletedRequestDesignerProps) => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const formatDate = (dateString: string): string => {
     const date = new Date(dateString);
@@ -33,9 +35,10 @@ const CompletedRequestDesigner = ({ data }: CompletedRequestDesignerProps) => {
     return `${month}.${day}.`;
   };
 
-  const handleDetailPage = (petId: number) => {
-    navigate('/bid/detail', { state: { petId } });
-  };
+  // const handleDetailPage = (request: DesignerCompletedRequest) => {
+  //   request.mode = 'detail';
+  //   navigate('/bid/pastDetail', { state: { ...request } });
+  // };
 
   return (
     <div className='mx-auto mb-[100px] flex w-full flex-col items-center pt-10'>
@@ -52,7 +55,7 @@ const CompletedRequestDesigner = ({ data }: CompletedRequestDesignerProps) => {
                       </div>
                       <div className='flex w-full items-center justify-center rounded-[8px] bg-white pb-10 pl-10 pt-4'>
                         <Avatar
-                          imageUrl={request.petImageUrl} // Ensure this matches
+                          imageUrl={request.petImageUrl}
                           mode='designerCard'
                           containerClassName='h-[70px] w-[70px]'
                         />
@@ -66,7 +69,7 @@ const CompletedRequestDesigner = ({ data }: CompletedRequestDesignerProps) => {
                             {request.desiredServiceCode || '알 수 없음'}
                           </p>
                           <div className='mt-1'>
-                            <DetailButton text='상세보기' onClick={() => handleDetailPage(request.petId)} />
+                            {/*<DetailButton text='상세보기' onClick={() => handleDetailPage(request)} />*/}
                           </div>
                         </div>
                       </div>

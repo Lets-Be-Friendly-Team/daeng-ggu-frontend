@@ -1,9 +1,13 @@
+// src/pages/SuggestPage/SuggestPage.tsx
+
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { BorderContainer, Calendar, Header, PageContainer, TimeSelect, TypeOneButton } from '@daeng-ggu/design-system';
 import { format } from 'date-fns';
 
-import TextEditor from '@/pages/SuggestPage/TextEditor.tsx';
+import { EstimateRequestPayload } from '@/apis/request/putSuggest';
+import usePutSuggest from '@/hooks/queries/Request/usePutSuggest';
+import TextEditor from '@/pages/SuggestPage/TextEditor';
 
 import '@/styles/TextEditor.css';
 
@@ -15,7 +19,7 @@ interface ImageWithId {
 const SuggestPage = () => {
   const location = useLocation();
   const {
-    petId,
+    targetRequestId,
     desiredDateOne,
     desiredDateTwo,
     desiredDateThree,
@@ -34,9 +38,6 @@ const SuggestPage = () => {
   const [textEditorValue, setTextEditorValue] = useState<string>('');
   const [price, setPrice] = useState<number | ''>('');
   const [, setImages] = useState<ImageWithId[]>([]);
-
-  const customerId = 123;
-  const designerId = 456;
 
   const desiredDates = [desiredDateOne, desiredDateTwo, desiredDateThree]
     .filter(Boolean)
@@ -77,7 +78,7 @@ const SuggestPage = () => {
   };
 
   const generateUniqueId = (index: number): string => {
-    return `image-${index + 1}-${customerId}`;
+    return `image-${index + 1}-${targetRequestId}`;
   };
 
   const base64ToFile = (base64: string, filename: string): File => {
@@ -137,111 +138,91 @@ const SuggestPage = () => {
 
   const { movingCost, totalAmount } = calculateCosts(majorBreed, price || 0, !!isVisitRequired, !!isMonitoringIncluded);
 
-  const handleSubmit = async () => {
-    console.log('handleSubmit called');
-
-    if (!selectedDate || selectedTime === null || !price) {
-      alert('다채우세여');
-      return;
-    }
-
-    try {
-      console.log('Original TextEditor Content:', textEditorValue);
-
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(textEditorValue, 'text/html');
-      const imgElements = doc.getElementsByTagName('img');
-      const imagesWithIds: ImageWithId[] = [];
-      let imageCounter = 0;
-
-      for (let i = 0; i < imgElements.length; i++) {
-        const img = imgElements[i];
-        const src = img.getAttribute('src');
-        if (src && src.startsWith('data:image')) {
-          imageCounter += 1;
-          const uniqueId = generateUniqueId(i);
-
-          img.setAttribute('src', uniqueId);
-          const file = base64ToFile(src, `image-${imageCounter}.png`);
-          imagesWithIds.push({ id: uniqueId, file });
-          console.log(`Processed Image ${i + 1}:`, {
-            id: uniqueId,
-            fileName: file.name,
-            fileType: file.type,
-          });
-        }
-      }
-
-      const serializer = new XMLSerializer();
-      const processedContent = serializer.serializeToString(doc.body);
-
-      setImages(imagesWithIds);
-
-      const estimateRequest = {
-        requestId: petId || 0,
-        customerId,
-        designerId,
-        requestDetail: processedContent,
-        requestDate: `${format(selectedDate, 'yyyy-MM-dd')} ${String(selectedTime).padStart(2, '0')}:00:00`,
-        requestPrice: Number(totalAmount),
-      };
-      console.log('Estimate Request Object:', estimateRequest);
-
-      const estimateImgList = imagesWithIds.map((image) => ({
-        estimateImgUrl: image.file,
-      }));
-
-      const estimateImgIdList = imagesWithIds.map((image) => ({
-        estimateTagId: image.id,
-      }));
-
-      console.log('Estimate Image List:', estimateImgList);
-      console.log('Estimate Img ID List:', estimateImgIdList);
-
-      const formData = new FormData();
-      formData.append('estimateRequest', new Blob([JSON.stringify(estimateRequest)], { type: 'application/json' }));
-
-      // Append images
-      estimateImgList.forEach((img, index) => {
-        formData.append(`estimateImgList[${index}].estimateImgUrl`, img.estimateImgUrl);
-      });
-
-      // Append image ID list
-      estimateImgIdList.forEach((imgIdItem, index) => {
-        formData.append(`estimateImgIdList[${index}].estimateTagId`, imgIdItem.estimateTagId);
-      });
-
-      for (const pair of formData.entries()) {
-        if (pair[1] instanceof File) {
-          console.log(`${pair[0]}: File - ${pair[1].name}, Type: ${pair[1].type}`);
-        } else {
-          console.log(`${pair[0]}: ${pair[1]}`);
-        }
-      }
-
-      const response = await fetch('http://localhost:8080/daengggu/bid/estimate', {
-        method: 'POST',
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error(`Network response was not ok: ${response.statusText}`);
-      }
-
-      const result = await response.json();
-      console.log('제안하기 성공:', result);
+  // usePutSuggest hook using React Query
+  const { mutate: updateEstimate } = usePutSuggest({
+    onSuccess: (data) => {
+      console.log('견적 제안 성공:', data);
       alert('견적 제안이 성공적으로 제출되었습니다.');
-
       // Reset form fields
       setTextEditorValue('');
       setPrice('');
       setSelectedDate(null);
       setSelectedTime(null);
       setImages([]);
-    } catch (error) {
-      console.error('제안하기 실패:', error);
+    },
+    onError: (error) => {
+      console.error('견적 제안 실패:', error);
       alert('견적 제안 제출에 실패했습니다. 다시 시도해주세요.');
+    },
+  });
+
+  const handleSubmit = () => {
+    console.log('handleSubmit called');
+
+    if (!selectedDate || selectedTime === null || !price) {
+      alert('모든 필드를 채워주세요.');
+      return;
     }
+
+    console.log('Original TextEditor Content:', textEditorValue);
+
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(textEditorValue, 'text/html');
+    const imgElements = doc.getElementsByTagName('img');
+    const imagesWithIds: ImageWithId[] = [];
+    let imageCounter = 0;
+
+    for (let i = 0; i < imgElements.length; i++) {
+      const img = imgElements[i];
+      const src = img.getAttribute('src');
+      if (src && src.startsWith('data:image')) {
+        imageCounter += 1;
+        const uniqueId = generateUniqueId(i);
+
+        img.setAttribute('src', uniqueId); // Replace base64 with unique ID
+        const file = base64ToFile(src, `image-${imageCounter}.png`);
+        imagesWithIds.push({ id: uniqueId, file });
+        console.log(`Processed Image ${i + 1}:`, {
+          id: uniqueId,
+          fileName: file.name,
+          fileType: file.type,
+        });
+      }
+    }
+
+    const serializer = new XMLSerializer();
+    const processedContent = serializer.serializeToString(doc.body);
+
+    setImages(imagesWithIds);
+
+    const estimateRequest = {
+      requestId: targetRequestId || 0,
+      requestDetail: processedContent,
+      requestDate: `${format(selectedDate, 'yyyy-MM-dd')} ${String(selectedTime).padStart(2, '0')}:00:00`,
+      requestPrice: Number(totalAmount),
+    };
+    console.log('Estimate Request Object:', estimateRequest);
+
+    const estimateImgList = imagesWithIds.map((image) => ({
+      estimateImgUrl: image.file,
+    }));
+
+    const estimateImgIdList = imagesWithIds.map((image) => ({
+      estimateTagId: image.id,
+    }));
+
+    console.log('Estimate Image List:', estimateImgList);
+    console.log('Estimate Img ID List:', estimateImgIdList);
+
+    const payload: EstimateRequestPayload = {
+      estimateRequest,
+      estimateImgList,
+      estimateImgIdList,
+    };
+    console.log('Payload to be sent:', payload);
+
+    // Call the mutation to submit the data
+    updateEstimate(payload);
   };
 
   return (
@@ -272,61 +253,56 @@ const SuggestPage = () => {
           <div className='mb-14 h-full w-full'>
             <BorderContainer>
               <div className='w-full bg-secondary'>
-                <div>
-                  <div className='rounded-[8px] bg-white'>
-                    <Calendar
-                      mode='single'
-                      selected={selectedDate || undefined}
-                      onSelect={handleDateClick}
-                      disabled={(date) => {
-                        const dateString = format(date, 'yyyy-MM-dd');
-                        return !desiredDatesSet.has(dateString);
-                      }}
+                <div className='rounded-[8px] bg-white'>
+                  <Calendar
+                    mode='single'
+                    selected={selectedDate || undefined}
+                    onSelect={handleDateClick}
+                    disabled={(date) => {
+                      const dateString = format(date, 'yyyy-MM-dd');
+                      return !desiredDatesSet.has(dateString);
+                    }}
+                  />
+                </div>
+              </div>
+
+              <div
+                className={`mt-4 overflow-hidden transition-all duration-300 ease-in-out ${
+                  showTimeSelect ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'
+                }`}
+              >
+                <div className='w-full bg-secondary'>
+                  <div className='flex justify-center rounded-[8px] bg-white py-4'>
+                    <TimeSelect
+                      availableTimes={getAvailableTimes()}
+                      selectValue={selectedTime}
+                      onSelectChange={handleTimeSelectChange}
                     />
                   </div>
                 </div>
-
-                <div
-                  className={`mt-4 overflow-hidden transition-all duration-300 ease-in-out ${
-                    showTimeSelect ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'
-                  }`}
-                >
-                  <div className='w-full bg-secondary'>
-                    <div className='flex justify-center rounded-[8px] bg-white py-4'>
-                      <TimeSelect
-                        availableTimes={getAvailableTimes()}
-                        selectValue={selectedTime}
-                        onSelectChange={handleTimeSelectChange}
+              </div>
+              <div className='mt-6 w-full bg-secondary'>
+                <div className='flex flex-col justify-center rounded-[8px] bg-white py-4 pl-6'>
+                  <div className='text-sub_h2 font-bold'>가격입력</div>
+                  <div className='mt-3 flex items-center text-sub_h1'>
+                    <div>
+                      <input
+                        className={`w-full border-b focus:outline-none ${price !== '' ? 'text-right' : ''}`}
+                        placeholder='₩ 가격'
+                        type='text'
+                        value={price !== '' ? Number(price).toLocaleString() : ''}
+                        onChange={(e) => {
+                          const rawValue = e.target.value.replace(/,/g, '');
+                          const numericValue = Number(rawValue);
+                          if (!isNaN(numericValue)) {
+                            setPrice(rawValue ? numericValue : '');
+                          } else {
+                            setPrice('');
+                          }
+                        }}
                       />
                     </div>
-                  </div>
-                </div>
-                <div className='mt-6 w-full bg-secondary'>
-                  <div>
-                    <div className='flex flex-col justify-center rounded-[8px] bg-white py-4 pl-6'>
-                      <div className='text-sub_h2 font-bold'>가격입력</div>
-                      <div className='mt-3 flex items-center text-sub_h1'>
-                        <div>
-                          <input
-                            className={`w-full border-b focus:outline-none ${price !== '' ? 'text-right' : ''}`}
-                            placeholder='₩ 가격'
-                            type='text'
-                            value={price !== '' ? Number(price).toLocaleString() : ''}
-                            onChange={(e) => {
-                              const rawValue = e.target.value.replace(/,/g, '');
-                              const numericValue = Number(rawValue);
-                              // Ensure valid number and prevent NaN
-                              if (!isNaN(numericValue)) {
-                                setPrice(rawValue ? numericValue : '');
-                              } else {
-                                setPrice('');
-                              }
-                            }}
-                          />
-                        </div>
-                        <span className='ml-2'>원</span>
-                      </div>
-                    </div>
+                    <span className='ml-2'>원</span>
                   </div>
                 </div>
               </div>
@@ -353,7 +329,7 @@ const SuggestPage = () => {
               <div className='flex-col items-start p-2 text-gray-800'>
                 {isVisitRequired && (
                   <div className='mb-2 flex justify-between'>
-                    <span>댕동비({location.state ? majorBreed : '정보 없음'})</span>
+                    <span>댕동비({majorBreed || '정보 없음'})</span>
                     <span>{Math.round(Number(movingCost)).toLocaleString()}원</span>
                   </div>
                 )}
@@ -377,14 +353,8 @@ const SuggestPage = () => {
           </div>
         </div>
       </PageContainer>
-      <div className='fixed w-full' style={{ bottom: '65px' }}>
-        <TypeOneButton
-          text='제안하기'
-          color='bg-secondary'
-          onClick={() => {
-            handleSubmit();
-          }}
-        />
+      <div className='fixed w-full' style={{ bottom: '7.5rem' }}>
+        <TypeOneButton text='제안하기' color='bg-secondary' onClick={handleSubmit} />
       </div>
     </div>
   );

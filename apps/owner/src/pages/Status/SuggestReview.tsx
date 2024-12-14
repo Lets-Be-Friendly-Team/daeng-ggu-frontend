@@ -1,46 +1,29 @@
 import { useMemo } from 'react';
 import { Avatar, BorderContainer, PageContainer, TypeOneButton } from '@daeng-ggu/design-system';
 
-interface EstimateImg {
-  estimateImageUrl: string;
-}
-
-interface DesignerData {
-  estimateId: number;
-  designerId: number;
-  designerName: string;
-  designerImageUrl: string;
-  createdAt: string;
-  estimateDetail: string;
-  customerId: number;
-  customerName: string;
-  phone: string;
-  address: string;
-  designerAddress: string;
-  groomingFee: number;
-  deliveryFee: number;
-  monitoringFee: number;
-  estimatePrice: number;
-  estimateImgList: EstimateImg[];
-  serviceDescription?: string;
-}
+import { PostSuggestResponse } from '@/apis/suggest/postSuggestRequest.ts';
 
 interface SuggestReviewProps {
-  data: DesignerData;
+  data: PostSuggestResponse;
 }
 
 const SuggestReview = ({ data }: SuggestReviewProps) => {
   const replacedHTML = useMemo(() => {
-    let html = data.estimateDetail;
+    let html = data.estimateDetail || '';
 
-    data.estimateImgList.forEach((item) => {
-      const match = item.estimateImageUrl.match(/(image-\d+-\d+)/);
-      if (match && match[1]) {
-        const placeholder = match[1];
-        const regex = new RegExp(`src="${placeholder}"`, 'g');
-        html = html.replace(regex, `src="${item.estimateImageUrl}"`);
-      }
-    });
+    // Check if estimateImgList and its first element exists
+    if (data.estimateImgList && data.estimateImgList.length > 0) {
+      console.log('this is image: ', data.estimateImgList[0]);
+
+      data.estimateImgList.forEach((item) => {
+        const match = item.match(/(image-\d+-\d+)/);
+        if (match && match[1]) {
+          const placeholder = match[1];
+          const regex = new RegExp(`src="${placeholder}"`, 'g');
+          html = html.replace(regex, `src="${item}"`);
+        }
+      });
+    }
 
     return html;
   }, [data]);

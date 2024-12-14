@@ -90,7 +90,7 @@ const RequestReview = ({
   onDisableDynamicHeight,
   userInput,
   mode = 'default',
-  pageMode = 'user',
+  pageMode = 'designer',
 }: RequestReviewProps) => {
   const [editingStep, setEditingStep] = useState<number | null>(null);
   const selectedProfile = profileData.find((profile) => profile.petId === selectedPet);

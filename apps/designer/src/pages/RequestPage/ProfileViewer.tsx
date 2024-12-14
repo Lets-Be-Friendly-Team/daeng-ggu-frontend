@@ -3,11 +3,11 @@ interface ProfileData {
   petName: string;
   petImageUrl: string;
   petImgName?: string;
-  subBreed: string;
-  birthDate: string;
-  gender: string;
-  isNeutered: boolean;
-  weight: number;
+  subBreed?: string;
+  birthDate?: string;
+  gender?: string;
+  isNeutered?: boolean;
+  weight?: number;
   majorBreed?: string;
   isRequested?: boolean;
   specialNotes?: string;

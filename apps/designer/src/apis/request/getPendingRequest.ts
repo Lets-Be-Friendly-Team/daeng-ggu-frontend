@@ -15,7 +15,7 @@ export interface DesignerRequest {
   createdAt: string;
 }
 const getPendingRequests = async (): Promise<DesignerRequest[]> => {
-  const response = await APIClient.get<DefaultResponse<DesignerRequest>>('/daengggu/bid/estimate/designer');
+  const response = await APIClient.get<DefaultResponse<DesignerRequest>>('/daengggu/bid/request/designer');
   console.log('Fetched Pending Requests:', response);
   return response.data;
 };

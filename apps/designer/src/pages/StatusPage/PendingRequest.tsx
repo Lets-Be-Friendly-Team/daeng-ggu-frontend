@@ -26,6 +26,8 @@ const PendingRequest = ({ data }: PendingRequestProps) => {
     };
     return <EmptyState title={title} buttonText={buttonText} onClick={onClick} />;
   }
+  console.log('checking post request id: ', data[0].requestId);
+
   return <PendingRequestDesigner data={data as DesignerRequest[]} />;
 };
 

@@ -17,6 +17,7 @@ import { format } from 'date-fns';
 
 import { GetOwnerPetProfileResponse } from '@/apis/request/getOwnerPetProfile';
 import editIcon from '@/assets/edit.svg';
+import useCreateBidRequest from '@/hooks/queries/Request/useCreateBidRequest.ts';
 import ProfileButton from '@/pages/Request/ProfileButton';
 import ProfileViewer from '@/pages/Request/ProfileViewer';
 import RequestReview from '@/pages/Request/RequestReview';
@@ -468,21 +469,26 @@ const StepByStep = ({ stepCount, profileData, onProfileSelect }: StepByStepProps
     );
   };
 
-  // const createBidRequestMutation = useCreateBidRequest();
+  const createBidRequestMutation = useCreateBidRequest();
   const handleReservation = () => {
+    const toISODateTime = (dateStr: string) => {
+      if (!dateStr) return '';
+      return dateStr.replace(' ', 'T');
+    };
+
     const data = {
       petId: selectedPet,
       desiredServiceCode: selectedOptions[3],
       lastGroomingDate: selectedOptions[4],
       desiredRegion: selectedOptions[5] === '무관' ? '무관' : `${regionSelection.area}, ${regionSelection.subArea}`,
-      desiredDate1: selectedDateTimes[0].dateStr || '',
-      desiredDate2: selectedDateTimes[1].dateStr || '',
-      desiredDate3: selectedDateTimes[2].dateStr || '',
+      desiredDate1: toISODateTime(selectedDateTimes[0].dateStr || ''),
+      desiredDate2: toISODateTime(selectedDateTimes[1].dateStr || ''),
+      desiredDate3: toISODateTime(selectedDateTimes[2].dateStr || ''),
       isVisitRequired: selectedOptions[7] === '원해요',
       isMonitoringIncluded: selectedOptions[8] === '원해요',
       additionalRequest: userInput,
     };
-    // createBidRequestMutation.mutate(data);
+    createBidRequestMutation.mutate(data);
     console.log(JSON.stringify(data));
   };
 

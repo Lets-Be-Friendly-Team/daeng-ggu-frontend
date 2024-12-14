@@ -42,7 +42,8 @@ const DetailPage = () => {
   const pageMode: PageMode = 'designer';
 
   const customerId = location.state?.customerId;
-  console.log('CustomerId:', customerId);
+  const sendingRequestId = location.state?.suggestRequestId;
+  console.log('requestId:', sendingRequestId);
 
   // Using the query hook with suspense
   const { data: postData } = usePostDetailPage({ requestId: customerId ? Number(customerId) : undefined });
@@ -92,6 +93,8 @@ const DetailPage = () => {
     };
   };
 
+  console.log('this is requestOne: ', sendingRequestId);
+
   const processedData: DesignerProcessedData = {
     selectedPet: profile.petId,
     selectedOptions: getSelectedOptions(),
@@ -125,6 +128,7 @@ const DetailPage = () => {
           onClick={() => {
             navigate('/bid/suggest', {
               state: {
+                targetRequestId: sendingRequestId,
                 petId: profile.petId,
                 customerName: profile.customerName,
                 desiredDateOne: desiredDate1,

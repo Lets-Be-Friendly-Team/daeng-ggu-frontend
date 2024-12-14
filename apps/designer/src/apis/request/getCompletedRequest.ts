@@ -19,7 +19,7 @@ export interface DesignerCompletedRequest {
   additionalRequest: string;
 }
 const getCompletedRequests = async (): Promise<DesignerCompletedRequest[]> => {
-  const response = await APIClient.get<DefaultResponse<DesignerCompletedRequest>>('/daengggu/bid/request/designer');
+  const response = await APIClient.get<DefaultResponse<DesignerCompletedRequest>>('/daengggu/bid/estimate/designer');
   console.log('Fetched completed Requests:', response.data);
   return response.data;
 };
