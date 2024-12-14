@@ -13,7 +13,7 @@ interface IAvartarListProps {
 const AvartarList = ({ pets }: IAvartarListProps) => {
   const navigate = useNavigate();
   const handleAvartarClick = (petId: number) => {
-    navigate(`/profile/edit/${petId}`);
+    navigate(`/profile/pet/edit/${petId}`);
   };
   const handleAddAvartarClick = () => {
     navigate(`/profile/pet/add`);

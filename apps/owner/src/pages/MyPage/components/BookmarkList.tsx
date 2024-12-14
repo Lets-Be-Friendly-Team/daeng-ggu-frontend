@@ -21,7 +21,7 @@ interface IDesignerListProps {
 const BookmarkList = ({ bookmarkList = [] }: IDesignerListProps) => {
   const navigate = useNavigate();
   const navigateDesignerProfile = (designerId: number) => {
-    navigate(`/profile/${designerId}`);
+    navigate(`/profile/designer/${designerId}`);
   };
 
   return (

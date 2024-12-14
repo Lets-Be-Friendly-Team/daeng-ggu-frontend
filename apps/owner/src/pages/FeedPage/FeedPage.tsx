@@ -4,16 +4,15 @@ import { EmptyHeartIcon, FilledHeartIcon, FullStarIcon, UserProfileImage } from 
 import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import useGetFeed from '@/hooks/queries/Review/useGetFeed';
-
+// import useGetFeed from '@/hooks/queries/Review/useGetFeed';
 import './swiperStyle.css';
 
 const FeedPage = () => {
   const [expandedReviews, setExpandedReviews] = useState<{ [key: number]: boolean }>({});
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const { reviewId } = useParams();
-  const { data: feedData } = useGetFeed();
-  console.log(feedData);
+  // const { data: feedData } = useGetFeed();
+  // console.log(feedData);
   const reviews = [
     {
       reviewId: 1,
@@ -21,7 +20,7 @@ const FeedPage = () => {
       reviewImgUrl2: 'https://daeng-ggu-test.s3.ap-northeast-2.amazonaws.com/haneul.jpg',
       reviewImgUrl3: null,
       lastcreatedat: '2024-12-08T10:15:30',
-      designerId: 4,
+      designerId: 5,
       designerImgUrl: 'https://daeng-ggu-test.s3.ap-northeast-2.amazonaws.com/BigBang+Pet+Salon.jpg',
       designerAddress: '경기 성남시 분당구 삼평동 709',
       nickname: '우리 미용실 짱',
@@ -42,7 +41,7 @@ const FeedPage = () => {
       reviewImgUrl2: null,
       reviewImgUrl3: null,
       lastcreatedat: '2024-12-07T14:00:00',
-      designerId: 4,
+      designerId: 6,
       designerImgUrl: 'https://daeng-ggu-test.s3.ap-northeast-2.amazonaws.com/BigBang+Pet+Salon.jpg',
       designerAddress: '경기 성남시 분당구 삼평동 709',
       nickname: '우리 미용실 최고임',
@@ -66,7 +65,7 @@ const FeedPage = () => {
   const [activeIndex, setActiveIndex] = useState(currentReviewIndex);
 
   const navigateDesignerProfile = (designerId: number) => {
-    navigate(`/profile/${designerId}`);
+    navigate(`/profile/designer/${designerId}`);
   };
 
   return (
