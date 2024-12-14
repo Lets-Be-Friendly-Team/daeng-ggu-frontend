@@ -1,6 +1,6 @@
 interface StickyButtonProps {
   text: string;
-  onClick: () => void;
+  onClick?: () => void;
   color?: string;
   className?: string;
   type?: 'button' | 'submit' | 'reset' | undefined;

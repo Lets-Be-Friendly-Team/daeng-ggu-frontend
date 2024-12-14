@@ -1,9 +1,17 @@
-// import postSignup from '@/apis/signup/postSignup';
+import { SignupFormData } from '@daeng-ggu/design-system/components/SignupForm/SignupForm';
 import { useMutation, UseMutationOptions } from '@tanstack/react-query';
 
-const useSignup = (mutationOptions?: UseMutationOptions) => {
+import postSignup, { SignupResponse } from '@/apis/signup/postSignup';
+
+interface SignupError {
+  message: string;
+  status: number;
+  code: number;
+}
+
+const useSignup = (mutationOptions?: UseMutationOptions<SignupResponse, SignupError, SignupFormData>) => {
   return useMutation({
-    // mutationFn: postSignup,
+    mutationFn: async (signupForm: SignupFormData) => await postSignup(signupForm),
     ...mutationOptions,
   });
 };

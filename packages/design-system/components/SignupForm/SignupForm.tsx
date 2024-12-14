@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { ChangeEvent, Dispatch, FormEvent, SetStateAction, useEffect, useState } from 'react';
 import { Header, Input, InputAddress, PageContainer, TypeOneButton, TypeTwoButton } from '@daeng-ggu/design-system';
 export type SignupFormData = {
   customerName: string;
@@ -14,7 +14,7 @@ interface SignupFormProps {
   formData: SignupFormData;
   setFormData: Dispatch<SetStateAction<SignupFormData>>;
   userType: 'C' | 'D';
-  handleSubmit: () => void;
+  handleSubmit: (_e: FormEvent) => void;
   handleClose: () => void;
 }
 
@@ -67,7 +67,7 @@ const SignupForm = ({ formData, setFormData, userType, handleSubmit, handleClose
 
   return (
     <div className='bg-white'>
-      <form>
+      <form onSubmit={handleSubmit}>
         <PageContainer>
           <Header mode='close' title='회원가입' onClick={handleClose} />
           <div className='mb-[6rem] flex flex-col gap-y-[2.4rem] py-[2rem]'>
@@ -77,14 +77,14 @@ const SignupForm = ({ formData, setFormData, userType, handleSubmit, handleClose
             <Input
               label='이름'
               placeholder='이름 입력'
-              name='name'
+              name='customerName'
               value={formData.customerName}
               onChange={handleChange}
             />
             <Input
               label='생년월일'
               placeholder='YYYYMMDD'
-              name='birth'
+              name='birthDate'
               value={formData.birthDate}
               onChange={(e) => handleNumChange(e, 8)}
             />
@@ -143,7 +143,6 @@ const SignupForm = ({ formData, setFormData, userType, handleSubmit, handleClose
         <TypeOneButton
           text='입력 완료'
           color={activeBtn ? 'bg-primary' : 'bg-gray-50'}
-          onClick={handleSubmit}
           disabled={!activeBtn}
           type='submit'
         />

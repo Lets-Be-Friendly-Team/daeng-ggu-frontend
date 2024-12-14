@@ -3,13 +3,13 @@ import { SignupFormData } from '@daeng-ggu/design-system/components/SignupForm/S
 import { APIClient } from '@daeng-ggu/shared';
 
 export interface SignupResponse {
-  data: string;
   status: string;
   message: string;
+  data: object;
 }
 
 const postSignup = async (signupForm: SignupFormData): Promise<SignupResponse> => {
-  return await APIClient.post<SignupResponse>('/daengggu/customer/signup', signupForm);
+  return await APIClient.post('/daengggu/customer/signup', signupForm);
 };
 
 export default postSignup;
