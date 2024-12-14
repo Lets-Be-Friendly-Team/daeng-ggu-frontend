@@ -11,7 +11,7 @@ interface IProfileProps {
 const Profile = ({ nickname, customerImgUrl }: IProfileProps) => {
   const navigate = useNavigate();
   const goToReservations = () => navigate(`/${ROUTES.reservation}`);
-  const goToEditProfile = () => navigate('/profile/edit');
+  const goToEditProfile = () => navigate(`/profile/${ROUTES.profileEdit}`);
   return (
     <div className='w-full'>
       <div className='flex gap-6'>

@@ -17,19 +17,20 @@ export interface portfolioItem {
 }
 export interface reviewItem {
   reviewId: number;
-  reviewImgUrl1: string | null | undefined;
-  reviewImgUrl2: string | null | undefined;
-  reviewImgUrl3: string | null | undefined;
-  customerId: number;
-  customerImgUrl: string | undefined;
-  customerName: string;
+  reviewImgUrl1?: string;
+  reviewImgUrl2?: string;
+  reviewImgUrl3?: string;
+  designerId: number;
+  designerImgUrl: string | undefined;
+  designerAddress: string;
+  nickname: string;
   reviewContents: string;
   reviewLikeCnt: number;
   reviewStar: number;
-  isReviewLike: boolean;
   feedExposure: boolean;
 }
 export interface DesignerProfileData {
+  isBookmarked: boolean;
   designerId: number;
   designerName: string;
   nickname: string;
@@ -54,7 +55,16 @@ export interface designerProfileResponse {
   data: DesignerProfileData;
 }
 
-const getDesignerProfile = async ({ designerId }: { designerId: number }): Promise<designerProfileResponse> => {
-  return await APIClient.get('/daengggu/designer/profile', { designerId: designerId.toString() });
+const getDesignerProfile = async ({
+  designerId,
+  customerId,
+}: {
+  designerId: number;
+  customerId: number;
+}): Promise<designerProfileResponse> => {
+  return await APIClient.get('/daengggu/customer/designer/profile', {
+    designerId: designerId.toString(),
+    customerId: customerId.toString(),
+  });
 };
 export default getDesignerProfile;

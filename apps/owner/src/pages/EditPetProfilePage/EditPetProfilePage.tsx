@@ -68,7 +68,7 @@ const EditPetProfilePage = () => {
   };
 
   return (
-    <div className='pb-[185px]'>
+    <div>
       <PageContainer>
         <Header mode='back' title={`${formData.petName} 프로필 수정`} />
         <div className='flex h-[180px] w-full flex-col items-center justify-center gap-[15px]'>
@@ -142,9 +142,7 @@ const EditPetProfilePage = () => {
           />
         </div>
       </PageContainer>
-      <div className='fixed w-full' style={{ bottom: '7.5rem' }}>
-        <TypeOneButton text='저장하기' color='bg-secondary' onClick={submitFormData} />
-      </div>
+      <TypeOneButton text='저장하기' color='bg-secondary' onClick={submitFormData} />
     </div>
   );
 };

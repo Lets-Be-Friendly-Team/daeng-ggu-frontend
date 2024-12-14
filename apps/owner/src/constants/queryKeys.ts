@@ -4,11 +4,10 @@ export const LOGIN_QUERY_KEYS = {
 } as const;
 
 export const REVIEW_QUERY_KEYS = {
-  //   GET_REVIEW: ['getReview'],
+  GET_FEED: (page: number) => ['getFeed', page],
   //   GET_REVIEW_LIST: ['getReviewList'],
   //   POST_REVIEW: ['postReview'],
-  //   DELETE_REVIEW: ['deleteReview'],
-  //   DETAILS: (id: string) => ['userDetails', id],
+  GET_REVIEW_DETAIL: (reviewId: number) => ['getReviewDetail', reviewId],
 } as const;
 
 export const USER_QUERY_KEYS = {
@@ -35,7 +34,8 @@ export const CUSTOMER_QUERY_KEYS = {
 
 export const DESIGNER_QUERY_KEYS = {
   TOTAL_DESIGNERS: ['totalDesigners'],
-  GET_DESIGNER_PROFILE: (designerId: number) => ['getDesignerProfile', designerId],
+  GET_DESIGNER_PROFILE: (designerId: number, customerId: number) => ['getDesignerProfile', designerId, customerId],
+  GET_PORTFOLIO_DETAIL: (designerId: number, portfolioId: number) => ['getPortfolioDetail', designerId, portfolioId],
 } as const;
 
 export const SEARCH_QUERY_KEYS = {

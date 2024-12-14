@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   BookmarkFillIcon,
@@ -9,8 +8,8 @@ import {
   UserProfileImage,
 } from '@daeng-ggu/design-system';
 
-import getBookmark from '@/apis/profile/getBookmark';
 interface IProfileProps {
+  isBookmarked: boolean;
   designerId: number;
   designerName?: string; // 디자이너 이름
   nickname: string; // 닉네임
@@ -23,8 +22,11 @@ interface IProfileProps {
   address?: string; // 주소
   introduction?: string; // 소개
   workExperience?: string; // 경력
+  // eslint-disable-next-line no-unused-vars
+  onBookmarkToggle: (designerId: number, updatedStatus: boolean) => void;
 }
 const Profile = ({
+  isBookmarked,
   designerId,
   nickname,
   designerImgUrl,
@@ -35,31 +37,21 @@ const Profile = ({
   address,
   introduction,
   workExperience,
+  onBookmarkToggle,
 }: IProfileProps) => {
   const navigate = useNavigate();
   const customerId = 2;
   // 다이렉트 예약 페이지 path로 수정해주세요
   const goToReservations = () => navigate('/profile/reservation');
-  const [isBookmarked, setIsBookmarked] = useState<boolean>(false);
   const extractBracketContent = (text: string) => {
     const match = text.match(/\(([^)]+)\)/);
     return match ? match[1].replace(/,/g, ' | ') : text;
   };
 
-  const handleBookmarkToggle = async () => {
-    try {
-      const updatedStatus = !isBookmarked;
-      const result = await getBookmark({
-        customerId,
-        designerId,
-        bookmarkYn: isBookmarked,
-      });
-      console.log(result);
-      setIsBookmarked(updatedStatus);
-    } catch (error) {
-      console.error('Failed to toggle bookmark:', error);
-    }
+  const handleBookmarkToggle = () => {
+    onBookmarkToggle(designerId, !isBookmarked);
   };
+
   const services = providedServices?.map((service) => extractBracketContent(service.codeDesc)).join(' | ');
   const breedMapping: { [key: string]: string } = {
     P1: '소형견',

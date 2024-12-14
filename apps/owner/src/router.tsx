@@ -32,6 +32,7 @@ import Suggest from '@/pages/Suggest/Suggest.tsx';
 
 import PrivateWrapper from './components/RouteGuard/PrivateWrapper'; //로그인 안된 상태면 접근 제한
 import PublicRoute from './components/RouteGuard/PublicRoute'; //로그인 된 상태면 접근 제한
+import EditReviewPage from './pages/EditReviewPage/EditReviewPage';
 
 import '@/styles/sequenceAnimation.css';
 // const isAuthenticated = Boolean(localStorage.getItem('ownerIdStorage')); //로그인 상태 확인
@@ -149,17 +150,11 @@ export const router = createBrowserRouter([
       },
       {
         path: ROUTES.review,
-        element: (
-          <PrivateWrapper isAuthenticated={isAuthenticated}>
-            <Outlet />
-          </PrivateWrapper>
-        ),
-        children: [
-          {
-            index: true,
-            element: <CreateReviewPage />,
-          },
-        ],
+        element: <CreateReviewPage />,
+      },
+      {
+        path: ROUTES.reviewEdit,
+        element: <EditReviewPage />,
       },
       {
         path: ROUTES.reservation,
@@ -209,38 +204,6 @@ export const router = createBrowserRouter([
           },
         ],
       },
-      // {
-      //   path: ROUTES.profile,
-      //   element: <MyPage />,
-      // },
-      // {
-      //   path: ROUTES.profileEdit,
-      //   element: <EditUserProfilePage />,
-      // },
-      // {
-      //   path: ROUTES.profileEditPet,
-      //   element: <EditPetProfilePage />,
-      // },
-      // {
-      //   path: ROUTES.profileAddPet,
-      //   element: <AddPetProfilePage />,
-      // },
-      // {
-      //   path: ROUTES.reviewDetail,
-      //   element: <ReviewDetailPage />,
-      // },
-      // {
-      //   path: ROUTES.reservation,
-      //   element: <ReservationPage />,
-      // },
-      // {
-      //   path: ROUTES.portfolioDetail,
-      //   element: <PortfolioDetailPage />,
-      // },
-      // {
-      //   path: ROUTES.designerProfile,
-      //   element: <DesignerProfilePage />,
-      // },
     ],
   },
 ]);

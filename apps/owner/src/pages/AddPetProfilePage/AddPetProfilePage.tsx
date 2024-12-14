@@ -207,14 +207,12 @@ const AddPetProfilePage = () => {
           />
         </div>
       </PageContainer>
-      {/* <div className='fixed w-full' style={{ bottom: '7.5rem' }}> */}
       <TypeOneButton
         text='등록하기'
         onClick={submitFormData}
         color={activeBtn ? 'bg-primary' : 'bg-gray-50'}
         disabled={!activeBtn}
       />
-      {/* </div> */}
     </div>
   );
 };

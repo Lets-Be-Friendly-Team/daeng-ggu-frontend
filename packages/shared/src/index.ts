@@ -15,3 +15,4 @@ export { default as useWatchUserLocation } from './hooks/useWatchUserLocation';
 export { default as debounce } from './utils/debounce';
 export { default as guardianlocationWebSocket } from './apis/websocket/guardianlocationWebSocket';
 export { default as SSEEventSource } from './apis/SSE/SSEEventSource';
+export { default as extractKorean } from './utils/extractKorean';

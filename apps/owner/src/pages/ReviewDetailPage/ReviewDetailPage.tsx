@@ -5,7 +5,6 @@ import {
   CloseIcon,
   DeleteIcon,
   EditIcon,
-  EmptyHeartIcon,
   FilledHeartIcon,
   FullStarIcon,
   LockIcon,
@@ -19,24 +18,24 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 import './swiperStyle.css';
 
-interface IReviewItem {
+export interface IReviewItem {
   reviewId: number;
   reviewImgUrl1: string | null | undefined;
-  reviewImgUrl2: string | null | undefined;
-  reviewImgUrl3: string | null | undefined;
+  reviewImgUrl2?: string | null | undefined;
+  reviewImgUrl3?: string | null | undefined;
   designerId: number;
   designerImgUrl: string | undefined;
   designerAddress: string;
-  nickname: string;
+  designerName: string;
   reviewContents: string;
   reviewLikeCnt: number;
   reviewStar: number;
   feedExposure: boolean;
+  isReviewLike: boolean;
 }
 
 const ReviewDetail = () => {
   const [expandedReviews, setExpandedReviews] = useState<{ [key: number]: boolean }>({});
-  const [isLiked, setIsLiked] = useState<boolean>(false);
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
   const { show } = useModalStore();
   const { state } = useLocation();
@@ -52,8 +51,12 @@ const ReviewDetail = () => {
   const navigateBack = () => {
     navigate('/profile');
   };
+  const navigateEditPage = () => {
+    navigate('/review/edit');
+  };
   const handleEdit = () => {
     setModalOpen(false);
+    navigateEditPage();
   };
 
   const handleDelete = () => {
@@ -93,7 +96,7 @@ const ReviewDetail = () => {
         </div>
         <div className='flex w-full justify-between'>
           <div className='flex flex-col'>
-            <div className='text-sub_h2 text-secondary'>{reviews[activeIndex]?.nickname}</div>
+            <div className='text-sub_h2 text-secondary'>{reviews[activeIndex]?.designerName}</div>
             <div className='text-caption text-secondary'>{reviews[activeIndex]?.designerAddress}</div>
           </div>
           <div className='flex items-center gap-[18px]'>
@@ -108,24 +111,28 @@ const ReviewDetail = () => {
       {/* 고정된 리뷰 내용 */}
       <div className='absolute bottom-0 left-0 right-0 z-10 flex h-[25%] items-start justify-between bg-gradient-to-t from-black px-5'>
         <div className='overflow-hidden pt-12 text-body2 leading-8 text-secondary'>
-          {expandedReviews[currentReviewIndex] ? (
-            reviews[currentReviewIndex]?.reviewContents
+          {reviews[currentReviewIndex]?.reviewContents ? (
+            expandedReviews[currentReviewIndex] ? (
+              reviews[currentReviewIndex].reviewContents
+            ) : (
+              <>
+                {reviews[currentReviewIndex].reviewContents.slice(0, 50)}
+                {reviews[currentReviewIndex].reviewContents.length > 50 && (
+                  <button
+                    onClick={() =>
+                      setExpandedReviews((prev) => ({
+                        ...prev,
+                        [currentReviewIndex]: true,
+                      }))
+                    }
+                  >
+                    ...더보기
+                  </button>
+                )}
+              </>
+            )
           ) : (
-            <>
-              {reviews[currentReviewIndex]?.reviewContents.slice(0, 50)}
-              {reviews[currentReviewIndex]?.reviewContents.length > 50 && (
-                <button
-                  onClick={() =>
-                    setExpandedReviews((prev) => ({
-                      ...prev,
-                      [currentReviewIndex]: true,
-                    }))
-                  }
-                >
-                  ...더보기
-                </button>
-              )}
-            </>
+            <div>리뷰 내용이 없습니다.</div> // 리뷰 내용이 없는 경우 처리
           )}
         </div>
 
@@ -137,25 +144,21 @@ const ReviewDetail = () => {
             <div>{reviews[activeIndex]?.reviewStar}</div>
           </div>
           <div className='flex flex-col items-center'>
-            <button onClick={() => setIsLiked((prev) => !prev)}>
-              {isLiked ? (
-                <FilledHeartIcon className='h-[30px] w-[30px]' color='#FF6842' />
-              ) : (
-                <EmptyHeartIcon className='h-[30px] w-[30px]' color='#F2F4F5' />
-              )}
+            <button>
+              <FilledHeartIcon className='h-[30px] w-[30px]' color='#FF6842' />
             </button>
             <div>{reviews[activeIndex]?.reviewLikeCnt}</div>
             <div>
               <button className='pt-[5px]' onClick={toggleModal}>
                 <MoreIcon className='h-[30px] w-[30px]' color='#F2F4F5' />
               </button>
-              <BottomSheetModal isOpen={isModalOpen} onClose={() => setModalOpen(false)} options={modalOptions} />
             </div>
           </div>
         </div>
       </div>
 
       {/* Vertical Swiper */}
+      <BottomSheetModal isOpen={isModalOpen} onClose={() => setModalOpen(false)} options={modalOptions} />
       <Swiper
         direction='vertical'
         slidesPerView={1}
@@ -171,6 +174,7 @@ const ReviewDetail = () => {
         {reviews.map((review) => (
           <SwiperSlide key={review.reviewId}>
             {/* Horizontal Swiper */}
+
             <Swiper
               direction='horizontal'
               slidesPerView={1}

@@ -1,6 +1,8 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CategoryTab, Header, PageContainer } from '@daeng-ggu/design-system';
+import { CategoryTab, Header, LogoImage, PageContainer } from '@daeng-ggu/design-system';
 
+import getBookmark from '@/apis/profile/getBookmark';
 import useGetDesignerProfile from '@/hooks/queries/DesignerProfile/useGetDesignerProfile';
 
 import Portfolio from './components/Portfolio';
@@ -9,12 +11,42 @@ import ReviewList from './components/ReviewList';
 
 const MyPage = () => {
   const navigate = useNavigate();
-  const designerId = 2;
-  const { data: designerProfileData, isError } = useGetDesignerProfile(designerId);
-  console.log(designerProfileData);
+  const designerId = 4;
+  const customerId = 2;
+  const { data: designerProfileData, isError } = useGetDesignerProfile(designerId, customerId);
+  const [isBookmarked, setIsBookmarked] = useState(false);
+
+  useEffect(() => {
+    if (designerProfileData) {
+      setIsBookmarked(designerProfileData.isBookmarked);
+    }
+  }, [designerProfileData]);
+
+  const toggleBookmark = async (designerId: number, updatedStatus: boolean) => {
+    try {
+      await getBookmark({
+        customerId: 2,
+        designerId,
+        bookmarkYn: designerProfileData?.isBookmarked ?? false,
+      });
+
+      setIsBookmarked(updatedStatus);
+    } catch (error) {
+      console.error('Bookmark toggle failed:', error);
+    }
+  };
 
   if (isError || !designerProfileData) {
-    return <div>프로필 정보를 가져오는 중 오류가 발생했습니다.</div>;
+    return (
+      <PageContainer>
+        <div className='flex h-screen w-full flex-col items-center justify-center'>
+          <div className='flex w-[100%] flex-col items-center gap-y-[2rem]'>
+            <img src={LogoImage} alt='logo image' className='w-3/5' />
+            <div className='text-body1 text-gray-900'>프로필 정보를 가져오고 있습니다.</div>
+          </div>
+        </div>
+      </PageContainer>
+    );
   }
   const tabs = [
     {
@@ -47,8 +79,9 @@ const MyPage = () => {
   return (
     <div className='pb-[185px]'>
       <PageContainer>
-        <Header mode='back' title='마이페이지' onClick={handleNavigateMain} />
+        <Header mode='back' title='디자이너 페이지' onClick={handleNavigateMain} />
         <Profile
+          isBookmarked={isBookmarked}
           designerId={designerProfileData.designerId}
           nickname={designerProfileData.nickname}
           designerImgUrl={designerProfileData.designerImgUrl}
@@ -60,6 +93,7 @@ const MyPage = () => {
           address={designerProfileData.address1}
           introduction={designerProfileData.introduction}
           workExperience={designerProfileData.workExperience}
+          onBookmarkToggle={toggleBookmark}
         />
         <CategoryTab tabs={tabs} />
       </PageContainer>

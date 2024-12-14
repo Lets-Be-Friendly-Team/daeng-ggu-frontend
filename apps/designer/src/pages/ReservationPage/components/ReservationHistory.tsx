@@ -3,6 +3,7 @@ import { ArrowDown, ArrowUp, UserProfileImage } from '@daeng-ggu/design-system';
 import MiniButton from '@daeng-ggu/design-system/components/Buttons/MiniButton';
 import BulbIcon from '@daeng-ggu/design-system/components/Icons/BulbIcon';
 import ScissorIcon from '@daeng-ggu/design-system/components/Icons/ScissorIcon';
+import { extractKorean } from '@daeng-ggu/shared';
 
 interface IReservation {
   reservationId: number;
@@ -78,7 +79,7 @@ const ReservationHistory = ({ reservationList }: ReservationHistoryProps) => {
                 </div>
                 <div className='text-gray-600'>미용 고객:</div>
                 <div className='text-gray-800'>
-                  {reservation.petName} ({reservation.subBreed})
+                  {reservation.petName} ({extractKorean(reservation.subBreed)})
                 </div>
               </div>
               <div className='flex gap-2'>

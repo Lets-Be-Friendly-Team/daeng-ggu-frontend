@@ -11,28 +11,28 @@ interface IDesignerItem {
   nickname: string;
   designerImgUrl: string;
   designerAddress: string;
-  possibleBreeds: IBreed[];
+  possibleBreed?: IBreed[];
 }
 
 interface IDesignerListProps {
   bookmarkList: IDesignerItem[];
 }
 
-const LikedList = ({ bookmarkList }: IDesignerListProps) => {
+const BookmarkList = ({ bookmarkList = [] }: IDesignerListProps) => {
   const navigate = useNavigate();
   const navigateDesignerProfile = (designerId: number) => {
-    navigate(`/profile/${designerId}`);
+    navigate(`/profile/designer/${designerId}`);
   };
 
   return (
     <div className='py-4'>
-      {bookmarkList.map((designer) => (
+      {bookmarkList?.map((designer) => (
         <BookmarkItem
           key={designer.designerId}
           nickname={designer.nickname}
           imageUrl={designer.designerImgUrl}
           address={designer.designerAddress}
-          breeds={designer.possibleBreeds}
+          breeds={designer.possibleBreed}
           onClick={() => navigateDesignerProfile(designer.designerId)}
         />
       ))}
@@ -40,4 +40,4 @@ const LikedList = ({ bookmarkList }: IDesignerListProps) => {
   );
 };
 
-export default LikedList;
+export default BookmarkList;
