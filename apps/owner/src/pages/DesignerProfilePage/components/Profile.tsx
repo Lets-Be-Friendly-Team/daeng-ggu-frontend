@@ -40,8 +40,6 @@ const Profile = ({
   onBookmarkToggle,
 }: IProfileProps) => {
   const navigate = useNavigate();
-  const customerId = 2;
-  // 다이렉트 예약 페이지 path로 수정해주세요
   const goToReservations = () => navigate('/profile/reservation');
   const extractBracketContent = (text: string) => {
     const match = text.match(/\(([^)]+)\)/);
