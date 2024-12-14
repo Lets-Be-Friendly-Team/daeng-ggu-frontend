@@ -1,4 +1,4 @@
-// src/apis/bidRequest.ts
+// src/apis/postsuggest.ts
 
 import { APIClient } from '@daeng-ggu/shared';
 

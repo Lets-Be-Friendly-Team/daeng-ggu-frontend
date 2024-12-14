@@ -15,6 +15,7 @@ import MembershipPage from '@/pages/Membership/MembershipPage';
 import MyPage from '@/pages/MyPage/MyPage';
 import PortfolioDetailPage from '@/pages/PortfolioDetailPage/PortfolioDetailPage';
 import RegisterStep from '@/pages/RegisterProfile/RegisterStep';
+import PastRequestReview from '@/pages/RequestPage/PastRequestReview.tsx';
 import ReservationPage from '@/pages/ReservationPage/ReservationPage';
 import ReviewDetailPage from '@/pages/ReviewDetailPage/ReviewDetailPage';
 import SignupPage from '@/pages/Signup/SignupPage';
@@ -96,10 +97,10 @@ export const router = createBrowserRouter(
               path: ROUTES.bidDetail,
               element: <DetailPage />,
             },
-            // {
-            //   path: ROUTES.bidTest,
-            //   element: <Test />,
-            // },
+            {
+              path: ROUTES.bidPastDetail,
+              element: <PastRequestReview />,
+            },
             {
               path: ROUTES.bidSuggest,
               element: <SuggestPage />,

@@ -32,8 +32,12 @@ const PendingRequestDesigner = ({ data }: PendingRequestDesignerProps) => {
   //   return dateString;
   // };
 
-  const handleDetailPage = (targetId: number) => {
-    navigate('/bid/detail', { state: { data: '', pageMode: 'designer', customerId: targetId } });
+  const handleDetailPage = (targetId: number, targetRequestId: number) => {
+    console.log('am i getting requestID?: ', targetRequestId);
+
+    navigate('/bid/detail', {
+      state: { data: '', pageMode: 'designer', customerId: targetId, suggestRequestId: targetRequestId },
+    });
   };
 
   const getDeliveryStatus = (majorBreedCode: string) => {
@@ -80,7 +84,10 @@ const PendingRequestDesigner = ({ data }: PendingRequestDesignerProps) => {
                             </p>
                           </div>
                           <div className='mt-2'>
-                            <DetailButton text='상세보기' onClick={() => handleDetailPage(request.petId)} />
+                            <DetailButton
+                              text='상세보기'
+                              onClick={() => handleDetailPage(request.petId, request.requestId)}
+                            />
                           </div>
                         </div>
                         <div>
