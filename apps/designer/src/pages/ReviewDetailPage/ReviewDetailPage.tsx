@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router';
-import { CloseIcon, EmptyHeartIcon, FilledHeartIcon, FullStarIcon, UserProfileImage } from '@daeng-ggu/design-system';
+import { CloseIcon, FilledHeartIcon, FullStarIcon, UserProfileImage } from '@daeng-ggu/design-system';
 import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -23,7 +23,6 @@ interface IReviewItem {
 
 const ReviewDetail = () => {
   const [expandedReviews, setExpandedReviews] = useState<{ [key: number]: boolean }>({});
-  const [isLiked, setIsLiked] = useState<boolean>(false);
   const { state } = useLocation();
   const { reviewId } = useParams();
   const navigate = useNavigate();
@@ -88,12 +87,8 @@ const ReviewDetail = () => {
             <div>{reviews[activeIndex]?.reviewStar}</div>
           </div>
           <div className='flex flex-col items-center'>
-            <button onClick={() => setIsLiked((prev) => !prev)}>
-              {isLiked ? (
-                <FilledHeartIcon className='h-[30px] w-[30px]' color='#FF6842' />
-              ) : (
-                <EmptyHeartIcon className='h-[30px] w-[30px]' color='#F2F4F5' />
-              )}
+            <button>
+              <FilledHeartIcon className='h-[30px] w-[30px]' color='#FF6842' />
             </button>
             <div>{reviews[activeIndex]?.reviewLikeCnt}</div>
           </div>

@@ -7,7 +7,6 @@ const useGetReviewDetail = (reviewId: number) => {
   return useQuery({
     queryKey: REVIEW_QUERY_KEYS.GET_REVIEW_DETAIL(reviewId),
     queryFn: () => getReviewDetail({ reviewId }),
-    select: (response) => response.data,
   });
 };
 export default useGetReviewDetail;

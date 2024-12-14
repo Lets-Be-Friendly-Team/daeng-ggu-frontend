@@ -33,6 +33,8 @@ import Suggest from '@/pages/Suggest/Suggest.tsx';
 import PrivateWrapper from './components/RouteGuard/PrivateWrapper'; //로그인 안된 상태면 접근 제한
 import PublicRoute from './components/RouteGuard/PublicRoute'; //로그인 된 상태면 접근 제한
 
+import EditReviewPage from './pages/EditReviewPage/EditReviewPage';
+
 import '@/styles/sequenceAnimation.css';
 // const isAuthenticated = Boolean(localStorage.getItem('ownerIdStorage')); //로그인 상태 확인
 const isAuthenticated = true; //로그인 상태 true로 임시 설정
@@ -149,17 +151,11 @@ export const router = createBrowserRouter([
       },
       {
         path: ROUTES.review,
-        element: (
-          <PrivateWrapper isAuthenticated={isAuthenticated}>
-            <Outlet />
-          </PrivateWrapper>
-        ),
-        children: [
-          {
-            index: true,
-            element: <CreateReviewPage />,
-          },
-        ],
+        element: <CreateReviewPage />,
+      },
+      {
+        path: ROUTES.reviewEdit,
+        element: <EditReviewPage />,
       },
       {
         path: ROUTES.reservation,

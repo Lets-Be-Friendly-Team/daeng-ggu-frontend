@@ -12,11 +12,11 @@ const MyPage = () => {
   const navigate = useNavigate();
   const customerId = 2;
   const { data: profileData, isError } = useGetProfile(customerId);
-
+  console.log(profileData);
   if (isError || !profileData) {
     return <div>프로필 정보를 가져오는 중 오류가 발생했습니다.</div>;
   }
-  console.log(profileData);
+
   const tabs = [
     {
       label: '리뷰',

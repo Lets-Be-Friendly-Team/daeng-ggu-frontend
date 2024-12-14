@@ -1,6 +1,16 @@
 interface IReviewItem {
   reviewId: number;
-  reviewImgUrl: string;
+  reviewImgUrl1?: string;
+  reviewImgUrl2?: string;
+  reviewImgUrl3?: string;
+  designerId: number;
+  designerImgUrl: string;
+  designerAddress: string;
+  nickname: string;
+  reviewContents: string;
+  reviewStar: number;
+  reviewLikeCnt: number;
+  feedExposure: boolean;
 }
 interface IReviewListProps {
   reviews: IReviewItem[];
@@ -15,7 +25,7 @@ const ReviewList = ({ reviews, onReviewClick }: IReviewListProps) => {
         <div key={review.reviewId} className='w-full'>
           <div className='relative' style={{ paddingTop: '100%' }} onClick={() => onReviewClick(review.reviewId)}>
             <img
-              src={review.reviewImgUrl}
+              src={review.reviewImgUrl1}
               alt={`img-${review.reviewId}`}
               className='absolute left-0 top-0 h-full w-full rounded-md object-cover hover:cursor-pointer'
             />

@@ -23,6 +23,7 @@ const ROUTES = {
   // designerProfile: 'profile/:designerId',
 
   review: 'review',
+  reviewEdit: 'review/edit',
   login: 'login',
   signup: 'signup',
   signupSuccess: 'success',

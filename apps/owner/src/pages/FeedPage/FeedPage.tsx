@@ -4,12 +4,16 @@ import { EmptyHeartIcon, FilledHeartIcon, FullStarIcon, UserProfileImage } from 
 import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
+import useGetFeed from '@/hooks/queries/Review/useGetFeed';
+
 import './swiperStyle.css';
 
 const FeedPage = () => {
   const [expandedReviews, setExpandedReviews] = useState<{ [key: number]: boolean }>({});
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const { reviewId } = useParams();
+  const { data: feedData } = useGetFeed();
+  console.log(feedData);
   const reviews = [
     {
       reviewId: 1,
@@ -51,46 +55,6 @@ const FeedPage = () => {
       reviewLikeCnt: 1,
       isReviewLike: false,
       feedExposureYn: 'N',
-    },
-    {
-      reviewId: 3,
-      reviewImgUrl1: 'https://daeng-ggu-test.s3.ap-northeast-2.amazonaws.com/haneul.jpg',
-      reviewImgUrl2: null,
-      reviewImgUrl3: null,
-      lastcreatedat: '2024-12-06T11:45:20',
-      designerId: 4,
-      designerImgUrl: 'https://daeng-ggu-test.s3.ap-northeast-2.amazonaws.com/BigBang+Pet+Salon.jpg',
-      designerAddress: '경기 성남시 분당구 삼평동 709',
-      nickname: '짱짱 미용실',
-      designerName: '권지용',
-      customerId: 103,
-      customerImgUrl: 'https://daeng-ggu-test.s3.ap-northeast-2.amazonaws.com/customer3.jpg',
-      customerName: '홍길동',
-      reviewContents: '친절하고 좋아요.',
-      reviewStar: 4,
-      reviewLikeCnt: 0,
-      isReviewLike: false,
-      feedExposureYn: 'Y',
-    },
-    {
-      reviewId: 4,
-      reviewImgUrl1: 'https://daeng-ggu-test.s3.ap-northeast-2.amazonaws.com/janggun.jpg',
-      reviewImgUrl2: null,
-      reviewImgUrl3: null,
-      lastcreatedat: '2024-12-05T09:00:00',
-      designerId: 1,
-      designerImgUrl: 'https://daeng-ggu-test.s3.ap-northeast-2.amazonaws.com/jangmi+hair+salon.jpg',
-      designerAddress: '서울특별시 강남구 대치동 889-41',
-      nickname: '깎을래 볶을래',
-      designerName: '김장미',
-      customerId: 104,
-      customerImgUrl: 'https://daeng-ggu-test.s3.ap-northeast-2.amazonaws.com/customer4.jpg',
-      customerName: '최은지',
-      reviewContents: '좋아요!',
-      reviewStar: 5,
-      reviewLikeCnt: 0,
-      isReviewLike: true,
-      feedExposureYn: 'Y',
     },
   ];
   const navigate = useNavigate();

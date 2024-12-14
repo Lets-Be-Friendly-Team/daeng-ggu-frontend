@@ -8,7 +8,17 @@ export interface Pet {
 
 export interface Review {
   reviewId: number;
-  reviewImgUrl: string;
+  reviewImgUrl1?: string;
+  reviewImgUrl2?: string;
+  reviewImgUrl3?: string;
+  designerId: number;
+  designerImgUrl: string;
+  designerAddress: string;
+  nickname: string;
+  reviewContents: string;
+  reviewStar: number;
+  reviewLikeCnt: number;
+  feedExposure: boolean;
 }
 export interface PossibleBreed {
   breedCode: string;

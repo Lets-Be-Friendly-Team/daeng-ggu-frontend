@@ -1,6 +1,8 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CategoryTab, Header, PageContainer } from '@daeng-ggu/design-system';
 
+import getBookmark from '@/apis/profile/getBookmark';
 import useGetDesignerProfile from '@/hooks/queries/DesignerProfile/useGetDesignerProfile';
 
 import Portfolio from './components/Portfolio';
@@ -9,9 +11,30 @@ import ReviewList from './components/ReviewList';
 
 const MyPage = () => {
   const navigate = useNavigate();
-  const designerId = 2;
-  const { data: designerProfileData, isError } = useGetDesignerProfile(designerId);
-  console.log(designerProfileData);
+  const designerId = 4;
+  const customerId = 2;
+  const { data: designerProfileData, isError } = useGetDesignerProfile(designerId, customerId);
+  const [isBookmarked, setIsBookmarked] = useState(false);
+
+  useEffect(() => {
+    if (designerProfileData) {
+      setIsBookmarked(designerProfileData.isBookmarked);
+    }
+  }, [designerProfileData]);
+
+  const toggleBookmark = async (designerId: number, updatedStatus: boolean) => {
+    try {
+      await getBookmark({
+        customerId: 2,
+        designerId,
+        bookmarkYn: designerProfileData?.isBookmarked ?? false,
+      });
+
+      setIsBookmarked(updatedStatus);
+    } catch (error) {
+      console.error('Bookmark toggle failed:', error);
+    }
+  };
 
   if (isError || !designerProfileData) {
     return <div>프로필 정보를 가져오는 중 오류가 발생했습니다.</div>;
@@ -49,6 +72,7 @@ const MyPage = () => {
       <PageContainer>
         <Header mode='back' title='디자이너 페이지' onClick={handleNavigateMain} />
         <Profile
+          isBookmarked={isBookmarked}
           designerId={designerProfileData.designerId}
           nickname={designerProfileData.nickname}
           designerImgUrl={designerProfileData.designerImgUrl}
@@ -60,6 +84,7 @@ const MyPage = () => {
           address={designerProfileData.address1}
           introduction={designerProfileData.introduction}
           workExperience={designerProfileData.workExperience}
+          onBookmarkToggle={toggleBookmark}
         />
         <CategoryTab tabs={tabs} />
       </PageContainer>
