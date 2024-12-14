@@ -4,7 +4,7 @@ export const LOGIN_QUERY_KEYS = {
 } as const;
 
 export const REVIEW_QUERY_KEYS = {
-  GET_REVIEW: (page: number) => ['getReview', page],
+  GET_FEED: (page: number) => ['getFeed', page],
   //   GET_REVIEW_LIST: ['getReviewList'],
   //   POST_REVIEW: ['postReview'],
   GET_REVIEW_DETAIL: (reviewId: number) => ['getReviewDetail', reviewId],

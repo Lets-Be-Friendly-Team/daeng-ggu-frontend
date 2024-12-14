@@ -2,15 +2,14 @@ import { APIClient } from '@daeng-ggu/shared';
 
 export interface ReviewItem {
   reviewId: number;
-  reviewImgUrl1: string | null;
-  reviewImgUrl2: string | null;
-  reviewImgUrl3: string | null;
-  lastCreatedAt: string; // ISO 8601 형식의 날짜 문자열
+  reviewImgList: string[];
+  lastCreatedAt: string;
   designerId: number;
-  designerImgUrl: string | null;
+  designerImgUrl: string | undefined;
   designerName: string;
+  designerAddress: string;
   customerId: number;
-  customerImgUrl: string | null;
+  customerImgUrl: string | undefined;
   customerName: string;
   reviewContents: string;
   reviewStar: number;
@@ -18,7 +17,6 @@ export interface ReviewItem {
   isReviewLike: boolean;
   feedExposure: boolean;
   feedUrl: string | null;
-  feedImgList: string[];
 }
 export interface FeedData {
   totalReview: number;
@@ -30,6 +28,8 @@ export interface FeedResponse {
   data: FeedData;
 }
 const getFeed = async ({ page }: { page: number }): Promise<FeedResponse> => {
-  return await APIClient.get('/daengggu/feed', { page: page.toString() });
+  return await APIClient.get('/daengggu/feed', {
+    page: page.toString(), // API 호출 쿼리 파라미터 수정
+  });
 };
 export default getFeed;

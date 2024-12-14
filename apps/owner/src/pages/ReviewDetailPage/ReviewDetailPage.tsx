@@ -152,13 +152,13 @@ const ReviewDetail = () => {
               <button className='pt-[5px]' onClick={toggleModal}>
                 <MoreIcon className='h-[30px] w-[30px]' color='#F2F4F5' />
               </button>
-              <BottomSheetModal isOpen={isModalOpen} onClose={() => setModalOpen(false)} options={modalOptions} />
             </div>
           </div>
         </div>
       </div>
 
       {/* Vertical Swiper */}
+      <BottomSheetModal isOpen={isModalOpen} onClose={() => setModalOpen(false)} options={modalOptions} />
       <Swiper
         direction='vertical'
         slidesPerView={1}
@@ -174,6 +174,7 @@ const ReviewDetail = () => {
         {reviews.map((review) => (
           <SwiperSlide key={review.reviewId}>
             {/* Horizontal Swiper */}
+
             <Swiper
               direction='horizontal'
               slidesPerView={1}

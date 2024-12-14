@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router';
-import { CategoryTab, Header, PageContainer } from '@daeng-ggu/design-system';
+import { CategoryTab, Header, LogoImage, PageContainer } from '@daeng-ggu/design-system';
 
 import useGetProfile from '@/hooks/queries/CustomerProfile/useGetProfile';
 
@@ -14,7 +14,16 @@ const MyPage = () => {
   const { data: profileData, isError } = useGetProfile(customerId);
   console.log(profileData);
   if (isError || !profileData) {
-    return <div>프로필 정보를 가져오는 중 오류가 발생했습니다.</div>;
+    return (
+      <PageContainer>
+        <div className='flex h-screen w-full flex-col items-center justify-center'>
+          <div className='flex w-[100%] flex-col items-center gap-y-[2rem]'>
+            <img src={LogoImage} alt='logo image' className='w-3/5' />
+            <div className='text-body1 text-gray-900'>프로필 정보를 가져오고 있습니다.</div>
+          </div>
+        </div>
+      </PageContainer>
+    );
   }
 
   const tabs = [
@@ -39,7 +48,7 @@ const MyPage = () => {
   };
 
   return (
-    <div className='pb-[185px]'>
+    <div className='pb-[64px]'>
       <PageContainer>
         <Header mode='back' title='마이페이지' onClick={handleNavigateMain} />
         <Profile

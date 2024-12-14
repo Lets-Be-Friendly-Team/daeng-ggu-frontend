@@ -4,60 +4,36 @@ import { EmptyHeartIcon, FilledHeartIcon, FullStarIcon, UserProfileImage } from 
 import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-// import useGetFeed from '@/hooks/queries/Review/useGetFeed';
+import useGetFeed from '@/hooks/queries/Review/useGetFeed';
+
 import './swiperStyle.css';
 
 const FeedPage = () => {
   const [expandedReviews, setExpandedReviews] = useState<{ [key: number]: boolean }>({});
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const { reviewId } = useParams();
-  // const { data: feedData } = useGetFeed();
-  // console.log(feedData);
-  const reviews = [
-    {
-      reviewId: 1,
-      reviewImgUrl1: 'https://daeng-ggu-test.s3.ap-northeast-2.amazonaws.com/haneul.jpg',
-      reviewImgUrl2: 'https://daeng-ggu-test.s3.ap-northeast-2.amazonaws.com/haneul.jpg',
-      reviewImgUrl3: null,
-      lastcreatedat: '2024-12-08T10:15:30',
-      designerId: 5,
-      designerImgUrl: 'https://daeng-ggu-test.s3.ap-northeast-2.amazonaws.com/BigBang+Pet+Salon.jpg',
-      designerAddress: '경기 성남시 분당구 삼평동 709',
-      nickname: '우리 미용실 짱',
-      designerName: '권지용',
-      customerId: 101,
-      customerImgUrl: 'https://daeng-ggu-test.s3.ap-northeast-2.amazonaws.com/haneul.jpg',
-      customerName: '김장군',
-      reviewContents:
-        '디자이너가 매우 친절하고, 스타일링이 정말 마음에 들었습니다. 또 오고 싶어요. 진짜 진짜 진짜!!! 너무 좋아요어어어어어어어',
-      reviewStar: 5,
-      reviewLikeCnt: 2,
-      isReviewLike: true,
-      feedExposureYn: 'Y',
-    },
-    {
-      reviewId: 2,
-      reviewImgUrl1: 'https://daeng-ggu-test.s3.ap-northeast-2.amazonaws.com/janggun.jpg',
-      reviewImgUrl2: null,
-      reviewImgUrl3: null,
-      lastcreatedat: '2024-12-07T14:00:00',
-      designerId: 6,
-      designerImgUrl: 'https://daeng-ggu-test.s3.ap-northeast-2.amazonaws.com/BigBang+Pet+Salon.jpg',
-      designerAddress: '경기 성남시 분당구 삼평동 709',
-      nickname: '우리 미용실 최고임',
-      designerName: '권지용',
-      customerId: 102,
-      customerImgUrl: 'https://daeng-ggu-test.s3.ap-northeast-2.amazonaws.com/janggun.jpg',
-      customerName: '이장미',
-      reviewContents: '보통입니다.',
-      reviewStar: 3,
-      reviewLikeCnt: 1,
-      isReviewLike: false,
-      feedExposureYn: 'N',
-    },
-  ];
   const navigate = useNavigate();
 
+  // 페이지 번호 초기화
+  const page = 0;
+  const { data: feedData, isLoading, error } = useGetFeed(page);
+
+  // API에서 받아온 리뷰 리스트
+  const reviews = feedData?.reviewList || [];
+
+  //   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, error } = useInfiniteQuery<
+  //   FeedResponse,
+  //   Error
+  // >(['feed'], ({ pageParam = 0 }) => getFeed({ page: pageParam }), {
+  //   getNextPageParam: (lastPage, pages) => {
+  //     const totalFetched = pages.length * FEEDS_PER_PAGE;
+  //     if (totalFetched < lastPage.data.totalReview) {
+  //       return pages.length + 1;
+  //     }
+  //     return undefined;
+  //   },
+  // });
+  // 현재 리뷰 인덱스 계산
   const currentReviewIndex = Math.max(
     reviews.findIndex((review) => review.reviewId === Number(reviewId)),
     0,
@@ -68,21 +44,26 @@ const FeedPage = () => {
     navigate(`/profile/designer/${designerId}`);
   };
 
+  if (isLoading) {
+    return <div className='text-white'>로딩 중...</div>;
+  }
+
+  if (error) {
+    return <div className='text-red-500'>에러가 발생했습니다. 다시 시도해주세요.</div>;
+  }
+
   return (
     <div className='relative flex h-[calc(100vh-65px)] w-full flex-col bg-gray-900'>
-      <div className='absolute left-0 right-0 top-0 z-10 flex h-[100px] items-center gap-[10px] bg-gradient-to-b from-black px-5'>
-        <div
-          className='hover: flex-shrink-0 cursor-pointer'
-          onClick={() => navigateDesignerProfile(reviews[activeIndex].designerId)}
-        >
+      <div
+        className='absolute left-0 right-0 top-0 z-10 flex h-[100px] items-center gap-[10px] bg-gradient-to-b from-black px-5 hover:cursor-pointer'
+        onClick={() => navigateDesignerProfile(reviews[activeIndex].designerId)}
+      >
+        <div className='flex-shrink-0'>
           <UserProfileImage imageUrl={reviews[activeIndex]?.designerImgUrl} />
         </div>
         <div className='flex w-full justify-between'>
-          <div
-            className='flex flex-col hover:cursor-pointer'
-            onClick={() => navigateDesignerProfile(reviews[activeIndex].designerId)}
-          >
-            <div className='text-sub_h2 text-secondary'>{reviews[activeIndex]?.nickname}</div>
+          <div className='flex flex-col'>
+            <div className='text-sub_h2 text-secondary'>{reviews[activeIndex]?.designerName}</div>
             <div className='text-caption text-secondary'>{reviews[activeIndex]?.designerAddress}</div>
           </div>
         </div>
@@ -161,23 +142,21 @@ const FeedPage = () => {
               modules={[Pagination]}
               className='relative h-full'
             >
-              {[review.reviewImgUrl1, review.reviewImgUrl2, review.reviewImgUrl3]
-                .filter(Boolean)
-                .map((imageUrl, index) => (
-                  <SwiperSlide key={index}>
-                    <div className='relative h-full w-full overflow-hidden'>
-                      <img
-                        src={imageUrl || undefined}
-                        alt={`Image ${index + 1}`}
-                        className='absolute left-0 top-0 h-full w-full object-cover'
-                        style={{
-                          objectFit: 'cover',
-                          objectPosition: 'center',
-                        }}
-                      />
-                    </div>
-                  </SwiperSlide>
-                ))}
+              {review.reviewImgList.filter(Boolean).map((imageUrl, index) => (
+                <SwiperSlide key={index}>
+                  <div className='relative h-full w-full overflow-hidden'>
+                    <img
+                      src={imageUrl || undefined}
+                      alt={`Image ${index + 1}`}
+                      className='absolute left-0 top-0 h-full w-full object-cover'
+                      style={{
+                        objectFit: 'cover',
+                        objectPosition: 'center',
+                      }}
+                    />
+                  </div>
+                </SwiperSlide>
+              ))}
             </Swiper>
           </SwiperSlide>
         ))}

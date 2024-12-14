@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { FileUploader } from 'react-drag-drop-files';
 
 import logoImage from '../../assets/images/logoImage.webp';
@@ -36,6 +36,9 @@ const ImageUploader = ({
   const [currentImgList, setCurrentImgList] = useState<string[]>(initialImgList);
   const [currentVideo, setCurrentVideo] = useState<string>(initialVideo);
 
+  useEffect(() => {
+    setCurrentImgList(initialImgList);
+  }, [initialImgList]);
   // 이미지 업로드 핸들러
   const handleImgUpload = (files: File[]) => {
     setImgList?.((prev) => [...prev, ...files]);

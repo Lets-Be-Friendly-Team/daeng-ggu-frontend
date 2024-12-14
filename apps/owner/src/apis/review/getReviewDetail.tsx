@@ -1,22 +1,26 @@
 import { APIClient } from '@daeng-ggu/shared';
 
-import { IReviewItem } from '@/pages/ReviewDetailPage/ReviewDetailPage';
-
+export interface ReviewItem {
+  designerId: number;
+  designerImgUrl: string;
+  designerName: string;
+  feedExposure: boolean;
+  isReviewLike: boolean;
+  reviewContents: string;
+  reviewId: number;
+  reviewImgList: string[];
+  reviewLikeCnt: number;
+  reviewStar: number;
+}
 export interface ReviewDetailResponse {
   status: string;
   message: string;
-  data: IReviewItem;
+  data: ReviewItem;
 }
 const getReviewDetail = async ({ reviewId }: { reviewId: number }) => {
-  try {
-    const response = await APIClient.post<ReviewDetailResponse>('/daengggu/feed/customer', {
-      reviewId,
-    });
-    console.log(response);
-    return response;
-  } catch (error) {
-    console.error('리뷰 상세 정보를 가져오는 중 오류 발생:', error);
-    throw new Error('리뷰 상세 정보를 가져오는 데 실패했습니다.');
-  }
+  const response = await APIClient.post<ReviewDetailResponse>('/daengggu/feed/customer', {
+    reviewId,
+  });
+  return response;
 };
 export default getReviewDetail;

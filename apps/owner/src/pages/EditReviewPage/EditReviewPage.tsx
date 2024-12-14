@@ -6,17 +6,16 @@ import useGetReviewDetail from '@/hooks/queries/Review/useGetReviewDetail';
 const EditReviewPage = () => {
   const reviewId = 5;
   const [imgList, setImgList] = useState<string[]>([]);
+  const [, setNewImgList] = useState<File[]>([]);
   const [ratingState, setRatingState] = useState(0);
   const [reviewContent, setReviewContent] = useState('');
   const { data: review, isPending } = useGetReviewDetail(reviewId);
 
   useEffect(() => {
-    if (review?.data) {
-      // 리뷰 데이터가 로드되었을 때 상태 초기화
-      const initialImageUrls = [review.data.reviewImgUrl1, review.data.reviewImgUrl2].filter(Boolean) as string[];
-      setImgList(initialImageUrls); // 이미지 리스트 설정
-      setRatingState(review.data.reviewStar || 0); // 별점 초기화
-      setReviewContent(review.data.reviewContents || ''); // 리뷰 내용 초기화
+    if (review?.data.reviewImgList) {
+      setImgList(review.data.reviewImgList);
+      setRatingState(review.data.reviewStar || 0);
+      setReviewContent(review.data.reviewContents || '');
     }
   }, [review]);
 
@@ -35,7 +34,7 @@ const EditReviewPage = () => {
     <>
       <PageContainer>
         <Header mode='close' title='리뷰 작성' />
-        <ImageUploader mode='img' label='이미지' initialImgList={imgList} setImgList={setImgList} />
+        <ImageUploader mode='img' label='이미지' initialImgList={imgList} setImgList={setNewImgList} />
         <StarRating className='mt-[4rem]' maxStars={5} ratingState={ratingState} setRatingState={handleRatingClick} />
         <TextArea
           className='mt-[4rem] font-pretendard text-[1.4rem] font-semibold text-gray-900'

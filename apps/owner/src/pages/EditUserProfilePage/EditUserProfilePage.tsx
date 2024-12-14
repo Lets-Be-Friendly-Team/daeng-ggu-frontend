@@ -43,26 +43,169 @@ const EditUserProfilePage = () => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
+  // const submitFormData = () => {
+  //   try {
+  //     const formPayload = new FormData();
+  //     formPayload.append('customerId', String(formData.customerId));
+  //     formPayload.append('customerName', formData.customerName);
+  //     formPayload.append('birthDate', formData.birthDate);
+  //     formPayload.append('gender', formData.gender);
+  //     formPayload.append('phone', formData.phone);
+  //     formPayload.append('nickname', formData.nickname);
+  //     formPayload.append('address1', formData.address1);
+  //     formPayload.append('address2', formData.address2);
+  //     formPayload.append('detailAddress', formData.detailAddress);
+  //     formPayload.append('preCustomerImgUrl', formData.customerImgUrl);
+
+  //     // formPayload.append(
+  //     //   'data',
+  //     //   JSON.stringify({
+  //     //     customerId: formData.customerId,
+  //     //     customerName: formData.customerName,
+  //     //     birthDate: formData.birthDate,
+  //     //     gender: formData.gender,
+  //     //     phone: formData.phone,
+  //     //     nickname: formData.nickname,
+  //     //     address1: formData.address1,
+  //     //     address2: formData.address2,
+  //     //     detailAddress: formData.detailAddress,
+  //     //     preCustomerImgUrl: formData.customerImgUrl,
+  //     //   }),
+  //     // );
+  //     // 파일이 있을 경우에만 append
+  //     if (profileImage) {
+  //       formPayload.append('newCustomerImgFile', profileImage);
+  //     } else {
+  //       // 파일이 없다면 빈 문자열 대신 서버가 이를 허용하는지 확인 필요
+  //       formPayload.append('newCustomerImgFile', '');
+  //     }
+
+  //     console.log('FormData Content:', [...formPayload.entries()]);
+  //     updateProfileMutation.mutate(formPayload, {
+  //       onSuccess: () => {
+  //         alert('업데이트 성공');
+  //         navigate(-1);
+  //       },
+  //       onError: (error) => {
+  //         alert('오류 발생');
+  //         console.error(error);
+  //       },
+  //     });
+  //   } catch (error) {
+  //     alert('프로필 저장에 실패했습니다.');
+  //     console.error(error);
+  //   }
+  // };
+
+  // const submitFormData = () => {
+  //   try {
+  //     const boundary = `----WebKitFormBoundary${Date.now().toString(16)}`; // boundary 값 생성
+  //     const formParts: string[] = [];
+
+  //     // JSON 데이터 추가
+  //     formParts.push(
+  //       `--${boundary}`,
+  //       'Content-Disposition: form-data; name="data"',
+  //       '',
+  //       JSON.stringify({
+  //         customerId: formData.customerId,
+  //         customerName: formData.customerName,
+  //         birthDate: formData.birthDate,
+  //         gender: formData.gender,
+  //         phone: formData.phone,
+  //         nickname: formData.nickname,
+  //         address1: formData.address1,
+  //         address2: formData.address2,
+  //         detailAddress: formData.detailAddress,
+  //         preCustomerImgUrl: formData.customerImgUrl,
+  //       }),
+  //     );
+
+  //     // 이미지 파일 추가 (이미지가 있을 경우)
+  //     if (profileImage) {
+  //       const reader = new FileReader();
+  //       reader.onload = () => {
+  //         formParts.push(
+  //           `--${boundary}`,
+  //           `Content-Disposition: form-data; name="newCustomerImgFile"; filename="${profileImage.name}"`,
+  //           `Content-Type: ${profileImage.type}`,
+  //           '',
+  //           reader.result as string,
+  //         );
+
+  //         // 마지막 boundary 추가
+  //         formParts.push(`--${boundary}--`);
+
+  //         const body = formParts.join('\r\n');
+
+  //         updateProfileMutation.mutate(
+  //           { body, boundary },
+  //           {
+  //             onSuccess: () => {
+  //               alert('업데이트 성공');
+  //               navigate(-1);
+  //             },
+  //             onError: (error) => {
+  //               alert('오류 발생');
+  //               console.error(error);
+  //             },
+  //           },
+  //         );
+  //       };
+  //       reader.readAsDataURL(profileImage);
+  //     } else {
+  //       // 이미지가 없는 경우 바로 전송
+  //       formParts.push(`--${boundary}--`);
+  //       const body = formParts.join('\r\n');
+
+  //       updateProfileMutation.mutate(
+  //         { body, boundary },
+  //         {
+  //           onSuccess: () => {
+  //             alert('업데이트 성공');
+  //             navigate(-1);
+  //           },
+  //           onError: (error) => {
+  //             alert('오류 발생');
+  //             console.error(error);
+  //           },
+  //         },
+  //       );
+  //     }
+  //   } catch (error) {
+  //     alert('프로필 저장에 실패했습니다.');
+  //     console.error(error);
+  //   }
+  // };
+
   const submitFormData = () => {
     try {
       const formPayload = new FormData();
-      formPayload.append('customerId', String(formData.customerId));
-      formPayload.append('customerName', formData.customerName);
-      formPayload.append('birthDate', formData.birthDate);
-      formPayload.append('gender', formData.gender);
-      formPayload.append('phone', formData.phone);
-      formPayload.append('nickname', formData.nickname);
-      formPayload.append('address1', formData.address1);
-      formPayload.append('address2', formData.address2);
-      formPayload.append('detailAddress', formData.detailAddress);
-      formPayload.append('preCustomerImgUrl', formData.customerImgUrl);
 
-      // 파일이 있을 경우에만 append
+      // JSON 데이터를 Blob으로 변환하여 지정된 key로 추가
+      const jsonData = {
+        customerId: formData.customerId,
+        customerName: formData.customerName,
+        birthDate: formData.birthDate,
+        gender: formData.gender,
+        phone: formData.phone,
+        nickname: formData.nickname,
+        address1: formData.address1,
+        address2: formData.address2,
+        detailAddress: formData.detailAddress,
+        preCustomerImgUrl: formData.customerImgUrl,
+      };
+
+      formPayload.append(
+        'data', // 서버에서 지정한 key
+        new Blob([JSON.stringify(jsonData)], {
+          type: 'application/json', // JSON 타입 명시
+        }),
+      );
+
+      // 이미지 파일 추가
       if (profileImage) {
-        formPayload.append('newCustomerImgFile', profileImage);
-      } else {
-        // 파일이 없다면 빈 문자열 대신 서버가 이를 허용하는지 확인 필요
-        formPayload.append('newCustomerImgFile', '');
+        formPayload.append('newCustomerImgFile', profileImage); // 이미지 key는 서버에서 요구하는 값으로 설정
       }
 
       console.log('FormData Content:', [...formPayload.entries()]);
@@ -81,6 +224,7 @@ const EditUserProfilePage = () => {
       console.error(error);
     }
   };
+
   const handleImageDelete = () => {
     setProfileImage(undefined);
     setFormData((prev) => ({ ...prev, customerImgUrl: '' }));
