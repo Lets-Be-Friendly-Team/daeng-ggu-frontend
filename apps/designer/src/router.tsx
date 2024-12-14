@@ -9,7 +9,7 @@ import ROUTES from '@/constants/routes';
 import AddPortfolioInRegister from '@/pages/AddPortfolioPage/AddPortfolioInRegister';
 import EditDesignerProfilePage from '@/pages/EditDesignerProfilePage/EditDesignerProfilePage';
 import FeedPage from '@/pages/FeedPage/FeedPage';
-import MembershipPage from '@/pages/Membership/MembershipPage';
+// import MembershipPage from '@/pages/Membership/MembershipPage';
 import MyPage from '@/pages/MyPage/MyPage';
 import PortfolioDetailPage from '@/pages/PortfolioDetailPage/PortfolioDetailPage';
 import ProgressPage from '@/pages/ProgressPage/ProgressPage';
@@ -71,10 +71,10 @@ export const router = createBrowserRouter(
             { path: ROUTES.signupSuccess, element: <SignupSuccessPage /> },
           ],
         },
-        {
-          path: ROUTES.membership,
-          children: [{ index: true, element: <MembershipPage /> }],
-        },
+        // {
+        //   path: ROUTES.membership,
+        //   children: [{ index: true, element: <MembershipPage /> }],
+        // },
         {
           path: ROUTES.registerProfile,
           children: [{ index: true, element: <RegisterStep /> }],

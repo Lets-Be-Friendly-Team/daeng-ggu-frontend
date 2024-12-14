@@ -1,7 +1,8 @@
 import { ChangeEvent, Dispatch, FormEvent, SetStateAction, useEffect, useState } from 'react';
 import { Header, Input, InputAddress, PageContainer, TypeOneButton, TypeTwoButton } from '@daeng-ggu/design-system';
 export type SignupFormData = {
-  customerName: string;
+  customerName?: string;
+  designerName?: string;
   birthDate: string;
   gender: string;
   phone: string;
