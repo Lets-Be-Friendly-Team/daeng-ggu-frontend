@@ -1,14 +1,15 @@
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { SignupForm } from '@daeng-ggu/design-system';
 import { SignupFormData } from '@daeng-ggu/design-system/components/SignupForm/SignupForm';
 
 import ROUTES from '@/constants/routes';
+import useSignup from '@/hooks/queries/Signup/useSignup';
 
 const SignupPage = () => {
   const [formData, setFormData] = useState<SignupFormData>({
-    name: '',
-    birth: '',
+    customerName: '',
+    birthDate: '',
     gender: '',
     phone: '',
     nickname: '',
@@ -18,6 +19,17 @@ const SignupPage = () => {
   });
 
   const navigate = useNavigate();
+  const { mutate: signup } = useSignup({
+    onSuccess: (data) => {
+      //회원가입 성공시
+      console.log('회원가입 성공', data);
+      navigate(ROUTES.signupSuccess, { state: { nickname: formData.nickname } }); //성공페이지로 이동
+    },
+    onError: (error) => {
+      //회원가입 실패시
+      console.log('회원가입 실패', error);
+    },
+  });
 
   //헤더의 X버튼 클릭시 처리 (추후 수정)
   const handleClose = () => {
@@ -25,10 +37,10 @@ const SignupPage = () => {
   };
 
   //데이터 전송 핸들러
-  const handleSubmit = () => {
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
     console.log(formData);
-    // alert('hi');
-    navigate(ROUTES.signupSuccess);
+    signup(formData);
   };
 
   return (
