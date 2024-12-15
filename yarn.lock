@@ -4032,7 +4032,6 @@ __metadata:
     turbo: "npm:^2.3.1"
     typescript: "npm:^5.7.2"
     typescript-eslint: "npm:^8.16.0"
-    vite: "npm:^6.0.1"
   languageName: unknown
   linkType: soft
 
