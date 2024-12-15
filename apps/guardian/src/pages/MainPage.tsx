@@ -1,5 +1,5 @@
 const MainPage = () => {
-  return <div>main pge</div>;
+  return <div>main pgsse</div>;
 };
 
 export default MainPage;
