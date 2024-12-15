@@ -30,7 +30,7 @@ export const router = createBrowserRouter(
           element: <MainPage />,
         },
         { path: ROUTES.test, element: <div>ddddd</div> },
-        { path: ROUTES.progress, element: <ProgressPage /> },
+        { path: ROUTES.progress(), element: <ProgressPage /> },
       ],
     },
   ],

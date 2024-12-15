@@ -1,4 +1,4 @@
-const CCTVContent = () => {
+const ProgressStep3 = () => {
   return (
     <>
       <div className='mt-[2rem] flex w-full justify-center'>
@@ -9,4 +9,4 @@ const CCTVContent = () => {
   );
 };
 
-export default CCTVContent;
+export default ProgressStep3;

@@ -4,7 +4,7 @@ import NaverGuardianMap from '@/components/NaverMap/NaverGuardianMap';
 
 // import NaverMapContent from '@/components/NaverMap/NaverMapContent';
 
-const GuardianContent = () => {
+const ProgressStep2and4 = () => {
   const tabs = [
     {
       label: '현재 위치',
@@ -27,4 +27,4 @@ const GuardianContent = () => {
   );
 };
 
-export default GuardianContent;
+export default ProgressStep2and4;

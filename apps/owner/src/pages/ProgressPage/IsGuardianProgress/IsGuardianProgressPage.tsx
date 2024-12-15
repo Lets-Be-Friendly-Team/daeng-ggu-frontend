@@ -1,14 +1,11 @@
 import { useMemo } from 'react';
 import { Progress } from '@daeng-ggu/design-system';
 
-import CCTVContent from '@/pages/ProgressPage/IsGuardianProgress/CCTVContent';
-import Finish from '@/pages/ProgressPage/IsGuardianProgress/Finish';
-import GuardianContent from '@/pages/ProgressPage/IsGuardianProgress/GuardianContent';
-import Step1 from '@/pages/ProgressPage/IsGuardianProgress/Step1';
+import ProgressStep1 from '@/pages/ProgressPage/IsGuardianProgress/ProgressStep1';
+import ProgressStep2and4 from '@/pages/ProgressPage/IsGuardianProgress/ProgressStep2and4';
+import ProgressStep3 from '@/pages/ProgressPage/IsGuardianProgress/ProgressStep3';
+import ProgressStep5 from '@/pages/ProgressPage/IsGuardianProgress/ProgressStep5';
 
-interface IsGuardianProgressProps {
-  step: number;
-}
 const ProgressTitle = [
   '디자이너의 정보입니다!',
   '반려동물이 이동중이에요!',
@@ -17,19 +14,20 @@ const ProgressTitle = [
   '모든 단계가 종료되었어요!',
 ];
 
-const IsGuardianProgressPage = ({ step }: IsGuardianProgressProps) => {
+const IsGuardianProgressPage = () => {
+  const step = 2 as number;
   const StepComponents = useMemo(() => {
     switch (step) {
       case 1:
-        return <Step1 />;
+        return <ProgressStep1 />;
       case 2:
-        return <GuardianContent />;
+        return <ProgressStep2and4 />;
       case 3:
-        return <CCTVContent />;
+        return <ProgressStep3 />;
       case 4:
-        return <GuardianContent />;
+        return <ProgressStep2and4 />;
       case 5:
-        return <Finish />;
+        return <ProgressStep5 />;
       default:
         return;
     }
