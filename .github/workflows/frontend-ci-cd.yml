@@ -99,6 +99,10 @@ jobs:
           echo "VITE_NAVER_CLIENT_ID=${{ secrets.VITE_NAVER_CLIENT_ID }}" > .env
           echo "VITE_BASE_URL=${{ secrets.VITE_BASE_URL }}" >> .env
           echo "VITE_SENTRY_DSN=${{ secrets.VITE_SENTRY_DSN }}" >> .env
+          echo "VITE_SOCKET_BASE_URL=${{ secrets.VITE_SOCKET_BASE_URL }}" >> .env
+          echo "VITE_OWNER_MAIN_URL=${{ secrets.VITE_OWNER_MAIN_URL }}" >> .env
+          echo "VITE_DESIGNER_MAIN_URL=${{ secrets.VITE_DESIGNER_MAIN_URL }}" >> .env
+
 
       - name: 프론트엔드 빌드 (Owner)
         if: needs.detect-changes.outputs.owner == 'true'
@@ -136,6 +140,10 @@ jobs:
           echo "VITE_NAVER_CLIENT_ID=${{ secrets.VITE_NAVER_CLIENT_ID }}" > .env
           echo "VITE_BASE_URL=${{ secrets.VITE_BASE_URL }}" >> .env
           echo "VITE_SENTRY_DSN=${{ secrets.VITE_SENTRY_DSN }}" >> .env
+          echo "VITE_SOCKET_BASE_URL=${{ secrets.VITE_SOCKET_BASE_URL }}" >> .env
+          echo "VITE_OWNER_MAIN_URL=${{ secrets.VITE_OWNER_MAIN_URL }}" >> .env
+          echo "VITE_DESIGNER_MAIN_URL=${{ secrets.VITE_DESIGNER_MAIN_URL }}" >> .env
+
 
       - name: 프론트엔드 빌드 (Designer)
         if: needs.detect-changes.outputs.designer == 'true'
@@ -173,6 +181,10 @@ jobs:
           echo "VITE_NAVER_CLIENT_ID=${{ secrets.VITE_NAVER_CLIENT_ID }}" > .env
           echo "VITE_BASE_URL=${{ secrets.VITE_BASE_URL }}" >> .env
           echo "VITE_SENTRY_DSN=${{ secrets.VITE_SENTRY_DSN }}" >> .env
+          echo "VITE_SOCKET_BASE_URL=${{ secrets.VITE_SOCKET_BASE_URL }}" >> .env
+          echo "VITE_OWNER_MAIN_URL=${{ secrets.VITE_OWNER_MAIN_URL }}" >> .env
+          echo "VITE_DESIGNER_MAIN_URL=${{ secrets.VITE_DESIGNER_MAIN_URL }}" >> .env
+
 
       - name: 프론트엔드 빌드 (Guardian)
         if: needs.detect-changes.outputs.guardian == 'true'
