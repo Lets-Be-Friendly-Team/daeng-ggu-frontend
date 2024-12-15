@@ -1,17 +1,26 @@
 // PaymentPage.tsx
+
 import { useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { loadPaymentWidget, PaymentWidgetInstance } from '@tosspayments/payment-widget-sdk';
+
+import useGetPaymentDetails from '@/hooks/queries/Payment/useGetPaymentDetail';
+
+export interface PaymentDetails {
+  customerKey: string;
+  orderId: string;
+}
 
 const PaymentPage = () => {
   const PAYMENT_KEY_CLIENT = import.meta.env.VITE_TOSS_PAYMENT_CLIENT;
 
   const location = useLocation();
-  const { price, orderId, customerName } = location.state as {
+  const { price, customerName } = location.state as {
     price: number;
-    orderId: number;
     customerName: string;
   };
+
+  const { data: paymentDetails } = useGetPaymentDetails();
 
   const paymentWidgetRef = useRef<PaymentWidgetInstance | null>(null);
 
@@ -22,20 +31,23 @@ const PaymentPage = () => {
         return;
       }
 
-      // Ensure the orderId follows the required format
-      const combinedOrderId = `customer_12345`;
-      console.log('Combined Order ID:', combinedOrderId);
+      if (!paymentDetails) {
+        console.error('Payment details are not available');
+        return;
+      }
 
-      // Validate combinedOrderId
+      const { orderId } = paymentDetails;
+      console.log('Order ID:', orderId);
+
       const orderIdRegex = /^[A-Za-z0-9-_]{6,64}$/;
-      if (!orderIdRegex.test(combinedOrderId)) {
+      if (!orderIdRegex.test(orderId)) {
         console.error('`orderId`는 영문 대소문자, 숫자, 특수문자(-, _) 만 허용합니다. 6자 이상 64자 이하여야 합니다.');
         alert('`orderId`는 영문 대소문자, 숫자, 특수문자(-, _) 만 허용합니다. 6자 이상 64자 이하여야 합니다.');
         return;
       }
 
       try {
-        const paymentWidget = await loadPaymentWidget(PAYMENT_KEY_CLIENT, combinedOrderId);
+        const paymentWidget = await loadPaymentWidget(PAYMENT_KEY_CLIENT, orderId);
 
         await paymentWidget.renderPaymentMethods('#payment-widget', {
           value: price,
@@ -48,9 +60,8 @@ const PaymentPage = () => {
         alert('결제 위젯을 로드하는 데 실패했습니다. 나중에 다시 시도해주세요.');
       }
     };
-
     initializePaymentWidget();
-  }, [PAYMENT_KEY_CLIENT, price, orderId]);
+  }, [PAYMENT_KEY_CLIENT, price, paymentDetails]);
 
   const onRequestPayment = async () => {
     if (!paymentWidgetRef.current) {
@@ -59,12 +70,18 @@ const PaymentPage = () => {
       return;
     }
 
-    const combinedOrderId = `customer_${orderId}`;
-    console.log('Combined Order ID:', combinedOrderId);
+    if (!paymentDetails) {
+      console.error('Payment details are not available');
+      alert('결제 정보를 불러오는 데 실패했습니다. 나중에 다시 시도해주세요.');
+      return;
+    }
 
-    // Validate combinedOrderId again before initiating payment
+    const { orderId } = paymentDetails;
+    console.log('Order ID:', orderId);
+
+    // Validate orderId before initiating payment
     const orderIdRegex = /^[A-Za-z0-9-_]{6,64}$/;
-    if (!orderIdRegex.test(combinedOrderId)) {
+    if (!orderIdRegex.test(orderId)) {
       console.error('`orderId`는 영문 대소문자, 숫자, 특수문자(-, _) 만 허용합니다. 6자 이상 64자 이하여야 합니다.');
       alert('`orderId`는 영문 대소문자, 숫자, 특수문자(-, _) 만 허용합니다. 6자 이상 64자 이하여야 합니다.');
       return;
@@ -76,12 +93,12 @@ const PaymentPage = () => {
 
     try {
       await paymentWidgetRef.current.requestPayment({
-        orderId: combinedOrderId,
+        orderId: orderId,
         orderName: '댕송지 미용 서비스 결제',
         successUrl,
         failUrl,
         customerName,
-        customerEmail: 'honggildong@example.com', // Replace with dynamic customer email if available
+        customerEmail: 'honggildong@example.com', // Ideally, fetch this from user data
         products: [
           {
             name: '미용 서비스',
@@ -102,7 +119,7 @@ const PaymentPage = () => {
     <section className='flex min-h-screen flex-col items-center justify-center bg-gray-100 p-4'>
       <div className='w-full rounded-lg bg-white p-8 shadow-lg'>
         <h2 className='mb-6 text-2xl font-semibold text-gray-800'>결제하기</h2>
-        <div id='payment-widget' className='mb-6 w-full'></div> {/* Set height to 24rem */}
+        <div id='payment-widget' className='mb-6 w-full'></div>
         <button
           type='button'
           onClick={onRequestPayment}

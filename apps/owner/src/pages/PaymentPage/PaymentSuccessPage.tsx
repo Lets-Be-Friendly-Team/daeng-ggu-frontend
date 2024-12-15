@@ -1,6 +1,9 @@
 // SuccessPage.tsx
+
 import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
+
+import useGetPaymentDetail from '@/hooks/queries/Payment/useGetPaymentDetail';
 
 export interface PaymentQueryParams {
   paymentType?: string;
@@ -20,11 +23,10 @@ const PaymentSuccessPage = () => {
     amount: searchParams.get('amount') || undefined,
   };
 
-  // Derive customerId from orderId (assuming orderId is prefixed with 'customer_')
-  const customerId = params.orderId?.startsWith('customer_')
-    ? params.orderId.substring('customer_'.length)
-    : params.orderId || 'Unknown';
+  // Fetch payment details using the hook
+  const { data: paymentDetails } = useGetPaymentDetail();
 
+  const customerId = paymentDetails?.customerKey || 'Unknown';
   const amount = params.amount ? Number(params.amount) : 0;
 
   useEffect(() => {
