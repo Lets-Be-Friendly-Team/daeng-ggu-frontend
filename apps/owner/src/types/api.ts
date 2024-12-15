@@ -1,3 +1,5 @@
+//api.ts
+
 export interface DefaultResponse<T> {
   data: T[];
   message: string;
