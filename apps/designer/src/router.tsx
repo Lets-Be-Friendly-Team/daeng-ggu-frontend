@@ -68,23 +68,28 @@ export const router = createBrowserRouter(
         },
         {
           path: ROUTES.profile,
-          element: <MyPage />,
-        },
-        {
-          path: ROUTES.profileEdit,
-          element: <EditDesignerProfilePage />,
-        },
-        {
-          path: ROUTES.reviewDetail,
-          element: <ReviewDetailPage />,
+          children: [
+            {
+              index: true,
+              element: <MyPage />,
+            },
+            {
+              path: ROUTES.profileEdit,
+              element: <EditDesignerProfilePage />,
+            },
+            {
+              path: ROUTES.reviewDetail,
+              element: <ReviewDetailPage />,
+            },
+            {
+              path: ROUTES.portfolioDetail,
+              element: <PortfolioDetailPage />,
+            },
+          ],
         },
         {
           path: ROUTES.reservation,
           element: <ReservationPage />,
-        },
-        {
-          path: ROUTES.portfolioDetail,
-          element: <PortfolioDetailPage />,
         },
         {
           path: ROUTES.bid,
