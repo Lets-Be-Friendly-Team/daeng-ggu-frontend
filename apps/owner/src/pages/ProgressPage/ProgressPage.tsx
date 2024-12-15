@@ -7,10 +7,9 @@ import IsNotGuardianProgressPage from '@/pages/ProgressPage/IsNotGuardianProgres
 const ProgressPage = () => {
   // api로 진행단계 및 가디언 사용여부 받아오기
   const isGuardian = true;
-  const step = 5;
   const ContentComponent = useMemo(() => {
     if (isGuardian) {
-      return <IsGuardianProgressPage step={step} />;
+      return <IsGuardianProgressPage />;
     }
     if (!isGuardian) {
       return <IsNotGuardianProgressPage />;

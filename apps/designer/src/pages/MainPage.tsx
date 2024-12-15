@@ -1,5 +1,5 @@
 const MainPage = () => {
-  return <div>main pag</div>;
+  return <div>main paqdwg</div>;
 };
 
 export default MainPage;

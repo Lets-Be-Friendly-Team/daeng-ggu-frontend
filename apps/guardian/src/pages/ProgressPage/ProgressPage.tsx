@@ -1,73 +1,34 @@
-import { useCallback, useEffect, useRef } from 'react';
-import { guardianlocationWebSocket, useInitNavermap, useWatchUserLocation } from '@daeng-ggu/shared';
+import { useMemo } from 'react';
+import { PageContainer, Progress } from '@daeng-ggu/design-system';
 
-import { cn } from '@/lib/utils';
+import Step1 from '@/pages/ProgressPage/GuardianProgressStep1';
+import GuardianProgressStep2and4 from '@/pages/ProgressPage/GuardianProgressStep2and4';
+import GuardianProgressStep3 from '@/pages/ProgressPage/GuardianProgressStep3';
+import GuardianProgressStep5 from '@/pages/ProgressPage/GuardianProgressStep5';
 
 const ProgressPage = () => {
-  const { mapContainerRef, mapRef } = useInitNavermap();
-  const { naver } = window;
-  const location = useWatchUserLocation();
-  const markerRef = useRef<naver.maps.Marker | null>(null);
-  const socketRef = useRef<WebSocket | null>(null);
-
-  const sendLocationToServer = (lat: number, lng: number) => {
-    if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
-      const data = JSON.stringify({ latitude: lat, longitude: lng }); // 데이터를 JSON 문자열로 변환
-      socketRef.current.send(data); // JSON 문자열 전송
-    }
-  };
-  const updateMarkerPosition = useCallback(
-    (lat: number, lng: number) => {
-      if (!window.naver || !mapRef.current) return;
-      const naver = window.naver;
-      const position = new naver.maps.LatLng(lat, lng);
-
-      mapRef.current.setCenter(position);
-      if (markerRef.current) {
-        markerRef.current.setPosition(position);
+  const step = 4 as number;
+  const StepComponents = useMemo(() => {
+    switch (step) {
+      case 1:
+        return <Step1 />;
+      case 2:
+        return <GuardianProgressStep2and4 status='ss' />;
+      case 3:
+        return <GuardianProgressStep3 />;
+      case 4:
+        return <GuardianProgressStep2and4 status='' />;
+      case 5:
+        return <GuardianProgressStep5 />;
+      default:
         return;
-      }
-      markerRef.current = new naver.maps.Marker({
-        position,
-        map: mapRef.current,
-      });
-    },
-    [mapRef],
-  );
-
-  useEffect(() => {
-    const socket = guardianlocationWebSocket('1', 'GUARDIAN');
-    socketRef.current = socket;
-
-    socket.onopen = () => {
-      console.log('socket opened');
-    };
-    socket.onerror = (error) => {
-      console.error('socket error:', error);
-    };
-
-    return () => {
-      socket.close();
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!naver || !mapRef.current || !location) return;
-
-    const interval = setInterval(() => {
-      const { lat, lng } = location;
-      console.log('Sending location:', lat, lng);
-      sendLocationToServer(lat, lng);
-      updateMarkerPosition(lat, lng);
-    }, 1000); // 1초마다 위치 업데이트
-
-    return () => clearInterval(interval);
-  }, [location, mapRef, naver, updateMarkerPosition]);
-
+    }
+  }, [step]);
   return (
-    <div className='py-[2rem] mb-[6rem] h-[60rem]'>
-      <div className={cn('relative h-full w-full')} ref={mapContainerRef}></div>
-    </div>
+    <PageContainer>
+      <Progress maxStep={5} value={step} text={'테스트'} />
+      {StepComponents}
+    </PageContainer>
   );
 };
 
