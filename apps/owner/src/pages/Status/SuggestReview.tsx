@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Avatar, BorderContainer, PageContainer, TypeOneButton } from '@daeng-ggu/design-system';
 
 import { PostSuggestResponse } from '@/apis/suggest/postSuggestRequest.ts';
@@ -8,6 +9,8 @@ interface SuggestReviewProps {
 }
 
 const SuggestReview = ({ data }: SuggestReviewProps) => {
+  const navigate = useNavigate();
+
   const replacedHTML = useMemo(() => {
     let html = data.estimateDetail || '';
 
@@ -34,6 +37,15 @@ const SuggestReview = ({ data }: SuggestReviewProps) => {
       return `${match[1]}.${match[2]}.`;
     }
     return dateString;
+  };
+
+  const handlePaymentExecute = () => {
+    const price = data.estimatePrice;
+    const orderId = data.estimateId;
+    const customerName = data.customerName;
+
+    // Pass the orderId and customerName to the payment page via state
+    navigate('/payment', { state: { price, orderId, customerName } });
   };
 
   return (
@@ -95,7 +107,7 @@ const SuggestReview = ({ data }: SuggestReviewProps) => {
         <div className='mb-6 mt-6'>
           <BorderContainer innerPadding='p-3'>
             <div className='flex-col items-start p-2 text-gray-800'>
-              <p className='text-sub_h2 font-bold'>{data ? data.customerName : '정보 없음'}</p>
+              <p className='text-sub_h2 font-bold'>{data ? data.designerName : '정보 없음'}</p>
               <p className='text-body3 font-bold text-gray-800'>{data ? data.phone : '정보 없음'}</p>
               <p className='pt-1 text-caption'>{data ? data.designerAddress : '정보 없음'}</p>
             </div>
@@ -128,7 +140,7 @@ const SuggestReview = ({ data }: SuggestReviewProps) => {
         </div>
       </PageContainer>
       <div className='fixed w-full' style={{ bottom: '65px' }}>
-        <TypeOneButton text='예약하기' color='bg-secondary' onClick={() => {}} />
+        <TypeOneButton text='예약하기' color='bg-secondary' onClick={() => handlePaymentExecute()} />
       </div>
     </div>
   );
