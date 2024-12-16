@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router';
 import { LogoImage, TypeTwoButton } from '@daeng-ggu/design-system';
 
-const GuardianProgressStep5 = () => {
+const GuardianProgressStep7 = () => {
   const navigate = useNavigate();
   return (
     <section className='mt-[12rem] flex h-[100vh] flex-col items-center'>
@@ -23,4 +23,4 @@ const GuardianProgressStep5 = () => {
   );
 };
 
-export default GuardianProgressStep5;
+export default GuardianProgressStep7;

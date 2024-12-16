@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useRef } from 'react';
+import { useParams } from 'react-router-dom';
 import { guardianlocationWebSocket, useInitNavermap, useWatchUserLocation } from '@daeng-ggu/shared';
 
 import { cn } from '@/lib/utils';
 
 const NaverSendLocationMap = ({ className }: { className?: string }) => {
   const { mapContainerRef, mapRef } = useInitNavermap();
+  const { reservationId } = useParams();
   const { naver } = window;
   const location = useWatchUserLocation();
   const markerRef = useRef<naver.maps.Marker | null>(null);
@@ -36,7 +38,8 @@ const NaverSendLocationMap = ({ className }: { className?: string }) => {
   );
 
   useEffect(() => {
-    const socket = guardianlocationWebSocket('1', 'GUARDIAN');
+    if (!reservationId) return;
+    const socket = guardianlocationWebSocket(reservationId, 'GUARDIAN');
     socketRef.current = socket;
 
     socket.onopen = () => {
@@ -49,7 +52,7 @@ const NaverSendLocationMap = ({ className }: { className?: string }) => {
     return () => {
       socket.close();
     };
-  }, []);
+  }, [reservationId]);
 
   useEffect(() => {
     if (!naver || !mapRef.current || !location) return;
