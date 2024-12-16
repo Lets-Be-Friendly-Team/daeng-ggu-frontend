@@ -510,6 +510,7 @@ __metadata:
     "@tanstack/eslint-plugin-query": "npm:^5.60.1"
     "@tanstack/react-query": "npm:^5.61.0"
     "@tanstack/react-query-devtools": "npm:^5.61.0"
+    "@tosspayments/payment-widget-sdk": "npm:^0.12.0"
     "@types/eslint-plugin-jsx-a11y": "npm:^6"
     "@types/eslint-plugin-tailwindcss": "npm:^3"
     "@types/navermaps": "npm:^3.7.8"
@@ -2713,6 +2714,68 @@ __metadata:
   peerDependencies:
     "@testing-library/dom": ">=7.21.4"
   checksum: 10c0/68a0c2aa28a3c8e6eb05cafee29705438d7d8a9427423ce5064d44f19c29e89b5636de46dd2f28620fb10abba75c67130185bbc3aa23ac1163a227a5f36641e1
+  languageName: node
+  linkType: hard
+
+"@tosspayments/brandpay-types@npm:^0.2.6":
+  version: 0.2.6
+  resolution: "@tosspayments/brandpay-types@npm:0.2.6"
+  peerDependencies:
+    typescript: ^4.1.0
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 10c0/064a39fdf8d4a9f35f94450a371f3a417f9cdeada963abbb4496676f9dab4d24790ade1cfdb69042eeab03086a3bbbcc89b7fa9773117163ed821b33d8123543
+  languageName: node
+  linkType: hard
+
+"@tosspayments/payment-widget-sdk@npm:^0.12.0":
+  version: 0.12.0
+  resolution: "@tosspayments/payment-widget-sdk@npm:0.12.0"
+  dependencies:
+    "@tosspayments/payment-widget__types": "npm:1.1.0"
+  checksum: 10c0/e26b9ca22630b0bbaced227dee8bb2d522c3cc51e07f9f1555971ecc8323dbfa9e46db10c168685dafefd9c0a2fd6caf2816fb25d5155f17ef6a0b615eab1b0a
+  languageName: node
+  linkType: hard
+
+"@tosspayments/payment-widget-types@npm:^0.0.5":
+  version: 0.0.5
+  resolution: "@tosspayments/payment-widget-types@npm:0.0.5"
+  peerDependencies:
+    typescript: ^4.7.4
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 10c0/bc5af20509424b220c7f876b1a8e42a257c281b07f895805fe5175336691e3dd8096458308c60cdcb6d0c58d39bd851f4d6303844e2cdb993d21d74ec69381e7
+  languageName: node
+  linkType: hard
+
+"@tosspayments/payment-widget__types@npm:1.1.0":
+  version: 1.1.0
+  resolution: "@tosspayments/payment-widget__types@npm:1.1.0"
+  dependencies:
+    "@tosspayments/brandpay-types": "npm:^0.2.6"
+    "@tosspayments/payment-widget-types": "npm:^0.0.5"
+    "@tosspayments/payment__types": "npm:^1.68.0"
+  checksum: 10c0/818546e48d4e4c78eeb6717f9fababbef1a4f6f368df71f9c9f839968998a82ffefd406da6e3003f5e351a5e195c67d689021347d8698fba7cc2ad19121c3e83
+  languageName: node
+  linkType: hard
+
+"@tosspayments/payment__types@npm:^1.68.0":
+  version: 1.69.0
+  resolution: "@tosspayments/payment__types@npm:1.69.0"
+  dependencies:
+    "@tosspayments/sdk-constants": "npm:^0.2.2"
+  checksum: 10c0/dd9aad687b6f587864562bdc0460bc0b18adc01b58e1182a6710a1897acae5edc1fe6dccb2adcdf674e88210c081b3a69d558b6675b4a9bc5e5474e8a25aba6e
+  languageName: node
+  linkType: hard
+
+"@tosspayments/sdk-constants@npm:^0.2.2":
+  version: 0.2.2
+  resolution: "@tosspayments/sdk-constants@npm:0.2.2"
+  dependencies:
+    type-fest: "npm:^2.11.2"
+  checksum: 10c0/8a3981d0183fe2af2c45f6b20f21f4ce83c9bfa160fbcd4fe3d2768a859cffc9d0c6a02725290637daf8970938143a95bca92ea192c619889be7b6741b01c94f
   languageName: node
   linkType: hard
 
@@ -9092,7 +9155,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"type-fest@npm:^2.19.0":
+"type-fest@npm:^2.11.2, type-fest@npm:^2.19.0":
   version: 2.19.0
   resolution: "type-fest@npm:2.19.0"
   checksum: 10c0/a5a7ecf2e654251613218c215c7493574594951c08e52ab9881c9df6a6da0aeca7528c213c622bc374b4e0cb5c443aa3ab758da4e3c959783ce884c3194e12cb
