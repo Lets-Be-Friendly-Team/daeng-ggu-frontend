@@ -1,4 +1,4 @@
-import { APIClient } from '@daeng-ggu/shared/src/apis/APIClient'; // Adjust import path as needed
+import { APIClient } from '@daeng-ggu/shared/src/apis/APIClient';
 
 export interface UploadImageResponse {
   status: string;
