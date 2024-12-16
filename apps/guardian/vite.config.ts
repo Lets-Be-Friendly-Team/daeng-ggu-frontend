@@ -11,7 +11,7 @@ export default defineConfig({
   server: {
     port: 5174,
   },
-  base: './',
+  base: '/guardian/',
   resolve: {
     alias: {
       '@': path.resolve('src'),
