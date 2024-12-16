@@ -55,14 +55,7 @@ jobs:
       run:
         shell: bash
     steps:
-      - name: Print filter outputs
-        run: |
-          echo "Owner changed: ${{ steps.filter.outputs.owner }}"
-          echo "Designer changed: ${{ steps.filter.outputs.designer }}"
-          echo "Guardian changed: ${{ steps.filter.outputs.guardian }}"
-
-      - name: 댕꾸의 코드 가져오기
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Enable Corepack for Yarn
         run: corepack enable
@@ -76,22 +69,39 @@ jobs:
           node-version: 'lts/*'
           cache: 'yarn'
 
-      # Owner 프로젝트 처리
+      # 변경된 앱별로 캐시 복원 (node_modules 사용 시)
       - name: 의존성 캐시 확인 (Owner)
         if: needs.detect-changes.outputs.owner == 'true'
         uses: actions/cache@v4
         with:
           path: apps/owner/node_modules
-          key: ${{ runner.os }}-owner-${{ hashFiles('/yarn.lock') }}-v1
+          key: ${{ runner.os }}-owner-${{ hashFiles('yarn.lock') }}-v1
           restore-keys: |
             ${{ runner.os }}-owner-
 
-      - name: 의존성 설치 (Owner)
-        if: needs.detect-changes.outputs.owner == 'true'
-        run: |
-          cd apps/owner
-          yarn install --immutable
+      - name: 의존성 캐시 확인 (Designer)
+        if: needs.detect-changes.outputs.designer == 'true'
+        uses: actions/cache@v4
+        with:
+          path: apps/designer/node_modules
+          key: ${{ runner.os }}-designer-${{ hashFiles('yarn.lock') }}-v1
+          restore-keys: |
+            ${{ runner.os }}-designer-
 
+      - name: 의존성 캐시 확인 (Guardian)
+        if: needs.detect-changes.outputs.guardian == 'true'
+        uses: actions/cache@v4
+        with:
+          path: apps/guardian/node_modules
+          key: ${{ runner.os }}-guardian-${{ hashFiles('yarn.lock') }}-v1
+          restore-keys: |
+            ${{ runner.os }}-guardian-
+
+      # 루트에서 한 번에 의존성 설치
+      - name: 의존성 설치 (루트)
+        run: yarn install --immutable
+
+      # Owner 빌드
       - name: 환경 변수 설정 (Owner)
         if: needs.detect-changes.outputs.owner == 'true'
         run: |
@@ -102,7 +112,6 @@ jobs:
           echo "VITE_SOCKET_BASE_URL=${{ secrets.VITE_SOCKET_BASE_URL }}" >> .env
           echo "VITE_OWNER_MAIN_URL=${{ secrets.VITE_OWNER_MAIN_URL }}" >> .env
           echo "VITE_DESIGNER_MAIN_URL=${{ secrets.VITE_DESIGNER_MAIN_URL }}" >> .env
-
 
       - name: 프론트엔드 빌드 (Owner)
         if: needs.detect-changes.outputs.owner == 'true'
@@ -117,22 +126,7 @@ jobs:
           name: frontend-dist-owner
           path: apps/owner/dist
 
-      # Designer 프로젝트 처리
-      - name: 의존성 캐시 확인 (Designer)
-        if: needs.detect-changes.outputs.designer == 'true'
-        uses: actions/cache@v4
-        with:
-          path: apps/designer/node_modules
-          key: ${{ runner.os }}-designer-${{ hashFiles('/yarn.lock') }}-v1
-          restore-keys: |
-            ${{ runner.os }}-designer-
-
-      - name: 의존성 설치 (Designer)
-        if: needs.detect-changes.outputs.designer == 'true'
-        run: |
-          cd apps/designer
-          yarn install --immutable
-
+      # Designer 빌드
       - name: 환경 변수 설정 (Designer)
         if: needs.detect-changes.outputs.designer == 'true'
         run: |
@@ -143,7 +137,6 @@ jobs:
           echo "VITE_SOCKET_BASE_URL=${{ secrets.VITE_SOCKET_BASE_URL }}" >> .env
           echo "VITE_OWNER_MAIN_URL=${{ secrets.VITE_OWNER_MAIN_URL }}" >> .env
           echo "VITE_DESIGNER_MAIN_URL=${{ secrets.VITE_DESIGNER_MAIN_URL }}" >> .env
-
 
       - name: 프론트엔드 빌드 (Designer)
         if: needs.detect-changes.outputs.designer == 'true'
@@ -158,22 +151,7 @@ jobs:
           name: frontend-dist-designer
           path: apps/designer/dist
 
-      # Guardian 프로젝트 처리
-      - name: 의존성 캐시 확인 (Guardian)
-        if: needs.detect-changes.outputs.guardian == 'true'
-        uses: actions/cache@v4
-        with:
-          path: apps/guardian/node_modules
-          key: ${{ runner.os }}-guardian-${{ hashFiles('/yarn.lock') }}-v1
-          restore-keys: |
-            ${{ runner.os }}-guardian-
-
-      - name: 의존성 설치 (Guardian)
-        if: needs.detect-changes.outputs.guardian == 'true'
-        run: |
-          cd apps/guardian
-          yarn install --immutable
-
+      # Guardian 빌드
       - name: 환경 변수 설정 (Guardian)
         if: needs.detect-changes.outputs.guardian == 'true'
         run: |
@@ -184,7 +162,6 @@ jobs:
           echo "VITE_SOCKET_BASE_URL=${{ secrets.VITE_SOCKET_BASE_URL }}" >> .env
           echo "VITE_OWNER_MAIN_URL=${{ secrets.VITE_OWNER_MAIN_URL }}" >> .env
           echo "VITE_DESIGNER_MAIN_URL=${{ secrets.VITE_DESIGNER_MAIN_URL }}" >> .env
-
 
       - name: 프론트엔드 빌드 (Guardian)
         if: needs.detect-changes.outputs.guardian == 'true'
@@ -224,7 +201,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      # Owner 프로젝트 배포
+      # Owner 배포
       - name: 빌드 파일 다운로드 (Owner)
         if: needs.detect-changes.outputs.owner == 'true'
         uses: actions/download-artifact@v4
@@ -237,7 +214,7 @@ jobs:
         run: |
           aws s3 sync dist/owner s3://$S3_OWNER --delete
 
-      # Designer 프로젝트 배포
+      # Designer 배포
       - name: 빌드 파일 다운로드 (Designer)
         if: needs.detect-changes.outputs.designer == 'true'
         uses: actions/download-artifact@v4
@@ -250,7 +227,7 @@ jobs:
         run: |
           aws s3 sync dist/designer s3://$S3_DESIGNER/designer --delete
 
-      # Guardian 프로젝트 배포
+      # Guardian 배포
       - name: 빌드 파일 다운로드 (Guardian)
         if: needs.detect-changes.outputs.guardian == 'true'
         uses: actions/download-artifact@v4
