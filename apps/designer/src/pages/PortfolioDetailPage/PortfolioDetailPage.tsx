@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { BottomSheetModal, CloseIcon, DeleteIcon, EditIcon, Modal, MoreIcon } from '@daeng-ggu/design-system';
-import { useModalStore } from '@daeng-ggu/shared';
+import { useModalStore, useToast } from '@daeng-ggu/shared';
 import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
+import useDeletePortfolio from '@/hooks/queries/DesignerProfile/useDeletePortfolio';
 import useGetPortfolioDetail from '@/hooks/queries/DesignerProfile/useGetPortfolioDetail';
 
 import './swiperStyle.css';
@@ -14,8 +15,10 @@ const PortfolioDetailPage = () => {
   const { portfolioId } = useParams();
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
   const { show } = useModalStore();
-  const designerId = 2;
+  const designerId = 4;
   const { data: portfolioData } = useGetPortfolioDetail(designerId, Number(portfolioId));
+  const { showToast } = useToast();
+  const { mutate: deletePortfolio } = useDeletePortfolio();
 
   const navigateBack = () => {
     navigate('/profile');
@@ -42,9 +45,23 @@ const PortfolioDetailPage = () => {
   };
   const showDeleteConfirmationModal = () => {
     show(Modal, {
-      title: '리뷰 삭제',
+      title: '포트폴리오 삭제',
       description: '해당 포트폴리오를 삭제하시겠습니까?',
-      onConfirm: () => {},
+      onConfirm: () => {
+        deletePortfolio(
+          { designerId: Number(designerId), portfolioId: Number(portfolioId) },
+          {
+            onSuccess: () => {
+              console.log('포트폴리오 삭제 성공');
+              showToast({ message: '포트폴리오가 삭제 되었습니다!', type: 'confirm' });
+              navigateBack();
+            },
+            onError: (error) => {
+              console.error('포트폴리오 삭제 실패', error);
+            },
+          },
+        );
+      },
       confirmText: '네',
       cancelText: '아니오',
     });
