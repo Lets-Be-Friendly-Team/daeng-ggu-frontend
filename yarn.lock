@@ -557,7 +557,7 @@ __metadata:
     typescript-eslint: "npm:^8.11.0"
     vite: "npm:^6.0.1"
     vite-plugin-mkcert: "npm:^1.17.6"
-    vite-tsconfig-paths: "npm:^5.1.2"
+    vite-tsconfig-paths: "npm:^5.1.4"
     zustand: "npm:^5.0.1"
   languageName: unknown
   linkType: soft
@@ -9447,7 +9447,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-tsconfig-paths@npm:^5.1.2, vite-tsconfig-paths@npm:^5.1.4":
+"vite-tsconfig-paths@npm:^5.1.4":
   version: 5.1.4
   resolution: "vite-tsconfig-paths@npm:5.1.4"
   dependencies:
