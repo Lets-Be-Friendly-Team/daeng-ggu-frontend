@@ -10,7 +10,6 @@ import AddPortfolioInRegister from '@/pages/AddPortfolioPage/AddPortfolioInRegis
 import EditDesignerProfilePage from '@/pages/EditDesignerProfilePage/EditDesignerProfilePage';
 import FeedPage from '@/pages/FeedPage/FeedPage';
 import MainPage from '@/pages/MainPage';
-// import AddPortfolioPage from './pages/AddPortfolioPage/AddPortfolioPage';
 import MembershipPage from '@/pages/Membership/MembershipPage';
 import MyPage from '@/pages/MyPage/MyPage';
 import PortfolioDetailPage from '@/pages/PortfolioDetailPage/PortfolioDetailPage';
@@ -22,6 +21,8 @@ import SignupPage from '@/pages/Signup/SignupPage';
 import SignupSuccessPage from '@/pages/Signup/SignupSuccessPage';
 import DetailPage from '@/pages/StatusPage/DetailPage.tsx';
 import SuggestPage from '@/pages/SuggestPage/SuggestPage.tsx';
+
+// import AddPortfolioPage from './pages/AddPortfolioPage/AddPortfolioPage';
 
 // import '@/styles/sequenceAnimation.css';
 export const router = createBrowserRouter(
@@ -77,6 +78,10 @@ export const router = createBrowserRouter(
               path: ROUTES.profileEdit,
               element: <EditDesignerProfilePage />,
             },
+            // {
+            //   path: ROUTES.portfolioAdd,
+            //   element: <AddPortfolioPage />,
+            // },
             {
               path: ROUTES.reviewDetail,
               element: <ReviewDetailPage />,

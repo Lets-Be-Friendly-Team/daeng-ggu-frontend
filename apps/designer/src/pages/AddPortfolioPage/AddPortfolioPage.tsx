@@ -4,7 +4,7 @@ import { Header, ImageUploader, Input, PageContainer, TextArea, TypeOneButton } 
 
 import useProfileStore from '@/stores/useProfileStore';
 
-import { Portfolio } from '../RegisterProfile/RegisterProfileData';
+import { Portfolio } from '@/pages/RegisterProfile/RegisterProfileData';
 
 interface PortfolioProps {
   handleSubmit: (_portfolio: Portfolio) => void;

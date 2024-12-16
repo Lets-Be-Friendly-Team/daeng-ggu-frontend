@@ -1,4 +1,7 @@
+import { useNavigate } from 'react-router';
 import { PlusIcon } from '@daeng-ggu/design-system';
+
+import ROUTES from '@/constants/routes';
 
 interface IPortfolio {
   portfolioId: number;
@@ -16,6 +19,9 @@ interface IPortfolioProps {
 }
 
 const Portfolio = ({ portfolioList, certifications, onPortfolioClick }: IPortfolioProps) => {
+  const navigate = useNavigate();
+  const goToAddPortfolio = () => navigate(`${ROUTES.portfolioAdd}`);
+
   return (
     <div className='flex flex-col gap-6 py-5'>
       {/* 포트폴리오 섹션 */}
@@ -41,7 +47,10 @@ const Portfolio = ({ portfolioList, certifications, onPortfolioClick }: IPortfol
             </div>
           ))}
           {/* 추가 버튼 */}
-          <div className='flex h-[160px] w-full items-center justify-center rounded-md bg-gray-50'>
+          <div
+            className='flex h-[160px] w-full items-center justify-center rounded-md bg-gray-50 hover:cursor-pointer'
+            onClick={goToAddPortfolio}
+          >
             <span className=''>
               <PlusIcon className='w-[24px] h-[24px]' />
             </span>

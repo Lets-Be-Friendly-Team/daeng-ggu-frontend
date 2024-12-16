@@ -30,6 +30,7 @@ const Profile = ({
   const navigate = useNavigate();
   const goToReservations = () => navigate(`/${ROUTES.reservation}`);
   const goToEditProfile = () => navigate(`/profile/${ROUTES.profileEdit}`);
+
   const extractBracketContent = (text: string) => {
     const match = text.match(/\(([^)]+)\)/);
     return match ? match[1].replace(/,/g, ' | ') : text;
