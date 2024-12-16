@@ -107,7 +107,7 @@ const SuggestReview = ({ data }: SuggestReviewProps) => {
         <div className='mb-6 mt-6'>
           <BorderContainer innerPadding='p-3'>
             <div className='flex-col items-start p-2 text-gray-800'>
-              <p className='text-sub_h2 font-bold'>{data ? data.customerName : '정보 없음'}</p>
+              <p className='text-sub_h2 font-bold'>{data ? data.designerName : '정보 없음'}</p>
               <p className='text-body3 font-bold text-gray-800'>{data ? data.phone : '정보 없음'}</p>
               <p className='pt-1 text-caption'>{data ? data.designerAddress : '정보 없음'}</p>
             </div>

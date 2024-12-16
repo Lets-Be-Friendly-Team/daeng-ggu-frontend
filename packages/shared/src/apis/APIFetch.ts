@@ -31,14 +31,18 @@ interface APIFetchType {
 
 let reissueAccessToken = false;
 
+// 커스텀 fetchbody에 대한 RequestInit['body'] 사용 유무 처리, 커스텀은 안쓸거임
+type FetchBody = FormData | string | Blob | ArrayBuffer | URLSearchParams | ReadableStream<Uint8Array> | null;
+
 class APIFetch implements APIFetchType {
   private baseURL: URL;
-  private header?: Headers;
+  private defaultHeaders?: Headers;
 
-  constructor(baseURL: string, header?: Headers) {
+  constructor(baseURL: string, defaultHeaders?: Headers) {
     this.baseURL = new URL(baseURL);
-    this.header = new Headers(header);
+    this.defaultHeaders = new Headers(defaultHeaders);
   }
+
   private createRequestProps({
     path,
     method,
@@ -47,26 +51,50 @@ class APIFetch implements APIFetchType {
     credentials = 'include',
   }: RequestProps): HandleRequestProps {
     const url = buildURL({ baseURL: this.baseURL, path, queryParams });
+
     return {
       url,
       method,
       body,
-      headers: this.header,
+      headers: this.defaultHeaders,
       credentials,
     };
   }
 
-  private async request<T>(props: RequestProps | HandleRequestProps): Promise<T> {
-    const isRequestProps = 'path' in props; // 타입 가드
+  private async request<T>(
+    props: RequestProps | HandleRequestProps,
+    customHeaders?: Record<string, string>,
+  ): Promise<T> {
+    const isRequestProps = 'path' in props;
     const requestProps = isRequestProps
       ? this.createRequestProps(props as RequestProps)
       : (props as HandleRequestProps);
 
+    const headers = new Headers(requestProps.headers);
+
+    // Merge custom headers with default headers
+    if (customHeaders) {
+      Object.entries(customHeaders).forEach(([key, value]) => headers.set(key, value));
+    }
+
+    // Define body with the custom FetchBody type
+    let body: FetchBody = null;
+
+    if (requestProps.body instanceof FormData) {
+      body = requestProps.body;
+      headers.delete('Content-Type'); // Let `fetch` handle it automatically
+    } else if (requestProps.body && typeof requestProps.body === 'object') {
+      body = JSON.stringify(requestProps.body);
+      if (!headers.has('Content-Type')) {
+        headers.set('Content-Type', 'application/json');
+      }
+    }
+
     try {
-      const response = await fetch(requestProps.url, {
+      const response = await fetch(requestProps.url.toString(), {
         method: requestProps.method,
-        headers: requestProps.headers,
-        body: JSON.stringify(requestProps.body),
+        headers,
+        body,
         credentials: requestProps.credentials,
       });
 
@@ -74,12 +102,13 @@ class APIFetch implements APIFetchType {
         await this.handleError(response, requestProps);
       }
 
+      // Assuming the response is JSON. Adjust if needed.
       return await response.json();
     } catch (error) {
       if (error instanceof HTTPError) {
         throw error;
       }
-      throw new HTTPError(404, '인터넷 연결을 확인해주세요!');
+      throw new HTTPError(404, 'Check your internet connection!');
     }
   }
 
@@ -89,7 +118,6 @@ class APIFetch implements APIFetchType {
     }
 
     const apiError = new HTTPError(response.status, response.statusText);
-    //  sentry관련 captureException(apiError);
     throw apiError;
   }
 
@@ -100,8 +128,6 @@ class APIFetch implements APIFetchType {
 
     reissueAccessToken = true;
     try {
-      // 추후에 재발급 api 개발 완료 시 수정 필요
-      // const accessTokenReissueResponse = (await postReissueAccessToken()) as Response;
       const accessTokenReissueResponse = { status: 200 };
 
       if (accessTokenReissueResponse.status === 200) {
@@ -109,31 +135,29 @@ class APIFetch implements APIFetchType {
         return await this.request(handleRequestProps);
       }
     } catch (error) {
-      // await deleteAccessToken()
-      console.log(error);
+      console.error(error);
       window.location.href = '/';
     }
-    //  await this.reissueAccessToken();
   }
 
-  async get<T>(path: string, queryParams?: Record<string, string>): Promise<T> {
-    return this.request<T>({ path, method: HTTP_METHOD.get, queryParams });
+  async get<T>(path: string, queryParams?: Record<string, string>, headers?: Record<string, string>): Promise<T> {
+    return this.request<T>({ path, method: HTTP_METHOD.get, queryParams }, headers);
   }
 
-  async post<T>(path: string, body?: Record<string, any>): Promise<T> {
-    return this.request<T>({ path, method: HTTP_METHOD.post, body });
+  async post<T>(path: string, body?: Record<string, any> | FormData, headers?: Record<string, string>): Promise<T> {
+    return this.request<T>({ path, method: HTTP_METHOD.post, body }, headers);
   }
 
-  async put<T>(path: string, body?: Record<string, any>): Promise<T> {
-    return this.request<T>({ path, method: HTTP_METHOD.put, body });
+  async put<T>(path: string, body?: Record<string, any>, headers?: Record<string, string>): Promise<T> {
+    return this.request<T>({ path, method: HTTP_METHOD.put, body }, headers);
   }
 
-  async delete<T>(path: string, body?: Record<string, any>): Promise<T> {
-    return this.request<T>({ path, method: HTTP_METHOD.delete, body });
+  async delete<T>(path: string, body?: Record<string, any>, headers?: Record<string, string>): Promise<T> {
+    return this.request<T>({ path, method: HTTP_METHOD.delete, body }, headers);
   }
 
-  async patch<T>(path: string, body?: Record<string, any>): Promise<T> {
-    return this.request<T>({ path, method: HTTP_METHOD.patch, body });
+  async patch<T>(path: string, body?: Record<string, any>, headers?: Record<string, string>): Promise<T> {
+    return this.request<T>({ path, method: HTTP_METHOD.patch, body }, headers);
   }
 }
 
