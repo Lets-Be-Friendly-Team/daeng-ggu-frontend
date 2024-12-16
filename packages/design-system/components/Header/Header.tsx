@@ -8,11 +8,12 @@ import BellIconButton from './BellIconButton';
 
 interface IHeaderProps {
   mode: 'main' | 'back' | 'close' | 'customBack';
+  alarm?: boolean;
   title?: string;
   onClick?: () => void;
 }
 
-const Header = ({ mode, title, onClick }: IHeaderProps) => {
+const Header = ({ mode, title, onClick, alarm = true }: IHeaderProps) => {
   const navigate = useNavigate();
   const handleLogoClick = () => {
     navigate('/');
@@ -32,7 +33,7 @@ const Header = ({ mode, title, onClick }: IHeaderProps) => {
             <button type='button'>
               <img src={textLogoImage} alt='logo image' className='h-[22px] w-[41px]' onClick={handleLogoClick} />
             </button>
-            <BellIconButton onClick={handleNotificationClick} />
+            {alarm && <BellIconButton onClick={handleNotificationClick} />}
           </div>
         )}
         {(mode === 'back' || mode === 'close' || mode === 'customBack') && (

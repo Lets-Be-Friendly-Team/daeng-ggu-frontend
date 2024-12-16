@@ -1,32 +1,38 @@
 import { useMemo } from 'react';
+import { useParams } from 'react-router-dom';
 import { PageContainer, Progress } from '@daeng-ggu/design-system';
 
+import useGetMonitoringStatus from '@/hooks/queries/useGetMonitoringStatus';
 import Step1 from '@/pages/ProgressPage/GuardianProgressStep1';
-import GuardianProgressStep2and4 from '@/pages/ProgressPage/GuardianProgressStep2and4';
-import GuardianProgressStep3 from '@/pages/ProgressPage/GuardianProgressStep3';
-import GuardianProgressStep5 from '@/pages/ProgressPage/GuardianProgressStep5';
+import GuardianProgressStep2and6 from '@/pages/ProgressPage/GuardianProgressStep2and6';
+import GuardianProgressStep3and4and5 from '@/pages/ProgressPage/GuardianProgressStep3and4and5';
+import GuardianProgressStep7 from '@/pages/ProgressPage/GuardianProgressStep7';
 
 const ProgressPage = () => {
-  const step = 4 as number;
+  const { reservationId } = useParams();
+  const { data: response } = useGetMonitoringStatus(reservationId as string);
+  console.log(response);
   const StepComponents = useMemo(() => {
-    switch (step) {
+    switch (response?.data.processNum) {
       case 1:
         return <Step1 />;
       case 2:
-        return <GuardianProgressStep2and4 status='ss' />;
+        return <GuardianProgressStep2and6 statusNum={response?.data.processNum} />;
       case 3:
-        return <GuardianProgressStep3 />;
       case 4:
-        return <GuardianProgressStep2and4 status='' />;
       case 5:
-        return <GuardianProgressStep5 />;
+        return <GuardianProgressStep3and4and5 statusNum={response?.data.processNum} />;
+      case 6:
+        return <GuardianProgressStep2and6 statusNum={response?.data.processNum} />;
+      case 7:
+        return <GuardianProgressStep7 />;
       default:
         return;
     }
-  }, [step]);
+  }, [response?.data.processNum]);
   return (
     <PageContainer>
-      <Progress maxStep={5} value={step} text={'테스트'} />
+      <Progress maxStep={7} value={2} text={response?.data.processMessage} />
       {StepComponents}
     </PageContainer>
   );
