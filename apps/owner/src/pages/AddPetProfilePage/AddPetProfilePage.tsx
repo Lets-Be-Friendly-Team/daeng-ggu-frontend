@@ -13,35 +13,38 @@ import {
 
 import SubBreedSelector from '@/components/SubBreedSelector/SubBreedSelector';
 import { breedList } from '@/constants/breedList';
+import useSingleImageUpload from '@/hooks/queries/ImageUpload/useSingleImageUpload';
 import useRegisterPetProfile from '@/hooks/queries/PetProfile/useRegisterPetProfile';
 
 export interface PetFormData {
   customerId: number;
-  petId: number | null;
+  // petId: number | null;
+  petId: number;
   petName: string;
-  newPetImgFile: File | null;
-  prePetImgUrl: File | null;
+  // newPetImgFile: File | null;
+  newPetImgUrl: string;
+  prePetImgUrl: string;
   majorBreedCode: string;
   subBreedCode: string;
   birthDate: string;
   gender: string;
   isNeutered: string;
-  weight: number;
+  weight: number | '';
   specialNotes: string;
 }
 
 const petData: PetFormData = {
   customerId: 2, // 보호자 아이디(임시로 2)
-  petId: null, // 반려견 아이디
+  petId: 0, // 반려견 아이디
   petName: '', // 반려견 이름
-  newPetImgFile: null, // 신규 반려견 이미지 파일 (실제로는 파일 업로드와 관련된 객체이므로 더미 데이터에서는 null로 설정)
-  prePetImgUrl: null, // 변경전 이미지 Url
+  newPetImgUrl: '', // 신규 반려견 이미지 파일 (실제로는 파일 업로드와 관련된 객체이므로 더미 데이터에서는 null로 설정)
+  prePetImgUrl: '', // 변경전 이미지 Url
   majorBreedCode: '', // 견종 대분류 코드 (예: '01' = 소형견)
   subBreedCode: '', // 견종 소분류 코드 (예: '0101' = 푸들)
   birthDate: '', // 생년월일 (YYYYMMDD)
   gender: '', // 성별 (M = 수컷, W = 암컷)
   isNeutered: '', // 중성화 여부 (Y = 중성화, N = 미중성화)
-  weight: 0, // 몸무게 (kg)
+  weight: '', // 몸무게 (kg)
   specialNotes: '', // 특이사항
 };
 const AddPetProfilePage = () => {
@@ -78,9 +81,14 @@ const AddPetProfilePage = () => {
   const handleChangeSubBreed = (subBreedCode: string) => {
     setFormData((prev) => ({ ...prev, subBreedCode }));
   };
-  const handleChange = (field: string, value: string | File | null) => {
+  const handleChange = (field: string, value: string | number | null) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
+
+  // // 몸무게 업데이트
+  // const handleWeightChange = (value: string) => {
+  //   setFormData((prev) => ({ ...prev, weight: value === '' ? '' : Number(value) }));
+  // };
 
   //문자입력 방지(숫자만 입력) 및 입력 길이 제한
   //생일 입력시 사용
@@ -97,7 +105,7 @@ const AddPetProfilePage = () => {
   // 필수 정보 입력되면 버튼 활성화
   useEffect(() => {
     console.log(formData);
-    const nonRequiredFileds = ['newPetImgFile', 'specialNotes']; //프로필 사진과 특이사항은 필수 입력사항이 아님
+    const nonRequiredFileds = ['newPetImgUrl', 'specialNotes']; //프로필 사진과 특이사항은 필수 입력사항이 아님
     const fieldsToValidate = Object.keys(formData).filter(
       (field) => !nonRequiredFileds.includes(field),
     ) as (keyof PetFormData)[];
@@ -105,6 +113,8 @@ const AddPetProfilePage = () => {
     setActiveBtn(isFormComplete);
   }, [formData]);
 
+  // 이미지 전송
+  const { mutate } = useSingleImageUpload();
   // 데이터 전송
   const { mutate: registerPet } = useRegisterPetProfile({
     onSuccess: (data) => {
@@ -117,29 +127,49 @@ const AddPetProfilePage = () => {
       console.log('반려견 등록 실패', error);
     },
   });
+
   const submitFormData = (e: FormEvent) => {
     e.preventDefault();
-    // try {
-    const payload = {
-      ...formData,
-      newPetImgFile: profileImage || null,
-    };
-    console.log(payload);
-    registerPet(petData);
-    // 데이터를 localStorage에 저장 (테스트용)
-    // localStorage.setItem('petProfile', JSON.stringify(payload));
-
-    //   alert('반려견 프로필이 등록되었습니다.');
-    //   navigate(-1);
-    // } catch (error) {
-    //   alert('반려견 프로필 등록에 실패했습니다.');
-    //   console.error(error);
-    // }
+    if (profileImage) {
+      mutate(profileImage, {
+        onSuccess: (url) => {
+          // alert(`이미지 업로드 성공! URL: ${url}`);
+          const payload = {
+            ...formData,
+            newPetImgUrl: url || '',
+            weight: Number(formData.weight),
+          };
+          console.log(payload);
+          registerPet(payload);
+        },
+        onError: (error) => {
+          alert(`이미지 업로드 실패: ${error.message}`);
+        },
+      });
+    } else {
+      const payload = {
+        ...formData,
+        weight: Number(formData.weight),
+      };
+      console.log(payload);
+      registerPet(payload);
+    }
   };
   const handleImageDelete = () => {
     setProfileImage(undefined);
     // setFormData((prev) => ({ ...prev, prePetImgUrl: '' }));
   };
+
+  // 필수 정보 입력되면 버튼 활성화
+  useEffect(() => {
+    console.log(formData);
+    const nonRequiredFileds = ['prePetImgUrl', 'newPetImgUrl', 'specialNotes']; //프로필 사진과 특이사항은 필수 입력사항이 아님
+    const fieldsToValidate = Object.keys(formData).filter(
+      (field) => !nonRequiredFileds.includes(field),
+    ) as (keyof PetFormData)[];
+    const isFormComplete = fieldsToValidate.every((field) => formData[field]?.toString().trim() !== '');
+    setActiveBtn(isFormComplete);
+  }, [formData]);
 
   return (
     <div className='pb-[10rem]'>
@@ -175,12 +205,14 @@ const AddPetProfilePage = () => {
               <div className='mb-[0.8rem] block text-body3 font-semibold text-gray-800'>성별</div>
               <div className='flex gap-2'>
                 <TypeTwoButton
+                  type='button'
                   text='남'
                   color={formData.gender === 'M' ? 'bg-secondary' : 'bg-gray-50'}
                   fontWeight='font-medium'
                   onClick={() => handleChange('gender', 'M')}
                 />
                 <TypeTwoButton
+                  type='button'
                   text='여'
                   color={formData.gender === 'W' ? 'bg-secondary' : 'bg-gray-50'}
                   fontWeight='font-medium'
@@ -192,12 +224,14 @@ const AddPetProfilePage = () => {
               <div className='mb-[0.8rem] block text-body3 font-semibold text-gray-800'>중성화 여부</div>
               <div className='flex gap-2'>
                 <TypeTwoButton
+                  type='button'
                   text='O'
                   color={formData.isNeutered === 'Y' ? 'bg-secondary' : 'bg-gray-50'}
                   fontWeight='font-medium'
                   onClick={() => handleChange('isNeutered', 'Y')}
                 />
                 <TypeTwoButton
+                  type='button'
                   text='X'
                   color={formData.isNeutered === 'N' ? 'bg-secondary' : 'bg-gray-50'}
                   fontWeight='font-medium'
@@ -208,7 +242,7 @@ const AddPetProfilePage = () => {
             <Input
               label='몸무게 (kg 단위)'
               placeholder='예시: 5'
-              value={formData.weight > 0 ? formData.weight : ''}
+              value={formData.weight}
               onChange={(e) => handleChange('weight', e.target.value)}
               type='number'
             />
