@@ -1,9 +1,14 @@
 import { useMemo } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { LogoImage, TypeTwoButton } from '@daeng-ggu/design-system';
+
+import usePostStartDeliveryToHome from '@/hooks/queries/usePostStartDeliveryToHome';
 
 const GuardianProgressStep3and4and5 = ({ statusNum }: { statusNum: number }) => {
   const navigate = useNavigate();
+  const { reservationId } = useParams();
+  const { mutate: startDeliveryMutate } = usePostStartDeliveryToHome(reservationId);
+
   const handleButtonText = useMemo(() => {
     if (statusNum === 5) {
       return '보호자에게 출발';
@@ -12,8 +17,7 @@ const GuardianProgressStep3and4and5 = ({ statusNum }: { statusNum: number }) => 
 
   const handleButtonOnClick = () => {
     if (statusNum === 5) {
-      //api 추가
-      return;
+      startDeliveryMutate();
     }
     navigate('/', { replace: true });
   };

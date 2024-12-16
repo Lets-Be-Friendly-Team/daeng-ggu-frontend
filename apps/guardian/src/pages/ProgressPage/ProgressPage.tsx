@@ -4,9 +4,9 @@ import { PageContainer, Progress } from '@daeng-ggu/design-system';
 
 import useGetMonitoringStatus from '@/hooks/queries/useGetMonitoringStatus';
 import Step1 from '@/pages/ProgressPage/GuardianProgressStep1';
-import GuardianProgressStep2and6 from '@/pages/ProgressPage/GuardianProgressStep2and4';
-import GuardianProgressStep3and4and5 from '@/pages/ProgressPage/GuardianProgressStep3';
-import GuardianProgressStep7 from '@/pages/ProgressPage/GuardianProgressStep5';
+import GuardianProgressStep2and6 from '@/pages/ProgressPage/GuardianProgressStep2and6';
+import GuardianProgressStep3and4and5 from '@/pages/ProgressPage/GuardianProgressStep3and4and5';
+import GuardianProgressStep7 from '@/pages/ProgressPage/GuardianProgressStep7';
 
 const ProgressPage = () => {
   const { reservationId } = useParams();

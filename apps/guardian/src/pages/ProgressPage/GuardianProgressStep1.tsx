@@ -1,7 +1,14 @@
+import { useParams } from 'react-router';
 import { LogoImage, TypeTwoButton } from '@daeng-ggu/design-system';
 
+import usePostStartDeliveryToShop from '@/hooks/queries/usePostStartDeliveryToShop';
+
 const GuardianProgressStep1 = () => {
-  const handleButtonOnClick = () => {};
+  const { reservationId } = useParams();
+  const { mutate } = usePostStartDeliveryToShop(reservationId);
+  const handleButtonOnClick = async () => {
+    mutate();
+  };
   return (
     <div>
       <img className='mb-[4rem] w-[16rem]' src={LogoImage} alt='logo' />
