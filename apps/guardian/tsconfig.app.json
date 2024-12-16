@@ -7,8 +7,7 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
-      "@daeng-ggu/owner": ["../owner/src/*"],
-      "vite": ["./node_modules/vite"]
+      "@daeng-ggu/owner": ["../owner/src/*"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.json"]
