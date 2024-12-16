@@ -3,10 +3,10 @@ import { useQuery } from '@tanstack/react-query';
 import getReservations from '@/apis/reservation/getReservations';
 import { RESERVATION_QUERY_KEYS } from '@/constants/queryKeys';
 
-const useReservation = (customerId: number) => {
+const useReservation = () => {
   return useQuery({
-    queryKey: RESERVATION_QUERY_KEYS.GET_RESERVATION(customerId),
-    queryFn: () => getReservations({ customerId }),
+    queryKey: RESERVATION_QUERY_KEYS.GET_RESERVATION,
+    queryFn: () => getReservations(),
     select: (response) => response.data,
   });
 };

@@ -7,5 +7,5 @@ export const DESIGNER_QUERY_KEYS = {
   GET_PORTFOLIO_DETAIL: (designerId: number, portfolioId: number) => ['getPortfolioDetail', designerId, portfolioId],
 };
 export const RESERVATION_QUERY_KEYS = {
-  GET_RESERVATION: (designerId: number) => ['getReservation', designerId],
+  GET_RESERVATION: ['getReservation'],
 } as const;

@@ -35,8 +35,8 @@ export interface ReservationResponse {
   message: string;
   data: Reservation[];
 }
-const getReservations = async ({ designerId }: { designerId: number }) => {
-  const response = await APIClient.get<ReservationResponse>(`/daengggu/designer/${designerId}/daengggu/reservations`);
+const getReservations = async () => {
+  const response = await APIClient.get<ReservationResponse>(`/daengggu/designer/reservations`);
   return response;
 };
 export default getReservations;
