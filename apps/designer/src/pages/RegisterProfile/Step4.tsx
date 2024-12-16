@@ -26,7 +26,8 @@ const Step4 = () => {
             <div key={index} className='w-[32%] aspect-square rounded-md overflow-hidden'>
               <img
                 className='w-full h-full object-cover'
-                src={URL.createObjectURL(portfolio.imgList[0])}
+                // src={URL.createObjectURL(portfolio.imgList[0])}
+                src={portfolio.newImgUrlList[0]}
                 alt='포트폴리오 대표 이미지'
               />
             </div>

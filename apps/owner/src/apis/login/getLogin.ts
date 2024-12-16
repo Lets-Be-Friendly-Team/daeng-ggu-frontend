@@ -9,6 +9,7 @@ export interface LoginResponse {
 }
 
 const getLogin = async ({ userType }: LoginContentProps): Promise<LoginResponse> => {
+  // return await APIClient.get('/daengggu/login', { userType });
   return await APIClient.get('/daengggu/login', { userType });
 };
 

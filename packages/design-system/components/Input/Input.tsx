@@ -16,6 +16,7 @@ interface Props {
   onChange?: (_ev: InputChangeEvent) => void;
   readonly?: boolean;
   required?: boolean;
+  cn?: string;
 }
 
 /*
@@ -44,6 +45,7 @@ const Input = ({
   value = '',
   width = '',
   height = '',
+  cn = '',
   onChange,
   readonly,
   required,
@@ -69,7 +71,7 @@ const Input = ({
         value={value}
         onChange={changeHandler}
         style={{ width: width || '100%', height: height || 'auto' }}
-        className='rounded-md bg-gray-50 px-[1.6rem] py-5 text-body3 focus:outline-none focus:ring-1 focus:ring-inset focus:ring-gray-500'
+        className={`${cn} rounded-md bg-gray-50 px-[1.6rem] py-5 text-body3 focus:outline-none focus:ring-1 focus:ring-inset focus:ring-gray-500`}
         readOnly={readonly}
         required={required}
       ></input>

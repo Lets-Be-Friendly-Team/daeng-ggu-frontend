@@ -3,21 +3,38 @@ import CameraIcon from '@daeng-ggu/design-system/components/Icons/CameraIcon';
 
 import useProfileStore from '@/stores/useProfileStore';
 
-const Step3 = () => {
-  const { profileData, setProfileData } = useProfileStore();
+import { DesignerData } from './RegisterProfileData';
 
+const Step3 = () => {
+  const { profileData, setProfileData, fileData, setFileData } = useProfileStore();
+
+  const handleChange = (field: keyof DesignerData, value: string | File | null) => {
+    setProfileData({ [field]: value }); // 변경된 값만 업데이트
+  };
+
+  const { businessNumber, businessIsVerified } = profileData;
+
+  /**to do
+   * 사업자 인증 버튼 클릭시 핸들러
+   */
   return (
     <div className='flex flex-col gap-y-[2.4rem]'>
       <div className='flex flex-col gap-y-[0.8rem]'>
         <div className='text-body3 font-semibold text-gray-800'>사업자 인증</div>
         <div className='flex w-full gap-[0.8rem]'>
           <div className='flex-grow'>
-            <Input placeholder='대표자 성명' />
+            <Input placeholder='대표자 성명' name='' />
           </div>
           <button className='border-none bg-gray-100 text-body3 text-gray-700 rounded-md p-[1rem]'>인증하기</button>
         </div>
-        <Input placeholder='사업자 등록번호' />
+        <Input
+          placeholder='사업자 등록번호'
+          name='businessNumber'
+          value={businessNumber}
+          onChange={(e) => handleChange('businessNumber', e.target.value)}
+        />
         <Input placeholder='개업 일자' />
+        {businessIsVerified && <p className='text-primary'>사업자 인증 완료</p>}
       </div>
       {/* <ul className='mt-4 flex w-full flex-wrap gap-x-[4%] gap-y-6'>
           이미지 미리보기
@@ -53,15 +70,19 @@ const Step3 = () => {
         <div className='text-body3 font-semibold text-gray-800'>서류 등록 (사업자 등록증 및 애견 미용 자격증)</div>
         <div className='text-gray-700 text-iconCaption'>5MB 이하의 jpg, png 파일 3개까지 업로드 가능합니다.</div>
         <div className='flex flex-wrap gap-[0.8rem]'>
-          {profileData.certifications.map((cert, index) => (
+          {fileData.certifications.map((cert, index) => (
             <div key={index} className='relative h-[20rem] w-[12rem] rounded-md overflow-hidden'>
-              <img src={cert} alt={`certification-${index}`} className='h-full w-full object-cover' />
+              <img
+                src={URL.createObjectURL(cert)}
+                alt={`certification-${index}`}
+                className='h-full w-full object-cover'
+              />
               <div className='absolute top-0 left-0 w-full bg-gradient-to-b from-gray-500 to-transparent py-6'>
                 <button
                   type='button'
                   onClick={() => {
-                    const updatedCerts = profileData.certifications.filter((_, i) => i !== index);
-                    setProfileData({ certifications: updatedCerts });
+                    const updatedCerts = fileData.certifications.filter((_, i) => i !== index);
+                    setFileData({ certifications: updatedCerts });
                   }}
                   className='absolute top-2 right-2 flex items-center justify-center'
                 >
@@ -70,7 +91,7 @@ const Step3 = () => {
               </div>
             </div>
           ))}
-          {profileData.certifications.length < 3 && (
+          {fileData.certifications.length < 3 && (
             <label
               htmlFor='upload-image'
               className='flex h-[20rem] w-[12rem] items-center justify-center rounded-md bg-gray-50 hover:cursor-pointer'
@@ -84,15 +105,17 @@ const Step3 = () => {
                 onChange={(e) => {
                   const file = e.target.files?.[0];
                   if (file) {
-                    const reader = new FileReader();
-                    reader.onload = () => {
-                      if (reader.result) {
-                        setProfileData({
-                          certifications: [...profileData.certifications, reader.result as string],
-                        });
-                      }
-                    };
-                    reader.readAsDataURL(file);
+                    setFileData({ certifications: [...fileData.certifications, file] });
+
+                    // const reader = new FileReader();
+                    // reader.onload = () => {
+                    //   if (reader.result) {
+                    //     setFileData({
+                    //       certifications: [...fileData.certifications, reader.result as string],
+                    //     });
+                    //   }
+                    // };
+                    // reader.readAsDataURL(file);
                   }
                 }}
               />

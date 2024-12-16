@@ -1,156 +1,4 @@
-// import { ChangeEvent, useState } from 'react';
-// import {
-//   DogTypePicker,
-//   Input,
-//   InputAddress,
-//   ProfileImgUploader,
-//   ServiceCheckBox,
-//   TextArea,
-// } from '@daeng-ggu/design-system';
-// import { TextChangeEvent } from '@daeng-ggu/design-system/components/TextArea/TextArea';
-
-// import { breedList, DesignerData, StepProps } from './RegisterProfileData';
-// import useProfileStore from '@/stores/useProfileStore';
-
-// const Step1 = ({ formData, setFormData }: StepProps) => {
-//   const { profileData, setProfileData } = useProfileStore();
-//   const handleChange = (field: keyof DesignerData, value: any) => {
-//     setProfileData({ [field]: value }); // 변경된 값만 업데이트
-//   };
-
-//   const {
-//     designerImg,
-//     nickname,
-//     address1,
-//     address2,
-//     detailAddress,
-//     introduction,
-//     phone,
-//     // providedServices,
-//     // possibleBreeds,
-//   } = formData;
-
-//   const handleImageUpload = (file: File | null) => {
-//     if (file) {
-//       setFormData((prev) => ({
-//         ...prev,
-//         designerImg: file,
-//       }));
-//     }
-//   };
-
-//   const handleImageDelete = () => {
-//     setFormData((prev) => ({ ...prev, designerImg: null }));
-//     // setFormData((prev) => ({ ...prev, prePetImgUrl: '' }));
-//   };
-
-//   //입력 핸들러
-//   // const handleChange = (_e: ChangeEvent<HTMLInputElement> | TextChangeEvent) => {
-//   //   const { name, value } = _e.target;
-//   //   setFormData((prev) => ({
-//   //     ...prev,
-//   //     [name]: value,
-//   //   }));
-//   // };
-//   //주소 입력 핸들러
-//   const handleAddressChange = (address1?: string, address2?: string) => {
-//     setFormData((prev) => ({
-//       ...prev,
-//       address1,
-//       address2,
-//     }));
-//   };
-//   //문자입력 방지(숫자만 입력)
-//   //연락처 입력시 사용
-//   const handleNumChange = (_e: ChangeEvent<HTMLInputElement>) => {
-//     const { name, value } = _e.target;
-//     const result = value.replace(/\D/g, '');
-//     setFormData((prev) => ({
-//       ...prev,
-//       [name]: result,
-//     }));
-//   };
-
-//   const handleServiceChange = (selectedItems: string[]) => {
-//     // setFormData((prev)=>({
-//     //     ...prev,
-//     //     providedServices:selectedItems //얘를 string[] type으로 바꾸는게 좋을듯
-//     // }))
-//     console.log(selectedItems);
-//     const providedServices = selectedItems.map((item) => ({ servicesCode: item, codeDesc: item }));
-//     setFormData((prev) => ({
-//       ...prev,
-//       providedServices: providedServices,
-//     }));
-//   };
-
-//   const [selectedBreed, setSelectedBreed] = useState<string[]>([]);
-//   const handleBreedChange = (selectedItems: string[]) => {
-//     // setFormData((prev)=>({
-//     //     ...prev,
-//     //     providedServices:selectedItems //얘를 string[] type으로 바꾸는게 좋을듯
-//     // }))
-//     console.log(selectedItems);
-//     setSelectedBreed(selectedItems);
-//     const possibleBreeds = selectedItems.map((item) => ({ breedCode: breedList[item].code, codeDesc: item }));
-//     setFormData((prev) => ({
-//       ...prev,
-//       possibleBreeds: possibleBreeds,
-//     }));
-//   };
-
-//   return (
-//     <div className='flex flex-col gap-y-[2.4rem]'>
-//       <div className='flex  w-full flex-col items-center justify-center gap-[1.5rem]'>
-//         <ProfileImgUploader image={designerImg} handleUpload={handleImageUpload} />
-//         <button className='block text-caption text-gray-400' onClick={handleImageDelete}>
-//           프로필 사진 삭제
-//         </button>
-//       </div>
-//       <Input
-//         label='닉네임(업체명)'
-//         placeholder='닉네임 및 업체명 입력'
-//         name='nickname'
-//         value={nickname}
-//         onChange={handleChange}
-//       />
-//       <InputAddress
-//         label='주소'
-//         addressForm={{ address1: address1, address2: address2 }}
-//         setAddressForm={({ address1, address2 }) => {
-//           handleAddressChange(address1, address2);
-//         }}
-//         detailAddr={detailAddress}
-//         setDetailAddr={(value) => {
-//           setFormData((prev) => ({
-//             ...prev,
-//             detailAddress: value,
-//           }));
-//         }}
-//       />
-//       <TextArea
-//         label='소개'
-//         placeholder='소개글 입력'
-//         maxLength={200}
-//         name='introduction'
-//         value={introduction}
-//         onChange={handleChange}
-//       />
-//       <Input label='연락처' placeholder='숫자만 입력' value={phone} name='phone' onChange={(e) => handleNumChange(e)} />
-//       <div className='flex flex-col gap-y-[0.8rem]'>
-//         <div className='text-body3 font-semibold text-gray-800'>제공 서비스</div>
-//         <ServiceCheckBox onChange={handleServiceChange} />
-//       </div>
-//       <div className='flex flex-col gap-y-[0.8rem]'>
-//         <div className='text-body3 font-semibold text-gray-800'>가능 견종</div>
-//         <DogTypePicker type='checkbox' selectedValues={selectedBreed} onChange={handleBreedChange} />
-//       </div>
-//     </div>
-//   );
-// };
-// export default Step1;
-
-import { ChangeEvent } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction, useEffect } from 'react';
 import {
   DogTypePicker,
   Input,
@@ -162,24 +10,31 @@ import {
 
 import useProfileStore from '@/stores/useProfileStore';
 
-import { breedList, DesignerData, Service } from './RegisterProfileData';
+import { Breed, DesignerData, FileData, Service } from './RegisterProfileData';
+// import { ProfileData } from '@/types/designerRequestAndStatusTypes';
 
-const Step1 = () => {
-  const { profileData, setProfileData } = useProfileStore();
+const Step1 = ({ setActiveBtn }: { setActiveBtn: Dispatch<SetStateAction<boolean>> }) => {
+  const { profileData, setProfileData, fileData, setFileData } = useProfileStore();
 
-  const handleChange = (
-    field: keyof DesignerData,
-    value: string | File | null | Service[] | { breedCode: string; codeDesc: string }[],
-  ) => {
+  const { nickname, address1, address2, detailAddress, introduction, phone, providedServices } = profileData;
+  const { designerImg } = fileData;
+
+  const handleChange = (field: keyof DesignerData, value: string | File | null | Service[] | Breed[]) => {
     setProfileData({ [field]: value }); // 변경된 값만 업데이트
   };
 
+  const handleFileChange = (field: keyof FileData, value: File | File[] | null) => {
+    setFileData({ [field]: value });
+  };
+
   const handleImageUpload = (file: File | null) => {
-    handleChange('designerImg', file);
+    setProfileData({ newImgUrl: 'new' }); // 버튼 활성화 위해서 이미지 업로드 여부만 판단
+    handleFileChange('designerImg', file);
   };
 
   const handleImageDelete = () => {
-    handleChange('designerImg', null);
+    setProfileData({ newImgUrl: '' });
+    handleFileChange('designerImg', null);
   };
 
   const handleAddressChange = (address1?: string, address2?: string) => {
@@ -195,23 +50,119 @@ const Step1 = () => {
     handleChange(name as keyof DesignerData, numericValue);
   };
 
+  // 제공 서비스 선택
   const handleServiceChange = (selectedItems: string[]) => {
-    const providedServices = selectedItems.map((item) => ({
-      servicesCode: item,
-      codeDesc: item,
-    }));
-    handleChange('providedServices', providedServices);
+    // 기존 데이터에서 선택된 항목에 없는 항목 제거
+    const updatedServices = profileData.providedServices.filter((service) => {
+      // `S1`의 경우 하위 서비스 코드를 모두 확인
+      if (service.serviceCode.startsWith('S1')) {
+        return selectedItems.includes('S1');
+      }
+      // 다른 서비스 코드 확인
+      return selectedItems.includes(service.serviceCode);
+    });
+
+    // 새로 추가된 항목 처리
+    selectedItems.forEach((item) => {
+      if (item === 'S1') {
+        // `S1`이 선택된 경우 하위 서비스 코드만 추가
+        const services = [
+          { serviceCode: 'S101', breedList: [] },
+          { serviceCode: 'S102', breedList: [] },
+          { serviceCode: 'S103', breedList: [] },
+          { serviceCode: 'S104', breedList: [] },
+        ];
+        services.forEach((service) => {
+          if (!updatedServices.some((s) => s.serviceCode === service.serviceCode)) {
+            updatedServices.push(service);
+          }
+        });
+      } else if (!profileData.providedServices.some((service) => service.serviceCode === item)) {
+        // 다른 서비스 코드 추가
+        updatedServices.push({ serviceCode: item, breedList: [] });
+      }
+    });
+
+    // 모든 서비스의 breedList를 빈 배열로 초기화
+    updatedServices.forEach((service) => {
+      service.breedList = []; // 모든 서비스의 breedList를 빈 배열로 설정
+    });
+
+    // 최종 데이터 업데이트
+    handleChange('providedServices', updatedServices);
   };
 
+  // 가능 견종 선택
   const handleBreedChange = (selectedItems: string[]) => {
-    const possibleBreeds = selectedItems.map((item) => ({
-      breedCode: breedList[item].code,
-      codeDesc: item,
+    // console.log('Selected items:', selectedItems);
+    const updatedProvidedServices = providedServices.map((service) => ({
+      ...service,
+      breedList: selectedItems.map((breedCode) => ({
+        majorBreedCode: breedCode,
+        price: '', // 기본값
+        time: '', // 기본값
+      })),
     }));
-    handleChange('possibleBreeds', possibleBreeds);
+    setProfileData({
+      ...profileData,
+      providedServices: updatedProvidedServices,
+    });
   };
 
-  const { designerImg, nickname, address1, address2, detailAddress, introduction, phone } = profileData;
+  const initialSelectedItems = () => {
+    // const { providedServices } = profileData;
+
+    // 'S1'으로 시작하는 서비스 필터링
+    const hasS1Services = providedServices.some((service) => service.serviceCode.startsWith('S1'));
+
+    // 나머지 서비스 필터링
+    const otherServices = providedServices
+      .filter((service) => !service.serviceCode.startsWith('S1'))
+      .map((service) => service.serviceCode);
+
+    // 'S1'으로 시작하는 서비스가 있으면 'S1' 추가
+    if (hasS1Services) {
+      return ['S1', ...otherServices];
+    }
+
+    return otherServices;
+  };
+  // useEffect(() => {
+  //   console.log('Initial providedServices:', providedServices);
+  // }, [providedServices]);
+
+  // 필수 정보 입력되면 버튼 활성화
+  useEffect(() => {
+    // console.log(formData);
+    const requiredFileds = [
+      'newImgUrl',
+      'nickname',
+      'address1',
+      'address2',
+      'detailAddress',
+      'phone',
+      'providedServices',
+    ]; //소개글은 필수 입력사항이 아님
+    const fieldsToValidate = Object.keys(profileData).filter((field) =>
+      requiredFileds.includes(field),
+    ) as (keyof DesignerData)[];
+
+    const isFormComplete = fieldsToValidate.every(
+      (field) => {
+        if (field === 'providedServices') {
+          const premiumService = profileData.providedServices.filter(
+            (service) => !service.serviceCode.startsWith('S1'),
+          );
+          console.log(premiumService);
+          return premiumService?.[0]?.breedList.length > 0;
+        } else {
+          return profileData[field]?.toString().trim() !== '';
+        }
+      },
+      // profileData[field]?.toString().trim() !== '',
+    );
+    setActiveBtn(isFormComplete);
+  }, [profileData, setActiveBtn]);
 
   return (
     <div className='flex flex-col gap-y-[2.4rem]'>
@@ -222,7 +173,7 @@ const Step1 = () => {
         </button>
       </div>
       <Input
-        label='닉네임(업체명)'
+        label='닉네임 (업체명)'
         placeholder='닉네임 및 업체명 입력'
         name='nickname'
         value={nickname}
@@ -247,17 +198,25 @@ const Step1 = () => {
       />
       <Input label='연락처' placeholder='숫자만 입력' value={phone} name='phone' onChange={handleNumChange} />
       <div className='flex flex-col gap-y-[0.8rem]'>
-        <div className='text-body3 font-semibold text-gray-800'>제공 서비스</div>
-        <ServiceCheckBox onChange={handleServiceChange} />
+        <div className='text-body3 font-semibold text-gray-800'>제공 서비스 (프리미엄 서비스 제공 필수)</div>
+        <ServiceCheckBox onChange={handleServiceChange} initialSelectedItems={initialSelectedItems()} />
       </div>
-      <div className='flex flex-col gap-y-[0.8rem]'>
-        <div className='text-body3 font-semibold text-gray-800'>가능 견종</div>
-        <DogTypePicker
-          type='checkbox'
-          selectedValues={profileData.possibleBreeds.map((b) => b.codeDesc)}
-          onChange={handleBreedChange}
-        />
-      </div>
+      {providedServices.filter((service) => !service.serviceCode.startsWith('S1')).length > 0 && ( // 프리미엄 서비스가 하나 이상이어야 가능 견종 선택 가능
+        <div className='flex flex-col gap-y-[0.8rem]'>
+          <div className='text-body3 font-semibold text-gray-800'>가능 견종</div>
+          <DogTypePicker
+            type='checkbox'
+            selectedValues={Array.from(
+              new Set(
+                providedServices
+                  .flatMap((service) => service.breedList?.map((breed) => breed.majorBreedCode || ''))
+                  .filter((code) => code),
+              ),
+            )}
+            onChange={handleBreedChange}
+          />
+        </div>
+      )}
     </div>
   );
 };

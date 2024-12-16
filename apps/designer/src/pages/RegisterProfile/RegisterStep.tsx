@@ -1,4 +1,4 @@
-import { createRef, RefObject, useEffect, useRef } from 'react';
+import { createRef, RefObject, useEffect, useRef, useState } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { Header, PageContainer, Progress, TypeOneButton } from '@daeng-ggu/design-system';
 
@@ -38,12 +38,13 @@ const RegisterStep = () => {
   const { profileData } = useProfileStore();
 
   const name = '김댕꾸';
+  const [activeBtn, setActiveBtn] = useState(false);
   const stepData: StepData[] = [
     {
       step: 1,
       title: `${name}님을 소개해주세요!`,
       // contents: <Step1 formData={profileFormData} setFormData={setProfileFormData} />,
-      contents: <Step1 />,
+      contents: <Step1 setActiveBtn={setActiveBtn} />,
     },
     {
       step: 2,
@@ -86,6 +87,9 @@ const RegisterStep = () => {
     return nodeRefs.current[key];
   };
 
+  // const handleFinish = () => {
+  //   // 프로필 작성 완료시 수행할 작업
+  // };
   useEffect(() => {
     console.log(profileData);
   }, [profileData]);
@@ -127,7 +131,12 @@ const RegisterStep = () => {
           color='bg-primary'
         />
       ) : (
-        <TypeOneButton onClick={handleNextStep} text='다음 단계로' color='bg-gray-50' />
+        <TypeOneButton
+          onClick={handleNextStep}
+          text='다음 단계로'
+          color={activeBtn ? 'bg-primary' : 'bg-gray-50'}
+          disabled={!activeBtn}
+        />
       )}
       {/* </div> */}
     </div>

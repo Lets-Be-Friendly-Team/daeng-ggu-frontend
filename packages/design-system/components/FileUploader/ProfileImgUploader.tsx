@@ -29,14 +29,14 @@ const ProfileImgUploader = ({ image, setImage, handleUpload, initialImageUrl }: 
   const displayImage = image ? URL.createObjectURL(image) : initialImageUrl;
 
   return (
-    <div className='relative flex aspect-square w-[12rem]'>
+    <div className='relative flex w-[12rem]'>
       {displayImage ? (
         //   <div className='bg-white'>
-        <div className='flex h-full w-full items-center justify-center overflow-hidden rounded-full border border-gray-100 bg-white'>
+        <div className='flex aspect-square h-full w-full items-center justify-center overflow-hidden rounded-full border border-gray-100 bg-white'>
           <img alt='프로필 이미지' src={displayImage} className='h-full w-full object-cover' />
         </div>
       ) : (
-        <div className='flex h-full w-full items-center justify-center overflow-hidden rounded-full bg-secondary'>
+        <div className='flex aspect-square h-full w-full items-center justify-center overflow-hidden rounded-full bg-secondary'>
           <img alt='기본 이미지' src={logo} className='w-[8rem]' />
         </div>
       )}

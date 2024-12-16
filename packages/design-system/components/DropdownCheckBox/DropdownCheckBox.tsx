@@ -5,7 +5,7 @@ import ArrowUp from '../Icons/ArrowUp';
 import CheckedIcon from '../Icons/CheckedIcon';
 import UncheckedIcon from '../Icons/UncheckedIcon';
 
-type Option = { id: string; label: string };
+type Option = { id: string; label: string; subLabel?: string };
 
 interface CheckBoxProps {
   // eslint-disable-next-line no-unused-vars
@@ -44,7 +44,8 @@ function DropdownCheckBox({ onChange, placeholder, options, selectedItems }: Che
   const selectedLabels = selectedItems
     .map((id) => {
       const option = options.find((opt) => opt.id === id);
-      return option?.label;
+
+      return option?.subLabel || option?.label;
     })
     .join('/');
 

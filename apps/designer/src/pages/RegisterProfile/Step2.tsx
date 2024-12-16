@@ -21,6 +21,7 @@
 // };
 // export default Step2;
 import DayOffCheckBox from '@/components/DayOffCheckBox/DayOffCheckBox';
+import PriceAndTimeList from '@/components/PriceAndTime/PriceAndTime';
 import useProfileStore from '@/stores/useProfileStore';
 
 const Step2 = () => {
@@ -34,8 +35,12 @@ const Step2 = () => {
   return (
     <div className='flex flex-col gap-y-[2.4rem]'>
       <div className='flex flex-col gap-y-[0.8rem]'>
-        <div className='text-body3 font-semibold text-gray-800'>제공 서비스</div>
+        <div className='text-body3 font-semibold text-gray-800'>휴무일</div>
         <DayOffCheckBox selectedItems={profileData.dayOff} onChange={handleServiceChange} />
+      </div>
+      <div className='flex flex-col'>
+        <div className='text-body3 font-semibold text-gray-800'>가격 및 소요시간</div>
+        <PriceAndTimeList />
       </div>
     </div>
   );

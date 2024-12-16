@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useLocation } from 'react-router';
 import { BottomTabBar, FeedIcon, MyPageIcon, RequestListIcon, ReservationIcon } from '@daeng-ggu/design-system';
 
@@ -7,7 +8,7 @@ import { useDesignerBottomTabStore } from '@/stores/bottomTabStore';
 
 // 로그인 상태에 따라 마이페이지/로그인 label 변경
 const designerTabs = [
-  { label: '예약 현황', icon: ReservationIcon, path: ROUTES.main },
+  { label: '예약 현황', icon: ReservationIcon, path: '' },
   { label: '요청서 조회', icon: RequestListIcon, path: ROUTES.bid },
   { label: '피드', icon: FeedIcon, path: ROUTES.feed },
   { label: '마이페이지', icon: MyPageIcon, path: ROUTES.profile },
@@ -26,6 +27,18 @@ const DesignerBottomTabBar = () => {
   const location = useLocation();
 
   const shouldHideTabbar = designerHideTabbarRoutes.some((route) => location.pathname.startsWith(route));
+
+  // url 바뀔때마다 activePath update
+  useEffect(() => {
+    const path = `${location.pathname.split('/', 2)[1]}`;
+    // if (path === 'map' || path === 'search') {
+    //   setActivePath('');
+    // } else {
+    setActivePath(path);
+    // }
+    console.log(path);
+  }, [location.pathname, setActivePath]);
+
   return (
     !shouldHideTabbar && (
       <BottomTabBar

@@ -1,6 +1,8 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Header, ImageUploader, Input, PageContainer, TextArea, TypeOneButton } from '@daeng-ggu/design-system';
 
+import useProfileStore from '@/stores/useProfileStore';
+
 import { Portfolio } from '../RegisterProfile/RegisterProfileData';
 
 interface PortfolioProps {
@@ -8,28 +10,34 @@ interface PortfolioProps {
 }
 const AddPortfolioPage = ({ handleSubmit }: PortfolioProps) => {
   const [portfolio, setPortfolio] = useState<Portfolio>({
-    portfolioId: 0,
+    // portfolioId: 0,
     title: '',
-    video: null,
-    imgList: [],
+    // video: null,
+    // imgList: [],
     contents: '',
+    newVideoUrl: '',
+    newImgUrlList: [],
   });
+  const { fileData, setFileData } = useProfileStore();
+
   const handleChange = (field: keyof Portfolio, value: number | string | File | null | File[]) => {
     setPortfolio((prev) => ({ ...prev, [field]: value }));
   };
 
   const handleSetImgList: Dispatch<SetStateAction<File[]>> = (value) => {
-    setPortfolio((prev) => ({
-      ...prev,
-      imgList: typeof value === 'function' ? value(prev.imgList) : value,
-    }));
+    // setPortfolio((prev) => ({
+    //   ...prev,
+    //   imgList: typeof value === 'function' ? value(prev.imgList) : value,
+    // }));
+    setFileData({ portfolioImgList: typeof value === 'function' ? value(fileData.portfolioImgList) : value });
   };
 
   const handleSetVideo: Dispatch<SetStateAction<File | null>> = (value) => {
-    setPortfolio((prev) => ({
-      ...prev,
-      video: typeof value === 'function' ? value(prev.video) : value,
-    }));
+    // setPortfolio((prev) => ({
+    //   ...prev,
+    //   video: typeof value === 'function' ? value(prev.video) : value,
+    // }));
+    setFileData({ video: typeof value === 'function' ? value(fileData.video) : value });
   };
   useEffect(() => {
     console.log(portfolio);
@@ -47,9 +55,9 @@ const AddPortfolioPage = ({ handleSubmit }: PortfolioProps) => {
           />
 
           <ImageUploader
-            imgList={portfolio.imgList}
+            imgList={fileData.portfolioImgList}
             setImgList={handleSetImgList}
-            video={portfolio.video}
+            video={fileData.video}
             setVideo={handleSetVideo}
             mode='both'
             label='사진 및 동영상'
