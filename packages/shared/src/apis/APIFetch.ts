@@ -152,8 +152,13 @@ class APIFetch implements APIFetchType {
     return this.request<T>({ path, method: HTTP_METHOD.put, body }, headers);
   }
 
-  async delete<T>(path: string, body?: Record<string, any>, headers?: Record<string, string>): Promise<T> {
-    return this.request<T>({ path, method: HTTP_METHOD.delete, body }, headers);
+  async delete<T>(
+    path: string,
+    queryParams?: Record<string, string>,
+    body?: Record<string, any>,
+    headers?: Record<string, string>,
+  ): Promise<T> {
+    return this.request<T>({ path, method: HTTP_METHOD.delete, body, queryParams }, headers);
   }
 
   async patch<T>(path: string, body?: Record<string, any>, headers?: Record<string, string>): Promise<T> {

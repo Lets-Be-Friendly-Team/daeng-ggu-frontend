@@ -23,7 +23,10 @@ const Modal = ({ onConfirm, description, onClose, confirmText, cancelText, title
             <TypeTwoButton
               className='h-[2.5rem] w-[8rem] rounded-md border-none'
               color='bg-primary'
-              onClick={onConfirm}
+              onClick={() => {
+                onConfirm();
+                onClose();
+              }}
               text={confirmText}
             />
           </div>
