@@ -13,6 +13,7 @@ const GuardianProgressStep3and4and5 = ({ statusNum }: { statusNum: number }) => 
     if (statusNum === 5) {
       return '보호자에게 출발';
     }
+    return '홈으로 가기';
   }, [statusNum]);
 
   const handleButtonOnClick = () => {
