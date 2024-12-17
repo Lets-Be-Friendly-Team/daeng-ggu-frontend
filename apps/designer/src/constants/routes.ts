@@ -4,7 +4,7 @@ const ROUTES = {
   // bid: 'bid',
   signup: 'signup',
   main: '/',
-  progress: (reservationId?: number) => `progress/${reservationId || ':reservartionId'}`,
+  progress: (reservationId?: number) => `progress/${reservationId || ':reservationId'}`,
   bid: 'bid',
   feed: 'feed',
   profile: 'profile',

@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useRef } from 'react';
+import ReactDOMServer from 'react-dom/server';
 import { useParams } from 'react-router-dom';
-import { guardianlocationWebSocket, useInitNavermap, useWatchUserLocation } from '@daeng-ggu/shared';
+import { MyLocationIcon } from '@daeng-ggu/design-system';
+import { guardianlocationWebSocket, Marker, useInitNavermap, useWatchUserLocation } from '@daeng-ggu/shared';
 
 import { cn } from '@/lib/utils';
 
@@ -31,6 +33,13 @@ const NaverSendLocationMap = ({ className }: { className?: string }) => {
       mapRef.current.setCenter(position);
       markerRef.current = new naver.maps.Marker({
         position,
+        icon: {
+          content: ReactDOMServer.renderToString(
+            <Marker>
+              <MyLocationIcon />
+            </Marker>,
+          ),
+        },
         map: mapRef.current,
       });
     },
@@ -55,10 +64,10 @@ const NaverSendLocationMap = ({ className }: { className?: string }) => {
   }, [reservationId]);
 
   useEffect(() => {
-    if (!naver || !mapRef.current || !location) return;
+    if (!naver || !mapRef.current || !location.loaded) return;
 
     const interval = setInterval(() => {
-      const { lat, lng } = location;
+      const { lat, lng } = location.coordinates;
       console.log('Sending location:', lat, lng);
       sendLocationToServer(lat, lng);
       updateMarkerPosition(lat, lng);

@@ -12,6 +12,7 @@ import FeedPage from '@/pages/FeedPage/FeedPage';
 import MembershipPage from '@/pages/Membership/MembershipPage';
 import MyPage from '@/pages/MyPage/MyPage';
 import PortfolioDetailPage from '@/pages/PortfolioDetailPage/PortfolioDetailPage';
+import ProgressPage from '@/pages/ProgressPage/ProgressPage';
 import RegisterStep from '@/pages/RegisterProfile/RegisterStep';
 import PastRequestReview from '@/pages/RequestPage/PastRequestReview.tsx';
 import ReservationPage from '@/pages/ReservationPage/ReservationPage';
@@ -48,6 +49,7 @@ export const router = createBrowserRouter(
           index: true,
           element: <ReservationPage />,
         },
+        { path: ROUTES.progress(), element: <ProgressPage /> },
         {
           path: ROUTES.signup,
           children: [

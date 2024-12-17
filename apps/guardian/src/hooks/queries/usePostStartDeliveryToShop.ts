@@ -1,10 +1,11 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 
 import postStartDeliveryToShop from '@/apis/monitoring/postStartDeliveryToShop';
-import { GUADIAN_MONITORING_QUERY_KEYS } from '@/constants/queryKeys';
+import useCreateBroadcastChannel from '@/hooks/queries/useCreateBroadcastChannel';
 
-const usePostStartDeliveryToShop = (reservationId?: string) => {
-  const queryClient = useQueryClient();
+const usePostStartDeliveryToShop = (reservationId: string) => {
+  const { mutate: createBroadcastChannelMutate } = useCreateBroadcastChannel(reservationId);
+
   return useMutation({
     mutationFn: async () => {
       if (!reservationId) {
@@ -13,10 +14,7 @@ const usePostStartDeliveryToShop = (reservationId?: string) => {
       return await postStartDeliveryToShop(reservationId);
     },
     onSuccess: () => {
-      if (!reservationId) {
-        return;
-      }
-      queryClient.invalidateQueries({ queryKey: GUADIAN_MONITORING_QUERY_KEYS.GET_MONITORING_STATUS(reservationId) });
+      createBroadcastChannelMutate();
     },
   });
 };
