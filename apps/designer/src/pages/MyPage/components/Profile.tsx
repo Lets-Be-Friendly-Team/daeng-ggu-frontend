@@ -29,7 +29,7 @@ const Profile = ({
 }: IProfileProps) => {
   const navigate = useNavigate();
   const goToReservations = () => navigate(`/`);
-  const goToEditProfile = () => navigate(`/profile/${ROUTES.profileEdit}`);
+  const goToEditProfile = () => navigate(`/${ROUTES.profileEdit}`);
 
   const extractBracketContent = (text: string) => {
     const match = text.match(/\(([^)]+)\)/);

@@ -11,7 +11,7 @@ const PortfolioDetailPage = () => {
   const navigate = useNavigate();
   const { portfolioId } = useParams();
 
-  const designerId = 2;
+  const designerId = 4;
   const { data: portfolioData } = useGetPortfolioDetail(designerId, Number(portfolioId));
 
   const navigateBack = () => {

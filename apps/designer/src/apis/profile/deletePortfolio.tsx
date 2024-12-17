@@ -2,7 +2,7 @@ import { APIClient } from '@daeng-ggu/shared';
 
 export interface DeletePortfolioResponse {
   status: string;
-  data: object;
+  data: null;
   message: string;
 }
 const deletePortfolio = async ({
@@ -12,9 +12,6 @@ const deletePortfolio = async ({
   designerId: number;
   portfolioId: number;
 }): Promise<DeletePortfolioResponse> => {
-  return await APIClient.delete('/daengggu/designer/portfolio/delete', {
-    designerId: designerId.toString(),
-    portfolioId: portfolioId.toString(),
-  });
+  return await APIClient.delete(`/daengggu/designer/portfolio/delete/${designerId}/${portfolioId}`);
 };
 export default deletePortfolio;

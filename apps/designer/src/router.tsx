@@ -21,6 +21,11 @@ import SignupSuccessPage from '@/pages/Signup/SignupSuccessPage';
 import DetailPage from '@/pages/StatusPage/DetailPage.tsx';
 import SuggestPage from '@/pages/SuggestPage/SuggestPage.tsx';
 
+import AddPortfolioInProfile from './pages/AddPortfolioPage/AddPortfolioInProfile';
+import EditPortfolioPage from './pages/EditPortfolioPage/EditPortfolioPage';
+
+// import AddPortfolioPage from './pages/AddPortfolioPage/AddPortfolioPage';
+
 // import AddPortfolioPage from './pages/AddPortfolioPage/AddPortfolioPage';
 
 // import '@/styles/sequenceAnimation.css';
@@ -60,7 +65,7 @@ export const router = createBrowserRouter(
         },
         {
           path: ROUTES.portfolio,
-          children: [{ path: ROUTES.portfolioAdd, element: <AddPortfolioInRegister /> }],
+          children: [{ path: ROUTES.portfolioRegister, element: <AddPortfolioInRegister /> }],
         },
         {
           path: ROUTES.feed,
@@ -77,10 +82,7 @@ export const router = createBrowserRouter(
               path: ROUTES.profileEdit,
               element: <EditDesignerProfilePage />,
             },
-            // {
-            //   path: ROUTES.portfolioAdd,
-            //   element: <AddPortfolioPage />,
-            // },
+
             {
               path: ROUTES.reviewDetail,
               element: <ReviewDetailPage />,
@@ -89,7 +91,15 @@ export const router = createBrowserRouter(
               path: ROUTES.portfolioDetail,
               element: <PortfolioDetailPage />,
             },
+            {
+              path: ROUTES.portfolioAdd,
+              element: <AddPortfolioInProfile />,
+            },
           ],
+        },
+        {
+          path: ROUTES.profileEditPortfolio,
+          element: <EditPortfolioPage />,
         },
         {
           path: ROUTES.reservation,

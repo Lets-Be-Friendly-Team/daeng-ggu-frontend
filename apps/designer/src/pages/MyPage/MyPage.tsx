@@ -9,7 +9,7 @@ import ReviewList from './components/ReviewList';
 
 const MyPage = () => {
   const navigate = useNavigate();
-  const designerId = 4;
+  const designerId = 2;
   const { data: profileData, isError } = useGetProfile(designerId);
   console.log(profileData);
 

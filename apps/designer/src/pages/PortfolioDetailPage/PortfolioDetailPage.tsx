@@ -15,7 +15,7 @@ const PortfolioDetailPage = () => {
   const { portfolioId } = useParams();
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
   const { show } = useModalStore();
-  const designerId = 4;
+  const designerId = 2;
   const { data: portfolioData } = useGetPortfolioDetail(designerId, Number(portfolioId));
   const { showToast } = useToast();
   const { mutate: deletePortfolio } = useDeletePortfolio();
@@ -25,6 +25,10 @@ const PortfolioDetailPage = () => {
   };
   const handleEdit = () => {
     setModalOpen(false);
+    navigateEditPage();
+  };
+  const navigateEditPage = () => {
+    navigate(`/edit/portfolio/${portfolioId}`);
   };
 
   const handleDelete = () => {
@@ -62,6 +66,7 @@ const PortfolioDetailPage = () => {
           },
         );
       },
+      onClose: () => close(),
       confirmText: '네',
       cancelText: '아니오',
     });

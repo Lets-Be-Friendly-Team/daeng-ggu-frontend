@@ -20,7 +20,7 @@ interface IPortfolioProps {
 
 const Portfolio = ({ portfolioList, certifications, onPortfolioClick }: IPortfolioProps) => {
   const navigate = useNavigate();
-  const goToAddPortfolio = () => navigate(`${ROUTES.portfolioAdd}`);
+  const goToAddPortfolio = () => navigate(`/profile/${ROUTES.portfolioAdd}`);
 
   return (
     <div className='flex flex-col gap-6 py-5'>
