@@ -1,4 +1,4 @@
-const ProgressStep3 = () => {
+const ProgressStep4 = () => {
   return (
     <>
       <div className='mt-[2rem] flex w-full justify-center'>
@@ -9,4 +9,4 @@ const ProgressStep3 = () => {
   );
 };
 
-export default ProgressStep3;
+export default ProgressStep4;

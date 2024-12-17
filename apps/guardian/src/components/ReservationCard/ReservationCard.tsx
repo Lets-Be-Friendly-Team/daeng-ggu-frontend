@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router';
 import { Avatar, TypeTwoButton } from '@daeng-ggu/design-system';
 
-import postCreateReservationProcess from '@/apis/monitoring/postCreateReservationProcess';
 import ROUTES from '@/constants/routes';
+import usePostCreateReservationProcess from '@/hooks/queries/usePostCreateReservationProcess';
 import { ReservationType } from '@/types/reservation';
 
 interface ReservationCardProps {
@@ -11,9 +11,10 @@ interface ReservationCardProps {
 
 const ReservationCard = ({ reservation }: ReservationCardProps) => {
   const navigate = useNavigate();
+  const { mutate } = usePostCreateReservationProcess(reservation.reservationId);
 
   const handleOnClickProgress = async (reservationId: number) => {
-    await postCreateReservationProcess(reservationId);
+    mutate();
     navigate(ROUTES.progress(reservationId));
   };
   return (

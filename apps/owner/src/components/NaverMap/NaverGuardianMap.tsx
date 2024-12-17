@@ -8,9 +8,10 @@ import { cn } from '@/lib/utils';
 
 interface NaverGuardianMapProps {
   className?: string;
+  reservationId?: string;
 }
 
-const NaverGuardianMap = ({ className }: NaverGuardianMapProps) => {
+const NaverGuardianMap = ({ reservationId, className }: NaverGuardianMapProps) => {
   const { mapContainerRef, mapRef } = useInitNavermap();
 
   const { naver } = window;
@@ -19,7 +20,8 @@ const NaverGuardianMap = ({ className }: NaverGuardianMapProps) => {
   const markerRef = useRef<naver.maps.Marker | null>(null);
 
   useEffect(() => {
-    const socket = guardianlocationWebSocket('1', 'CUSTOMER');
+    if (!reservationId) return;
+    const socket = guardianlocationWebSocket(reservationId, 'CUSTOMER');
 
     socketRef.current = socket;
 
@@ -75,7 +77,7 @@ const NaverGuardianMap = ({ className }: NaverGuardianMapProps) => {
     return () => {
       socket.close();
     };
-  }, [mapRef]);
+  }, [mapRef, reservationId]);
 
   useEffect(() => {
     if (!naver || !mapRef.current) return;

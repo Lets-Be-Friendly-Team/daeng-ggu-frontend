@@ -45,6 +45,11 @@ export const SEARCH_QUERY_KEYS = {
 export const RESERVATION_QUERY_KEYS = {
   GET_RESERVATION: (customerId: number) => ['getReservation', customerId],
 } as const;
+
 export const PET_QUERY_KEYS = {
   GET_PET_PROFILE_DETAIL: (customerId: number, petId: number) => ['getPetProfileDetail', customerId, petId],
+};
+
+export const GUADIAN_MONITORING_QUERY_KEYS = {
+  GET_MONITORING_STATUS: (reservationId: string) => ['getMonitoringStatus', reservationId],
 };
