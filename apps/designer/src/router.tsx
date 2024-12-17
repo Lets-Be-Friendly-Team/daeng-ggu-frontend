@@ -9,7 +9,6 @@ import ROUTES from '@/constants/routes';
 import AddPortfolioInRegister from '@/pages/AddPortfolioPage/AddPortfolioInRegister';
 import EditDesignerProfilePage from '@/pages/EditDesignerProfilePage/EditDesignerProfilePage';
 import FeedPage from '@/pages/FeedPage/FeedPage';
-import MainPage from '@/pages/MainPage';
 import MembershipPage from '@/pages/Membership/MembershipPage';
 import MyPage from '@/pages/MyPage/MyPage';
 import PortfolioDetailPage from '@/pages/PortfolioDetailPage/PortfolioDetailPage';
@@ -42,7 +41,7 @@ export const router = createBrowserRouter(
       children: [
         {
           index: true,
-          element: <MainPage />,
+          element: <ReservationPage />,
         },
         {
           path: ROUTES.signup,

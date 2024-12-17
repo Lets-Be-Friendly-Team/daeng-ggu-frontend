@@ -28,7 +28,7 @@ const Profile = ({
   workExperience,
 }: IProfileProps) => {
   const navigate = useNavigate();
-  const goToReservations = () => navigate(`/${ROUTES.reservation}`);
+  const goToReservations = () => navigate(`/`);
   const goToEditProfile = () => navigate(`/profile/${ROUTES.profileEdit}`);
 
   const extractBracketContent = (text: string) => {

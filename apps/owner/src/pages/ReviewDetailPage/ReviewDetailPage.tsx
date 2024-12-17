@@ -57,7 +57,7 @@ const ReviewDetail = () => {
     navigate('/profile');
   };
   const navigateEditPage = () => {
-    navigate('/review/edit');
+    navigate(`/review/edit/${reviewId}`);
   };
   const handleEdit = () => {
     setModalOpen(false);

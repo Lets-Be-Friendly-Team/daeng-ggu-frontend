@@ -21,11 +21,9 @@ const designerHideTabbarRoutes = [
   '/portfolio/add',
   // 숨기고 싶은 tabbar route 추가
 ];
-
 const DesignerBottomTabBar = () => {
   const { activePath, setActivePath } = useDesignerBottomTabStore();
   const location = useLocation();
-
   const shouldHideTabbar = designerHideTabbarRoutes.some((route) => location.pathname.startsWith(route));
 
   // url 바뀔때마다 activePath update

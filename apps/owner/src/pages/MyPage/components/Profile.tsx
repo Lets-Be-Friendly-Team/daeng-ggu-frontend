@@ -10,7 +10,9 @@ interface IProfileProps {
 }
 const Profile = ({ nickname, customerImgUrl }: IProfileProps) => {
   const navigate = useNavigate();
-  const goToReservations = () => navigate(`/${ROUTES.reservation}`);
+  const goToReservations = () => {
+    navigate('/designer');
+  };
   const goToEditProfile = () => navigate(`/profile/${ROUTES.profileEdit}`);
   return (
     <div className='w-full'>

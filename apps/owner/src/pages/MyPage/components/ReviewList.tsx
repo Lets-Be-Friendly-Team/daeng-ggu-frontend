@@ -19,6 +19,7 @@ interface IReviewListProps {
 }
 
 const ReviewList = ({ reviews, onReviewClick }: IReviewListProps) => {
+  console.log(reviews);
   return (
     <div className='grid grid-cols-3 gap-4'>
       {reviews.map((review) => (

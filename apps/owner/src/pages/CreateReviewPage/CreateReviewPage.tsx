@@ -30,7 +30,7 @@ const CreateReviewPage = () => {
 
     try {
       const imageUrls = await uploadImage(imgList);
-
+      console.log(imageUrls);
       const reviewData = {
         designerId: 2,
         reviewContents: reviewContent,
@@ -42,9 +42,6 @@ const CreateReviewPage = () => {
       await postReview(reviewData);
       alert('리뷰가 성공적으로 등록되었습니다.');
       navigate('/profile');
-      setImgList([]);
-      setRatingState(0);
-      setReviewContent('');
     } catch (error) {
       console.error(error);
       alert('리뷰 등록에 실패했습니다. 다시 시도해주세요.');
