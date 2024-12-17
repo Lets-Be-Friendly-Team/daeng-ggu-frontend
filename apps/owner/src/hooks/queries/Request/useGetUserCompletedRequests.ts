@@ -1,7 +1,7 @@
 // src/hooks/request/useGetUserCompletedRequests.ts
 import { useSuspenseQuery } from '@tanstack/react-query';
 
-import getCompletedRequests, { CompletedRequest } from '@/apis/request/getCompletedRequests.tsx';
+import getCompletedRequests, { CompletedRequest } from '@/apis/request/getCompletedRequests';
 
 export const USER_COMPLETED_REQUESTS_QUERY_KEY = ['userCompletedRequests'];
 
