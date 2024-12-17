@@ -11,10 +11,13 @@ const AddPortfolioInProfile = () => {
   const [portfolio, setPortfolio] = useState<Portfolio>({
     portfolioId: 0,
     title: '',
-    video: null,
-    imgList: [],
     contents: '',
+    newVideoUrl: '',
+    newImgUrlList: [],
+    imgList: [], // imgList 초기값 명시
+    video: null, // 비디오 초기값 명시
   });
+
   const navigate = useNavigate();
 
   const { mutateAsync: updatePortfolio } = useUpdatePortfolio();
@@ -28,31 +31,36 @@ const AddPortfolioInProfile = () => {
   const handleSetImgList: Dispatch<SetStateAction<File[]>> = (value) => {
     setPortfolio((prev) => ({
       ...prev,
-      imgList: typeof value === 'function' ? value(prev.imgList) : value,
+      imgList: typeof value === 'function' ? value(prev.imgList ?? []) : value, // undefined 방지
     }));
   };
 
   const handleSetVideo: Dispatch<SetStateAction<File | null>> = (value) => {
     setPortfolio((prev) => ({
       ...prev,
-      video: typeof value === 'function' ? value(prev.video) : value,
+      video:
+        typeof value === 'function'
+          ? value(prev.video ?? null) // undefined일 경우 null로 변환
+          : value,
     }));
   };
 
   const handleSaveClick = async () => {
     try {
-      const imageUrls = await uploadImages(portfolio.imgList);
+      // imgList가 항상 File[] 타입임을 보장
+      const imageUrls = portfolio.imgList ? await uploadImages(portfolio.imgList) : [];
       console.log(imageUrls);
 
       // 비디오 업로드
       let newVideoUrl: string | null = null;
       if (portfolio.video) {
-        newVideoUrl = await uploadImage(portfolio.video); // 비디오도 이미지 업로드 훅을 재사용
+        newVideoUrl = await uploadImage(portfolio.video);
         console.log('Video URL:', newVideoUrl);
       }
+
       const portfolioData = {
         designerId: 2,
-        portfolioId: portfolio.portfolioId,
+        portfolioId: portfolio.portfolioId ?? 0,
         title: portfolio.title,
         contents: portfolio.contents,
         preVideoUrl: '',
@@ -66,11 +74,12 @@ const AddPortfolioInProfile = () => {
       alert('포트폴리오가 성공적으로 등록되었습니다.');
       navigate('/profile');
       setPortfolio({
-        portfolioId: 0,
         title: '',
-        video: null,
-        imgList: [],
         contents: '',
+        newVideoUrl: '',
+        newImgUrlList: [],
+        imgList: [],
+        video: null,
       });
     } catch (error) {
       console.error('포트폴리오 저장 실패:' + error);
@@ -82,7 +91,7 @@ const AddPortfolioInProfile = () => {
     <div className='w-full'>
       <PageContainer>
         <Header mode='close' title='포트폴리오 작성' />
-        <div className='flex  w-full flex-col gap-[2.4rem] pt-[2rem] pb-[4rem] mb-[6rem]'>
+        <div className='flex w-full flex-col gap-[2.4rem] pt-[2rem] pb-[4rem] mb-[6rem]'>
           <Input
             label='제목'
             placeholder='포트폴리오 제목 입력'
@@ -91,7 +100,7 @@ const AddPortfolioInProfile = () => {
           />
 
           <ImageUploader
-            imgList={portfolio.imgList}
+            imgList={portfolio.imgList ?? []} // undefined 방지
             setImgList={handleSetImgList}
             video={portfolio.video}
             setVideo={handleSetVideo}

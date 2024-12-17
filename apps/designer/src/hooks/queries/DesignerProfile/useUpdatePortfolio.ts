@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 
-import updatePortfolio, { PortfolioData } from '@/apis/profile/updatePortfolio';
+import updatePortfolio, { PortfolioData } from '@/apis/Profile/updatePortfolio';
 
 const useUpdatePortfolio = () => {
   return useMutation({

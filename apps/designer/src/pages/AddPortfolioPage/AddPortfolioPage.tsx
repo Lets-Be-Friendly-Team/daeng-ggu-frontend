@@ -2,9 +2,8 @@ import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'reac
 import { useNavigate } from 'react-router';
 import { Header, ImageUploader, Input, PageContainer, TextArea, TypeOneButton } from '@daeng-ggu/design-system';
 
-import useProfileStore from '@/stores/useProfileStore';
-
 import { Portfolio } from '@/pages/RegisterProfile/RegisterProfileData';
+import useProfileStore from '@/stores/useProfileStore';
 
 interface PortfolioProps {
   handleSubmit: (_portfolio: Portfolio) => void;
