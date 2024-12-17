@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 
-import deletePortfolio from '@/apis/profile/deletePortfolio';
+import deletePortfolio from '@/apis/Profile/deletePortfolio';
 
 const useDeletePortfolio = () => {
   return useMutation({

@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import getProfile from '@/apis/profile/getProfile';
+import getProfile from '@/apis/Profile/getProfile';
 import { DESIGNER_QUERY_KEYS } from '@/constants/queryKeys';
 
 const useGetProfile = (designerId: number) => {
