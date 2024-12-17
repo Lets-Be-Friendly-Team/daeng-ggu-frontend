@@ -1,6 +1,6 @@
 import { useMutation, UseMutationOptions } from '@tanstack/react-query';
 
-import registerProfile, { RegisterProfileResponse } from '@/apis/profile/registerProfile';
+import registerProfile, { RegisterProfileResponse } from '@/apis/Profile/registerProfile';
 import { DesignerData } from '@/pages/RegisterProfile/RegisterProfileData';
 
 interface RegisterProfileError {

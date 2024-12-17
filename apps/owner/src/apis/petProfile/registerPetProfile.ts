@@ -10,6 +10,6 @@ export interface RegisterPetResponse {
 }
 
 const registerPetProfile = async (petFormData: PetFormData): Promise<RegisterPetResponse> => {
-  return await APIClient.post('/daengggu/pet/profile/update', petFormData);
+  return await APIClient.patch('/daengggu/pet/profile/update', petFormData);
 };
 export default registerPetProfile;

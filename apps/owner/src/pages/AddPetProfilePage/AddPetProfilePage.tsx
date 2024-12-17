@@ -54,6 +54,7 @@ const AddPetProfilePage = () => {
   const [profileImage, setProfileImage] = useState<File | undefined>(undefined);
   const [selectedBreed, setSelectedBreed] = useState<string[]>([]);
   const [activeBtn, setActiveBtn] = useState(false);
+  // const [subArray, setSubArray] = useState([]);
 
   // 견종 대분류 업데이트
   const handleChangeMajorBreed = (values: string[]) => {
@@ -61,11 +62,10 @@ const AddPetProfilePage = () => {
     setSelectedBreed(values);
     if (values.length > 0) {
       const selectedValue = values[0];
-      const breedData = breedList[selectedValue];
 
       setFormData((prev) => ({
         ...prev,
-        majorBreedCode: breedData.code,
+        majorBreedCode: selectedValue,
         subBreedCode: '',
       }));
     } else {
@@ -78,17 +78,17 @@ const AddPetProfilePage = () => {
   };
 
   // 견종 소분류 업데이트
+  const getSubArrayByCode = (code: string) => {
+    const category = Object.values(breedList).find((item) => item.code === code);
+    return category ? category.sub : [];
+  };
+
   const handleChangeSubBreed = (subBreedCode: string) => {
     setFormData((prev) => ({ ...prev, subBreedCode }));
   };
   const handleChange = (field: string, value: string | number | null) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
-
-  // // 몸무게 업데이트
-  // const handleWeightChange = (value: string) => {
-  //   setFormData((prev) => ({ ...prev, weight: value === '' ? '' : Number(value) }));
-  // };
 
   //문자입력 방지(숫자만 입력) 및 입력 길이 제한
   //생일 입력시 사용
@@ -102,19 +102,19 @@ const AddPetProfilePage = () => {
     }));
   };
 
-  // 필수 정보 입력되면 버튼 활성화
-  useEffect(() => {
-    console.log(formData);
-    const nonRequiredFileds = ['newPetImgUrl', 'specialNotes']; //프로필 사진과 특이사항은 필수 입력사항이 아님
-    const fieldsToValidate = Object.keys(formData).filter(
-      (field) => !nonRequiredFileds.includes(field),
-    ) as (keyof PetFormData)[];
-    const isFormComplete = fieldsToValidate.every((field) => formData[field]?.toString().trim() !== '');
-    setActiveBtn(isFormComplete);
-  }, [formData]);
+  // // 필수 정보 입력되면 버튼 활성화
+  // useEffect(() => {
+  //   console.log(formData);
+  //   const nonRequiredFileds = ['newPetImgUrl', 'specialNotes']; //프로필 사진과 특이사항은 필수 입력사항이 아님
+  //   const fieldsToValidate = Object.keys(formData).filter(
+  //     (field) => !nonRequiredFileds.includes(field),
+  //   ) as (keyof PetFormData)[];
+  //   const isFormComplete = fieldsToValidate.every((field) => formData[field]?.toString().trim() !== '');
+  //   setActiveBtn(isFormComplete);
+  // }, [formData]);
 
   // 이미지 전송
-  const { mutate } = useSingleImageUpload();
+  const { mutate: imgUpload } = useSingleImageUpload();
   // 데이터 전송
   const { mutate: registerPet } = useRegisterPetProfile({
     onSuccess: (data) => {
@@ -131,7 +131,7 @@ const AddPetProfilePage = () => {
   const submitFormData = (e: FormEvent) => {
     e.preventDefault();
     if (profileImage) {
-      mutate(profileImage, {
+      imgUpload(profileImage, {
         onSuccess: (url) => {
           // alert(`이미지 업로드 성공! URL: ${url}`);
           const payload = {
@@ -192,7 +192,7 @@ const AddPetProfilePage = () => {
             <div className='flex flex-col gap-y-[0.8rem]'>
               <div className='text-body3 font-semibold text-gray-800'>견종</div>
               <DogTypePicker type='radio' selectedValues={selectedBreed} onChange={handleChangeMajorBreed} />
-              <SubBreedSelector options={breedList[selectedBreed[0]]?.sub} onChange={handleChangeSubBreed} />
+              <SubBreedSelector options={getSubArrayByCode(selectedBreed[0])} onChange={handleChangeSubBreed} />
             </div>
             <Input
               label='생일'

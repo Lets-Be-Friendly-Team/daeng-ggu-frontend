@@ -7891,18 +7891,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router-dom@npm:^7.0.2":
-  version: 7.0.2
-  resolution: "react-router-dom@npm:7.0.2"
-  dependencies:
-    react-router: "npm:7.0.2"
-  peerDependencies:
-    react: ">=18"
-    react-dom: ">=18"
-  checksum: 10c0/eb6fe524792f6cf645872c15ed1beb6aeb778c7c5ebcf6c1d4ccf2bdab7a969313b3fc3b4ec6bc4516bbc91b238f0ef651d9ad2551b2aa9ea54b01653dcd1c98
-  languageName: node
-  linkType: hard
-
 "react-router@npm:6.28.0, react-router@npm:^6.28.0":
   version: 6.28.0
   resolution: "react-router@npm:6.28.0"
