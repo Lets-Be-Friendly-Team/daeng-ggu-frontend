@@ -6,8 +6,8 @@ import CompletedServices from './components/CompletedServices';
 import ReservationHistory, { IReservation } from './components/ReservationHistory';
 
 const ReservationPage = () => {
-  const customerId = 2;
-  const { data: reservationData, isError } = useReservation(customerId);
+  // const customerId = 2;
+  const { data: reservationData, isError } = useReservation();
   const unfiinishedReservations = reservationData?.filter((item: IReservation) => !item.isFinished);
   const completedReservations = reservationData?.filter((item: IReservation) => item.isFinished);
 
