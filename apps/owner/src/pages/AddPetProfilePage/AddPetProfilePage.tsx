@@ -15,6 +15,7 @@ import SubBreedSelector from '@/components/SubBreedSelector/SubBreedSelector';
 import { breedList } from '@/constants/breedList';
 import useSingleImageUpload from '@/hooks/queries/ImageUpload/useSingleImageUpload';
 import useRegisterPetProfile from '@/hooks/queries/PetProfile/useRegisterPetProfile';
+import useOwnerIdStore from '@/stores/useOwnerIdStore';
 
 export interface PetFormData {
   customerId: number;
@@ -34,7 +35,7 @@ export interface PetFormData {
 }
 
 const petData: PetFormData = {
-  customerId: 2, // 보호자 아이디(임시로 2)
+  customerId: -1, // 보호자 아이디(초기값 -1)
   petId: 0, // 반려견 아이디
   petName: '', // 반려견 이름
   newPetImgUrl: '', // 신규 반려견 이미지 파일 (실제로는 파일 업로드와 관련된 객체이므로 더미 데이터에서는 null로 설정)
@@ -54,6 +55,7 @@ const AddPetProfilePage = () => {
   const [profileImage, setProfileImage] = useState<File | undefined>(undefined);
   const [selectedBreed, setSelectedBreed] = useState<string[]>([]);
   const [activeBtn, setActiveBtn] = useState(false);
+  const { ownerId } = useOwnerIdStore();
   // const [subArray, setSubArray] = useState([]);
 
   // 견종 대분류 업데이트
@@ -136,6 +138,7 @@ const AddPetProfilePage = () => {
           // alert(`이미지 업로드 성공! URL: ${url}`);
           const payload = {
             ...formData,
+            customerId: ownerId,
             newPetImgUrl: url || '',
             weight: Number(formData.weight),
           };
@@ -208,14 +211,14 @@ const AddPetProfilePage = () => {
                   type='button'
                   text='남'
                   color={formData.gender === 'M' ? 'bg-secondary' : 'bg-gray-50'}
-                  fontWeight='font-medium'
+                  fontWeight='font-normal'
                   onClick={() => handleChange('gender', 'M')}
                 />
                 <TypeTwoButton
                   type='button'
                   text='여'
                   color={formData.gender === 'W' ? 'bg-secondary' : 'bg-gray-50'}
-                  fontWeight='font-medium'
+                  fontWeight='font-normal'
                   onClick={() => handleChange('gender', 'W')}
                 />
               </div>
@@ -227,14 +230,14 @@ const AddPetProfilePage = () => {
                   type='button'
                   text='O'
                   color={formData.isNeutered === 'Y' ? 'bg-secondary' : 'bg-gray-50'}
-                  fontWeight='font-medium'
+                  fontWeight='font-normal'
                   onClick={() => handleChange('isNeutered', 'Y')}
                 />
                 <TypeTwoButton
                   type='button'
                   text='X'
                   color={formData.isNeutered === 'N' ? 'bg-secondary' : 'bg-gray-50'}
-                  fontWeight='font-medium'
+                  fontWeight='font-normal'
                   onClick={() => handleChange('isNeutered', 'N')}
                 />
               </div>

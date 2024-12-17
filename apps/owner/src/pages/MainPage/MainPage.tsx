@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router';
 import { Header, SearchBar } from '@daeng-ggu/design-system';
 
 import MainCategoryTab from '@/components/MainCategoryTab/MainCategoryTab';
+// import useOwnerIdStore from '@/stores/useOwnerIdStore';
 
 // import OwnerBottomTabBar from '@/components/BottomTabBar/OwnerBottomTabBar';
 
@@ -22,6 +23,10 @@ const MainPage = () => {
       navigate(`/search?keyword=${searchword}`);
     }
   };
+  // const { ownerId } = useOwnerIdStore();
+  // useEffect(() => {
+  //   console.log(ownerId);
+  // }, []);
   return (
     <>
       <div className='sticky top-0 z-10 bg-white px-8'>

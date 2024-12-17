@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router';
 import { CategoryTab, Header, LogoImage, PageContainer } from '@daeng-ggu/design-system';
 
 import useGetProfile from '@/hooks/queries/CustomerProfile/useGetProfile';
+import useOwnerIdStore from '@/stores/useOwnerIdStore';
 
 import AvartarList from './components/AvartarList';
 import BookmarkList from './components/BookmarkList';
@@ -10,8 +11,9 @@ import ReviewList from './components/ReviewList';
 
 const MyPage = () => {
   const navigate = useNavigate();
-  const customerId = 2;
-  const { data: profileData, isError } = useGetProfile(customerId);
+  // const customerId = 2;
+  const { ownerId } = useOwnerIdStore();
+  const { data: profileData, isError } = useGetProfile(ownerId);
   console.log(profileData);
   if (isError || !profileData) {
     return (
@@ -56,7 +58,9 @@ const MyPage = () => {
           customerImgUrl={profileData.customerImgUrl}
           customerImgName={profileData.customerImgName}
         />
-        <AvartarList pets={profileData.petList} />
+        <div className='px-[0.4rem]'>
+          <AvartarList pets={profileData.petList} />
+        </div>
         <CategoryTab tabs={tabs} />
       </PageContainer>
     </div>
