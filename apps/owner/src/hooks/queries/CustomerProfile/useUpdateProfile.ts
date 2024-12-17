@@ -1,9 +1,10 @@
 import { useMutation } from '@tanstack/react-query';
 
-import updateProfile from '@/apis/profile/updateProfile';
+import updateProfile, { ProfileData } from '@/apis/profile/updateProfile';
+
 const useUpdateProfile = () => {
   return useMutation({
-    mutationFn: (formData: FormData) => updateProfile(formData),
+    mutationFn: (profileData: ProfileData) => updateProfile(profileData),
   });
 };
 export default useUpdateProfile;
