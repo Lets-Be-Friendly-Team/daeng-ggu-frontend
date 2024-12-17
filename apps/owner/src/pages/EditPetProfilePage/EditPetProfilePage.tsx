@@ -14,13 +14,15 @@ import { useModalStore, useToast } from '@daeng-ggu/shared';
 
 import useDeletePetProfile from '@/hooks/queries/PetProfile/useDeletePetProfile';
 import useGetPetProfileDetail from '@/hooks/queries/PetProfile/useGetPetProfileDetail';
+import useOwnerIdStore from '@/stores/useOwnerIdStore';
 
 const EditPetProfilePage = () => {
   const navigate = useNavigate();
   const params = useParams();
   const petId = params.petId;
-  const customerId = 2;
-  const { data: petData } = useGetPetProfileDetail(customerId, Number(petId));
+  // const customerId = 2;
+  const { ownerId } = useOwnerIdStore();
+  const { data: petData } = useGetPetProfileDetail(ownerId, Number(petId));
   const { mutate: deletePetProfile } = useDeletePetProfile();
   console.log(petData);
   const [formData, setFormData] = useState({
@@ -60,7 +62,7 @@ const EditPetProfilePage = () => {
       description: '반려견 프로필을 삭제하시겠습니까?',
       onConfirm: () => {
         deletePetProfile(
-          { customerId: Number(customerId), petId: Number(petId) },
+          { customerId: ownerId, petId: Number(petId) },
           {
             onSuccess: () => {
               console.log('반려동물 프로필 삭제 성공');
