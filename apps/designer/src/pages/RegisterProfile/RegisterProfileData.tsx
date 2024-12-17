@@ -13,7 +13,7 @@ export interface serviceBreed {
 }
 export interface Service {
   serviceCode: string;
-  breedList: serviceBreed[];
+  breedPriceTimeList: serviceBreed[];
 }
 
 export interface Breed {
@@ -45,7 +45,7 @@ export interface DesignerData {
   detailAddress: string;
   introduction: string;
   phone: string;
-  providedServices: Service[];
+  providedServiceList: Service[];
   // possibleBreeds: Breed[];
   dayOff: string[];
   businessNumber: string;

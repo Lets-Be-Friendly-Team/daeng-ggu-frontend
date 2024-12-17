@@ -11,7 +11,8 @@ interface ProfileState {
 
 const useProfileStore = create<ProfileState>((set) => ({
   profileData: {
-    designerId: Number(localStorage.getItem('designerId')),
+    // designerId: Number(localStorage.getItem('designerId')),
+    designerId: 2,
     // designerImg: null,
     newImgUrl: '',
     nickname: '',
@@ -20,10 +21,12 @@ const useProfileStore = create<ProfileState>((set) => ({
     detailAddress: '',
     introduction: '',
     phone: '',
-    providedServices: [],
+    providedServiceList: [],
     dayOff: [],
-    businessNumber: '',
-    businessIsVerified: '',
+    // businessNumber: '',
+    businessNumber: '12345',
+    // businessIsVerified: '',
+    businessIsVerified: 'N',
     certificationsUrlList: [],
     workExperience: '',
     portfolioList: [],

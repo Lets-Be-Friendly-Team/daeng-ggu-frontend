@@ -1,4 +1,5 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 import { Header, ImageUploader, Input, PageContainer, TextArea, TypeOneButton } from '@daeng-ggu/design-system';
 
 import useProfileStore from '@/stores/useProfileStore';
@@ -19,33 +20,42 @@ const AddPortfolioPage = ({ handleSubmit }: PortfolioProps) => {
     newImgUrlList: [],
   });
   const { fileData, setFileData } = useProfileStore();
-
+  const [activeBtn, setActiveBtn] = useState(false);
+  const navigate = useNavigate();
   const handleChange = (field: keyof Portfolio, value: number | string | File | null | File[]) => {
     setPortfolio((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSetImgList: Dispatch<SetStateAction<File[]>> = (value) => {
-    // setPortfolio((prev) => ({
-    //   ...prev,
-    //   imgList: typeof value === 'function' ? value(prev.imgList) : value,
-    // }));
-    setFileData({ portfolioImgList: typeof value === 'function' ? value(fileData.portfolioImgList) : value });
+  const handleSetImgList: Dispatch<SetStateAction<File[]>> = useCallback(
+    (value) => {
+      setFileData({ portfolioImgList: typeof value === 'function' ? value(fileData.portfolioImgList) : value });
+    },
+    [fileData.portfolioImgList, setFileData],
+  );
+
+  const handleSetVideo: Dispatch<SetStateAction<File | null>> = useCallback(
+    (value) => {
+      setFileData({ video: typeof value === 'function' ? value(fileData.video) : value });
+    },
+    [fileData.video, setFileData],
+  );
+
+  const handleClose = () => {
+    setFileData({ portfolioImgList: [], video: null });
+    navigate(-1);
   };
 
-  const handleSetVideo: Dispatch<SetStateAction<File | null>> = (value) => {
-    // setPortfolio((prev) => ({
-    //   ...prev,
-    //   video: typeof value === 'function' ? value(prev.video) : value,
-    // }));
-    setFileData({ video: typeof value === 'function' ? value(fileData.video) : value });
-  };
   useEffect(() => {
     console.log(portfolio);
-  }, [portfolio]);
+    // const requiredFiled
+    const isFormComplete = fileData.portfolioImgList?.length > 0 && portfolio.title !== '';
+    setActiveBtn(isFormComplete);
+  }, [portfolio, fileData]);
+
   return (
     <div className='w-full'>
       <PageContainer>
-        <Header mode='close' title='포트폴리오 작성' />
+        <Header mode='close' title='포트폴리오 작성' onClick={handleClose} />
         <div className='flex  w-full flex-col gap-[2.4rem] pt-[2rem] pb-[4rem] mb-[6rem]'>
           <Input
             label='제목'
@@ -61,7 +71,7 @@ const AddPortfolioPage = ({ handleSubmit }: PortfolioProps) => {
             setVideo={handleSetVideo}
             mode='both'
             label='사진 및 동영상'
-            subLabel='동영상은 1개만 업로드 가능합니다'
+            subLabel='사진 업로드는 필수이며 동영상은 1개만 업로드 가능합니다'
           />
           <TextArea
             label='내용'
@@ -77,7 +87,8 @@ const AddPortfolioPage = ({ handleSubmit }: PortfolioProps) => {
           handleSubmit(portfolio);
         }}
         text='작성완료'
-        color='bg-primary'
+        color={activeBtn ? 'bg-primary' : 'bg-gray-50'}
+        disabled={!activeBtn}
       />
     </div>
   );

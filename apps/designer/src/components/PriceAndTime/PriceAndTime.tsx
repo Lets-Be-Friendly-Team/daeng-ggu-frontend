@@ -6,13 +6,13 @@ import useProfileStore from '@/stores/useProfileStore';
 const PriceAndTime = ({ title = '', serviceCode = '', breedCode = '', price = '', time = '' }) => {
   const { profileData, setProfileData } = useProfileStore();
   const handleChange = (field: 'price' | 'time', value: string) => {
-    const numericValue = value.replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ','); //숫자만 허용 & 천단위 콤마 처리
+    const numericValue = value.replace(/\D/g, ''); //숫자만 허용
     setProfileData({
-      providedServices: profileData.providedServices.map((service) =>
+      providedServiceList: profileData.providedServiceList.map((service) =>
         service.serviceCode === serviceCode
           ? {
               ...service,
-              breedList: service.breedList?.map((breed) =>
+              breedPriceTimeList: service.breedPriceTimeList?.map((breed) =>
                 breed.majorBreedCode === breedCode
                   ? {
                       ...breed,
@@ -28,7 +28,7 @@ const PriceAndTime = ({ title = '', serviceCode = '', breedCode = '', price = ''
   return (
     <div className='flex items-start justify-between w-full'>
       {/* Title */}
-      <div className='flex-1 text-body3 leading-[4rem]'>{title}</div>
+      <h2 className='flex-1 text-body3 leading-[4rem]'>{title}</h2>
       <div className='flex-[2] flex flex-col gap-y-[0.8rem]'>
         {/* Price */}
         <div className='flex items-center justify-end'>
@@ -37,7 +37,7 @@ const PriceAndTime = ({ title = '', serviceCode = '', breedCode = '', price = ''
             <Input
               name='price'
               width='100%'
-              value={price}
+              value={price.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
               onChange={(e) => handleChange('price', e.target.value)}
               cn='text-right'
             ></Input>
@@ -51,7 +51,7 @@ const PriceAndTime = ({ title = '', serviceCode = '', breedCode = '', price = ''
             <Input
               name='time'
               width='100%'
-              value={time}
+              value={time.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
               onChange={(e) => handleChange('time', e.target.value)}
               cn='text-right'
             ></Input>
@@ -65,13 +65,13 @@ const PriceAndTime = ({ title = '', serviceCode = '', breedCode = '', price = ''
 
 const PriceAndTimeList = () => {
   const { profileData } = useProfileStore();
-  const { providedServices } = profileData;
+  const { providedServiceList } = profileData;
   const findTitle = (code: string): string | undefined => {
     //견종 코드 이용해서 견종명 찾는 함수
     return reverseBreedList.get(code);
   };
   //   const handleChangeService = (service: Service) => {};
-  return providedServices?.map((service, index) => (
+  return providedServiceList?.map((service, index) => (
     <div
       key={index}
       className='px-[1rem] py-[1.2rem] flex items-start w-full justify-between [&:not(:last-child)]:border-b border-b-gray-300'
@@ -80,7 +80,7 @@ const PriceAndTimeList = () => {
         {serviceList[service.serviceCode]}
       </h1>
       <div className='flex-[3] flex flex-col gap-y-[0.8rem]'>
-        {service.breedList?.map((breed) => {
+        {service.breedPriceTimeList?.map((breed) => {
           const title = findTitle(breed.majorBreedCode);
 
           return (

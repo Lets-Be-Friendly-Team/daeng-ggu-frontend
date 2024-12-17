@@ -16,7 +16,7 @@ import { Breed, DesignerData, FileData, Service } from './RegisterProfileData';
 const Step1 = ({ setActiveBtn }: { setActiveBtn: Dispatch<SetStateAction<boolean>> }) => {
   const { profileData, setProfileData, fileData, setFileData } = useProfileStore();
 
-  const { nickname, address1, address2, detailAddress, introduction, phone, providedServices } = profileData;
+  const { nickname, address1, address2, detailAddress, introduction, phone, providedServiceList } = profileData;
   const { designerImg } = fileData;
 
   const handleChange = (field: keyof DesignerData, value: string | File | null | Service[] | Breed[]) => {
@@ -53,7 +53,7 @@ const Step1 = ({ setActiveBtn }: { setActiveBtn: Dispatch<SetStateAction<boolean
   // 제공 서비스 선택
   const handleServiceChange = (selectedItems: string[]) => {
     // 기존 데이터에서 선택된 항목에 없는 항목 제거
-    const updatedServices = profileData.providedServices.filter((service) => {
+    const updatedServices = profileData.providedServiceList.filter((service) => {
       // `S1`의 경우 하위 서비스 코드를 모두 확인
       if (service.serviceCode.startsWith('S1')) {
         return selectedItems.includes('S1');
@@ -67,37 +67,37 @@ const Step1 = ({ setActiveBtn }: { setActiveBtn: Dispatch<SetStateAction<boolean
       if (item === 'S1') {
         // `S1`이 선택된 경우 하위 서비스 코드만 추가
         const services = [
-          { serviceCode: 'S101', breedList: [] },
-          { serviceCode: 'S102', breedList: [] },
-          { serviceCode: 'S103', breedList: [] },
-          { serviceCode: 'S104', breedList: [] },
+          { serviceCode: 'S101', breedPriceTimeList: [] },
+          { serviceCode: 'S102', breedPriceTimeList: [] },
+          { serviceCode: 'S103', breedPriceTimeList: [] },
+          { serviceCode: 'S104', breedPriceTimeList: [] },
         ];
         services.forEach((service) => {
           if (!updatedServices.some((s) => s.serviceCode === service.serviceCode)) {
             updatedServices.push(service);
           }
         });
-      } else if (!profileData.providedServices.some((service) => service.serviceCode === item)) {
+      } else if (!profileData.providedServiceList.some((service) => service.serviceCode === item)) {
         // 다른 서비스 코드 추가
-        updatedServices.push({ serviceCode: item, breedList: [] });
+        updatedServices.push({ serviceCode: item, breedPriceTimeList: [] });
       }
     });
 
     // 모든 서비스의 breedList를 빈 배열로 초기화
     updatedServices.forEach((service) => {
-      service.breedList = []; // 모든 서비스의 breedList를 빈 배열로 설정
+      service.breedPriceTimeList = []; // 모든 서비스의 breedList를 빈 배열로 설정
     });
 
     // 최종 데이터 업데이트
-    handleChange('providedServices', updatedServices);
+    handleChange('providedServiceList', updatedServices);
   };
 
   // 가능 견종 선택
   const handleBreedChange = (selectedItems: string[]) => {
     // console.log('Selected items:', selectedItems);
-    const updatedProvidedServices = providedServices.map((service) => ({
+    const updatedProvidedServiceList = providedServiceList.map((service) => ({
       ...service,
-      breedList: selectedItems.map((breedCode) => ({
+      breedPriceTimeList: selectedItems.map((breedCode) => ({
         majorBreedCode: breedCode,
         price: '', // 기본값
         time: '', // 기본값
@@ -105,7 +105,7 @@ const Step1 = ({ setActiveBtn }: { setActiveBtn: Dispatch<SetStateAction<boolean
     }));
     setProfileData({
       ...profileData,
-      providedServices: updatedProvidedServices,
+      providedServiceList: updatedProvidedServiceList,
     });
   };
 
@@ -113,10 +113,10 @@ const Step1 = ({ setActiveBtn }: { setActiveBtn: Dispatch<SetStateAction<boolean
     // const { providedServices } = profileData;
 
     // 'S1'으로 시작하는 서비스 필터링
-    const hasS1Services = providedServices.some((service) => service.serviceCode.startsWith('S1'));
+    const hasS1Services = providedServiceList.some((service) => service.serviceCode.startsWith('S1'));
 
     // 나머지 서비스 필터링
-    const otherServices = providedServices
+    const otherServices = providedServiceList
       .filter((service) => !service.serviceCode.startsWith('S1'))
       .map((service) => service.serviceCode);
 
@@ -149,12 +149,12 @@ const Step1 = ({ setActiveBtn }: { setActiveBtn: Dispatch<SetStateAction<boolean
 
     const isFormComplete = fieldsToValidate.every(
       (field) => {
-        if (field === 'providedServices') {
-          const premiumService = profileData.providedServices.filter(
+        if (field === 'providedServiceList') {
+          const premiumService = profileData.providedServiceList.filter(
             (service) => !service.serviceCode.startsWith('S1'),
           );
           console.log(premiumService);
-          return premiumService?.[0]?.breedList.length > 0;
+          return premiumService?.[0]?.breedPriceTimeList.length > 0;
         } else {
           return profileData[field]?.toString().trim() !== '';
         }
@@ -201,15 +201,15 @@ const Step1 = ({ setActiveBtn }: { setActiveBtn: Dispatch<SetStateAction<boolean
         <div className='text-body3 font-semibold text-gray-800'>제공 서비스 (프리미엄 서비스 제공 필수)</div>
         <ServiceCheckBox onChange={handleServiceChange} initialSelectedItems={initialSelectedItems()} />
       </div>
-      {providedServices.filter((service) => !service.serviceCode.startsWith('S1')).length > 0 && ( // 프리미엄 서비스가 하나 이상이어야 가능 견종 선택 가능
+      {providedServiceList.filter((service) => !service.serviceCode.startsWith('S1')).length > 0 && ( // 프리미엄 서비스가 하나 이상이어야 가능 견종 선택 가능
         <div className='flex flex-col gap-y-[0.8rem]'>
           <div className='text-body3 font-semibold text-gray-800'>가능 견종</div>
           <DogTypePicker
             type='checkbox'
             selectedValues={Array.from(
               new Set(
-                providedServices
-                  .flatMap((service) => service.breedList?.map((breed) => breed.majorBreedCode || ''))
+                providedServiceList
+                  .flatMap((service) => service.breedPriceTimeList?.map((breed) => breed.majorBreedCode || ''))
                   .filter((code) => code),
               ),
             )}

@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { FileUploader } from 'react-drag-drop-files';
 
 import logoImage from '../../assets/images/logoImage.webp';
@@ -32,13 +32,39 @@ const ImageUploader = ({
 }: ImageUploaderProps) => {
   const fileTypes =
     mode === 'img' ? ['jpg', 'png', 'jpeg', 'gif'] : ['jpg', 'png', 'jpeg', 'gif', 'avi', 'mp4', 'mov', 'wmv'];
+  const [imgURLs, setImgURLs] = useState<string[]>([]);
+  const [videoURL, setVideoURL] = useState<string | null>(null);
 
   const [currentImgList, setCurrentImgList] = useState<string[]>(initialImgList);
   const [currentVideo, setCurrentVideo] = useState<string>(initialVideo);
 
-  // useEffect(() => {
-  //   setCurrentImgList(initialImgList);
-  // }, [initialImgList]);
+  // 이미지 파일 URL 관리
+  useEffect(() => {
+    // 새로운 URL 생성
+    const urls = imgList.map((file) => URL.createObjectURL(file));
+    setImgURLs(urls);
+
+    // 기존 URL 해제
+    return () => {
+      urls.forEach((url) => URL.revokeObjectURL(url));
+    };
+  }, [imgList]);
+
+  // 비디오 파일 URL 관리
+  useEffect(() => {
+    if (video) {
+      const url = URL.createObjectURL(video);
+      setVideoURL(url);
+
+      // 기존 URL 해제
+      return () => {
+        URL.revokeObjectURL(url);
+      };
+    } else {
+      setVideoURL(null);
+    }
+  }, [video]);
+
   // 이미지 업로드 핸들러
   const handleImgUpload = (files: File[]) => {
     setImgList?.((prev) => [...prev, ...files]);
@@ -47,12 +73,12 @@ const ImageUploader = ({
   // 비디오 업로드 핸들러
   const handleVideoUpload = (files: File[]) => {
     if (files.length > 1 || currentVideo || video) {
-      alert('비디오는 최대 1개만 업로드할 수 있습니다.');
+      alert('동영상은 최대 1개만 업로드할 수 있습니다!');
       return;
     }
 
-    const videoFile = files[0];
-    setVideo?.(videoFile);
+    // const videoFile = files[0];
+    setVideo?.(files[0]);
     // setCurrentVideo(URL.createObjectURL(videoFile));
   };
 
@@ -74,23 +100,16 @@ const ImageUploader = ({
     }
   };
 
-  // 슬라이더에 전달할 데이터 생성
-  const sliderList = [
-    ...currentImgList.map((src) => ({ type: 'image', src })),
-    ...imgList.map((file) => ({ type: 'image', src: URL.createObjectURL(file) })),
-    ...(currentVideo ? [{ type: 'video', src: currentVideo }] : []),
-    ...(video ? [{ type: 'video', src: URL.createObjectURL(video) }] : []),
-  ];
-
   // 파일 업로드 후 처리
   const handleFileChange = (files: File[]) => {
-    console.log(files); // 파일이 잘 들어오는지 확인
+    // console.log(files); // 파일이 잘 들어오는지 확인
     const imageFiles = Array.from(files).filter((file) => file.type.startsWith('image/'));
     const videoFiles = Array.from(files).filter((file) => file.type.startsWith('video/'));
 
-    console.log('Image Files:', imageFiles);
-    console.log(imgList);
-    console.log('Video Files:', videoFiles);
+    // console.log('Image Files:', imageFiles);
+    // console.log(imgList);
+    // console.log('Video Files:', videoFiles);
+
     // 이미지 처리
     if (imageFiles.length > 0) {
       handleImgUpload(imageFiles);
@@ -102,11 +121,20 @@ const ImageUploader = ({
     }
   };
 
+  // 슬라이더에 전달할 데이터 생성
+  const sliderList = [
+    ...currentImgList.map((src) => ({ type: 'image', src })),
+    // ...imgList.map((file) => ({ type: 'image', src: URL.createObjectURL(file) })),
+    ...imgURLs.map((src) => ({ type: 'image', src })),
+    ...(currentVideo ? [{ type: 'video', src: currentVideo }] : []),
+    ...(videoURL ? [{ type: 'video', src: videoURL }] : []),
+  ];
+
   return (
     <div>
       <div className='mb-[0.8rem] text-body3 font-semibold text-gray-800'>
         <p>{label}</p>
-        <p className='mt-[0.6rem] text-iconCaption text-gray-700'>{subLabel}</p>
+        <p className='mt-[0.6rem] text-iconCaption font-normal text-gray-700'>{subLabel}</p>
       </div>
       {/* 슬라이더 */}
       {sliderList.length > 0 ? (
@@ -129,10 +157,10 @@ const ImageUploader = ({
             </button>
           </div>
         ))}
-        {imgList.map((file, index) => (
+        {imgURLs.map((url, index) => (
           <div key={index} className='relative aspect-square w-[22%]'>
             <li className='flex h-full w-full items-center justify-center overflow-hidden rounded-md'>
-              <img className='h-full w-full object-cover' alt='이미지' src={URL.createObjectURL(file)} />
+              <img className='h-full w-full object-cover' alt='이미지' src={url} />
             </li>
             <button onClick={() => handleImgDelete(index, false)} className='absolute -right-2 -top-2'>
               <CloseCircleIcon className='h-8 w-8' />
@@ -150,10 +178,10 @@ const ImageUploader = ({
             </button>
           </div>
         )}
-        {video && (
+        {videoURL && (
           <div className='relative flex aspect-square w-[22%]'>
             <li className='flex h-full w-full items-center justify-center overflow-hidden rounded-md'>
-              <video className='h-full w-full object-cover' controls src={URL.createObjectURL(video)}></video>
+              <video className='h-full w-full object-cover' controls src={videoURL}></video>
             </li>
             <button onClick={() => handleVideoDelete(false)} className='absolute -right-2 -top-2'>
               <CloseCircleIcon className='h-8 w-8' />

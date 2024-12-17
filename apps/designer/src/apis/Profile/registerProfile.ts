@@ -5,7 +5,7 @@ import { DesignerData } from '@/pages/RegisterProfile/RegisterProfileData';
 export interface RegisterProfileResponse {
   status: string;
   message: string;
-  //   data: { petId: number };
+  data: object;
 }
 
 const registerProfile = async (profileData: DesignerData): Promise<RegisterProfileResponse> => {

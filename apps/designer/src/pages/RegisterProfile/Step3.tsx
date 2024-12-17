@@ -34,7 +34,7 @@ const Step3 = () => {
           onChange={(e) => handleChange('businessNumber', e.target.value)}
         />
         <Input placeholder='개업 일자' />
-        {businessIsVerified && <p className='text-primary'>사업자 인증 완료</p>}
+        {businessIsVerified === 'Y' && <p className='text-primary'>사업자 인증 완료</p>}
       </div>
       {/* <ul className='mt-4 flex w-full flex-wrap gap-x-[4%] gap-y-6'>
           이미지 미리보기
