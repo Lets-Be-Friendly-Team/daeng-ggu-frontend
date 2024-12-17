@@ -11,13 +11,15 @@ import {
 } from '@daeng-ggu/design-system';
 
 import useGetPetProfileDetail from '@/hooks/queries/PetProfile/useGetPetProfileDetail';
+import useOwnerIdStore from '@/stores/useOwnerIdStore';
 
 const EditPetProfilePage = () => {
   const navigate = useNavigate();
   const params = useParams();
   const petId = params.petId;
-  const customerId = 2;
-  const { data: petData } = useGetPetProfileDetail(customerId, Number(petId));
+  // const customerId = 2;
+  const { ownerId } = useOwnerIdStore();
+  const { data: petData } = useGetPetProfileDetail(ownerId, Number(petId));
   console.log(petData);
   const [formData, setFormData] = useState({
     petId: 0,

@@ -64,8 +64,8 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.login,
         children: [
-          { index: true, element: <PublicRoute element={<LoginPage />} isAuthenticated={isAuthenticated} /> },
-          // { index: true, element: <PublicRoute element={<LoginPage />} isAuthenticated={false} /> }, //임시
+          // { index: true, element: <PublicRoute element={<LoginPage />} isAuthenticated={isAuthenticated} /> },
+          { index: true, element: <LoginPage /> }, //임시
           { path: ROUTES.loginCallback, element: <KakaoCallback /> },
         ],
       },

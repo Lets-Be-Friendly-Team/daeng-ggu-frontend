@@ -1,6 +1,6 @@
 // router.jsx
 import { Suspense } from 'react';
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, Outlet } from 'react-router-dom';
 import StatusPage from '@daeng-ggu/designer/src/pages/StatusPage/StatusPage';
 import { LogContainer, RouterErrorFallback } from '@daeng-ggu/shared';
 
@@ -29,6 +29,11 @@ import EditPortfolioPage from './pages/EditPortfolioPage/EditPortfolioPage';
 
 // import AddPortfolioPage from './pages/AddPortfolioPage/AddPortfolioPage';
 
+import PrivateWrapper from './components/RouteGuard/PrivateWrapper'; //로그인 안된 상태면 접근 제한
+import PublicRoute from './components/RouteGuard/PublicRoute'; //로그인 된 상태면 접근 제한
+
+const isAuthenticated = Boolean(localStorage.getItem('designerIdStorage')); //로그인 상태 확인
+
 // import '@/styles/sequenceAnimation.css';
 export const router = createBrowserRouter(
   [
@@ -50,10 +55,19 @@ export const router = createBrowserRouter(
           element: <ReservationPage />,
         },
         { path: ROUTES.progress(), element: <ProgressPage /> },
+        // {
+        //   path: ROUTES.login,
+        //   children: [
+        //     { index: true, element: <PublicRoute element={<LoginPage />} isAuthenticated={isAuthenticated} /> },
+        //     // { index: true, element: <PublicRoute element={<LoginPage />} isAuthenticated={false} /> }, //임시
+        //     { path: ROUTES.loginCallback, element: <KakaoCallback /> },
+        //   ],
+        // },
         {
           path: ROUTES.signup,
           children: [
-            { index: true, element: <SignupPage /> },
+            { index: true, element: <PublicRoute element={<SignupPage />} isAuthenticated={isAuthenticated} /> },
+            // { index: true, element: <PublicRoute element={<SignupPage />} isAuthenticated={false} /> }, //임시
             { path: ROUTES.signupSuccess, element: <SignupSuccessPage /> },
           ],
         },
@@ -109,6 +123,11 @@ export const router = createBrowserRouter(
         },
         {
           path: ROUTES.bid,
+          element: (
+            <PrivateWrapper isAuthenticated={isAuthenticated}>
+              <Outlet />
+            </PrivateWrapper>
+          ),
           children: [
             {
               index: true,
