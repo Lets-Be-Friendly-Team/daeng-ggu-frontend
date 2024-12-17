@@ -19,7 +19,7 @@ const KakaoCallback = () => {
         console.log(data);
         //가입 되어있는 유저면 로컬스토리지에 토큰 및 id 저장후 메인으로 이동
         if (data.data.joinYn === 'Y') {
-          localStorage.setItem('T', userInfo.refreshToken);
+          // localStorage.setItem('T', userInfo.refreshToken);
           setOwnerId(userInfo.id);
           navigate(ROUTES.main);
         } else {
@@ -31,7 +31,7 @@ const KakaoCallback = () => {
         console.log(data);
         //가입 되어있는 유저면 로컬스토리지에 토큰 및 id 저장후 디자이너 메인으로 이동
         if (data.data.joinYn === 'Y') {
-          localStorage.setItem('T', userInfo.refreshToken);
+          // localStorage.setItem('T', userInfo.refreshToken);
           setDesignerId(userInfo.id);
           window.location.href = import.meta.env.VITE_DESIGNER_MAIN_URL;
         } else {
