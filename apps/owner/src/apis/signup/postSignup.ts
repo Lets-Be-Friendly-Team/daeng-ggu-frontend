@@ -5,7 +5,9 @@ import { APIClient } from '@daeng-ggu/shared';
 export interface SignupResponse {
   status: string;
   message: string;
-  data: object;
+  data: {
+    customerId: number;
+  };
 }
 
 const postSignup = async (signupForm: SignupFormData): Promise<SignupResponse> => {
