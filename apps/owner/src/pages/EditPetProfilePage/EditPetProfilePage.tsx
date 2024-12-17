@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import {
+  DeleteIcon,
   Header,
   Input,
   Modal,
