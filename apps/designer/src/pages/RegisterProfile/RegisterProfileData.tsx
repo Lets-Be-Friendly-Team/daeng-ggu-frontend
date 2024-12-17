@@ -22,9 +22,10 @@ export interface Breed {
 }
 
 export interface Portfolio {
+  portfolioId?: number;
   title: string;
-  // video: File | null;
-  // imgList: File[];
+  video?: File | null;
+  imgList?: File[];
   contents: string;
   newVideoUrl: string;
   newImgUrlList: string[];
