@@ -1,4 +1,4 @@
-import { Review } from '@/apis/profile/getProfile';
+import { Review } from '@/apis/Profile/getProfile';
 
 interface IReviewListProps {
   reviews: Review[];

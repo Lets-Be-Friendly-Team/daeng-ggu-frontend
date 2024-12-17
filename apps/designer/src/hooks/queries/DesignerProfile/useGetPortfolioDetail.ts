@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import getPortfolioDetail from '@/apis/profile/getPortfolioDetail';
+import getPortfolioDetail from '@/apis/Profile/getPortfolioDetail';
 import { DESIGNER_QUERY_KEYS } from '@/constants/queryKeys';
 
 const useGetPortfolioDetail = (designerId: number, portfolioId: number) => {
