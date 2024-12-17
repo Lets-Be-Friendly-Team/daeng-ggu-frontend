@@ -83,9 +83,18 @@ const Profile = ({ nickname, customerImgUrl }: IProfileProps) => {
           <MoreIcon className='w-[2.4rem] rotate-90' color='#949CA5' />
         </div>
       </div>
-      <div className='flex w-full gap-4 pt-[10px]'>
-        <TypeTwoButton text='예약 조회' color='bg-secondary' onClick={goToReservations} />
-        <TypeTwoButton text='프로필 수정' onClick={goToEditProfile} className='bg-gray-50' />
+      <div className='flex w-full gap-4 pt-[2rem]'>
+        <TypeTwoButton
+          text='예약 조회'
+          onClick={goToReservations}
+          className='bg-gray-50 text-gray-800 hover:bg-secondary hover:text-primary'
+          // fontWeight='font-normal'
+        />
+        <TypeTwoButton
+          text='프로필 수정'
+          onClick={goToEditProfile}
+          className='bg-gray-50 text-gray-800 hover:bg-secondary hover:text-primary'
+        />
       </div>
       <div className='ml-[-2rem]'>
         <BottomSheetModal isOpen={isModalOpen} onClose={() => setModalOpen(false)} options={modalOptions} />

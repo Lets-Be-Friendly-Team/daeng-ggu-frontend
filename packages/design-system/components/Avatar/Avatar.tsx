@@ -33,11 +33,13 @@ const Avatar = ({ imageUrl, name, mode, isActive, onClick, containerClassName, i
       {mode === 'avatar' && (
         <>
           <div
-            className={`flex h-[45px] w-[45px] items-center justify-center overflow-hidden rounded-full bg-secondary ${
+            // className={`flex h-[45px] w-[45px] items-center justify-center overflow-hidden rounded-full ${
+            className={`flex h-[6rem] w-[6rem] items-center justify-center overflow-hidden rounded-full bg-secondary${
               isActive ? 'border border-primary' : ''
             }`}
           >
-            <img src={imageUrl || logo} className='h-[45px] w-[45px] object-cover' alt='Avatar' />
+            {/* <img src={imageUrl || logo} className='h-[45px] w-[45px] object-cover' alt='Avatar' /> */}
+            <img src={imageUrl || logo} className='h-full w-full object-cover' alt='Avatar' />
           </div>
           <div className={`flex justify-center pt-[7px] text-caption ${isActive ? 'text-primary' : 'text-gray-500'}`}>
             {name}
@@ -47,23 +49,26 @@ const Avatar = ({ imageUrl, name, mode, isActive, onClick, containerClassName, i
       {mode === 'add' && (
         <>
           <div
-            className={`flex h-[45px] w-[45px] items-center justify-center overflow-hidden rounded-full border border-gray-200 ${
+            // className={`flex h-[45px] w-[45px] items-center justify-center overflow-hidden rounded-full border border-gray-200 ${
+            className={`flex h-[6rem] w-[6rem] items-center justify-center overflow-hidden rounded-full border border-gray-200 ${
               isActive ? 'border border-primary' : ''
             }`}
           >
-            <PlusIcon className='h-[24px] w-[24px]' />
+            <PlusIcon className='h-[3rem] w-[3rem]' />
           </div>
-          <div className={`flex justify-center pt-[7px] text-caption text-primary`}>추가하기</div>
+          {/* <div className={`flex justify-center pt-[7px] text-caption text-primary`}> </div> */}
         </>
       )}
       {mode === 'request' && (
         <>
           <div
-            className={`flex h-[45px] w-[45px] items-center justify-center overflow-hidden rounded-full border border-gray-200 ${
+            // className={`flex h-[45px] w-[45px] items-center justify-center overflow-hidden rounded-full border border-gray-200 ${
+            className={`flex h-[6rem] w-[6rem] items-center justify-center overflow-hidden rounded-full border border-gray-200 ${
               isActive ? 'border border-primary' : ''
             }`}
           >
-            <PlusIcon className='h-[24px] w-[24px]' />
+            {/* <PlusIcon className='h-[24px] w-[24px]' /> */}
+            <PlusIcon className='h-[3rem] w-[3rem]' />
           </div>
           <div className={`flex justify-center pt-[7px] text-caption text-gray-500`}>새 요청</div>
         </>

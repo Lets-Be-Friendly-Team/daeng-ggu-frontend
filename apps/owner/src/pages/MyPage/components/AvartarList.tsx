@@ -19,8 +19,8 @@ const AvartarList = ({ pets }: IAvartarListProps) => {
     navigate(`/profile/pet/add`);
   };
   return (
-    <div className='pt-4'>
-      <div className='flex gap-[20px]'>
+    <div className='pt-[2rem]'>
+      <div className='flex items-start gap-[20px]'>
         {pets.map((pet) => (
           <div key={pet.petId} onClick={() => handleAvartarClick(pet.petId)}>
             <Avatar mode='avatar' imageUrl={pet.petImgUrl} name={pet.petName} />

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import {
+  DeleteIcon,
   Header,
   Input,
   Modal,
@@ -208,7 +209,7 @@ const EditPetProfilePage = () => {
   }, [formData]);
 
   return (
-    <div>
+    <div className='pb-[10rem]'>
       <PageContainer>
         <Header mode='back' title={`${initialPetName} 프로필 수정`} />
 
@@ -285,6 +286,8 @@ const EditPetProfilePage = () => {
             placeholder='특이사항을 입력해주세요'
             value={formData.specialNotes}
             onChange={(e) => handleChange('specialNotes', e.target.value)}
+            maxLength={200}
+            initialLength={formData?.specialNotes.length}
           />
           <div className='mb-[10rem] block text-body3 font-semibold text-gray-800'>
             <TypeTwoButton text='삭제하기' color='bg-secondary' onClick={handleDelete} />

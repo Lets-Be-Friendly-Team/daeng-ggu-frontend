@@ -5,4 +5,5 @@ export interface ModalProps {
   description: string;
   confirmText: string;
   cancelText: string;
+  btnCn?: string;
 }

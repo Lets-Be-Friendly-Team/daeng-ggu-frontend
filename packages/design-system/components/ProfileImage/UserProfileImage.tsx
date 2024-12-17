@@ -8,7 +8,8 @@ interface IUserProfileImage {
 const UserProfileImage = ({ imageUrl, size = 'large', onClick }: IUserProfileImage) => {
   const sizes = {
     small: 'w-[45px] h-[45px]',
-    large: 'w-[70px] h-[70px]',
+    // large: 'w-[70px] h-[70px]',
+    large: 'w-[8rem] h-[8rem]',
   };
 
   return (
