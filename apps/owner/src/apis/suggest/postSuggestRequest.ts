@@ -22,7 +22,10 @@ export interface PostSuggestResponse {
   deliveryFee: number;
   monitoringFee: number;
   estimatePrice: number;
-  estimateImgList: string[]; // <-- Changed from EstimateImg[] to string[]
+  startTime: string;
+  endTime: string;
+  takeTime: number;
+  estimateImgList: string[];
   serviceDescription?: string;
 }
 

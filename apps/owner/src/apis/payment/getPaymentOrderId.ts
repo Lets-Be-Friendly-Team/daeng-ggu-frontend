@@ -1,5 +1,4 @@
-// src/apis/payment/getPaymentDetails.ts
-
+// src/apis/payment/getPaymentOrderId.ts
 import { APIClient } from '@daeng-ggu/shared';
 
 import { SecondDefaultResponse } from '@/types/api';
@@ -9,19 +8,19 @@ export interface PaymentDetailsResponse {
   orderId: string;
 }
 
-const getPaymentDetails = async (): Promise<PaymentDetailsResponse> => {
+const getPaymentOrderId = async (): Promise<PaymentDetailsResponse> => {
   const url = '/daengggu/reservation/payment/keys';
   try {
-    const response = await APIClient.get<SecondDefaultResponse<PaymentDetailsResponse>>(`${url}`);
-
-    if (response.status === 'success') {
+    const response = await APIClient.get<SecondDefaultResponse<PaymentDetailsResponse>>(url);
+    console.log('Payment details response: ', response);
+    if (response.status === 'SUCCESS') {
       return response.data;
     } else {
-      throw new Error(response.message || 'Failed to fetch payment details.');
+      throw new Error(response.status || 'Failed to fetch payment details.');
     }
   } catch (error) {
     console.error('Error fetching payment details:', error);
     throw error;
   }
 };
-export default getPaymentDetails;
+export default getPaymentOrderId;
