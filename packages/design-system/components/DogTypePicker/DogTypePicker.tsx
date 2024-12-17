@@ -7,6 +7,7 @@ interface IDogTypeOption {
   image: string;
   size: string;
   gap: string;
+  code: string;
 }
 interface IDogTypePickerProps {
   type?: 'radio' | 'checkbox';
@@ -16,10 +17,10 @@ interface IDogTypePickerProps {
 }
 const DogTypePicker = ({ type, selectedValues, onChange }: IDogTypePickerProps) => {
   const dogOptions: IDogTypeOption[] = [
-    { label: '소형견', image: redPoodle, size: 'h-[32px] w-[32px]', gap: 'gap-[14px]' },
-    { label: '중형견', image: shiba, size: 'h-[32px] w-[32px]', gap: 'gap-[14px]' },
-    { label: '대형견', image: husky, size: 'h-[40px] w-[40px]', gap: 'gap-[6px]' },
-    { label: '특수견', image: bichon, size: 'h-[36px] w-[36px]', gap: 'gap-[10px]' },
+    { label: '소형견', code: 'P1', image: redPoodle, size: 'h-[32px] w-[32px]', gap: 'gap-[14px]' },
+    { label: '중형견', code: 'P2', image: shiba, size: 'h-[32px] w-[32px]', gap: 'gap-[14px]' },
+    { label: '대형견', code: 'P3', image: husky, size: 'h-[40px] w-[40px]', gap: 'gap-[6px]' },
+    { label: '특수견', code: 'P4', image: bichon, size: 'h-[36px] w-[36px]', gap: 'gap-[10px]' },
   ];
 
   const handleChange = (value: string) => {
@@ -44,8 +45,10 @@ const DogTypePicker = ({ type, selectedValues, onChange }: IDogTypePickerProps) 
             name={type === 'radio' ? 'dog-type' : `dog-type-${index}`}
             id={`dog-type-${index}`}
             className='peer hidden'
-            checked={selectedValues.includes(option.label)}
-            onChange={() => handleChange(option.label)}
+            // checked={selectedValues.includes(option.label)}
+            checked={selectedValues.includes(option.code)}
+            // onChange={() => handleChange(option.label)}
+            onChange={() => handleChange(option.code)}
           />
           <label
             htmlFor={`dog-type-${index}`}

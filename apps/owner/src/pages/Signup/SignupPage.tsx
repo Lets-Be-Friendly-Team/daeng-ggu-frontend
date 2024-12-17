@@ -23,6 +23,7 @@ const SignupPage = () => {
     onSuccess: (data) => {
       //회원가입 성공시
       console.log('회원가입 성공', data);
+      //로그인 처리 해주고 싶음..
       navigate(ROUTES.signupSuccess, { state: { nickname: formData.nickname } }); //성공페이지로 이동
     },
     onError: (error) => {

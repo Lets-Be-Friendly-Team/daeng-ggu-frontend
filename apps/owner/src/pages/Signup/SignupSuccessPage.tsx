@@ -1,10 +1,42 @@
 import { useLocation, useNavigate } from 'react-router';
 import { Header, LogoImage, PageContainer, RightIcon, TypeTwoButton } from '@daeng-ggu/design-system';
+// import getLogin from '@/apis/login/getLogin';
+// import { useEffect } from 'react';
 
 const SignupSuccessPage = () => {
   const { state } = useLocation();
-  const nickname = state.nickname;
+  const nickname = state?.nickname || '보호자';
   const navigate = useNavigate();
+  // const login = async () => {
+  //   const data = await getLogin({ userType: 'C' });
+  //   // window.location.href = `/${data.data}`;
+  //   window.location.href = data.data;
+  // };
+
+  // useEffect(() => {
+  //   login();
+  // }, []);
+
+  // const { data, error } = useGetUserInfo();
+  // const { setOwnerId } = useOwnerIdStore();
+  // useEffect(() => {
+  //   if (data?.status === 'SUCCESS') {
+  //     const userInfo = data.data;
+  //     if (userInfo.userType === 'C') {
+  //       //보호자일 경우
+  //       console.log(data);
+  //       //가입 되어있는 유저면 로컬스토리지에 토큰 및 id 저장(로그인 처리)
+  //       if (data.data.joinYn === 'Y') {
+  //         localStorage.setItem('T', userInfo.refreshToken);
+  //         setOwnerId(userInfo.id);
+  //       } else {
+  //         console.log('미가입 유저입니다.');
+  //       }
+  //     }
+  //   }
+  // }, [data, setOwnerId]);
+  // if (error) return <p>Error: {error.message}</p>;
+
   const handleClick = () => {
     navigate('/profile/pet/add');
   };
