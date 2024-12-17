@@ -1,10 +1,15 @@
+import { useNavigate } from 'react-router';
 import { FullBookMarkIcon, FullStarIcon } from '@daeng-ggu/design-system';
 
 import { DesignerType } from './DesignerData';
 
 const Designer = ({ designer }: { designer: DesignerType }) => {
+  const navigate = useNavigate();
+  const handleClickDesigner = () => {
+    navigate(`/profile/designer/${designer.designerId}`);
+  };
   return (
-    <div>
+    <div onClick={handleClickDesigner} className='cursor-pointer'>
       <div className='aspect-square w-full overflow-hidden rounded-md'>
         <img className='w-fll h-full object-cover' src={designer.designerImgUrl} alt='디자이너 사진' />
       </div>
