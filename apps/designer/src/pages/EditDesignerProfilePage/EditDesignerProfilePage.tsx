@@ -52,7 +52,7 @@ const EditDesignerProfilePage = () => {
 
   const [formData, setFormData] = useState(data);
   const [profileImage, setProfileImage] = useState<File | undefined>(undefined);
-  const [selectedServices, setSelectedServices] = useState<string[]>(data.providedServices);
+  const [selectedServices, setSelectedServices] = useState<string[]>(['S1']);
   const [selectedBreeds, setSelectedBreeds] = useState<string[]>(
     data.possibleBreeds.map((breed) => {
       if (breed.breedCode === 'P1') return '소형견';
