@@ -30,6 +30,7 @@ const MainCategoryTab = () => {
 
   useEffect(() => {
     if (data) {
+      console.log(data);
       setLists({
         designerList: data.data.allDesignerList,
         popularList: data.data.popularList,
