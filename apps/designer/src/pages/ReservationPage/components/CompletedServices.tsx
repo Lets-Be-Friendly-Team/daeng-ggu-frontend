@@ -5,39 +5,10 @@ import BulbIcon from '@daeng-ggu/design-system/components/Icons/BulbIcon';
 import ScissorIcon from '@daeng-ggu/design-system/components/Icons/ScissorIcon';
 import { extractKorean } from '@daeng-ggu/shared';
 
-interface IReservation {
-  reservationId: number;
-  petName: string;
-  nickname: string;
-  customerImgUrl: string;
-  majorBreedCode: string;
-  majorBreed: string;
-  subBreedCode: string;
-  subBreed: string;
-  reservationType: string;
-  isFinished: boolean;
-  isCanceled: boolean;
-  reservationDate: string;
-  dayOfWeek: string;
-  amPm: string;
-  startTime: number;
-  groomingFee: number;
-  deliveryFee: number;
-  monitoringFee: number;
-  totalPayment: number;
-  estimateDetail: string;
-  requestDetail: {
-    desiredService: string;
-    lastGroomingDate: string;
-    isDelivery: boolean;
-    desiredRegion: string;
-    isMonitoring: boolean;
-    additionalRequest: string;
-  };
-}
+import { Reservation } from '@/apis/reservation/getReservation';
 
 interface ICompletedHistoryProps {
-  completedGroomingList: IReservation[];
+  completedGroomingList: Reservation[] | undefined;
 }
 
 const CompletedServices = ({ completedGroomingList }: ICompletedHistoryProps) => {
@@ -50,7 +21,7 @@ const CompletedServices = ({ completedGroomingList }: ICompletedHistoryProps) =>
   };
   return (
     <div className='flex flex-col gap-6 px-5 py-5'>
-      {completedGroomingList.map((reservation) => (
+      {completedGroomingList?.map((reservation) => (
         <>
           <div className='flex items-center justify-between'>
             <div className='flex gap-3'>
@@ -58,7 +29,7 @@ const CompletedServices = ({ completedGroomingList }: ICompletedHistoryProps) =>
                 <UserProfileImage size='small' />
               </div>
               <div className='flex flex-col justify-center gap-2'>
-                <div className='text-black text-caption'>{reservation.nickname}</div>
+                <div className='text-black text-caption'>{reservation.customerNickname}</div>
                 <div className='text-gray-300 text-iconCaption'>
                   {reservation.reservationDate.slice(2)} {reservation.dayOfWeek[0]} | {reservation.amPm}{' '}
                   {reservation.startTime}시
@@ -91,7 +62,7 @@ const CompletedServices = ({ completedGroomingList }: ICompletedHistoryProps) =>
             <div className='mt-4 rounded-md bg-white p-4 text-caption'>
               <div className='flex justify-end gap-1'>
                 <div className='text-gray-700'>총 결제 금액:</div>
-                <div className='text-primary'>{reservation.totalPayment.toLocaleString()}원</div>
+                <div className='text-primary'>{reservation.totalPayment?.toLocaleString()}원</div>
               </div>
             </div>
 
@@ -122,19 +93,19 @@ const CompletedServices = ({ completedGroomingList }: ICompletedHistoryProps) =>
                   <div className='text-caption text-gray-700 flex flex-col gap-2'>
                     <div className='flex justify-between'>
                       <span>미용비</span>
-                      <span>{reservation.groomingFee.toLocaleString()}원</span>
+                      <span>{(reservation.groomingFee ?? 0).toLocaleString()}원</span>
                     </div>
                     <div className='flex justify-between'>
                       <span>모니터링 비용</span>
-                      <span>{reservation.monitoringFee.toLocaleString()}원</span>
+                      <span>{(reservation.monitoringFee ?? 0).toLocaleString()}원</span>
                     </div>
                     <div className='flex justify-between border-b pb-2'>
                       <span>댕동비</span>
-                      <span>{reservation.deliveryFee.toLocaleString()}원</span>
+                      <span>{(reservation.deliveryFee ?? 0).toLocaleString()}원</span>
                     </div>
                     <div className='flex justify-between pt-1'>
                       <span>결제 금액</span>
-                      <span className='text-primary'>{reservation.totalPayment.toLocaleString()}원</span>
+                      <span className='text-primary'>{(reservation.totalPayment ?? 0).toLocaleString()}원</span>
                     </div>
                   </div>
                 </div>

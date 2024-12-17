@@ -9,8 +9,6 @@ import ROUTES from '@/constants/routes';
 import AddPortfolioInRegister from '@/pages/AddPortfolioPage/AddPortfolioInRegister';
 import EditDesignerProfilePage from '@/pages/EditDesignerProfilePage/EditDesignerProfilePage';
 import FeedPage from '@/pages/FeedPage/FeedPage';
-import MainPage from '@/pages/MainPage';
-// import AddPortfolioPage from './pages/AddPortfolioPage/AddPortfolioPage';
 import MembershipPage from '@/pages/Membership/MembershipPage';
 import MyPage from '@/pages/MyPage/MyPage';
 import PortfolioDetailPage from '@/pages/PortfolioDetailPage/PortfolioDetailPage';
@@ -22,6 +20,13 @@ import SignupPage from '@/pages/Signup/SignupPage';
 import SignupSuccessPage from '@/pages/Signup/SignupSuccessPage';
 import DetailPage from '@/pages/StatusPage/DetailPage.tsx';
 import SuggestPage from '@/pages/SuggestPage/SuggestPage.tsx';
+
+import AddPortfolioInProfile from './pages/AddPortfolioPage/AddPortfolioInProfile';
+import EditPortfolioPage from './pages/EditPortfolioPage/EditPortfolioPage';
+
+// import AddPortfolioPage from './pages/AddPortfolioPage/AddPortfolioPage';
+
+// import AddPortfolioPage from './pages/AddPortfolioPage/AddPortfolioPage';
 
 // import '@/styles/sequenceAnimation.css';
 export const router = createBrowserRouter(
@@ -41,7 +46,7 @@ export const router = createBrowserRouter(
       children: [
         {
           index: true,
-          element: <MainPage />,
+          element: <ReservationPage />,
         },
         {
           path: ROUTES.signup,
@@ -60,7 +65,7 @@ export const router = createBrowserRouter(
         },
         {
           path: ROUTES.portfolio,
-          children: [{ path: ROUTES.portfolioAdd, element: <AddPortfolioInRegister /> }],
+          children: [{ path: ROUTES.portfolioRegister, element: <AddPortfolioInRegister /> }],
         },
         {
           path: ROUTES.feed,
@@ -68,23 +73,37 @@ export const router = createBrowserRouter(
         },
         {
           path: ROUTES.profile,
-          element: <MyPage />,
+          children: [
+            {
+              index: true,
+              element: <MyPage />,
+            },
+            {
+              path: ROUTES.profileEdit,
+              element: <EditDesignerProfilePage />,
+            },
+
+            {
+              path: ROUTES.reviewDetail,
+              element: <ReviewDetailPage />,
+            },
+            {
+              path: ROUTES.portfolioDetail,
+              element: <PortfolioDetailPage />,
+            },
+            {
+              path: ROUTES.portfolioAdd,
+              element: <AddPortfolioInProfile />,
+            },
+          ],
         },
         {
-          path: ROUTES.profileEdit,
-          element: <EditDesignerProfilePage />,
-        },
-        {
-          path: ROUTES.reviewDetail,
-          element: <ReviewDetailPage />,
+          path: ROUTES.profileEditPortfolio,
+          element: <EditPortfolioPage />,
         },
         {
           path: ROUTES.reservation,
           element: <ReservationPage />,
-        },
-        {
-          path: ROUTES.portfolioDetail,
-          element: <PortfolioDetailPage />,
         },
         {
           path: ROUTES.bid,

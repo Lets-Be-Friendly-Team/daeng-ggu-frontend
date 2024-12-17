@@ -6,7 +6,7 @@ export const LOGIN_QUERY_KEYS = {
 export const REVIEW_QUERY_KEYS = {
   GET_FEED: (page: number) => ['getFeed', page],
   //   GET_REVIEW_LIST: ['getReviewList'],
-  //   POST_REVIEW: ['postReview'],
+  POST_REVIEW: ['postReview'],
   GET_REVIEW_DETAIL: (reviewId: number) => ['getReviewDetail', reviewId],
 } as const;
 
@@ -43,7 +43,7 @@ export const SEARCH_QUERY_KEYS = {
 } as const;
 
 export const RESERVATION_QUERY_KEYS = {
-  GET_RESERVATION: (customerId: number) => ['getReservation', customerId],
+  GET_RESERVATION: ['getReservation'],
 } as const;
 
 export const PET_QUERY_KEYS = {

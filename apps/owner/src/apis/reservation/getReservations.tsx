@@ -7,10 +7,8 @@ export interface ReservationResponse {
   message: string;
   data: IReservation[];
 }
-const getReservations = async ({ customerId }: { customerId: number }) => {
-  const response = await APIClient.get<ReservationResponse>('/daengggu/reservations', {
-    customerId: customerId.toString(),
-  });
+const getReservations = async () => {
+  const response = await APIClient.get<ReservationResponse>('/daengggu/customer/reservations');
   return response;
 };
 export default getReservations;

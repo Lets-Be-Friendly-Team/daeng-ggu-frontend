@@ -7,7 +7,7 @@ const Step4 = () => {
   const { profileData, setProfileData } = useProfileStore();
   const navigate = useNavigate();
   const addPortfolio = () => {
-    navigate('/portfolio/add');
+    navigate('/portfolio/register');
   };
   return (
     <div className='flex flex-col gap-y-[2.4rem]'>

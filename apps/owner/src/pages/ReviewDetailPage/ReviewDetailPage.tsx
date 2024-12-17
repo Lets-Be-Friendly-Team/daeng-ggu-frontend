@@ -12,9 +12,11 @@ import {
   MoreIcon,
   UserProfileImage,
 } from '@daeng-ggu/design-system';
-import { useModalStore } from '@daeng-ggu/shared';
+import { useModalStore, useToast } from '@daeng-ggu/shared';
 import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
+
+import useDeleteReview from '@/hooks/queries/Review/useDeleteReview';
 
 import './swiperStyle.css';
 
@@ -41,6 +43,7 @@ const ReviewDetail = () => {
   const { state } = useLocation();
   const { reviewId } = useParams();
   const navigate = useNavigate();
+  const { showToast } = useToast();
 
   const reviews: IReviewItem[] = state?.reviews || [];
 
@@ -48,11 +51,13 @@ const ReviewDetail = () => {
 
   const [activeIndex, setActiveIndex] = useState(currentReviewIndex);
 
+  const { mutate: deleteReview } = useDeleteReview();
+
   const navigateBack = () => {
     navigate('/profile');
   };
   const navigateEditPage = () => {
-    navigate('/review/edit');
+    navigate(`/review/edit/${reviewId}`);
   };
   const handleEdit = () => {
     setModalOpen(false);
@@ -76,11 +81,27 @@ const ReviewDetail = () => {
   const toggleModal = () => {
     setModalOpen((prev) => !prev);
   };
+
   const showDeleteConfirmationModal = () => {
     show(Modal, {
       title: '리뷰 삭제',
       description: '해당 리뷰를 삭제하시겠습니까?',
-      onConfirm: () => {},
+      onConfirm: () => {
+        deleteReview(
+          { reviewId: Number(reviewId) },
+          {
+            onSuccess: () => {
+              console.log('리뷰 삭제 성공');
+              showToast({ message: '리뷰가 삭제 되었습니다!', type: 'confirm' });
+              navigateBack();
+            },
+            onError: (error) => {
+              console.error('리뷰 삭제 실패', error);
+            },
+          },
+        );
+      },
+      onClose: () => close(),
       confirmText: '네',
       cancelText: '아니오',
     });

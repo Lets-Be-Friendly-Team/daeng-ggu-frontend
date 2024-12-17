@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
+// import { useNavigate } from 'react-router';
 import {
   Header,
   Input,
@@ -10,14 +10,19 @@ import {
   TypeTwoButton,
 } from '@daeng-ggu/design-system';
 
+import postImage from '@/apis/image/postImage';
 import useGetProfileDetail from '@/hooks/queries/CustomerProfile/useGetProfileDetail';
-import useUpdateProfile from '@/hooks/queries/CustomerProfile/useUpdateProfile';
+// import useSingleImageUpload from '@/hooks/queries/ImageUpload/useSingleImageUpload';
+// import useUpdateProfile from '@/hooks/queries/CustomerProfile/useUpdateProfile';
+// import usePostImage from '@/hooks/queries/Image/usePostImage';
 
 const EditUserProfilePage = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const customerId = 2;
   const { data: profileData } = useGetProfileDetail(customerId);
-  const updateProfileMutation = useUpdateProfile();
+  // const updateProfileMutation = useUpdateProfile();
+  // const { mutateAsync: uploadImage } = usePostImage();
+
   const [formData, setFormData] = useState({
     customerId: customerId,
     customerName: '',
@@ -43,187 +48,94 @@ const EditUserProfilePage = () => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  // const submitFormData = () => {
-  //   try {
-  //     const formPayload = new FormData();
-  //     formPayload.append('customerId', String(formData.customerId));
-  //     formPayload.append('customerName', formData.customerName);
-  //     formPayload.append('birthDate', formData.birthDate);
-  //     formPayload.append('gender', formData.gender);
-  //     formPayload.append('phone', formData.phone);
-  //     formPayload.append('nickname', formData.nickname);
-  //     formPayload.append('address1', formData.address1);
-  //     formPayload.append('address2', formData.address2);
-  //     formPayload.append('detailAddress', formData.detailAddress);
-  //     formPayload.append('preCustomerImgUrl', formData.customerImgUrl);
+  // const singleImageUpload = useSingleImageUpload;
 
-  //     // formPayload.append(
-  //     //   'data',
-  //     //   JSON.stringify({
-  //     //     customerId: formData.customerId,
-  //     //     customerName: formData.customerName,
-  //     //     birthDate: formData.birthDate,
-  //     //     gender: formData.gender,
-  //     //     phone: formData.phone,
-  //     //     nickname: formData.nickname,
-  //     //     address1: formData.address1,
-  //     //     address2: formData.address2,
-  //     //     detailAddress: formData.detailAddress,
-  //     //     preCustomerImgUrl: formData.customerImgUrl,
-  //     //   }),
-  //     // );
-  //     // 파일이 있을 경우에만 append
-  //     if (profileImage) {
-  //       formPayload.append('newCustomerImgFile', profileImage);
-  //     } else {
-  //       // 파일이 없다면 빈 문자열 대신 서버가 이를 허용하는지 확인 필요
-  //       formPayload.append('newCustomerImgFile', '');
-  //     }
-
-  //     console.log('FormData Content:', [...formPayload.entries()]);
-  //     updateProfileMutation.mutate(formPayload, {
-  //       onSuccess: () => {
-  //         alert('업데이트 성공');
-  //         navigate(-1);
-  //       },
-  //       onError: (error) => {
-  //         alert('오류 발생');
-  //         console.error(error);
-  //       },
-  //     });
-  //   } catch (error) {
-  //     alert('프로필 저장에 실패했습니다.');
-  //     console.error(error);
-  //   }
-  // };
-
-  // const submitFormData = () => {
-  //   try {
-  //     const boundary = `----WebKitFormBoundary${Date.now().toString(16)}`; // boundary 값 생성
-  //     const formParts: string[] = [];
-
-  //     // JSON 데이터 추가
-  //     formParts.push(
-  //       `--${boundary}`,
-  //       'Content-Disposition: form-data; name="data"',
-  //       '',
-  //       JSON.stringify({
-  //         customerId: formData.customerId,
-  //         customerName: formData.customerName,
-  //         birthDate: formData.birthDate,
-  //         gender: formData.gender,
-  //         phone: formData.phone,
-  //         nickname: formData.nickname,
-  //         address1: formData.address1,
-  //         address2: formData.address2,
-  //         detailAddress: formData.detailAddress,
-  //         preCustomerImgUrl: formData.customerImgUrl,
-  //       }),
-  //     );
-
-  //     // 이미지 파일 추가 (이미지가 있을 경우)
-  //     if (profileImage) {
-  //       const reader = new FileReader();
-  //       reader.onload = () => {
-  //         formParts.push(
-  //           `--${boundary}`,
-  //           `Content-Disposition: form-data; name="newCustomerImgFile"; filename="${profileImage.name}"`,
-  //           `Content-Type: ${profileImage.type}`,
-  //           '',
-  //           reader.result as string,
-  //         );
-
-  //         // 마지막 boundary 추가
-  //         formParts.push(`--${boundary}--`);
-
-  //         const body = formParts.join('\r\n');
-
-  //         updateProfileMutation.mutate(
-  //           { body, boundary },
-  //           {
-  //             onSuccess: () => {
-  //               alert('업데이트 성공');
-  //               navigate(-1);
-  //             },
-  //             onError: (error) => {
-  //               alert('오류 발생');
-  //               console.error(error);
-  //             },
-  //           },
-  //         );
-  //       };
-  //       reader.readAsDataURL(profileImage);
-  //     } else {
-  //       // 이미지가 없는 경우 바로 전송
-  //       formParts.push(`--${boundary}--`);
-  //       const body = formParts.join('\r\n');
-
-  //       updateProfileMutation.mutate(
-  //         { body, boundary },
-  //         {
-  //           onSuccess: () => {
-  //             alert('업데이트 성공');
-  //             navigate(-1);
-  //           },
-  //           onError: (error) => {
-  //             alert('오류 발생');
-  //             console.error(error);
-  //           },
-  //         },
-  //       );
-  //     }
-  //   } catch (error) {
-  //     alert('프로필 저장에 실패했습니다.');
-  //     console.error(error);
-  //   }
-  // };
-
-  const submitFormData = () => {
+  const submitFormData = async () => {
     try {
       const formPayload = new FormData();
 
-      // JSON 데이터를 Blob으로 변환하여 지정된 key로 추가
-      const jsonData = {
-        customerId: formData.customerId,
-        customerName: formData.customerName,
-        birthDate: formData.birthDate,
-        gender: formData.gender,
-        phone: formData.phone,
-        nickname: formData.nickname,
-        address1: formData.address1,
-        address2: formData.address2,
-        detailAddress: formData.detailAddress,
-        preCustomerImgUrl: formData.customerImgUrl,
-      };
-
-      formPayload.append(
-        'data', // 서버에서 지정한 key
-        new Blob([JSON.stringify(jsonData)], {
-          type: 'application/json', // JSON 타입 명시
-        }),
-      );
-
-      // 이미지 파일 추가
+      // 이미지 업로드가 있을 경우
       if (profileImage) {
-        formPayload.append('newCustomerImgFile', profileImage); // 이미지 key는 서버에서 요구하는 값으로 설정
-      }
+        const imageFormData = new FormData();
+        imageFormData.append('img', profileImage);
 
-      console.log('FormData Content:', [...formPayload.entries()]);
-      updateProfileMutation.mutate(formPayload, {
-        onSuccess: () => {
-          alert('업데이트 성공');
-          navigate(-1);
-        },
-        onError: (error) => {
-          alert('오류 발생');
-          console.error(error);
-        },
-      });
+        // 이미지 업로드 API 호출
+        const uploadResponse = await postImage(imageFormData);
+        console.log(uploadResponse);
+        if (uploadResponse.status === 'SUCCESS') {
+          formData.customerImgUrl = uploadResponse.data; // 업로드된 이미지 URL 반영
+          // setFormData((prev) => ({
+          //   ...prev,
+          //   customerImgUrl: uploadResponse.data, // 업로드된 이미지 URL 반영
+          // }));
+        } else {
+          throw new Error('이미지 업로드 실패');
+        }
+      }
+      // JSON 데이터를 Blob으로 변환하여 지정된 key로 추가
+      // const jsonData = {
+      //   customerId: formData.customerId,
+      //   customerName: formData.customerName,
+      //   birthDate: formData.birthDate,
+      //   gender: formData.gender,
+      //   phone: formData.phone,
+      //   nickname: formData.nickname,
+      //   address1: formData.address1,
+      //   address2: formData.address2,
+      //   detailAddress: formData.detailAddress,
+      //   preCustomerImgUrl: formData.customerImgUrl,
+      // };
+
+      // formPayload.append(
+      //   'data', // 서버에서 지정한 key
+      //   new Blob([JSON.stringify(jsonData)], {
+      //     type: 'application/json', // JSON 타입 명시
+      //   }),
+      // );
+
+      console.log('Final FormData:', [...formPayload.entries()]);
+
+      // updateProfileMutation.mutate(formPayload, {
+      //   onSuccess: () => {
+      //     alert('업데이트 성공');
+      //     navigate(-1);
+      //   },
+      //   onError: (error) => {
+      //     alert('오류 발생');
+      //     console.error(error);
+      //   },
+      // });
     } catch (error) {
       alert('프로필 저장에 실패했습니다.');
       console.error(error);
     }
   };
+
+  // const submitFormData = async () => {
+  //   try {
+  //     if (profileImage) {
+
+  //       console.log(profileImage);
+  //       const imageFormData = new FormData();
+  //       imageFormData.append('img', profileImage);
+
+  //       // 이미지 업로드 API 호출
+  //       const uploadResponse = await postImage(imageFormData);
+
+  //       if (uploadResponse.status === 'SUCCESS') {
+  //         console.log('Uploaded Image URL:', uploadResponse.data);
+  //         alert(`이미지 업로드 성공: ${uploadResponse.data}`);
+  //       } else {
+  //         alert(`이미지 업로드 실패: ${uploadResponse.message}`);
+  //       }
+  //     } else {
+  //       alert('업로드할 이미지가 없습니다.');
+  //     }
+  //   } catch (error) {
+  //     console.error('Upload Error:', error);
+  //     alert('이미지 업로드 중 오류가 발생했습니다.');
+  //   }
+  // };
 
   const handleImageDelete = () => {
     setProfileImage(undefined);

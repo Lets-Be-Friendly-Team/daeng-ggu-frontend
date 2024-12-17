@@ -1,35 +1,34 @@
 import { useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { BottomSheetModal, CloseIcon, DeleteIcon, EditIcon, Modal, MoreIcon } from '@daeng-ggu/design-system';
-import { useModalStore } from '@daeng-ggu/shared';
+import { useModalStore, useToast } from '@daeng-ggu/shared';
 import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import './swiperStyle.css';
+import useDeletePortfolio from '@/hooks/queries/DesignerProfile/useDeletePortfolio';
+import useGetPortfolioDetail from '@/hooks/queries/DesignerProfile/useGetPortfolioDetail';
 
-interface IPortfolioItem {
-  portfolioId: number;
-  title: string;
-  videoUrl: string;
-  imgUrlList: string[];
-  contents: string;
-}
+import './swiperStyle.css';
 
 const PortfolioDetailPage = () => {
   const navigate = useNavigate();
-  const { state } = useLocation();
   const { portfolioId } = useParams();
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
   const { show } = useModalStore();
-  const portfolios: IPortfolioItem[] = state?.portfolios || [];
-  const currentPortfolioIndex = portfolios.findIndex((portfolio) => portfolio.portfolioId === Number(portfolioId));
-  const portfolio = portfolios[currentPortfolioIndex];
+  const designerId = 2;
+  const { data: portfolioData } = useGetPortfolioDetail(designerId, Number(portfolioId));
+  const { showToast } = useToast();
+  const { mutate: deletePortfolio } = useDeletePortfolio();
 
   const navigateBack = () => {
     navigate('/profile');
   };
   const handleEdit = () => {
     setModalOpen(false);
+    navigateEditPage();
+  };
+  const navigateEditPage = () => {
+    navigate(`/edit/portfolio/${portfolioId}`);
   };
 
   const handleDelete = () => {
@@ -50,9 +49,24 @@ const PortfolioDetailPage = () => {
   };
   const showDeleteConfirmationModal = () => {
     show(Modal, {
-      title: '리뷰 삭제',
+      title: '포트폴리오 삭제',
       description: '해당 포트폴리오를 삭제하시겠습니까?',
-      onConfirm: () => {},
+      onConfirm: () => {
+        deletePortfolio(
+          { designerId: Number(designerId), portfolioId: Number(portfolioId) },
+          {
+            onSuccess: () => {
+              console.log('포트폴리오 삭제 성공');
+              showToast({ message: '포트폴리오가 삭제 되었습니다!', type: 'confirm' });
+              navigateBack();
+            },
+            onError: (error) => {
+              console.error('포트폴리오 삭제 실패', error);
+            },
+          },
+        );
+      },
+      onClose: () => close(),
       confirmText: '네',
       cancelText: '아니오',
     });
@@ -63,7 +77,7 @@ const PortfolioDetailPage = () => {
       {/* Header */}
       <div className='absolute left-0 right-0 top-0 z-10 flex h-[100px] items-center gap-[10px] bg-gradient-to-b from-black px-5'>
         <div className='flex w-full justify-between'>
-          <div className='text-h3 text-secondary'>{portfolio?.title}</div>
+          <div className='text-h3 text-secondary'>{portfolioData?.title}</div>
           <div className='flex flex-col gap-5'>
             <button onClick={navigateBack}>
               <CloseIcon className='h-[20px] w-[20px] stroke-gray-50' />
@@ -78,7 +92,7 @@ const PortfolioDetailPage = () => {
       {/* Bottom Content */}
       <div className='absolute bottom-0 left-0 right-0 z-10 flex h-[20%] items-center bg-gradient-to-t from-black px-5'>
         <div className='flex flex-col gap-2'>
-          <div className='text-body2 text-secondary break-keep'>{portfolio?.contents}</div>
+          <div className='text-body2 text-secondary break-keep'>{portfolioData?.contents}</div>
         </div>
       </div>
       <BottomSheetModal isOpen={isModalOpen} onClose={() => setModalOpen(false)} options={modalOptions} />
@@ -91,7 +105,7 @@ const PortfolioDetailPage = () => {
         className='mySwiper2 relative h-full'
         modules={[Pagination]}
       >
-        {portfolio.imgUrlList.map((imageUrl, index) => (
+        {portfolioData?.imgUrlList.map((imageUrl, index) => (
           <SwiperSlide key={index}>
             <div className='relative h-full w-full overflow-hidden'>
               <img

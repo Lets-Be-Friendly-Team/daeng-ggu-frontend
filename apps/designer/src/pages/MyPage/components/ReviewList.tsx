@@ -1,19 +1,7 @@
-interface IReviewItem {
-  reviewId: number;
-  reviewImgUrl1: string | null | undefined;
-  reviewImgUrl2: string | null | undefined;
-  reviewImgUrl3: string | null | undefined;
-  customerId: number;
-  customerImgUrl: string | undefined;
-  customerName: string;
-  reviewContents: string;
-  reviewLikeCnt: number;
-  reviewStar: number;
-  isReviewLike: boolean;
-  feedExposure: boolean;
-}
+import { Review } from '@/apis/profile/getProfile';
+
 interface IReviewListProps {
-  reviews: IReviewItem[];
+  reviews: Review[];
   // eslint-disable-next-line no-unused-vars
   onReviewClick: (reviewId: number) => void;
 }

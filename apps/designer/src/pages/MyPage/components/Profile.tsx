@@ -1,5 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { BulbIcon, FilledHeartIcon, FullStarIcon, TypeTwoButton, UserProfileImage } from '@daeng-ggu/design-system';
+
+import ROUTES from '@/constants/routes';
+
 interface IProfileProps {
   designerName?: string; // 디자이너 이름
   nickname: string; // 닉네임
@@ -25,8 +28,9 @@ const Profile = ({
   workExperience,
 }: IProfileProps) => {
   const navigate = useNavigate();
-  const goToReservations = () => navigate('/profile/reservation');
-  const goToEditProfile = () => navigate('/profile/edit');
+  const goToReservations = () => navigate(`/`);
+  const goToEditProfile = () => navigate(`/${ROUTES.profileEdit}`);
+
   const extractBracketContent = (text: string) => {
     const match = text.match(/\(([^)]+)\)/);
     return match ? match[1].replace(/,/g, ' | ') : text;

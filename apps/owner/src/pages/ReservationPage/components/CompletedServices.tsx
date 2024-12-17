@@ -118,19 +118,19 @@ const CompletedServices = ({ completedGroomingList }: ICompletedHistoryProps) =>
                   <div className='flex flex-col gap-2 text-caption text-gray-700'>
                     <div className='flex justify-between'>
                       <span>미용비</span>
-                      <span>{reservation.groomingFee.toLocaleString()}원</span>
+                      <span>{(reservation.groomingFee ?? 0).toLocaleString()}원</span>
                     </div>
                     <div className='flex justify-between'>
                       <span>모니터링 비용</span>
-                      <span>{reservation.monitoringFee.toLocaleString()}원</span>
+                      <span>{(reservation.monitoringFee ?? 0).toLocaleString()}원</span>
                     </div>
                     <div className='flex justify-between border-b pb-2'>
                       <span>댕동비</span>
-                      <span>{reservation.deliveryFee.toLocaleString()}원</span>
+                      <span>{(reservation.deliveryFee ?? 0).toLocaleString()}원</span>
                     </div>
                     <div className='flex justify-between pt-1'>
                       <span>결제 금액</span>
-                      <span className='text-primary'>{reservation.totalPayment.toLocaleString()}원</span>
+                      <span className='text-primary'>{(reservation.totalPayment ?? 0).toLocaleString()}원</span>
                     </div>
                   </div>
                 </div>
