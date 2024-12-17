@@ -11,6 +11,7 @@ const useGetMonitoringStatus = (reservationId: string) => {
     queryFn: async () => await getMonitoringStatus(reservationId),
     staleTime: 0,
     enabled: !!reservationId,
+    refetchInterval: 1000 * 10,
   });
 };
 

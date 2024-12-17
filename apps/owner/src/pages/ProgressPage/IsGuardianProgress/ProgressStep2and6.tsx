@@ -1,16 +1,16 @@
+import { useParams } from 'react-router';
 import { CategoryTab, TypeOneButton } from '@daeng-ggu/design-system';
 
 import NaverGuardianMap from '@/components/NaverMap/NaverGuardianMap';
 
-// import NaverMapContent from '@/components/NaverMap/NaverMapContent';
-
-const ProgressStep2and4 = () => {
+const ProgressStep2and6 = () => {
+  const { reservationId } = useParams();
   const tabs = [
     {
       label: '현재 위치',
       content: (
         <>
-          <NaverGuardianMap className={'mb-[6rem] h-[60rem]'}></NaverGuardianMap>
+          <NaverGuardianMap reservationId={reservationId} className={'mb-[6rem] h-[60rem]'}></NaverGuardianMap>
           <TypeOneButton text='펫가디언에게 문의하기' color='bg-primary' onClick={() => {}} />
         </>
       ),
@@ -27,4 +27,4 @@ const ProgressStep2and4 = () => {
   );
 };
 
-export default ProgressStep2and4;
+export default ProgressStep2and6;

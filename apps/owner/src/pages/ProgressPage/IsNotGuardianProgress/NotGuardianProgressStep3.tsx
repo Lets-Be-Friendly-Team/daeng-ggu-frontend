@@ -1,15 +1,15 @@
 import { useNavigate } from 'react-router';
 import { LogoImage, TypeTwoButton } from '@daeng-ggu/design-system';
 
-const ProgressStep3 = () => {
+const NotGuardianProgressStep3 = () => {
   const navigate = useNavigate();
   return (
     <section className='mt-[12rem] flex h-[100vh] flex-col items-center'>
       <img className='mb-[4rem] w-[16rem]' src={LogoImage} alt='logo' />
-      <h1 className='text-h2 font-semibold'>미용이 종료되었습니다.</h1>
-      <span className='mt-10 text-sub_h3'>강아지를 픽업하러 가고 있어요!</span>
+      <h1 className='text-h2 font-semibold'>모든 단계가 종료되었습니다!</h1>
+      <span className='mt-10 text-sub_h3'>서비스가 마음에 드셨다면 리뷰 작성을 부탁드려요!</span>
       <div className='mt-10 flex gap-4'>
-        <TypeTwoButton className='px-[2rem]' text='댕꾸에게 문의' color='bg-secondary' onClick={() => {}} />
+        <TypeTwoButton className='px-[2rem]' text='리뷰쓰기' color='bg-primary' onClick={() => {}} />
         <TypeTwoButton
           className='px-[2rem]'
           text='홈으로 가기'
@@ -23,4 +23,4 @@ const ProgressStep3 = () => {
   );
 };
 
-export default ProgressStep3;
+export default NotGuardianProgressStep3;

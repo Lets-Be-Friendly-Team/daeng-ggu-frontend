@@ -1,20 +1,28 @@
 import { useMemo } from 'react';
+import { useParams } from 'react-router';
 import { PageContainer } from '@daeng-ggu/design-system';
 
+import useGetMonitoringStatus from '@/hooks/queries/monitoring/useGetMonitoringStatus';
 import IsGuardianProgressPage from '@/pages/ProgressPage/IsGuardianProgress/IsGuardianProgressPage';
 import IsNotGuardianProgressPage from '@/pages/ProgressPage/IsNotGuardianProgress/IsNotGuardianProgressPage';
 
 const ProgressPage = () => {
-  // api로 진행단계 및 가디언 사용여부 받아오기
-  const isGuardian = true;
+  const { reservationId } = useParams();
+  const { data: response } = useGetMonitoringStatus(reservationId as string);
   const ContentComponent = useMemo(() => {
-    if (isGuardian) {
-      return <IsGuardianProgressPage />;
+    if (!response?.data) {
+      return;
     }
-    if (!isGuardian) {
-      return <IsNotGuardianProgressPage />;
+    if (response?.data.isDelivery) {
+      return (
+        <IsGuardianProgressPage processMessage={response.data.processMessage} processNum={response?.data.processNum} />
+      );
     }
-  }, [isGuardian]);
+
+    return (
+      <IsNotGuardianProgressPage processMessage={response.data.processMessage} processNum={response?.data.processNum} />
+    );
+  }, [response?.data]);
 
   return <PageContainer>{ContentComponent}</PageContainer>;
 };
