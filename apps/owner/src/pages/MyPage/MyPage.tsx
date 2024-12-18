@@ -12,7 +12,7 @@ const MyPage = () => {
   const navigate = useNavigate();
   const customerId = 2;
   const { data: profileData, isError } = useGetProfile(customerId);
-
+  console.log(profileData);
   if (isError || !profileData) {
     return (
       <PageContainer>
