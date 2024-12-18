@@ -12,8 +12,8 @@ export interface SignupResponse {
 }
 
 const postSignup = async (signupForm: SignupFormData): Promise<SignupResponse> => {
-  //   return await APIClient.post('/daengggu/designer/signup', signupForm);
-  return await APIClient.post('/daengggu/test/designer/signup', signupForm);
+  return await APIClient.post('/daengggu/designer/signup', signupForm);
+  // return await APIClient.post('/daengggu/test/designer/signup', signupForm);
 };
 
 export default postSignup;
