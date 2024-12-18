@@ -18,7 +18,7 @@ const UserProfileImage = ({ imageUrl, size = 'large', onClick }: IUserProfileIma
     >
       <img
         src={imageUrl || defaultImage}
-        className={`${sizes[size]} ${imageUrl ? 'h-full w-full rounded-full' : ''} object-contain`}
+        className={`${sizes[size]} ${imageUrl ? 'h-full w-full rounded-full' : ''} object-cover`}
         onError={(e) => (e.currentTarget.src = defaultImage)}
         alt='User Profile'
       />
