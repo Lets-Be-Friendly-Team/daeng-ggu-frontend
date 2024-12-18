@@ -82,7 +82,7 @@ const EditPetProfilePage = () => {
   const showDeleteConfirmationModal = () => {
     show(Modal, {
       // title: '반려견 프로필 삭제',
-      title: `${formData.petName} 프로필을 삭제하시겠습니까?`,
+      title: `${initialPetName} 프로필을 삭제하시겠습니까?`,
       // description: '반려견 프로필을 삭제하시겠습니까?',
       description: '프로필을 삭제하면 되돌릴 수 없습니다.',
       onConfirm: () => {

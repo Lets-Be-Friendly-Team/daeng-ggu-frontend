@@ -1,15 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import {
   BottomSheetModal,
   LogoutIcon,
+  Modal,
   MoreIcon,
   SwapIcon,
   TypeTwoButton,
   UserProfileImage,
 } from '@daeng-ggu/design-system';
+import { useModalStore } from '@daeng-ggu/shared';
 
+import getLogin from '@/apis/login/getLogin';
 import ROUTES from '@/constants/routes';
+import useOwnerIdStore from '@/stores/useOwnerIdStore';
 
 interface IProfileProps {
   nickname: string;
@@ -23,20 +27,39 @@ const Profile = ({ nickname, customerImgUrl }: IProfileProps) => {
   };
   const goToEditProfile = () => navigate(`/profile/${ROUTES.profileEdit}`);
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
+  const { show } = useModalStore();
+  const { setOwnerId } = useOwnerIdStore();
+  const clearOwnerIdStorage = useOwnerIdStore.persist.clearStorage;
+
   const toggleModal = () => {
     setModalOpen((prev) => !prev);
   };
-  //로그아웃 api 연동
-  const handleLogout = () => {};
+
+  //로그아웃 처리
+  const handleLogout = () => {
+    show(Modal, {
+      title: '로그아웃 하시겠습니까?',
+      onConfirm: () => {
+        setOwnerId(-1);
+        clearOwnerIdStorage(); //localStorage에서 ownerId 삭제
+        navigate(ROUTES.main);
+      },
+      onClose: () => close(),
+      confirmText: '로그아웃',
+      cancelText: '취소',
+    });
+  };
   //디자이너로 전환
-  const handleTypeChange = () => {
+  const handleTypeChange = async () => {
     //개발 url -> 배포 url로 바꾸기
-    window.location.href = `${import.meta.env.VITE_DESIGNER_MAIN_URL}`;
+    // window.location.href = `${import.meta.env.VITE_DESIGNER_MAIN_URL}`;
+    const data = await getLogin({ userType: 'D' });
+    window.location.href = data.data;
   };
 
-  useEffect(() => {
-    console.log(isModalOpen);
-  }, [isModalOpen]);
+  // useEffect(() => {
+  //   console.log(isModalOpen);
+  // }, [isModalOpen]);
   const modalOptions = [
     {
       label: '로그아웃',
