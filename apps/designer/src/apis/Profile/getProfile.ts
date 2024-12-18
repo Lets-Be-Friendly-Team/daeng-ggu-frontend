@@ -40,9 +40,7 @@ export interface Portfolio {
 
 export interface Review {
   reviewId: number;
-  reviewImgUrl1: string | null | undefined;
-  reviewImgUrl2: string | null | undefined;
-  reviewImgUrl3: string | null | undefined;
+  reviewImgList: string[];
   customerId: number;
   customerImgUrl: string | undefined;
   customerName: string;
