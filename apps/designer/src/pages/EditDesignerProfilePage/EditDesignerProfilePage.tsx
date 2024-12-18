@@ -15,12 +15,14 @@ import {
 import CameraIcon from '@daeng-ggu/design-system/components/Icons/CameraIcon';
 
 import useGetProfileDetail from '@/hooks/queries/DesignerProfile/useGetProfileDetail';
+import useUpdateProfile from '@/hooks/queries/DesignerProfile/useUpdateProfile';
+import useSingleImageUpload from '@/hooks/queries/ImageUpload/useSingleImageUpload';
 
 const EditDesignerProfilePage = () => {
   const navigate = useNavigate();
   const designerId = 4;
   const [formData, setFormData] = useState({
-    designerId: 0,
+    designerId: designerId,
     designerName: '',
     nickname: '',
     preImgUrl: '',
@@ -30,21 +32,24 @@ const EditDesignerProfilePage = () => {
     introduction: '',
     phone: '',
     businessNumber: '',
-    certifications: [''],
+    preCertifications: [''],
     workExperience: '',
   });
   const [profileImage, setProfileImage] = useState<File | undefined>(undefined);
   const [selectedServices, setSelectedServices] = useState<string[]>(['S1']);
   const { data: profileData } = useGetProfileDetail(designerId);
+  const { mutateAsync: updateProfile } = useUpdateProfile();
+  const { mutateAsync: uploadImage } = useSingleImageUpload();
   const [selectedBreeds, setSelectedBreeds] = useState<string[]>([]);
-  console.log(profileData?.possibleBreeds);
+  const [certification] = useState<File>();
+
   useEffect(() => {
     if (profileData?.possibleBreeds) {
       const initialBreeds = profileData.possibleBreeds.map((breed) => breed.breedCode);
       setSelectedBreeds(initialBreeds);
     }
   }, [profileData]);
-  console.log(selectedBreeds);
+
   useEffect(() => {
     if (profileData) {
       setFormData({
@@ -58,7 +63,7 @@ const EditDesignerProfilePage = () => {
         introduction: profileData.introduction,
         phone: profileData.phone,
         businessNumber: profileData.businessNumber,
-        certifications: profileData.certifications,
+        preCertifications: profileData.certifications,
         workExperience: profileData.workExperience,
       });
 
@@ -70,21 +75,19 @@ const EditDesignerProfilePage = () => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const submitFormData = () => {
+  const submitFormData = async () => {
     try {
-      const payload = {
+      const uploadedImageUrl = profileImage ? await uploadImage(profileImage) : '';
+      const uploadedCertificationUrl = certification ? await uploadImage(certification) : '';
+      const updatedFormData = {
         ...formData,
-        address: `${formData.address1} ${formData.address2} ${formData.detailAddress}`,
-        newImgFile: profileImage || '',
-        providedServices: selectedServices,
+        newImgUrl: uploadedImageUrl || [],
+        providedService: selectedServices,
         possibleBreed: selectedBreeds,
+        newCertifications: uploadedCertificationUrl ? [uploadedCertificationUrl] : [],
       };
-
-      // 데이터를 localStorage에 저장 (테스트용)
-      localStorage.setItem('designerProfile', JSON.stringify(payload));
-
-      alert('프로필이 저장되었습니다.');
-      navigate(-1);
+      await updateProfile(updatedFormData);
+      navigate('/profile');
     } catch (error) {
       alert('프로필 저장에 실패했습니다.');
       console.error(error);
@@ -189,13 +192,13 @@ const EditDesignerProfilePage = () => {
             </div>
             <div className='text-gray-700 text-iconCaption'>~MB 이하의 jpg, png 파일 3개까지 업로드 가능합니다.</div>
             <div className='flex flex-wrap gap-3'>
-              {formData.certifications.map((cert, index) => (
+              {formData.preCertifications.map((cert, index) => (
                 <div key={index} className='relative h-[100px] w-[100px] rounded-md overflow-hidden'>
                   <img src={cert} alt={`certification-${index}`} className='h-full w-full object-cover' />
                   <div className='absolute top-0 rounded-b-md left-0 w-full bg-gradient-to-b from-gray-700 to-transparent py-4'>
                     <button
                       onClick={() => {
-                        const updatedCerts = formData.certifications.filter((_, i) => i !== index);
+                        const updatedCerts = formData.preCertifications.filter((_, i) => i !== index);
                         setFormData((prev) => ({ ...prev, certifications: updatedCerts }));
                       }}
                       className='absolute top-1 right-1 flex items-center justify-center'
@@ -224,7 +227,7 @@ const EditDesignerProfilePage = () => {
                         if (reader.result) {
                           setFormData((prev) => ({
                             ...prev,
-                            certifications: [...prev.certifications, reader.result as string],
+                            certifications: [...prev.preCertifications, reader.result as string],
                           }));
                         }
                       };

@@ -17,7 +17,7 @@ const EditReviewPage = () => {
   const [ratingState, setRatingState] = useState(0);
   const [reviewContent, setReviewContent] = useState('');
   const { data: review, isPending } = useGetReviewDetail(Number(reviewId));
-  const { mutateAsync: postReview } = usePatchReview();
+  const { mutateAsync: patchReview } = usePatchReview();
   const { mutateAsync: uploadImage } = useMultipleImageUpload();
 
   useEffect(() => {
@@ -27,28 +27,21 @@ const EditReviewPage = () => {
       setReviewContent(review.data.reviewContents || '');
     }
   }, [review]);
-
   const handleRatingClick = (index: number) => {
     setRatingState(index);
   };
   const handleReviewContentChange = (ev: ChangeEvent<HTMLTextAreaElement>) => {
     setReviewContent(ev.target.value);
   };
-
   if (isPending) {
     return <div>로딩 중...</div>;
   }
   const handleSaveClick = async () => {
-    if (ratingState === 0 || reviewContent.trim() === '' || newNewImgList.length === 0) {
-      alert('모든 필드를 채워주세요.');
-      return;
-    }
-
     try {
       const imageUrls = await uploadImage(newNewImgList);
       console.log(imageUrls);
       const reviewData = {
-        designerId: 2,
+        reviewId: reviewId,
         reviewContents: reviewContent,
         reviewStar: ratingState,
         isFeedAdd: true,
@@ -56,7 +49,7 @@ const EditReviewPage = () => {
         FeedImgList: imageUrls,
       };
 
-      await postReview(reviewData);
+      await patchReview(reviewData);
       alert('리뷰가 성공적으로 수정되었습니다.');
       navigate('/profile');
     } catch (error) {
@@ -69,7 +62,13 @@ const EditReviewPage = () => {
     <>
       <PageContainer>
         <Header mode='close' title='리뷰 작성' />
-        <ImageUploader mode='img' label='이미지' initialImgList={imgList} setImgList={setNewImgList} />
+        <ImageUploader
+          mode='img'
+          label='이미지'
+          initialImgList={imgList}
+          imgList={newNewImgList}
+          setImgList={setNewImgList}
+        />
         <StarRating className='mt-[4rem]' maxStars={5} ratingState={ratingState} setRatingState={handleRatingClick} />
         <TextArea
           className='mt-[4rem] font-pretendard text-[1.4rem] font-semibold text-gray-900'
@@ -84,5 +83,4 @@ const EditReviewPage = () => {
     </>
   );
 };
-
 export default EditReviewPage;

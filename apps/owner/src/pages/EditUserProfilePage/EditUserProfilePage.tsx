@@ -49,7 +49,7 @@ const EditUserProfilePage = () => {
 
   const submitFormData = async () => {
     try {
-      const uploadedImageUrl = await uploadImage(profileImage);
+      const uploadedImageUrl = profileImage ? await uploadImage(profileImage) : '';
       const updatedFormData = {
         customerId: customerId,
         customerName: formData.customerName,
@@ -66,7 +66,7 @@ const EditUserProfilePage = () => {
 
       await updateProfile(updatedFormData);
 
-      navigate('/'); // 수정 완료 후 이동할 경로에 맞춰 변경
+      navigate('/profile'); // 수정 완료 후 이동할 경로에 맞춰 변경
     } catch (error) {
       alert('프로필 저장에 실패했습니다.');
       console.error(error);
