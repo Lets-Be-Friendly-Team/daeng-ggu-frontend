@@ -9,10 +9,12 @@ import './swiperStyle.css';
 
 const PortfolioDetailPage = () => {
   const navigate = useNavigate();
+  const { designerId } = useParams();
   const { portfolioId } = useParams();
 
-  const designerId = 4;
-  const { data: portfolioData } = useGetPortfolioDetail(designerId, Number(portfolioId));
+  // const designerId = 4;
+
+  const { data: portfolioData } = useGetPortfolioDetail(Number(designerId), Number(portfolioId));
 
   const navigateBack = () => {
     navigate(-1);

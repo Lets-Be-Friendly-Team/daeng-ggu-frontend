@@ -7,7 +7,7 @@ export interface SignupResponse {
   message: string;
   //   data: object;
   data: {
-    desingnerId: string;
+    desingnerId: number;
   };
 }
 

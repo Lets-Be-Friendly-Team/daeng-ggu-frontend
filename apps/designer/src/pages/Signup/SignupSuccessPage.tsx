@@ -1,7 +1,9 @@
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { Header, LogoImage, PageContainer, RightIcon, TypeTwoButton } from '@daeng-ggu/design-system';
 
 const SignupSuccessPage = () => {
+  const { state } = useLocation();
+  const nickname = state?.nickname || '디자이너';
   const navigate = useNavigate();
   const handleClick = () => {
     navigate('/register/profile');
@@ -13,7 +15,7 @@ const SignupSuccessPage = () => {
       <div className='mb-[4rem] mt-[10rem] px-4'>
         <img src={LogoImage} className='w-1/4' alt='댕꾸로고' />
         <h1 className='mt-[2rem] text-h1 font-bold'>
-          <p>김댕꾸님,</p>
+          <p>{nickname}님,</p>
           <p className='mt-[0.4rem]'>반가워요!</p>
         </h1>
         <div className='mt-[4rem] text-body2 text-gray-500'>

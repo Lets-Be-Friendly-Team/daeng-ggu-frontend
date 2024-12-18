@@ -6,6 +6,7 @@ import useGetReservationList from '@/hooks/queries/useGetReservationList';
 const MainPage = () => {
   const { data: response } = useGetReservationList();
   const reservationList = response?.data || [];
+
   return (
     <PageContainer>
       <Header mode='main' alarm={false} />

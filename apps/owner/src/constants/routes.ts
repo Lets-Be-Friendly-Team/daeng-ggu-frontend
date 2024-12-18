@@ -11,7 +11,7 @@ const ROUTES = {
   profileEditPet: 'pet/edit/:petId',
   profileAddPet: 'pet/add',
   reviewDetail: 'review/:reviewId',
-  portfolioDetail: 'portfolio/:portfolioId',
+  portfolioDetail: 'portfolio/:designerId/:portfolioId',
   reservation: 'reservation',
   designerProfile: 'designer/:designerId',
   review: 'review',
