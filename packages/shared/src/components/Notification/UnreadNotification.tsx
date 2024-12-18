@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ExclamationIcon } from '@daeng-ggu/design-system';
-import SSEEventSource from 'src/apis/SSE/SSEEventSource';
-import EmptyNotification from 'src/components/Notification/EmptyNotification';
+
+import SSEEventSource from '../../apis/SSE/SSEEventSource';
+import EmptyNotification from '../../components/Notification/EmptyNotification';
 
 type NotificationItem = {
   alarmId: number;
