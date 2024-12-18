@@ -3,12 +3,14 @@ import { useNavigate, useParams } from 'react-router';
 import {
   Header,
   Input,
+  Modal,
   PageContainer,
   ProfileImgUploader,
   TextArea,
   TypeOneButton,
   TypeTwoButton,
 } from '@daeng-ggu/design-system';
+import { useModalStore } from '@daeng-ggu/shared';
 
 import useGetPetProfileDetail from '@/hooks/queries/PetProfile/useGetPetProfileDetail';
 
@@ -34,6 +36,7 @@ const EditPetProfilePage = () => {
     specialNotes: '',
   });
   const [profileImage, setProfileImage] = useState<File | undefined>(undefined);
+  const { show } = useModalStore();
 
   useEffect(() => {
     if (petData) {
@@ -41,7 +44,20 @@ const EditPetProfilePage = () => {
       setProfileImage(undefined);
     }
   }, [petData]);
-  console.log(petData);
+
+  const handleDelete = () => {
+    showDeleteConfirmationModal();
+  };
+  const showDeleteConfirmationModal = () => {
+    show(Modal, {
+      title: '반려견 프로필 삭제',
+      description: '반려견 프로필을 삭제하시겠습니까?',
+      onConfirm: () => {},
+      onClose: () => close(),
+      confirmText: '네',
+      cancelText: '아니오',
+    });
+  };
   const handleChange = (field: string, value: string | File | null) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
@@ -140,6 +156,9 @@ const EditPetProfilePage = () => {
             value={formData.specialNotes}
             onChange={(e) => handleChange('specialNotes', e.target.value)}
           />
+          <div className='mb-[0.8rem] block text-body3 font-semibold text-gray-800'>
+            <TypeTwoButton text='삭제하기' color='bg-secondary' onClick={handleDelete} />
+          </div>
         </div>
       </PageContainer>
       <TypeOneButton text='저장하기' color='bg-secondary' onClick={submitFormData} />

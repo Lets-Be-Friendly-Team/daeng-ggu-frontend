@@ -27,6 +27,7 @@ const EditReviewPage = () => {
       setReviewContent(review.data.reviewContents || '');
     }
   }, [review]);
+
   const handleRatingClick = (index: number) => {
     setRatingState(index);
   };
@@ -38,10 +39,10 @@ const EditReviewPage = () => {
   }
   const handleSaveClick = async () => {
     try {
-      const imageUrls = await uploadImage(newNewImgList);
-      console.log(imageUrls);
+      const imageUrls = newNewImgList.length > 0 ? await uploadImage(newNewImgList) : [];
+      console.log('이미지 url>>', imageUrls);
       const reviewData = {
-        reviewId: reviewId,
+        reviewId: reviewId || 0,
         reviewContents: reviewContent,
         reviewStar: ratingState,
         isFeedAdd: true,
@@ -66,6 +67,7 @@ const EditReviewPage = () => {
           mode='img'
           label='이미지'
           initialImgList={imgList}
+          setInitialImgList={setImgList}
           imgList={newNewImgList}
           setImgList={setNewImgList}
         />
