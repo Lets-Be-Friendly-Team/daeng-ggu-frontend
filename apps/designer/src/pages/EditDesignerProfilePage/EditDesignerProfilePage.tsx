@@ -15,8 +15,8 @@ import {
 import CameraIcon from '@daeng-ggu/design-system/components/Icons/CameraIcon';
 
 import useGetProfileDetail from '@/hooks/queries/DesignerProfile/useGetProfileDetail';
-import useUpdateProfile from '@/hooks/queries/DesignerProfile/useUpdateProfile';
-import useSingleImageUpload from '@/hooks/queries/ImageUpload/useSingleImageUpload';
+// import useUpdateProfile from '@/hooks/queries/DesignerProfile/useUpdateProfile';
+// import useSingleImageUpload from '@/hooks/queries/ImageUpload/useSingleImageUpload';
 
 const EditDesignerProfilePage = () => {
   const navigate = useNavigate();
@@ -38,10 +38,10 @@ const EditDesignerProfilePage = () => {
   const [profileImage, setProfileImage] = useState<File | undefined>(undefined);
   const [selectedServices, setSelectedServices] = useState<string[]>(['S1']);
   const { data: profileData } = useGetProfileDetail(designerId);
-  const { mutateAsync: updateProfile } = useUpdateProfile();
-  const { mutateAsync: uploadImage } = useSingleImageUpload();
+  // const { mutateAsync: updateProfile } = useUpdateProfile();
+  // const { mutateAsync: uploadImage } = useSingleImageUpload();
   const [selectedBreeds, setSelectedBreeds] = useState<string[]>([]);
-  const [certification] = useState<File>();
+  // const [certification] = useState<File>();
 
   useEffect(() => {
     if (profileData?.possibleBreeds) {
@@ -77,16 +77,16 @@ const EditDesignerProfilePage = () => {
 
   const submitFormData = async () => {
     try {
-      const uploadedImageUrl = profileImage ? await uploadImage(profileImage) : '';
-      const uploadedCertificationUrl = certification ? await uploadImage(certification) : '';
-      const updatedFormData = {
-        ...formData,
-        newImgUrl: uploadedImageUrl || [],
-        providedService: selectedServices,
-        possibleBreed: selectedBreeds,
-        newCertifications: uploadedCertificationUrl ? [uploadedCertificationUrl] : [],
-      };
-      await updateProfile(updatedFormData);
+      // const uploadedImageUrl = profileImage ? await uploadImage(profileImage) : '';
+      // const uploadedCertificationUrl = certification ? await uploadImage(certification) : '';
+      // const updatedFormData = {
+      //   ...formData,
+      //   newImgUrl: uploadedImageUrl || [],
+      //   providedService: selectedServices,
+      //   possibleBreed: selectedBreeds,
+      //   newCertifications: uploadedCertificationUrl ? [uploadedCertificationUrl] : [],
+      // };
+      // await updateProfile(updatedFormData);
       navigate('/profile');
     } catch (error) {
       alert('프로필 저장에 실패했습니다.');
