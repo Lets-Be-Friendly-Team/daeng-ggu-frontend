@@ -1,6 +1,7 @@
 import { ReactNode, useEffect } from 'react';
 import ReactDOMServer from 'react-dom/server';
-import { Marker } from '@daeng-ggu/shared';
+
+import Marker from '../components/navermap/Marker';
 
 export interface LocationState {
   loaded: boolean;

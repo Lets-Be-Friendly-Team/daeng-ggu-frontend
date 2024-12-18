@@ -21,7 +21,7 @@ const NotGuadianProgressStep1 = () => {
         icon: {
           content: ReactDOMServer.renderToString(
             <Marker>
-              <MyLocationIcon />
+              <MyLocationIcon className='fill-primary' />
             </Marker>,
           ),
         },

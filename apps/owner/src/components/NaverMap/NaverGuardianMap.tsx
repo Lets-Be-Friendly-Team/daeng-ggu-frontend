@@ -1,22 +1,34 @@
 import { useEffect, useRef } from 'react';
 import ReactDOMServer from 'react-dom/server';
-import { GuardianIcon } from '@daeng-ggu/design-system';
-import { guardianlocationWebSocket, Marker, useInitNavermap } from '@daeng-ggu/shared';
+import { GuardianIcon, MyLocationIcon } from '@daeng-ggu/design-system';
+import {
+  guardianlocationWebSocket,
+  Marker,
+  useCreateMarker,
+  useGetAddressLocation,
+  useInitNavermap,
+} from '@daeng-ggu/shared';
 
 import { cn } from '@/lib/utils';
 
 interface NaverGuardianMapProps {
   className?: string;
   reservationId?: string;
+  shopAddress: string;
+  customerAddress: string;
 }
 
-const NaverGuardianMap = ({ reservationId, className }: NaverGuardianMapProps) => {
+const NaverGuardianMap = ({ reservationId, className, shopAddress, customerAddress }: NaverGuardianMapProps) => {
   const { mapContainerRef, mapRef } = useInitNavermap();
 
   const { naver } = window;
 
   const socketRef = useRef<WebSocket | null>(null);
   const markerRef = useRef<naver.maps.Marker | null>(null);
+  const shopLocation = useGetAddressLocation(shopAddress);
+  const customerLocation = useGetAddressLocation(customerAddress);
+  useCreateMarker(mapRef.current, shopLocation, <MyLocationIcon className='fill-primary' />);
+  useCreateMarker(mapRef.current, customerLocation, <MyLocationIcon />);
 
   useEffect(() => {
     if (!reservationId) return;

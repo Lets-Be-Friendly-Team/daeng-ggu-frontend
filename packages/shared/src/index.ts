@@ -23,3 +23,5 @@ export { default as getPlaybackUrl } from './apis/monitoring/getPlaybackUrl';
 export { default as postCreateChannel } from './apis/monitoring/postCreateChannel';
 export { default as useReservationId } from './hooks/useReservationId';
 export { default as getBroadcastChannel } from './apis/monitoring/getBroadcastChannel';
+export { default as useGetAddressLocation } from './hooks/useGetAddressLocation';
+export { default as useCreateMarker } from './hooks/useCreateMarker';

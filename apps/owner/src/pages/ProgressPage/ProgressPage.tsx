@@ -11,7 +11,7 @@ const ProgressPage = () => {
   const { data: response } = useGetMonitoringStatus(reservationId as string);
   // const response = {
   //   data: {
-  //     isDelivery: false,
+  //     isDelivery: true,
   //     processMessage: '테스트',
   //     processNum: 2,
   //   },

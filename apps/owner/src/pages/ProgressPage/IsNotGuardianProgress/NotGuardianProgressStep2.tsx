@@ -7,7 +7,6 @@ import useGetPlaybackUrl from '@/hooks/queries/monitoring/useGetPlaybackUrl';
 const NotGuardianProgressStep2 = () => {
   const reservationId = useReservationId();
   const { data } = useGetPlaybackUrl(reservationId);
-  console.log(data?.playbackUrl);
   return (
     <>
       <div className='mt-[2rem] flex w-full justify-center'>

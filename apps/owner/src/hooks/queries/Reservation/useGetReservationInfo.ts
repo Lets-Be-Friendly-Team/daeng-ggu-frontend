@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import getReservationInfo from '@/apis/monitoring/getReservationInfo';
+import getReservationInfo from '@/apis/reservation/getReservationInfo';
 import { GUADIAN_MONITORING_QUERY_KEYS } from '@/constants/queryKeys';
 import { SecondDefaultResponse } from '@/types/api';
 import { ReservationInfo } from '@/types/reservation';

@@ -2,10 +2,15 @@ import { useCallback, useEffect, useRef } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { useParams } from 'react-router-dom';
 import { GuardianIcon, MyLocationIcon } from '@daeng-ggu/design-system';
-import { guardianlocationWebSocket, Marker, useInitNavermap, useWatchUserLocation } from '@daeng-ggu/shared';
+import {
+  guardianlocationWebSocket,
+  Marker,
+  useGetAddressLocation,
+  useInitNavermap,
+  useWatchUserLocation,
+} from '@daeng-ggu/shared';
 
 import useCreateMarker from '@/hooks/useCreateMarker';
-import useGetAddressLocation from '@/hooks/useGetAddressLocation';
 import { cn } from '@/lib/utils';
 
 const NaverSendLocationMap = ({
