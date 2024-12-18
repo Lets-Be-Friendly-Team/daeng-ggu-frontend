@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { ExclamationIcon } from '@daeng-ggu/design-system';
-import EmptyNotification from 'src/components/Notification/EmptyNotification';
-import useGetAlarms from 'src/hooks/queries/useGetAlarms';
+
+import EmptyNotification from '../../components/Notification/EmptyNotification';
+import useGetAlarms from '../../hooks/queries/useGetAlarms';
 
 const FullNotification = () => {
   const navigate = useNavigate();
