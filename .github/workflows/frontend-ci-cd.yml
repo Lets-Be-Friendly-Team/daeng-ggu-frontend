@@ -112,7 +112,8 @@ jobs:
           echo "VITE_SOCKET_BASE_URL=${{ secrets.VITE_SOCKET_BASE_URL }}" >> .env
           echo "VITE_OWNER_MAIN_URL=${{ secrets.VITE_OWNER_MAIN_URL }}" >> .env
           echo "VITE_DESIGNER_MAIN_URL=${{ secrets.VITE_DESIGNER_MAIN_URL }}" >> .env
-
+          echo "VITE_TOSS_PAYMENT_CLIENT"=${{ secrets.VITE_TOSS_PAYMENT_CLIENT }}" >> .env
+          echo "VITE_TOSS_PAYMENT_SECRET"=${{ secrets.VITE_TOSS_PAYMENT_SECRET }}" >> .env
       - name: 프론트엔드 빌드 (Owner)
         if: needs.detect-changes.outputs.owner == 'true'
         run: |
@@ -137,7 +138,8 @@ jobs:
           echo "VITE_SOCKET_BASE_URL=${{ secrets.VITE_SOCKET_BASE_URL }}" >> .env
           echo "VITE_OWNER_MAIN_URL=${{ secrets.VITE_OWNER_MAIN_URL }}" >> .env
           echo "VITE_DESIGNER_MAIN_URL=${{ secrets.VITE_DESIGNER_MAIN_URL }}" >> .env
-
+          echo "VITE_TOSS_PAYMENT_CLIENT"=${{ secrets.VITE_TOSS_PAYMENT_CLIENT }}" >> .env
+          echo "VITE_TOSS_PAYMENT_SECRET"=${{ secrets.VITE_TOSS_PAYMENT_SECRET }}" >> .env
       - name: 프론트엔드 빌드 (Designer)
         if: needs.detect-changes.outputs.designer == 'true'
         run: |
@@ -162,7 +164,8 @@ jobs:
           echo "VITE_SOCKET_BASE_URL=${{ secrets.VITE_SOCKET_BASE_URL }}" >> .env
           echo "VITE_OWNER_MAIN_URL=${{ secrets.VITE_OWNER_MAIN_URL }}" >> .env
           echo "VITE_DESIGNER_MAIN_URL=${{ secrets.VITE_DESIGNER_MAIN_URL }}" >> .env
-
+          echo "VITE_TOSS_PAYMENT_CLIENT"=${{ secrets.VITE_TOSS_PAYMENT_CLIENT }}" >> .env
+          echo "VITE_TOSS_PAYMENT_SECRET"=${{ secrets.VITE_TOSS_PAYMENT_SECRET }}" >> .env
       - name: 프론트엔드 빌드 (Guardian)
         if: needs.detect-changes.outputs.guardian == 'true'
         run: |

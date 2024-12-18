@@ -513,6 +513,7 @@ __metadata:
     "@tosspayments/payment-widget-sdk": "npm:^0.12.0"
     "@types/eslint-plugin-jsx-a11y": "npm:^6"
     "@types/eslint-plugin-tailwindcss": "npm:^3"
+    "@types/events": "npm:^3"
     "@types/navermaps": "npm:^3.7.8"
     "@types/node": "npm:^22.9.0"
     "@types/react": "npm:^18.3.12"
@@ -534,6 +535,7 @@ __metadata:
     eslint-plugin-react-refresh: "npm:^0.4.14"
     eslint-plugin-simple-import-sort: "npm:^12.1.1"
     eslint-plugin-tailwindcss: "npm:^3.17.5"
+    events: "npm:^3.3.0"
     husky: "npm:^9.1.6"
     lint-staged: "npm:^15.2.10"
     lucide-react: "npm:^0.460.0"
@@ -2884,6 +2886,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/events@npm:^3":
+  version: 3.0.3
+  resolution: "@types/events@npm:3.0.3"
+  checksum: 10c0/3a56f8c51eb4ebc0d05dcadca0c6636c816acc10216ce36c976fad11e54a01f4bb979a07211355686015884753b37f17d74bfdc7aaf4ebb027c1e8a501c7b21d
+  languageName: node
+  linkType: hard
+
 "@types/geojson@npm:*":
   version: 7946.0.15
   resolution: "@types/geojson@npm:7946.0.15"
@@ -5205,6 +5214,13 @@ __metadata:
   version: 5.0.1
   resolution: "eventemitter3@npm:5.0.1"
   checksum: 10c0/4ba5c00c506e6c786b4d6262cfbce90ddc14c10d4667e5c83ae993c9de88aa856033994dd2b35b83e8dc1170e224e66a319fa80adc4c32adcd2379bbc75da814
+  languageName: node
+  linkType: hard
+
+"events@npm:^3.3.0":
+  version: 3.3.0
+  resolution: "events@npm:3.3.0"
+  checksum: 10c0/d6b6f2adbccbcda74ddbab52ed07db727ef52e31a61ed26db9feb7dc62af7fc8e060defa65e5f8af9449b86b52cc1a1f6a79f2eafcf4e62add2b7a1fa4a432f6
   languageName: node
   linkType: hard
 
