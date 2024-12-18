@@ -33,8 +33,8 @@ const IVSBroadCast = ({ ingestEndpoint, streamKey }: { ingestEndpoint: string; s
           clientRef.current.attachPreview(previewRef.current);
         }
 
-        clientRef.current.addVideoInputDevice(stream, 'camera1', { index: 0 });
-        startBroadcast();
+        await clientRef.current.addVideoInputDevice(stream, 'camera1', { index: 0 });
+        await startBroadcast();
       } catch (err: any) {
         console.error('Failed to initialize broadcast client:', err);
       }

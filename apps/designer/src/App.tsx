@@ -16,7 +16,7 @@ function App() {
       new QueryClient({
         defaultOptions: {
           mutations: { onError: (error) => showToast({ message: error.message, type: 'error' }) },
-          queries: { throwOnError: true },
+          queries: { throwOnError: true, retry: 0 },
         },
       }),
   );
