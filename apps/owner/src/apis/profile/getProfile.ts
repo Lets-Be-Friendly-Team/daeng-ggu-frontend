@@ -8,9 +8,7 @@ export interface Pet {
 
 export interface Review {
   reviewId: number;
-  reviewImgUrl1?: string;
-  reviewImgUrl2?: string;
-  reviewImgUrl3?: string;
+  reviewImgList: string[];
   designerId: number;
   designerImgUrl: string;
   designerAddress: string;

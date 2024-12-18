@@ -26,7 +26,9 @@ const getPetProfileDetail = async ({
   customerId: number;
   petId: number;
 }): Promise<PetDataResponse> => {
-  const url = '/daengggu/pet/profile/detail';
-  return await APIClient.get(url, { customerId: customerId.toString(), petId: petId.toString() });
+  return await APIClient.get('/daengggu/pet/profile/detail', {
+    customerId: customerId.toString(),
+    petId: petId.toString(),
+  });
 };
 export default getPetProfileDetail;

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import {
   CloseIcon,
@@ -14,71 +14,80 @@ import {
 } from '@daeng-ggu/design-system';
 import CameraIcon from '@daeng-ggu/design-system/components/Icons/CameraIcon';
 
-const data = {
-  designerId: '1',
-  designerName: '김장미',
-  preImgUrl: 'https://daeng-ggu-test.s3.ap-northeast-2.amazonaws.com/jangmi+hair+salon.jpg',
-  address1: '서울특별시 강남구 대치동 889-41',
-  address2: '서울특별시 강남구 선릉로 428',
-  detailAddress: '멀티캠퍼스 4층',
-  introduction: '경험이 풍부한 전문 디자이너입니다.',
-  phone: '010-2222-3333',
-  providedServices: ['S1', 'S2'],
-  isVerified: 'Y',
-  businessNumber: '123-45-67890',
-  businessIsVerified: 'Y',
-  certifications: ['https://daeng-ggu-test.s3.ap-northeast-2.amazonaws.com/jangmi-certificate1.jpg'],
-  workExperience: '10년 이상의 미용 경력을 보유',
-  newImgFile: '', // Base64로 변환된 파일
-  nickname: '장미 애견 미용실',
-  possibleBreeds: [
-    {
-      breedCode: 'P1',
-      codeDesc: '소형견 (Small Breeds)',
-    },
-    {
-      breedCode: 'P2',
-      codeDesc: '중형견 (Medium Breeds)',
-    },
-    {
-      breedCode: 'P3',
-      codeDesc: '대형견 (Large Breeds)',
-    },
-  ],
-  certificationsFileList: [],
-};
+import useGetProfileDetail from '@/hooks/queries/DesignerProfile/useGetProfileDetail';
+import useUpdateProfile from '@/hooks/queries/DesignerProfile/useUpdateProfile';
+import useSingleImageUpload from '@/hooks/queries/ImageUpload/useSingleImageUpload';
+
 const EditDesignerProfilePage = () => {
   const navigate = useNavigate();
-
-  const [formData, setFormData] = useState(data);
+  const designerId = 4;
+  const [formData, setFormData] = useState({
+    designerId: designerId,
+    designerName: '',
+    nickname: '',
+    preImgUrl: '',
+    address1: '',
+    address2: '',
+    detailAddress: '',
+    introduction: '',
+    phone: '',
+    businessNumber: '',
+    preCertifications: [''],
+    workExperience: '',
+  });
   const [profileImage, setProfileImage] = useState<File | undefined>(undefined);
-  const [selectedServices, setSelectedServices] = useState<string[]>(data.providedServices);
-  const [selectedBreeds, setSelectedBreeds] = useState<string[]>(
-    data.possibleBreeds.map((breed) => {
-      if (breed.breedCode === 'P1') return '소형견';
-      if (breed.breedCode === 'P2') return '중형견';
-      if (breed.breedCode === 'P3') return '대형견';
-      return '특수견';
-    }),
-  );
+  const [selectedServices, setSelectedServices] = useState<string[]>(['S1']);
+  const { data: profileData } = useGetProfileDetail(designerId);
+  const { mutateAsync: updateProfile } = useUpdateProfile();
+  const { mutateAsync: uploadImage } = useSingleImageUpload();
+  const [selectedBreeds, setSelectedBreeds] = useState<string[]>([]);
+  const [certification] = useState<File>();
+
+  useEffect(() => {
+    if (profileData?.possibleBreeds) {
+      const initialBreeds = profileData.possibleBreeds.map((breed) => breed.breedCode);
+      setSelectedBreeds(initialBreeds);
+    }
+  }, [profileData]);
+
+  useEffect(() => {
+    if (profileData) {
+      setFormData({
+        designerId: profileData.designerId,
+        designerName: profileData.designerName,
+        nickname: profileData.nickname,
+        preImgUrl: profileData.designerImgUrl,
+        address1: profileData.address1,
+        address2: profileData.address2,
+        detailAddress: profileData.detailAddress,
+        introduction: profileData.introduction,
+        phone: profileData.phone,
+        businessNumber: profileData.businessNumber,
+        preCertifications: profileData.certifications,
+        workExperience: profileData.workExperience,
+      });
+
+      setSelectedServices(profileData.providedServices.map((service) => service.servicesCode));
+    }
+  }, [profileData]);
+
   const handleChange = (field: string, value: string | File | null | undefined) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
-  const submitFormData = () => {
+
+  const submitFormData = async () => {
     try {
-      const payload = {
+      const uploadedImageUrl = profileImage ? await uploadImage(profileImage) : '';
+      const uploadedCertificationUrl = certification ? await uploadImage(certification) : '';
+      const updatedFormData = {
         ...formData,
-        address: `${formData.address1} ${formData.address2} ${formData.detailAddress}`,
-        newImgFile: profileImage || '',
-        providedServices: selectedServices,
+        newImgUrl: uploadedImageUrl || [],
+        providedService: selectedServices,
         possibleBreed: selectedBreeds,
+        newCertifications: uploadedCertificationUrl ? [uploadedCertificationUrl] : [],
       };
-
-      // 데이터를 localStorage에 저장 (테스트용)
-      localStorage.setItem('designerProfile', JSON.stringify(payload));
-
-      alert('프로필이 저장되었습니다.');
-      navigate(-1);
+      await updateProfile(updatedFormData);
+      navigate('/profile');
     } catch (error) {
       alert('프로필 저장에 실패했습니다.');
       console.error(error);
@@ -89,6 +98,7 @@ const EditDesignerProfilePage = () => {
     setProfileImage(undefined);
     setFormData((prev) => ({ ...prev, preImgUrl: '' }));
   };
+
   return (
     <div className='pb-[185px]'>
       <PageContainer>
@@ -102,7 +112,7 @@ const EditDesignerProfilePage = () => {
         <div className='flex flex-col gap-5'>
           <Input
             label='이름'
-            placeholder={data.designerName}
+            placeholder={formData.designerName}
             value={formData.designerName}
             onChange={(e) => handleChange('designerName', e.target.value)}
           />
@@ -121,13 +131,13 @@ const EditDesignerProfilePage = () => {
           />
           <Input
             label='미용실 소개'
-            placeholder={data.introduction}
+            placeholder={formData.introduction}
             value={formData.introduction}
             onChange={(e) => handleChange('introduction', e.target.value)}
           />
           <Input
             label='연락처'
-            placeholder={data.phone}
+            placeholder={formData.phone}
             value={formData.phone}
             onChange={(e) => handleChange('phone', e.target.value)}
           />
@@ -145,7 +155,7 @@ const EditDesignerProfilePage = () => {
           />
           <Input
             label='닉네임'
-            placeholder={data.nickname}
+            placeholder={formData.nickname}
             value={formData.nickname}
             onChange={(e) => handleChange('nickname', e.target.value)}
           />
@@ -160,7 +170,7 @@ const EditDesignerProfilePage = () => {
             <div className='flex gap-1'>
               <div className='flex-grow'>
                 <Input
-                  placeholder={data.businessNumber}
+                  placeholder={formData.businessNumber}
                   value={formData.businessNumber}
                   onChange={(e) => handleChange('businessNumber', e.target.value)}
                 />
@@ -182,13 +192,13 @@ const EditDesignerProfilePage = () => {
             </div>
             <div className='text-gray-700 text-iconCaption'>~MB 이하의 jpg, png 파일 3개까지 업로드 가능합니다.</div>
             <div className='flex flex-wrap gap-3'>
-              {formData.certifications.map((cert, index) => (
+              {formData.preCertifications.map((cert, index) => (
                 <div key={index} className='relative h-[100px] w-[100px] rounded-md overflow-hidden'>
                   <img src={cert} alt={`certification-${index}`} className='h-full w-full object-cover' />
                   <div className='absolute top-0 rounded-b-md left-0 w-full bg-gradient-to-b from-gray-700 to-transparent py-4'>
                     <button
                       onClick={() => {
-                        const updatedCerts = formData.certifications.filter((_, i) => i !== index);
+                        const updatedCerts = formData.preCertifications.filter((_, i) => i !== index);
                         setFormData((prev) => ({ ...prev, certifications: updatedCerts }));
                       }}
                       className='absolute top-1 right-1 flex items-center justify-center'
@@ -217,7 +227,7 @@ const EditDesignerProfilePage = () => {
                         if (reader.result) {
                           setFormData((prev) => ({
                             ...prev,
-                            certifications: [...prev.certifications, reader.result as string],
+                            certifications: [...prev.preCertifications, reader.result as string],
                           }));
                         }
                       };

@@ -8,11 +8,15 @@ interface ServiceCheckBoxProps {
   onChange?: (_selectedItems: string[]) => void;
 }
 const ServiceCheckBox = ({ initialSelectedItems = [], onChange }: ServiceCheckBoxProps) => {
-  const [selectedServices, setSelectedServices] = useState<string[]>(initialSelectedItems);
+  const fixedService = 'S1';
+  const [selectedServices, setSelectedServices] = useState<string[]>(() => {
+    return [...new Set([fixedService, ...initialSelectedItems])];
+  });
   const handleChange = (selectedItems: string[]) => {
-    setSelectedServices(selectedItems);
+    const updatedServices = [...new Set([fixedService, ...selectedItems])];
+    setSelectedServices(updatedServices);
     if (onChange) {
-      onChange(selectedItems);
+      onChange(updatedServices);
     }
   };
   const serviceOptions = [

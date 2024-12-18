@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 
-import updateProfile, { ProfileData } from '@/apis/profile/updateProfile';
+import updateProfile, { ProfileData } from '@/apis/Profile/updateProfile';
 
 const useUpdateProfile = () => {
   return useMutation({

@@ -1,5 +1,3 @@
-import { PlusIcon } from '@daeng-ggu/design-system';
-
 export interface IPortfolio {
   portfolioId: number;
   title: string;
@@ -40,12 +38,6 @@ const Portfolio = ({ portfolioList, certifications, onPortfolioClick }: IPortfol
               </div>
             </div>
           ))}
-          {/* 추가 버튼 */}
-          <div className='flex h-[160px] w-full items-center justify-center rounded-md bg-gray-50'>
-            <span className=''>
-              <PlusIcon className='h-[24px] w-[24px]' />
-            </span>
-          </div>
         </div>
       </div>
 

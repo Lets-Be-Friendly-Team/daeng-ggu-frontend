@@ -8,9 +8,7 @@ import './swiperStyle.css';
 
 interface IReviewItem {
   reviewId: number;
-  reviewImgUrl1: string | null | undefined;
-  reviewImgUrl2: string | null | undefined;
-  reviewImgUrl3: string | null | undefined;
+  reviewImgList: string[];
   customerId: number;
   customerImgUrl: string | undefined;
   customerName: string;
@@ -115,23 +113,21 @@ const ReviewDetail = () => {
               modules={[Pagination]}
               className='relative h-full'
             >
-              {[review.reviewImgUrl1, review.reviewImgUrl2, review.reviewImgUrl3]
-                .filter(Boolean)
-                .map((imageUrl, index) => (
-                  <SwiperSlide key={index}>
-                    <div className='relative h-full w-full overflow-hidden'>
-                      <img
-                        src={imageUrl || undefined}
-                        alt={`Image ${index + 1}`}
-                        className='absolute left-0 top-0 h-full w-full object-cover'
-                        style={{
-                          objectFit: 'cover',
-                          objectPosition: 'center',
-                        }}
-                      />
-                    </div>
-                  </SwiperSlide>
-                ))}
+              {review.reviewImgList.filter(Boolean).map((imageUrl, index) => (
+                <SwiperSlide key={index}>
+                  <div className='relative h-full w-full overflow-hidden'>
+                    <img
+                      src={imageUrl || undefined}
+                      alt={`Image ${index + 1}`}
+                      className='absolute left-0 top-0 h-full w-full object-cover'
+                      style={{
+                        objectFit: 'cover',
+                        objectPosition: 'center',
+                      }}
+                    />
+                  </div>
+                </SwiperSlide>
+              ))}
             </Swiper>
           </SwiperSlide>
         ))}

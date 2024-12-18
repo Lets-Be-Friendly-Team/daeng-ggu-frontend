@@ -11,7 +11,7 @@ interface IProfileProps {
 const Profile = ({ nickname, customerImgUrl }: IProfileProps) => {
   const navigate = useNavigate();
   const goToReservations = () => {
-    navigate('/designer');
+    navigate('/reservation');
   };
   const goToEditProfile = () => navigate(`/profile/${ROUTES.profileEdit}`);
   return (

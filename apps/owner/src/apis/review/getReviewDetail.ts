@@ -1,13 +1,14 @@
 import { APIClient } from '@daeng-ggu/shared';
 
 export interface ReviewItem {
+  reviewId: number;
   designerId: number;
   designerImgUrl: string;
-  designerName: string;
+  designerAddress: string;
+  nickname: string;
   feedExposure: boolean;
   isReviewLike: boolean;
   reviewContents: string;
-  reviewId: number;
   reviewImgList: string[];
   reviewLikeCnt: number;
   reviewStar: number;

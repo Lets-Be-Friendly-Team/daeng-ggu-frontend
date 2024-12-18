@@ -7,7 +7,7 @@ const useGetProfileDetail = (customerId: number) => {
   return useQuery({
     queryKey: CUSTOMER_QUERY_KEYS.GET_PROFILE_DETAIL(customerId),
     queryFn: () => getProfileDetail({ customerId }),
-    select: (data) => data.data,
+    select: (response) => response.data,
   });
 };
 

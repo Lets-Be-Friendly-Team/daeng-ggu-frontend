@@ -17,26 +17,30 @@ interface ImageUploaderProps {
   setVideo?: Dispatch<SetStateAction<File | null>>;
   label?: string;
   subLabel?: string;
+  setInitialImgList: Dispatch<SetStateAction<string[]>>;
+  setInitialVideo?: Dispatch<SetStateAction<string>>;
+  // eslint-disable-next-line no-unused-vars
+  onInitialImageDelete?: (url: string) => void;
 }
 
 const ImageUploader = ({
   mode,
   initialImgList = [],
   initialVideo = '',
+  setInitialImgList,
+  setInitialVideo,
   imgList = [],
   setImgList,
   video = null,
   setVideo,
   label = '',
   subLabel = '',
+  onInitialImageDelete,
 }: ImageUploaderProps) => {
   const fileTypes =
     mode === 'img' ? ['jpg', 'png', 'jpeg', 'gif'] : ['jpg', 'png', 'jpeg', 'gif', 'avi', 'mp4', 'mov', 'wmv'];
   const [imgURLs, setImgURLs] = useState<string[]>([]);
   const [videoURL, setVideoURL] = useState<string | null>(null);
-
-  const [currentImgList, setCurrentImgList] = useState<string[]>(initialImgList);
-  const [currentVideo, setCurrentVideo] = useState<string>(initialVideo);
 
   // 이미지 파일 URL 관리
   useEffect(() => {
@@ -67,12 +71,25 @@ const ImageUploader = ({
 
   // 이미지 업로드 핸들러
   const handleImgUpload = (files: File[]) => {
-    setImgList?.((prev) => [...prev, ...files]);
+    setImgList?.((prev) => {
+      // 현재 총 이미지 개수 = 기존 이미지 개수 + 현재 새 이미지 개수
+      const currentCount = initialImgList.length + prev.length;
+      const addedCount = files.length;
+
+      // 만약 현재 개수 + 새로 추가하려는 이미지 수가 3개를 넘으면
+      if (currentCount + addedCount > 3) {
+        alert('이미지는 최대 3개만 업로드할 수 있습니다!');
+        const remainingSlots = 3 - currentCount; // 남은 업로드 가능한 개수
+        return [...prev, ...files.slice(0, remainingSlots)];
+      }
+
+      return [...prev, ...files];
+    });
   };
 
   // 비디오 업로드 핸들러
   const handleVideoUpload = (files: File[]) => {
-    if (files.length > 1 || currentVideo || video) {
+    if (files.length > 1 || initialVideo || video) {
       alert('동영상은 최대 1개만 업로드할 수 있습니다!');
       return;
     }
@@ -85,7 +102,9 @@ const ImageUploader = ({
   // 이미지 삭제 핸들러
   const handleImgDelete = (index: number, isInitial: boolean) => {
     if (isInitial) {
-      setCurrentImgList((prev) => prev.filter((_, i) => i !== index));
+      const deletedUrl = initialImgList[index];
+      setInitialImgList((prev) => prev.filter((_, i) => i !== index));
+      onInitialImageDelete?.(deletedUrl);
     } else {
       setImgList?.((prev) => prev.filter((_, i) => i !== index));
     }
@@ -94,7 +113,7 @@ const ImageUploader = ({
   // 비디오 삭제 핸들러
   const handleVideoDelete = (isInitial: boolean) => {
     if (isInitial) {
-      setCurrentVideo('');
+      setInitialVideo?.('');
     } else {
       setVideo?.(null);
     }
@@ -105,10 +124,6 @@ const ImageUploader = ({
     // console.log(files); // 파일이 잘 들어오는지 확인
     const imageFiles = Array.from(files).filter((file) => file.type.startsWith('image/'));
     const videoFiles = Array.from(files).filter((file) => file.type.startsWith('video/'));
-
-    // console.log('Image Files:', imageFiles);
-    // console.log(imgList);
-    // console.log('Video Files:', videoFiles);
 
     // 이미지 처리
     if (imageFiles.length > 0) {
@@ -123,10 +138,10 @@ const ImageUploader = ({
 
   // 슬라이더에 전달할 데이터 생성
   const sliderList = [
-    ...currentImgList.map((src) => ({ type: 'image', src })),
+    ...initialImgList.map((src) => ({ type: 'image', src })),
     // ...imgList.map((file) => ({ type: 'image', src: URL.createObjectURL(file) })),
     ...imgURLs.map((src) => ({ type: 'image', src })),
-    ...(currentVideo ? [{ type: 'video', src: currentVideo }] : []),
+    ...(initialVideo ? [{ type: 'video', src: initialVideo }] : []),
     ...(videoURL ? [{ type: 'video', src: videoURL }] : []),
   ];
 
@@ -147,7 +162,7 @@ const ImageUploader = ({
       )}
       <ul className='mt-4 flex w-full flex-wrap gap-x-[4%] gap-y-6'>
         {/* 이미지 미리보기 */}
-        {currentImgList.map((url, index) => (
+        {initialImgList.map((url, index) => (
           <div key={`initial-${index}`} className='relative flex aspect-square w-[22%]'>
             <li className='flex h-full w-full items-center justify-center overflow-hidden rounded-md'>
               <img className='h-full w-full object-cover' alt='이미지' src={url} />
@@ -168,10 +183,10 @@ const ImageUploader = ({
           </div>
         ))}
         {/* 비디오 미리보기 */}
-        {currentVideo && (
+        {initialVideo && (
           <div className='relative flex aspect-square w-[22%]'>
             <li className='flex h-full w-full items-center justify-center overflow-hidden rounded-md'>
-              <video className='h-full w-full object-cover' controls src={currentVideo}></video>
+              <video className='h-full w-full object-cover' controls src={initialVideo}></video>
             </li>
             <button onClick={() => handleVideoDelete(true)} className='absolute -right-2 -top-2'>
               <CloseCircleIcon className='h-8 w-8' />

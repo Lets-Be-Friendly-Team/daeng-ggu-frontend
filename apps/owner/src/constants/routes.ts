@@ -15,7 +15,7 @@ const ROUTES = {
   reservation: 'reservation',
   designerProfile: 'designer/:designerId',
   review: 'review',
-  reviewEdit: 'review/edit',
+  reviewEdit: 'review/edit/:reviewId',
   login: 'login',
   signup: 'signup',
   signupSuccess: 'success',

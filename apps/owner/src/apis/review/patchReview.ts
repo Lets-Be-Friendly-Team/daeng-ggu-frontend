@@ -7,10 +7,11 @@ export interface PatchReviewResponse {
 }
 
 export interface ReviewData {
-  designerId: number;
+  reviewId: number;
   reviewContents: string;
   reviewStar: number;
   isFeedAdd: boolean;
+  existImgList: string[];
   FeedImgList: string[]; // 이미지 URL 배열
 }
 const patchReview = async (reviewData: ReviewData): Promise<PatchReviewResponse> => {

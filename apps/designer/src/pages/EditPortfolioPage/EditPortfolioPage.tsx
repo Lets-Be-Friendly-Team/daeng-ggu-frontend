@@ -30,7 +30,7 @@ const EditPortfolioPage = () => {
 
   const [preImgUrlList, setPreImgUrlList] = useState<string[]>([]);
   const [preVideoUrl, setPreVideoUrl] = useState<string>('');
-  const [deletedImgUrls, setDeletedImgUrls] = useState<string[]>([]); // New state
+  // const [deletedImgUrls, setDeletedImgUrls] = useState<string[]>([]); // New state
 
   const navigate = useNavigate();
   const { data: fetchedPortfolio } = useGetPortfolioDetail(designerId, portfolioId!);
@@ -50,7 +50,7 @@ const EditPortfolioPage = () => {
       });
       setPreImgUrlList(fetchedPortfolio.imgUrlList || []);
       setPreVideoUrl(fetchedPortfolio.videoUrl || '');
-      setDeletedImgUrls([]); // Reset deletions on new fetch
+      // setDeletedImgUrls([]); // Reset deletions on new fetch
     }
   }, [fetchedPortfolio]);
 
@@ -84,7 +84,7 @@ const EditPortfolioPage = () => {
       }
 
       // 필터링된 기존 이미지 리스트
-      const filteredPreImgUrlList = preImgUrlList.filter((url) => !deletedImgUrls.includes(url));
+      // const filteredPreImgUrlList = preImgUrlList.filter((url) => !deletedImgUrls.includes(url));
 
       const portfolioData = {
         designerId,
@@ -93,8 +93,8 @@ const EditPortfolioPage = () => {
         contents: portfolio.contents,
         preVideoUrl: preVideoUrl, // 기존 비디오 URL
         newVideoUrl: newVideoUrlString, // 새 비디오 URL
-        preImgUrlList: filteredPreImgUrlList, // 필터링된 기존 이미지 URL 리스트
-        newImgUrlList: newImageUrls, // 새 이미지 URL 리스트
+        preImgUrlList: preImgUrlList ?? [], // 필터링된 기존 이미지 URL 리스트
+        newImgUrlList: newImageUrls || null, // 새 이미지 URL 리스트
       };
 
       console.log('최종 전송 데이터:', portfolioData);
@@ -107,6 +107,12 @@ const EditPortfolioPage = () => {
       console.error('포트폴리오 수정 실패:', error);
       alert('포트폴리오 수정에 실패했습니다.');
     }
+  };
+
+  // 콜백 함수 추가
+  const handleInitialImageDelete = (url: string) => {
+    // preImgUrlList에서도 해당 URL을 제거
+    setPreImgUrlList((prev) => (prev ?? []).filter((prevUrl) => prevUrl !== url));
   };
 
   return (
@@ -123,12 +129,17 @@ const EditPortfolioPage = () => {
 
           <ImageUploader
             initialImgList={preImgUrlList}
+            setInitialImgList={setPreImgUrlList}
             setImgList={handleSetImgList}
+            imgList={portfolio.imgList}
             initialVideo={preVideoUrl}
+            setInitialVideo={setPreVideoUrl}
+            video={portfolio.video}
             setVideo={handleSetVideo}
             mode='both'
             label='사진 및 동영상'
             subLabel='동영상은 1개만 업로드 가능합니다'
+            onInitialImageDelete={handleInitialImageDelete}
           />
 
           <TextArea

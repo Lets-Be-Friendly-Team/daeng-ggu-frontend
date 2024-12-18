@@ -3,13 +3,16 @@ import { useNavigate, useParams } from 'react-router';
 import {
   Header,
   Input,
+  Modal,
   PageContainer,
   ProfileImgUploader,
   TextArea,
   TypeOneButton,
   TypeTwoButton,
 } from '@daeng-ggu/design-system';
+import { useModalStore, useToast } from '@daeng-ggu/shared';
 
+import useDeletePetProfile from '@/hooks/queries/PetProfile/useDeletePetProfile';
 import useGetPetProfileDetail from '@/hooks/queries/PetProfile/useGetPetProfileDetail';
 
 const EditPetProfilePage = () => {
@@ -18,6 +21,7 @@ const EditPetProfilePage = () => {
   const petId = params.petId;
   const customerId = 2;
   const { data: petData } = useGetPetProfileDetail(customerId, Number(petId));
+  const { mutate: deletePetProfile } = useDeletePetProfile();
   console.log(petData);
   const [formData, setFormData] = useState({
     petId: 0,
@@ -34,6 +38,8 @@ const EditPetProfilePage = () => {
     specialNotes: '',
   });
   const [profileImage, setProfileImage] = useState<File | undefined>(undefined);
+  const { show } = useModalStore();
+  const { showToast } = useToast();
 
   useEffect(() => {
     if (petData) {
@@ -41,7 +47,37 @@ const EditPetProfilePage = () => {
       setProfileImage(undefined);
     }
   }, [petData]);
-  console.log(petData);
+
+  const navigateBack = () => {
+    navigate('/profile');
+  };
+  const handleDelete = () => {
+    showDeleteConfirmationModal();
+  };
+  const showDeleteConfirmationModal = () => {
+    show(Modal, {
+      title: '반려견 프로필 삭제',
+      description: '반려견 프로필을 삭제하시겠습니까?',
+      onConfirm: () => {
+        deletePetProfile(
+          { customerId: Number(customerId), petId: Number(petId) },
+          {
+            onSuccess: () => {
+              console.log('반려동물 프로필 삭제 성공');
+              showToast({ message: '반려견 프로필이 삭제 되었습니다!', type: 'confirm' });
+              navigateBack();
+            },
+            onError: (error) => {
+              console.error('반려동물 프로필 삭제 실패', error);
+            },
+          },
+        );
+      },
+      onClose: () => close(),
+      confirmText: '네',
+      cancelText: '아니오',
+    });
+  };
   const handleChange = (field: string, value: string | File | null) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
@@ -140,6 +176,9 @@ const EditPetProfilePage = () => {
             value={formData.specialNotes}
             onChange={(e) => handleChange('specialNotes', e.target.value)}
           />
+          <div className='mb-[0.8rem] block text-body3 font-semibold text-gray-800'>
+            <TypeTwoButton text='삭제하기' color='bg-secondary' onClick={handleDelete} />
+          </div>
         </div>
       </PageContainer>
       <TypeOneButton text='저장하기' color='bg-secondary' onClick={submitFormData} />
