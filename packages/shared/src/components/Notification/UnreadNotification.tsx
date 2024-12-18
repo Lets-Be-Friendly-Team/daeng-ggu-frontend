@@ -1,20 +1,50 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ExclamationIcon } from '@daeng-ggu/design-system';
+import SSEEventSource from 'src/apis/SSE/SSEEventSource';
+import EmptyNotification from 'src/components/Notification/EmptyNotification';
 
 type NotificationItem = {
   alarmId: number;
-  objectId: number;
   alarmMessage: string;
   alarmType: string;
   alarmStatus: number;
-  alarmTypeName: string;
 };
 
-type UnreadNotificationProps = {
-  data: NotificationItem[];
+const getAlarmTypeName = (alarmType: string) => {
+  switch (alarmType) {
+    case 'A1':
+      return '요청알림';
+    case 'A2':
+      return '견적알림';
+    case 'A3':
+      return '예약알림';
+    case 'A4':
+      return '리뷰알림';
+    default:
+      return '';
+  }
 };
 
-const UnreadNotification = ({ data }: UnreadNotificationProps) => {
+const UnreadNotification = () => {
+  const [unreadNotifications, setUnreadNotifications] = useState<NotificationItem[]>([]);
+  useEffect(() => {
+    const eventSource = SSEEventSource('/daengggu/alarm/subscribe');
+
+    eventSource.addEventListener('alarm', (event) => {
+      console.log('alarmEvent', JSON.parse(event.data));
+      setUnreadNotifications((prev) => [...prev, JSON.parse(event.data)]);
+    });
+
+    eventSource.onerror = () => {
+      //에러 발생시 할 동작
+      eventSource.close(); //연결 끊기
+    };
+    return () => {
+      eventSource.close();
+    };
+  }, []);
+
   const navigate = useNavigate();
 
   const getRouteByAlarmType = (alarmType: string) => {
@@ -32,11 +62,11 @@ const UnreadNotification = ({ data }: UnreadNotificationProps) => {
   };
 
   return (
-    <div>
-      {data.length === 0 ? (
-        <div>알림이 없어요!</div>
+    <div className='pb-[10rem]'>
+      {unreadNotifications.length === 0 ? (
+        <EmptyNotification text='읽지 않은 알림이 없어요!' />
       ) : (
-        data.map((notification) => {
+        unreadNotifications.map((notification) => {
           const containerClass = 'flex flex-col p-[16px] border-b border-gray-100 hover:bg-secondary cursor-pointer';
           const iconColor = 'gray';
 
@@ -53,7 +83,7 @@ const UnreadNotification = ({ data }: UnreadNotificationProps) => {
             >
               <div className='flex'>
                 <ExclamationIcon className='w-[14px] h-[14px]' color={iconColor} />
-                <p className='px-1 text-caption font-semibold'>{notification.alarmTypeName}</p>
+                <p className='px-1 text-caption font-semibold'>{getAlarmTypeName(notification.alarmType)}</p>
               </div>
               <div className='pl-6 text-sub_h3 mt-[10px] font-semibold overflow-hidden text-ellipsis line-clamp-2'>
                 <p>{notification.alarmMessage}</p>

@@ -25,3 +25,8 @@ export { default as useReservationId } from './hooks/useReservationId';
 export { default as getBroadcastChannel } from './apis/monitoring/getBroadcastChannel';
 export { default as useGetAddressLocation } from './hooks/useGetAddressLocation';
 export { default as useCreateMarker } from './hooks/useCreateMarker';
+export { default as getAlarms } from './apis/alarm/getAlarms';
+export type { DefaultResponse } from './types/api';
+export type { SecondDefaultResponse } from './types/api';
+export type { AlarmType } from './types/alarm';
+export { default as useGetAlarms } from './hooks/queries/useGetAlarms';

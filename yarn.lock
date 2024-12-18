@@ -571,6 +571,7 @@ __metadata:
   resolution: "@daeng-ggu/shared@workspace:packages/shared"
   dependencies:
     "@eslint/js": "npm:^9.13.0"
+    "@tanstack/react-query": "npm:^5.61.0"
     "@types/eslint-plugin-jsx-a11y": "npm:^6"
     "@types/eslint-plugin-tailwindcss": "npm:^3"
     "@types/react": "npm:^18.3.12"

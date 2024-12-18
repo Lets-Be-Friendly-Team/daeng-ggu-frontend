@@ -2,7 +2,7 @@
 import { Suspense } from 'react';
 import { createBrowserRouter, Outlet } from 'react-router-dom';
 import StatusPage from '@daeng-ggu/designer/src/pages/StatusPage/StatusPage';
-import { LogContainer, RouterErrorFallback } from '@daeng-ggu/shared';
+import { LogContainer, Notification, RouterErrorFallback } from '@daeng-ggu/shared';
 
 import App from '@/App';
 import ROUTES from '@/constants/routes';
@@ -109,6 +109,11 @@ export const router = createBrowserRouter(
               element: <AddPortfolioInProfile />,
             },
           ],
+        },
+        {
+          path: ROUTES.notification,
+          element: <Outlet />,
+          children: [{ index: true, element: <Notification /> }],
         },
         {
           path: ROUTES.profileEditPortfolio,
