@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
+import { useNavigate } from 'react-router';
 import { ArrowDown, ArrowUp, UserProfileImage } from '@daeng-ggu/design-system';
 import MiniButton from '@daeng-ggu/design-system/components/Buttons/MiniButton';
 import BulbIcon from '@daeng-ggu/design-system/components/Icons/BulbIcon';
@@ -6,12 +7,15 @@ import ScissorIcon from '@daeng-ggu/design-system/components/Icons/ScissorIcon';
 import { extractKorean } from '@daeng-ggu/shared';
 
 import { Reservation } from '@/apis/reservation/getReservation';
+import ROUTES from '@/constants/routes';
+import { isTodayOrPast } from '@/utils/isTodayOrPast';
 
 interface ReservationHistoryProps {
   reservationList: Reservation[] | undefined;
 }
 
 const ReservationHistory = ({ reservationList }: ReservationHistoryProps) => {
+  const navigate = useNavigate();
   const [expandedReservations, setExpandedReservations] = useState<{ [key: number]: boolean }>({});
   const toggleDetails = (id: number) => {
     setExpandedReservations((prev) => ({
@@ -19,11 +23,13 @@ const ReservationHistory = ({ reservationList }: ReservationHistoryProps) => {
       [id]: !prev[id],
     }));
   };
-
+  const handleStartGrooming = (reservationId: number) => {
+    navigate(ROUTES.progress(reservationId));
+  };
   return (
     <div className='flex flex-col gap-6 px-5 py-5'>
       {reservationList?.map((reservation) => (
-        <>
+        <Fragment key={reservation.reservationId}>
           <div className='flex items-center justify-between'>
             <div className='flex gap-3'>
               <div>
@@ -38,8 +44,13 @@ const ReservationHistory = ({ reservationList }: ReservationHistoryProps) => {
               </div>
             </div>
             <div className='flex gap-2'>
-              <MiniButton text='예약 취소' />
-              {reservation.isCanceled && <MiniButton text='취소된 예약' isActive />}
+              {!isTodayOrPast(reservation.reservationDate) && !reservation.isCanceled && (
+                <MiniButton text='예약 취소' />
+              )}
+              {isTodayOrPast(reservation.reservationDate) && (
+                <MiniButton isActive text='미용 시작' onClick={() => handleStartGrooming(reservation.reservationId)} />
+              )}
+              {reservation.isCanceled && <span className='text-red-600 font-semibold text-body3'>예약 취소됨</span>}
             </div>
           </div>
           <div key={reservation.reservationId} className='rounded-md bg-secondary p-5 shadow-sm'>
@@ -128,7 +139,7 @@ const ReservationHistory = ({ reservationList }: ReservationHistoryProps) => {
               </div>
             </div>
           </div>
-        </>
+        </Fragment>
       ))}
     </div>
   );

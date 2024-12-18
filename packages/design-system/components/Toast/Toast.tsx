@@ -14,7 +14,7 @@ const Toast = ({ type, message }: { type: ToastType; message: string | null }) =
   return (
     <div
       id='toast-simple'
-      className='fixed left-1/2 top-[2rem] z-[9999] flex w-full max-w-xs -translate-x-1/2 animate-slide-up items-center space-x-4 divide-x divide-gray-200 rounded-lg bg-white p-4 text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-400 rtl:space-x-reverse rtl:divide-x-reverse'
+      className='fixed left-1/2 top-[2rem] z-[9999] flex min-w-fit max-w-[40rem] -translate-x-1/2 animate-slide-up items-center space-x-4 divide-x divide-gray-200 rounded-lg bg-white p-4 text-gray-500 shadow dark:divide-gray-700 dark:bg-gray-800 dark:text-gray-400 rtl:space-x-reverse rtl:divide-x-reverse'
       role='alert'
     >
       {renderIcon(type)}

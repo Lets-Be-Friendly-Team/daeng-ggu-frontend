@@ -112,20 +112,16 @@ class APIFetch implements APIFetchType {
 
   private async handleError(response: Response): Promise<void> {
     if (response.status === 401) {
-      return this.handleUnauthorizedError(response);
+      try {
+        throw new HTTPError(401, response.statusText);
+      } catch (error) {
+        console.error(error); // 에러를 로그로 출력
+        window.location.href = '/';
+      }
     }
 
     const apiError = new HTTPError(response.status, response.statusText);
     throw apiError;
-  }
-
-  private async handleUnauthorizedError(response: Response): Promise<void> {
-    try {
-      throw new HTTPError(401, response.statusText);
-    } catch (error) {
-      console.error(error);
-      window.location.href = '/';
-    }
   }
 
   async get<T>(path: string, queryParams?: Record<string, string>, headers?: Record<string, string>): Promise<T> {

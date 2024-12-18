@@ -9,7 +9,6 @@ interface BellIconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const BellIconButton = ({ onClick }: BellIconButtonProps) => {
-  console.log('cxs');
   const [bellAlert, setBellAlert] = useState(false);
   useEffect(() => {
     const eventSource = SSEEventSource('/daengggu/alarm/subscribe');

@@ -53,4 +53,5 @@ export const PET_QUERY_KEYS = {
 export const GUADIAN_MONITORING_QUERY_KEYS = {
   GET_MONITORING_STATUS: (reservationId: string) => ['getMonitoringStatus', reservationId],
   GET_PLAYBACK_URL: (reservationId: string) => ['getPlaybackUrl', reservationId],
+  GET_RESERVATION_INFO: (reservationId: string) => ['getReservationInfo', reservationId],
 };
