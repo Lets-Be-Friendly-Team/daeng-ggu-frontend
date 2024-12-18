@@ -48,7 +48,7 @@ const Profile = ({
   const { setDesignerId } = useDesignerIdStore();
   const clearDesignerIdStorage = useDesignerIdStore.persist.clearStorage;
   const navigate = useNavigate();
-  const goToReservations = () => navigate(`/`);
+  const goToReservations = () => navigate(`${ROUTES.reservation}`);
   const goToEditProfile = () => navigate(`/profile/${ROUTES.profileEdit}`);
 
   const extractBracketContent = (text: string) => {

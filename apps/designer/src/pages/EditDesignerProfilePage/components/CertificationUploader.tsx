@@ -27,7 +27,9 @@ const CertificationUploader = ({ formData, setFormData, setNewCertifications }: 
   return (
     <div className='flex flex-col gap-1'>
       <div className='block text-body3 font-semibold text-gray-800'>서류 등록 (사업자 등록증 및 애견 미용 자격증)</div>
-      <div className='text-gray-700 text-iconCaption'>~MB 이하의 jpg, png 파일 3개까지 업로드 가능합니다.</div>
+      <div className='text-gray-700 text-iconCaption mb-[0.8rem] block font-semibold'>
+        ~MB 이하의 jpg, png 파일 3개까지 업로드 가능합니다.
+      </div>
       <div className='flex flex-wrap gap-3'>
         {preCertifications.map((cert, index) => (
           <div key={index} className='relative h-[100px] w-[100px] rounded-md overflow-hidden'>
