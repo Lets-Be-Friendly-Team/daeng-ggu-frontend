@@ -21,6 +21,7 @@ export interface Reservation {
   monitoringFee: number;
   totalPayment: number;
   estimateDetail: string;
+  isProcess: boolean;
   requestDetail: {
     desiredService: string;
     lastGroomingDate: string;

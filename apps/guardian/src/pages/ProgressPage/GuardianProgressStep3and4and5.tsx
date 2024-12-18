@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { LogoImage, TypeTwoButton } from '@daeng-ggu/design-system';
 
@@ -6,6 +6,7 @@ import usePostStartDeliveryToHome from '@/hooks/queries/usePostStartDeliveryToHo
 
 const GuardianProgressStep3and4and5 = ({ statusNum }: { statusNum: number }) => {
   const navigate = useNavigate();
+  const [isDisabled, setIsDisabled] = useState(false);
   const { reservationId } = useParams();
   const { mutate: startDeliveryMutate } = usePostStartDeliveryToHome(reservationId);
 
@@ -17,6 +18,7 @@ const GuardianProgressStep3and4and5 = ({ statusNum }: { statusNum: number }) => 
   }, [statusNum]);
 
   const handleButtonOnClick = () => {
+    setIsDisabled(true);
     if (statusNum === 5) {
       startDeliveryMutate();
     }
@@ -28,7 +30,13 @@ const GuardianProgressStep3and4and5 = ({ statusNum }: { statusNum: number }) => 
       <h1 className='text-h2 font-semibold'>단계가 완료되면 화면이 이동됩니다.</h1>
       <div className='mt-10 flex gap-4'>
         <TypeTwoButton className='px-[2rem]' text='댕꾸에게 문의' color='bg-secondary' onClick={() => {}} />
-        <TypeTwoButton className='px-[2rem]' text={handleButtonText} color='bg-primary' onClick={handleButtonOnClick} />
+        <TypeTwoButton
+          disabled={isDisabled}
+          className='px-[2rem]'
+          text={handleButtonText}
+          color='bg-primary'
+          onClick={handleButtonOnClick}
+        />
       </div>
     </section>
   );
