@@ -178,7 +178,7 @@ const EditPetProfilePage = () => {
             value={formData.specialNotes}
             onChange={(e) => handleChange('specialNotes', e.target.value)}
           />
-          <div className='mb-[0.8rem] block text-body3 font-semibold text-gray-800'>
+          <div className='mb-[10rem] block text-body3 font-semibold text-gray-800'>
             <TypeTwoButton text='삭제하기' color='bg-secondary' onClick={handleDelete} />
           </div>
         </div>
