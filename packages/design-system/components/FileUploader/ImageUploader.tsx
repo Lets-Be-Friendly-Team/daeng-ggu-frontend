@@ -17,7 +17,7 @@ interface ImageUploaderProps {
   setVideo?: Dispatch<SetStateAction<File | null>>;
   label?: string;
   subLabel?: string;
-  setInitialImgList: Dispatch<SetStateAction<string[]>>;
+  setInitialImgList?: Dispatch<SetStateAction<string[]>>;
   setInitialVideo?: Dispatch<SetStateAction<string>>;
   // eslint-disable-next-line no-unused-vars
   onInitialImageDelete?: (url: string) => void;
@@ -103,7 +103,7 @@ const ImageUploader = ({
   const handleImgDelete = (index: number, isInitial: boolean) => {
     if (isInitial) {
       const deletedUrl = initialImgList[index];
-      setInitialImgList((prev) => prev.filter((_, i) => i !== index));
+      setInitialImgList?.((prev) => prev.filter((_, i) => i !== index));
       onInitialImageDelete?.(deletedUrl);
     } else {
       setImgList?.((prev) => prev.filter((_, i) => i !== index));

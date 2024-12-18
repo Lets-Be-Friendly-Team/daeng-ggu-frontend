@@ -117,7 +117,7 @@ const CompletedServices = ({ completedGroomingList }: ICompletedHistoryProps) =>
                 <div className='mt-4 rounded-md bg-white p-4'>
                   <div className='flex flex-col gap-2 text-caption text-gray-700'>
                     <div className='flex justify-between'>
-                      <span>미용비</span>
+                      <span>미용비 (수수료 포함) </span>
                       <span>{(reservation.groomingFee ?? 0).toLocaleString()}원</span>
                     </div>
                     <div className='flex justify-between'>
