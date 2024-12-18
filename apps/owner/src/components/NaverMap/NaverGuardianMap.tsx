@@ -1,9 +1,8 @@
 import { useEffect, useRef } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { GuardianIcon } from '@daeng-ggu/design-system';
-import { guardianlocationWebSocket, useInitNavermap } from '@daeng-ggu/shared';
+import { guardianlocationWebSocket, Marker, useInitNavermap } from '@daeng-ggu/shared';
 
-import Marker from '@/components/NaverMap/Marker';
 import { cn } from '@/lib/utils';
 
 interface NaverGuardianMapProps {

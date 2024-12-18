@@ -21,31 +21,31 @@ const useUserLocation = (): { location: LocationState } => {
   });
   const { showToast } = useToast();
 
-  const onSuccess = (position: GeolocationPosition): void => {
-    const { latitude, longitude } = position.coords;
-    setLocation({
-      loaded: true,
-      coordinates: { lat: latitude, lng: longitude },
-      permissionGranted: true,
-    });
-  };
-
-  const onError = (): void => {
-    setLocation({
-      loaded: true,
-      coordinates: { lat: 37.413294, lng: 126.734086 },
-      permissionGranted: false,
-    });
-    showToast({ message: '현재 위치를 불러올 수 없습니다!', type: 'warning' });
-  };
-
   useEffect(() => {
     if (!navigator.geolocation) {
       return;
     }
 
+    const onSuccess = (position: GeolocationPosition): void => {
+      const { latitude, longitude } = position.coords;
+      setLocation({
+        loaded: true,
+        coordinates: { lat: latitude, lng: longitude },
+        permissionGranted: true,
+      });
+    };
+
+    const onError = (): void => {
+      setLocation({
+        loaded: true,
+        coordinates: { lat: 37.413294, lng: 126.734086 },
+        permissionGranted: false,
+      });
+      showToast({ message: '현재 위치를 불러올 수 없습니다!', type: 'warning' });
+    };
+
     navigator.geolocation.getCurrentPosition(onSuccess, onError);
-  }, []);
+  }, [showToast]);
 
   return { location };
 };

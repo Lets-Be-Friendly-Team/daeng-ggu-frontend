@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
-import { useParams } from 'react-router';
 import { PageContainer, Progress } from '@daeng-ggu/design-system';
+import { useReservationId } from '@daeng-ggu/shared';
 
 import useGetMonitoringStatus from '@/hooks/queries/monitoring/useGetMonitoringStatus';
 import ProgressStep1 from '@/pages/ProgressPage/ProgressStep1';
@@ -8,13 +8,21 @@ import ProgressStep2 from '@/pages/ProgressPage/ProgressStep2';
 import ProgressStep3 from '@/pages/ProgressPage/ProgressStep3';
 
 const ProgressPage = () => {
-  const { reservationId } = useParams();
+  const reservationId = useReservationId();
 
-  const { data: response } = useGetMonitoringStatus(reservationId as string);
+  const { data: response } = useGetMonitoringStatus(reservationId);
+  // const response = {
+  //   data: {
+  //     processStatus: 'GROOMING',
+  //     isDelivery: false,
+  //     processMessage: '테스트',
+  //   },
+  // };
+  console.log(response);
   const StepComponents = useMemo(() => {
     switch (response?.data.processStatus) {
       case 'PREPAREING':
-        return <ProgressStep1 status='' />;
+        return <ProgressStep1 isDelivery={response?.data.isDelivery} processStatus={response.data.processStatus} />;
       case 'GROOMING':
         return <ProgressStep2 />;
       case 'COMPLETE':
@@ -39,8 +47,10 @@ const ProgressPage = () => {
 
   return (
     <PageContainer>
-      <Progress maxStep={3} value={handleText} text={'테스트'} />
-      {StepComponents}
+      <div className='py-[2rem]'>
+        <Progress maxStep={3} value={handleText} text={'테스트'} />
+        {StepComponents}
+      </div>
     </PageContainer>
   );
 };

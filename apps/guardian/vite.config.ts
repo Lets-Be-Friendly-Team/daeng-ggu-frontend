@@ -9,6 +9,7 @@ export default defineConfig({
   plugins: [react(), mkcert(), tsconfigPaths()],
   assetsInclude: ['**/*.woff2'],
   server: {
+    host: true,
     port: 5174,
   },
   base: '/guardian/',

@@ -8,6 +8,7 @@ export default defineConfig({
   plugins: [react(), tsconfigPaths(), mkcert()],
   assetsInclude: ['**/*.woff2'],
   server: {
+    host: true,
     port: 5173,
   },
   resolve: {

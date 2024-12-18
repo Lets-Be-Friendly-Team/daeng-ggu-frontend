@@ -29,8 +29,6 @@ interface APIFetchType {
   put<T>(_path: string, _body?: Record<string, any>): Promise<T>;
 }
 
-let reissueAccessToken = false;
-
 // 커스텀 fetchbody에 대한 RequestInit['body'] 사용 유무 처리, 커스텀은 안쓸거임
 type FetchBody = FormData | string | Blob | ArrayBuffer | URLSearchParams | ReadableStream<Uint8Array> | null;
 
@@ -99,7 +97,7 @@ class APIFetch implements APIFetchType {
       });
 
       if (!response.ok) {
-        await this.handleError(response, requestProps);
+        await this.handleError(response);
       }
 
       // Assuming the response is JSON. Adjust if needed.
@@ -112,28 +110,18 @@ class APIFetch implements APIFetchType {
     }
   }
 
-  private async handleError(response: Response, handleRequestProps: HandleRequestProps): Promise<void> {
+  private async handleError(response: Response): Promise<void> {
     if (response.status === 401) {
-      return this.handleUnauthorizedError(response, handleRequestProps);
+      return this.handleUnauthorizedError(response);
     }
 
     const apiError = new HTTPError(response.status, response.statusText);
     throw apiError;
   }
 
-  private async handleUnauthorizedError(response: Response, handleRequestProps: HandleRequestProps): Promise<void> {
-    if (reissueAccessToken) {
-      throw new HTTPError(401, response.statusText);
-    }
-
-    reissueAccessToken = true;
+  private async handleUnauthorizedError(response: Response): Promise<void> {
     try {
-      const accessTokenReissueResponse = { status: 200 };
-
-      if (accessTokenReissueResponse.status === 200) {
-        reissueAccessToken = false;
-        return await this.request(handleRequestProps);
-      }
+      throw new HTTPError(401, response.statusText);
     } catch (error) {
       console.error(error);
       window.location.href = '/';
@@ -144,8 +132,13 @@ class APIFetch implements APIFetchType {
     return this.request<T>({ path, method: HTTP_METHOD.get, queryParams }, headers);
   }
 
-  async post<T>(path: string, body?: Record<string, any> | FormData, headers?: Record<string, string>): Promise<T> {
-    return this.request<T>({ path, method: HTTP_METHOD.post, body }, headers);
+  async post<T>(
+    path: string,
+    body?: Record<string, any> | FormData,
+    headers?: Record<string, string>,
+    queryParams?: Record<string, string>,
+  ): Promise<T> {
+    return this.request<T>({ path, method: HTTP_METHOD.post, body, queryParams }, headers);
   }
 
   async put<T>(path: string, body?: Record<string, any>, headers?: Record<string, string>): Promise<T> {

@@ -2,13 +2,23 @@ import { useEffect, useState } from 'react';
 
 import useToast from '../hooks/useToast';
 
-interface Location {
+export interface LocationState {
+  loaded: boolean;
+  coordinates: Coordinates;
+  permissionGranted: boolean;
+}
+
+interface Coordinates {
   lat: number;
   lng: number;
 }
 
-const useWatchUserLocation = (): Location => {
-  const [location, setLocation] = useState<Location>({ lat: 37.413294, lng: 126.734086 });
+const useWatchUserLocation = (): LocationState => {
+  const [location, setLocation] = useState<LocationState>({
+    loaded: false,
+    coordinates: { lat: 37.413294, lng: 126.734086 },
+    permissionGranted: false,
+  });
   const { showToast } = useToast();
   useEffect(() => {
     if (!navigator.geolocation) {
@@ -19,9 +29,10 @@ const useWatchUserLocation = (): Location => {
     const watchId = navigator.geolocation.watchPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
-        setLocation({ lat: latitude, lng: longitude });
+        setLocation({ loaded: true, coordinates: { lat: latitude, lng: longitude }, permissionGranted: true });
       },
       () => {
+        setLocation((prev) => ({ ...prev, loaded: true, permissionGranted: false }));
         showToast({ message: '현재 위치를 불러올 수 없습니다!', type: 'error' });
       },
       {

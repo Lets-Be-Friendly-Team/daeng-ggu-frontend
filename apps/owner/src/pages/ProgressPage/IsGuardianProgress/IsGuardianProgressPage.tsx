@@ -38,7 +38,7 @@ const IsGuardianProgressPage = ({ processNum, processMessage }: { processNum: nu
 
   return (
     <div className='py-[2rem]'>
-      <Progress maxStep={5} value={processNum} text={processMessage} />
+      <Progress maxStep={7} value={processNum} text={processMessage} />
       {StepComponents}
     </div>
   );

@@ -1,10 +1,13 @@
-import { useParams } from 'react-router';
 import { CategoryTab, TypeOneButton } from '@daeng-ggu/design-system';
+import { useReservationId } from '@daeng-ggu/shared';
 
+import IVSPlayer from '@/components/IVS/IVSPlayer';
 import NaverGuardianMap from '@/components/NaverMap/NaverGuardianMap';
+import useGetPlaybackUrl from '@/hooks/queries/monitoring/useGetPlaybackUrl';
 
 const ProgressStep2and6 = () => {
-  const { reservationId } = useParams();
+  const reservationId = useReservationId();
+  const { data } = useGetPlaybackUrl(reservationId);
   const tabs = [
     {
       label: '현재 위치',
@@ -17,7 +20,12 @@ const ProgressStep2and6 = () => {
     },
     {
       label: 'CCTV',
-      content: <div>CCTV</div>,
+      content: (
+        <>
+          <IVSPlayer playbackUrl={data?.playbackUrl || ''} />
+          <TypeOneButton text='펫가디언에게 문의하기' color='bg-primary' onClick={() => {}} />
+        </>
+      ),
     },
   ];
   return (

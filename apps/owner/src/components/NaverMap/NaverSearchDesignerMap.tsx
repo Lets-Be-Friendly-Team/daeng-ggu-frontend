@@ -2,13 +2,12 @@ import { ReactNode, useEffect, useState } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { useNavigate } from 'react-router';
 import { MyLocationIcon } from '@daeng-ggu/design-system';
-import { useInitNavermap, useUserLocation } from '@daeng-ggu/shared';
+import { Marker, useInitNavermap, useUserLocation } from '@daeng-ggu/shared';
 
 import getHomeMap, { DesignerInfo, HomeMapParams } from '@/apis/home/getHomeMap';
 import DesignerInfoWindow from '@/components/NaverMap/DesignerInfoWindow';
 import DesignerMarker from '@/components/NaverMap/DesignerMarker';
 import GoLocationButton from '@/components/NaverMap/LocationButton';
-import Marker from '@/components/NaverMap/Marker';
 import RefreshDesignerMarkerButton from '@/components/NaverMap/RefreshDesignerMarkerButton';
 import { cn } from '@/lib/utils';
 

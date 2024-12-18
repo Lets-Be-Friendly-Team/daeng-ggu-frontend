@@ -22,7 +22,7 @@ const ReservationCard = ({ reservation }: ReservationCardProps) => {
       <div className='flex gap-4 items-center'>
         <Avatar
           imageClassName=' w-[8rem] h-[8rem]'
-          containerClassName=' w-[9rem] h-[9rem]'
+          containerClassName=' w-[9rem] h-[9rem] shrink-0'
           mode='designerCard'
           imageUrl={'https://picsum.photos/200/300'}
         />
