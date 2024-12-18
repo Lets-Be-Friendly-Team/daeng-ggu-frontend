@@ -13,8 +13,6 @@ export interface ProfileData {
   phone: string;
   providedServices: string[];
   possibleBreed: string[];
-  businessNumber: string;
-  businessIsVerified: string;
   preCertifications: string[];
   workExperience: string;
   newCertifications: string[];
