@@ -40,7 +40,7 @@ const SuggestReview = ({ data }: SuggestReviewProps) => {
       console.log('This is image:', data.estimateImgList[0]);
 
       data.estimateImgList.forEach((item) => {
-        const match = item.match(/(image-\d+-\d+)/);
+        const match = item.match(/(image-\d+)/);
         if (match && match[1]) {
           const placeholder = match[1];
           const regex = new RegExp(`src="${placeholder}"`, 'g');

@@ -1,27 +1,44 @@
+// src/pages/Status/Status.tsx
 import { CategoryTab, Header, PageContainer } from '@daeng-ggu/design-system';
 
 import useGetPendingRequests from '@/hooks/queries/Request/useGetPendingRequests';
 import useGetCompletedRequests from '@/hooks/queries/Request/useGetUserCompletedRequests';
-import CompletedRequestUser from '@/pages/Status/CompletedRequestUser.tsx';
+import CompletedRequestUser from '@/pages/Status/CompletedRequestUser';
 import PendingRequest from '@/pages/Status/PendingRequest';
-
-// https://via.placeholder.com/100
 
 const Status = () => {
   // Fetch pending requests using the custom hook
-  const { data: pendingData } = useGetPendingRequests();
+  const { data: pendingData, isLoading: isPendingLoading, error: pendingError } = useGetPendingRequests();
 
   // Fetch completed requests using the custom hook
-  const { data: completedData } = useGetCompletedRequests();
+  const { data: completedData, isLoading: isCompletedLoading, error: completedError } = useGetCompletedRequests();
+
+  // Handle loading states
+  if (isPendingLoading || isCompletedLoading) {
+    return (
+      <div className='flex h-full w-full items-center justify-center'>
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
+  // Handle error states
+  if (pendingError || completedError) {
+    return (
+      <div className='flex h-full w-full items-center justify-center'>
+        <p>Error fetching requests.</p>
+      </div>
+    );
+  }
 
   const tabs = [
     {
       label: '견적서받는 중',
-      content: <PendingRequest data={pendingData} />,
+      content: <PendingRequest data={pendingData!} />, // Non-null assertion since data is loaded
     },
     {
       label: '이전견적 조회',
-      content: <CompletedRequestUser data={completedData} />,
+      content: <CompletedRequestUser data={completedData!} />,
     },
   ];
 

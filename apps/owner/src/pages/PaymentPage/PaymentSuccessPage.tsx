@@ -3,12 +3,15 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { PaymentDetails } from '@/apis/payment/postReservationEstimate.ts';
 import useGetPaymentProcess from '@/hooks/queries/Payment/useGetPaymentProcess';
+import usePostReservationEstimate from '@/hooks/queries/Payment/usePostReservationEstimate';
 import usePaymentStore from '@/stores/usePaymentStore';
 import useReservationStoreOne from '@/stores/useReservationStoreOne';
-
+/*
+ * 1. zustand store 선언 및 데이터 유효성 확인
+ * 2.**/
 const PaymentSuccessPage = () => {
-  // **Retrieve data from Zustand stores**
   const {
     customerKey,
     amount,
@@ -20,14 +23,13 @@ const PaymentSuccessPage = () => {
     deliveryFee,
     monitoringFee,
     totalPayment,
-    // clearAll, // Uncomment if you plan to use it
+    clearAll,
   } = useReservationStoreOne();
 
   const { paymentKey, orderId } = usePaymentStore();
 
   const navigate = useNavigate();
 
-  // **Step 1: Define a variable to check if reservation data is loaded**
   const isReservationDataLoaded =
     typeof customerKey === 'string' &&
     typeof amount === 'number' &&
@@ -43,10 +45,10 @@ const PaymentSuccessPage = () => {
   // **Step 2: Initialize the useGetPaymentProcess hook unconditionally**
   const {
     data: paymentProcessData,
-    isLoading,
-    isError,
-    isSuccess,
-    error,
+    isLoading: isPaymentProcessLoading,
+    isError: isPaymentProcessError,
+    isSuccess: isPaymentProcessSuccess,
+    error: paymentProcessError,
   } = useGetPaymentProcess({
     customerKey: customerKey!,
     orderId: orderId!,
@@ -69,24 +71,79 @@ const PaymentSuccessPage = () => {
     }
   }, [isReservationDataLoaded, paymentKey, orderId, customerKey, amount]);
 
-  // **Step 5: Handle the mutation's success and error states**
+  // **Step 5: Initialize the mutation hook**
+  const {
+    mutate: postReservationEstimateMutation,
+    isPending: isPostingEstimate,
+    isError: isPostEstimateError,
+    isSuccess: isPostEstimateSuccess,
+  } = usePostReservationEstimate({
+    onSuccess: (data) => {
+      if (data.status === 'SUCCESS') {
+        console.log('Reservation estimate posted successfully:', data);
+        clearAll(); // Clear the store or perform any other necessary actions
+        // Optionally, navigate to a confirmation page or elsewhere
+      } else {
+        console.warn('Failed to post reservation estimate:', data.message);
+        // Optionally, display a message to the user or handle the error
+      }
+    },
+    onError: (error) => {
+      console.error('Error posting reservation estimate:', error);
+      // Optionally, display a message to the user or handle the error
+    },
+  });
+
+  // **Step 6: Handle the payment process's success and trigger the reservation estimate post**
   useEffect(() => {
-    if (isSuccess && paymentProcessData?.status === 'SUCCESS') {
+    if (isPaymentProcessSuccess && paymentProcessData?.status === 'SUCCESS') {
       console.log('Payment process succeeded:', paymentProcessData);
-      // Optionally, perform additional actions here, such as clearing the store or navigating to another page
-      // clearAll(); // Uncomment if you wish to clear the store
-    } else if (isSuccess && paymentProcessData?.status !== 'SUCCESS') {
+      // Prepare the PaymentDetails object with non-null assertions
+      const paymentDetails: PaymentDetails = {
+        paymentKey: paymentKey!, // Asserting non-null
+        orderId: orderId!, // Asserting non-null
+        amount,
+        estimateId: estimateId || 0, // Assuming 0 or a default value if undefined
+        reservationDate: reservationDate!,
+        startTime: startTime!,
+        endTime: endTime!,
+        groomingFee: groomingFee!, // Asserting non-null
+        deliveryFee: deliveryFee!, // Asserting non-null
+        monitoringFee: monitoringFee!, // Asserting non-null
+        totalPayment,
+      };
+
+      // Trigger the mutation to post the reservation estimate
+      postReservationEstimateMutation(paymentDetails);
+    } else if (isPaymentProcessSuccess && paymentProcessData?.status !== 'SUCCESS') {
       console.warn('Payment process did not succeed:', paymentProcessData?.message || 'Unknown error');
       // Optionally, navigate to an error page or display a message to the user
     }
 
-    if (isError) {
-      console.error('Error during payment process:', error);
+    if (isPaymentProcessError) {
+      console.error('Error during payment process:', paymentProcessError);
       // Optionally, navigate to an error page or display a message to the user
     }
-  }, [isSuccess, paymentProcessData, isError, error]);
+  }, [
+    isPaymentProcessSuccess,
+    paymentProcessData,
+    isPaymentProcessError,
+    paymentProcessError,
+    postReservationEstimateMutation,
+    paymentKey,
+    orderId,
+    amount,
+    estimateId,
+    reservationDate,
+    startTime,
+    endTime,
+    groomingFee,
+    deliveryFee,
+    monitoringFee,
+    totalPayment,
+  ]);
 
-  // **Step 6: Show loading state if data is not yet loaded**
+  // **Step 7: Show loading state if data is not yet loaded**
   if (!isReservationDataLoaded) {
     return (
       <section className='flex min-h-screen items-center justify-center bg-gray-100 p-4'>
@@ -139,9 +196,13 @@ const PaymentSuccessPage = () => {
           </li>
         </ul>
         {/* **Optional: Show loading or error states related to the POST request** */}
-        {isLoading && <p className='mt-4 text-blue-500'>Processing your payment details...</p>}
-        {isError && <p className='mt-4 text-red-500'>Failed to process payment details. Please try again later.</p>}
-        {isSuccess && paymentProcessData?.status === 'SUCCESS' && (
+        {(isPaymentProcessLoading || isPostingEstimate) && (
+          <p className='mt-4 text-blue-500'>Processing your payment details...</p>
+        )}
+        {(isPaymentProcessError || isPostEstimateError) && (
+          <p className='mt-4 text-red-500'>Failed to process payment details. Please try again later.</p>
+        )}
+        {isPostEstimateSuccess && paymentProcessData?.status === 'SUCCESS' && (
           <p className='mt-4 text-green-500'>Payment details successfully processed!</p>
         )}
       </div>
