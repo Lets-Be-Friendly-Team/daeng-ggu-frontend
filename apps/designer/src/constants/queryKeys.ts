@@ -21,3 +21,12 @@ export const USER_QUERY_KEYS = {
   POST_USER: ['postUser'],
   //   DELETE_USER: ['delete]
 } as const;
+
+export const BUSINESS_QUERY_KEYS = {
+  GET_VERIFY_BUSINESS: (businessNumber: string, representativeName: string, startDate: string) => [
+    'verifyBusiness',
+    businessNumber,
+    representativeName,
+    startDate,
+  ],
+} as const;

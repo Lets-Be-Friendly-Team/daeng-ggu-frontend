@@ -1,70 +1,121 @@
+import { useState } from 'react';
 import { CloseIcon, Input } from '@daeng-ggu/design-system';
 import CameraIcon from '@daeng-ggu/design-system/components/Icons/CameraIcon';
+import { useToast } from '@daeng-ggu/shared';
 
+// import { DesignerData } from './RegisterProfileData';
+import useVerifyBusiness from '@/hooks/queries/VerifyBusiness/useVerifyBusiness';
 import useProfileStore from '@/stores/useProfileStore';
 
-import { DesignerData } from './RegisterProfileData';
+export interface BusinessForm {
+  businessNumber: string;
+  representativeName: string;
+  startDate: string;
+}
 
 const Step3 = () => {
+  const { showToast } = useToast();
   const { profileData, setProfileData, fileData, setFileData } = useProfileStore();
+  const { businessNumber } = profileData;
+  const [businessData, setBusinessData] = useState<BusinessForm>({
+    businessNumber: '',
+    representativeName: '',
+    startDate: '',
+  });
+  const [desc, setDesc] = useState('');
+  // 사업자 인증을 위한 query hook
+  const { isLoading, isError, refetch } = useVerifyBusiness({
+    ...businessData,
+    businessNumber: businessData.businessNumber, // 동적 값
+    representativeName: businessData.representativeName,
+    startDate: businessData.startDate,
+  });
 
-  const handleChange = (field: keyof DesignerData, value: string | File | null) => {
-    setProfileData({ [field]: value }); // 변경된 값만 업데이트
+  const handleChange = (field: keyof BusinessForm, value: string) => {
+    if (field === 'businessNumber') {
+      setProfileData({ businessNumber: value });
+    }
+    setBusinessData((prev) => ({ ...prev, [field]: value }));
   };
-
-  const { businessNumber, businessIsVerified } = profileData;
 
   /**to do
    * 사업자 인증 버튼 클릭시 핸들러
    */
+  const handleVerify = async () => {
+    if (!businessData.businessNumber || !businessData.representativeName || !businessData.startDate) {
+      showToast({ message: '모든 값을 입력해주세요', type: 'error' });
+      return;
+    }
+    try {
+      // // queryKey 생성
+      // const queryKey = BUSINESS_QUERY_KEYS.GET_VERIFY_BUSINESS(
+      //   businessData.businessNumber,
+      //   businessData.representativeName,
+      //   businessData.startDate,
+      // );
+
+      // // queryKey를 명시적으로 타입 단언
+      // queryClient.invalidateQueries(queryKey as any); // 또는 queryKey as string[]
+
+      const response = await refetch(); // useVerifyBusiness의 query 재실행
+      if (response.data?.data === 'Y') {
+        // alert('사업자 인증 성공!');
+        showToast({ message: '사업자 인증 성공!', type: 'confirm' });
+        setProfileData({ businessIsVerified: 'Y' }); // 인증 상태 업데이트
+        setDesc('사업자 인증 완료');
+      } else if (response.data?.data === 'N') {
+        // alert('사업자 인증 실패');
+        showToast({ message: '사업자 인증 실패', type: 'error' });
+
+        setProfileData({ businessIsVerified: 'N' }); // 인증 상태 업데이트
+        setDesc('사업자 인증 실패');
+      } else {
+        // showToast({ message: '사업자 인증 성공!', type: 'confirm' });
+        console.log(response.data?.message || '사업자 인증 실패');
+      }
+    } catch (error) {
+      showToast({ message: '사업자 인증중 에러 발생', type: 'error' });
+
+      console.log('사업자 인증 중 에러가 발생했습니다.', error);
+    }
+  };
+
   return (
     <div className='flex flex-col gap-y-[2.4rem]'>
       <div className='flex flex-col gap-y-[0.8rem]'>
         <div className='text-body3 font-semibold text-gray-800'>사업자 인증</div>
         <div className='flex w-full gap-[0.8rem]'>
           <div className='flex-grow'>
-            <Input placeholder='대표자 성명' name='' />
+            <Input
+              placeholder='대표자 성명'
+              name='representativeName'
+              value={businessData.representativeName}
+              onChange={(e) => handleChange('representativeName', e.target.value)}
+            />
           </div>
-          <button className='border-none bg-gray-100 text-body3 text-gray-700 rounded-md p-[1rem]'>인증하기</button>
+          <button
+            className='border-none bg-gray-100 text-body3 text-gray-700 rounded-md p-[1rem]'
+            disabled={isLoading} // 로딩 중 버튼 비활성화
+            onClick={handleVerify}
+          >
+            {isLoading ? '인증 중...' : '인증하기'}
+          </button>
         </div>
         <Input
-          placeholder='사업자 등록번호'
+          placeholder='사업자 등록번호 ( - 없이 입력)'
           name='businessNumber'
           value={businessNumber}
           onChange={(e) => handleChange('businessNumber', e.target.value)}
         />
-        <Input placeholder='개업 일자' />
-        {businessIsVerified === 'Y' && <p className='text-primary'>사업자 인증 완료</p>}
+        <Input
+          placeholder='개업 일자 (YYYYMMDD)'
+          name='startDate'
+          value={businessData.startDate}
+          onChange={(e) => handleChange('startDate', e.target.value)}
+        />
+        {desc && <p className='text-primary text-iconCaption p-2'>{desc}</p>}
+        {isError && <p className='text-primary'>사업자 인증 중 문제가 발생했습니다.</p>}
       </div>
-      {/* <ul className='mt-4 flex w-full flex-wrap gap-x-[4%] gap-y-6'>
-          이미지 미리보기
-          {imgList.map((file, index) => (
-            <div key={index} className='relative aspect-square w-[22%]'>
-              <li className='flex h-full w-full items-center justify-center overflow-hidden rounded-md'>
-                <img className='h-full w-full object-cover' alt='이미지' src={URL.createObjectURL(file)} />
-              </li>
-              <button onClick={() => handleImgDelete(index, false)} className='absolute -right-2 -top-2'>
-                <CloseCircleIcon className='h-8 w-8' />
-              </button>
-            </div>
-          ))}
-
-          파일 업로더
-          <button className='aspect-square w-[22%] rounded-md border-none bg-gray-50 focus:outline-none'>
-            <FileUploader
-              handleChange={handleFileChange} // 파일 업로드 처리 함수로 변경
-              name='file'
-              types={fileTypes}
-              multiple={true}
-              hoverTitle='놓으세요!'
-              classes='flex items-center justify-center w-full h-full'
-              uploadedLabel=' '
-              label=' '
-            >
-              <PlusIcon className='w-8' />
-            </FileUploader>
-          </button>
-        </ul> */}
 
       <div className='flex flex-col gap-y-[0.8rem]'>
         <div className='text-body3 font-semibold text-gray-800'>서류 등록 (사업자 등록증 및 애견 미용 자격증)</div>
@@ -106,16 +157,6 @@ const Step3 = () => {
                   const file = e.target.files?.[0];
                   if (file) {
                     setFileData({ certifications: [...fileData.certifications, file] });
-
-                    // const reader = new FileReader();
-                    // reader.onload = () => {
-                    //   if (reader.result) {
-                    //     setFileData({
-                    //       certifications: [...fileData.certifications, reader.result as string],
-                    //     });
-                    //   }
-                    // };
-                    // reader.readAsDataURL(file);
                   }
                 }}
               />

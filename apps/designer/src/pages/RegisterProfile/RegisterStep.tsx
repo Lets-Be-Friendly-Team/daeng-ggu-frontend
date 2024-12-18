@@ -25,23 +25,7 @@ const RegisterStep = () => {
     console.log('render');
   }, []);
   const { currentStep, nextStep, prevStep, setDirection, direction } = useRegisterProfileStepStore();
-  // const [profileFormData, setProfileFormData] = useState<DesignerData>({
-  //   designerImg: null,
-  //   nickname: '',
-  //   address1: '',
-  //   address2: '',
-  //   detailAddress: '',
-  //   introduction: '',
-  //   phone: '',
-  //   providedServices: [],
-  //   possibleBreeds: [],
-  //   dayOff: [], //휴무일 -> 인터페이스 정의서에 없어서 임의로 명명함
-  //   //가격 및 소요시간 추가
-  //   businessNumber: '',
-  //   certifications: [],
-  //   workExperience: '',
-  //   portfolioList: [],
-  // });
+
   const { profileData, fileData, setProfileData } = useProfileStore();
   const { designerImg, certifications } = fileData;
   const name = '디자이너';
@@ -220,7 +204,7 @@ const RegisterStep = () => {
           onClick={handleNextStep}
           text='다음 단계로'
           color={activeBtn ? 'bg-primary' : 'bg-gray-50'}
-          // disabled={!activeBtn}
+          disabled={!activeBtn}
         />
       )}
       {/* </div> */}

@@ -13,22 +13,12 @@ const Step4 = () => {
   return (
     <div className='flex flex-col gap-y-[2.4rem]'>
       <div className='flex flex-col gap-y-[0.8rem]'>
-        <div className='text-body3 font-semibold text-gray-800'>경력 (연 단위)</div>
-        <div className='flex items-center gap-x-[2rem] w-[2/3] '>
-          <p className='text-body3'>총 경력</p>
-          <div className=''>
-            <Input
-              // label='경력 (연 단위)'
-              placeholder='연차 입력'
-              type='number'
-              value={profileData.workExperience}
-              onChange={(e) => setProfileData({ workExperience: e.target.value })}
-              width='9rem'
-              cn='text-right'
-            />
-          </div>
-          <p className='text-body3'>년</p>
-        </div>
+        <div className='text-body3 font-semibold text-gray-800'>경력</div>
+        <Input
+          placeholder='경력 입력 (예: 경력 3년 이상)'
+          value={profileData.workExperience}
+          onChange={(e) => setProfileData({ workExperience: e.target.value })}
+        />
       </div>
       <div className='flex flex-col gap-y-[0.8rem]'>
         <div className='text-body3 font-semibold text-gray-800'>포트폴리오</div>
