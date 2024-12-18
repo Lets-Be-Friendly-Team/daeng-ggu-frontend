@@ -46,7 +46,7 @@ const ReservationPage = () => {
   return (
     <div className='pb-[65px]'>
       <PageContainer>
-        <Header mode='back' title='예약 조회' />
+        <Header mode='main' />
         <CategoryTab tabs={tabs} />
       </PageContainer>
     </div>

@@ -11,7 +11,16 @@ import GuardianProgressStep7 from '@/pages/ProgressPage/GuardianProgressStep7';
 const ProgressPage = () => {
   const reservationId = useReservationId();
   const { data: response } = useGetMonitoringStatus(reservationId);
-  console.log(response);
+  // console.log(response);
+
+  // const response = {
+  //   data: {
+  //     isDelivery: true,
+  //     processMessage: '테스트',
+  //     processNum: 2,
+  //   },
+  // };
+
   const StepComponents = useMemo(() => {
     switch (response?.data.processNum) {
       case 1:
@@ -32,8 +41,10 @@ const ProgressPage = () => {
   }, [response?.data.processNum]);
   return (
     <PageContainer>
-      <Progress maxStep={7} value={response?.data.processNum} text={response?.data.processMessage} />
-      {StepComponents}
+      <div className='py-[2rem]'>
+        <Progress maxStep={7} value={response?.data.processNum} text={response?.data.processMessage} />
+        {StepComponents}
+      </div>
     </PageContainer>
   );
 };

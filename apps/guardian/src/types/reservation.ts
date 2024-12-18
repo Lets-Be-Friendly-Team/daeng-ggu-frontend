@@ -24,3 +24,14 @@ export interface ReservationStatusType {
   processStatus: string;
   processMessage: string;
 }
+
+export interface ReservationInfo {
+  reservationId: number;
+  reservationDate: string;
+  startTime: number;
+  isFinished: true;
+  processId: number;
+  customerAddress: string;
+  shopAddress: string;
+  petInfo: ReservationPetInfo;
+}

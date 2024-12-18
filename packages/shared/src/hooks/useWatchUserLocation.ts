@@ -31,14 +31,15 @@ const useWatchUserLocation = (): LocationState => {
         const { latitude, longitude } = position.coords;
         setLocation({ loaded: true, coordinates: { lat: latitude, lng: longitude }, permissionGranted: true });
       },
-      () => {
+      (error) => {
+        console.log(error);
         setLocation((prev) => ({ ...prev, loaded: true, permissionGranted: false }));
         showToast({ message: '현재 위치를 불러올 수 없습니다!', type: 'error' });
       },
       {
         enableHighAccuracy: true,
         maximumAge: 0,
-        timeout: 5000,
+        timeout: 10000,
       },
     );
 
