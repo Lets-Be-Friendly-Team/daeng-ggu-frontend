@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   BottomSheetModal,
   BulbIcon,
+  DeleteIcon,
   FilledHeartIcon,
   FullStarIcon,
   LogoutIcon,
@@ -67,26 +68,26 @@ const Profile = ({
   const toggleModal = () => {
     setModalOpen((prev) => !prev);
   };
-  //로그아웃 api 연동
+  // 로그아웃 api 연동
   const handleLogout = () => {
     show(Modal, {
       title: '로그아웃 하시겠습니까?',
       onConfirm: () => {
         setDesignerId(-1);
         clearDesignerIdStorage();
-        // navigate(ROUTES.main);
         window.location.href = `${import.meta.env.VITE_OWNER_MAIN_URL}/login`;
       },
       onClose: () => close(),
       confirmText: '로그아웃',
       cancelText: '취소',
     });
-    //localStorage에서 ownerId 삭제
   };
-  //보호자로 전환
+  const handleDelete = () => {
+    setModalOpen(false);
+    showDeleteConfirmationModal();
+  };
+  // 보호자로 전환
   const handleTypeChange = async () => {
-    //개발 url -> 배포 url로 바꾸기
-    // window.location.href = `${import.meta.env.VITE_DESIGNER_MAIN_URL}`;
     const data = await getLogin({ userType: 'C' });
     window.location.href = data.data;
   };
@@ -102,7 +103,24 @@ const Profile = ({
       onClick: handleTypeChange,
       icon: <SwapIcon size='h-[1.6rem] w-[1.6rem] mr-[0.4rem]' color='fill-gray-800' />,
     },
+    {
+      label: '프로필 삭제하기',
+      onClick: handleDelete,
+      color: 'text-primary',
+      icon: <DeleteIcon className='h-[15px] w-[15px]' color='#FF6842' />,
+    },
   ];
+
+  const showDeleteConfirmationModal = () => {
+    show(Modal, {
+      title: '내 프로필 삭제',
+      description: '삭제 시 보호자와의 매칭이 불가합니다. 프로필을 삭제하시겠습니까?',
+      onConfirm: () => {},
+      onClose: () => close(),
+      confirmText: '네',
+      cancelText: '아니오',
+    });
+  };
 
   return (
     <div>
