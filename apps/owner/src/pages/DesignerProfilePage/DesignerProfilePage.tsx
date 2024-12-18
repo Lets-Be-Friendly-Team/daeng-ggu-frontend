@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { CategoryTab, Header, LogoImage, PageContainer } from '@daeng-ggu/design-system';
 
 import getBookmark from '@/apis/profile/getBookmark';
 import useGetDesignerProfile from '@/hooks/queries/DesignerProfile/useGetDesignerProfile';
+import useOwnerIdStore from '@/stores/useOwnerIdStore';
 
 import Portfolio from './components/Portfolio';
 import Profile from './components/Profile';
@@ -11,9 +12,11 @@ import ReviewList from './components/ReviewList';
 
 const MyPage = () => {
   const navigate = useNavigate();
-  const designerId = 4;
-  const customerId = 2;
-  const { data: designerProfileData, isError } = useGetDesignerProfile(designerId, customerId);
+  // const designerId = 4;
+  const { designerId } = useParams();
+  // const customerId = 2;
+  const { ownerId } = useOwnerIdStore();
+  const { data: designerProfileData, isError } = useGetDesignerProfile(Number(designerId), ownerId);
   const [isBookmarked, setIsBookmarked] = useState(false);
 
   useEffect(() => {
@@ -25,7 +28,8 @@ const MyPage = () => {
   const toggleBookmark = async (designerId: number, updatedStatus: boolean) => {
     try {
       await getBookmark({
-        customerId: 2,
+        // customerId: 2,
+        customerId: ownerId,
         designerId,
         bookmarkYn: designerProfileData?.isBookmarked ?? false,
       });
@@ -56,7 +60,9 @@ const MyPage = () => {
           portfolioList={designerProfileData.portfolioList}
           certifications={designerProfileData.certifications}
           onPortfolioClick={(portfolioId: number) =>
-            navigate(`/profile/portfolio/${portfolioId}`, { state: { portfolios: designerProfileData.portfolioList } })
+            navigate(`/profile/portfolio/${designerId}/${portfolioId}`, {
+              state: { portfolios: designerProfileData.portfolioList },
+            })
           }
         />
       ),

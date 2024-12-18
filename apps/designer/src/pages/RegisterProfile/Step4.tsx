@@ -1,13 +1,14 @@
 import { useNavigate } from 'react-router';
 import { Input, PlusIcon } from '@daeng-ggu/design-system';
 
+import ROUTES from '@/constants/routes';
 import useProfileStore from '@/stores/useProfileStore';
 
 const Step4 = () => {
   const { profileData, setProfileData } = useProfileStore();
   const navigate = useNavigate();
   const addPortfolio = () => {
-    navigate('/portfolio/register');
+    navigate(`/${ROUTES.portfolioRegister}`);
   };
   return (
     <div className='flex flex-col gap-y-[2.4rem]'>

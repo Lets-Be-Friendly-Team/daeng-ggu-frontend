@@ -42,6 +42,17 @@ const ImageUploader = ({
   const [imgURLs, setImgURLs] = useState<string[]>([]);
   const [videoURL, setVideoURL] = useState<string | null>(null);
 
+  // const [currentImgList, setCurrentImgList] = useState<string[]>(initialImgList);
+  // const [currentVideo, setCurrentVideo] = useState<string>(initialVideo);
+
+  // useEffect(() => {
+  //   setCurrentImgList(initialImgList);
+  // }, [initialImgList]);
+
+  // useEffect(() => {
+  //   setCurrentVideo(initialVideo);
+  // }, [initialVideo]);
+
   // 이미지 파일 URL 관리
   useEffect(() => {
     // 새로운 URL 생성

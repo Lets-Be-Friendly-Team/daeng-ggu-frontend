@@ -8,6 +8,7 @@ import useMultipleImageUpload from '@/hooks/queries/ImageUpload/useMultipleImage
 import useSingleImageUpload from '@/hooks/queries/ImageUpload/useSingleImageUpload';
 import useRegisterProfile from '@/hooks/queries/Profile/useRegisterProfile';
 import { useRegisterProfileStepStore } from '@/stores/RegisterProfileStepStore';
+import useDesignerIdStore from '@/stores/useDesignerIdStore';
 import useProfileStore from '@/stores/useProfileStore';
 
 import { StepData } from './RegisterProfileData';
@@ -43,7 +44,7 @@ const RegisterStep = () => {
   // });
   const { profileData, fileData, setProfileData } = useProfileStore();
   const { designerImg, certifications } = fileData;
-  const name = '김댕꾸';
+  const name = '디자이너';
   const [activeBtn, setActiveBtn] = useState(false);
   const stepData: StepData[] = [
     {
@@ -96,6 +97,7 @@ const RegisterStep = () => {
   };
 
   const navigate = useNavigate();
+  const { designerId } = useDesignerIdStore();
   // 이미지 전송
   const { mutate: imgUpload } = useSingleImageUpload();
   const { mutate: imgListUpload } = useMultipleImageUpload();
@@ -160,6 +162,7 @@ const RegisterStep = () => {
       const { newImgUrl, certificationsUrlList } = await setImgUrl();
       const newProfile = {
         ...profileData,
+        designerId: designerId,
         newImgUrl,
         certificationsUrlList,
       };

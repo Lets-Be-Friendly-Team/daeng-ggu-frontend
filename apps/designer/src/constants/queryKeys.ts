@@ -14,3 +14,10 @@ export const DESIGNER_QUERY_KEYS = {
 export const RESERVATION_QUERY_KEYS = {
   GET_RESERVATION: ['getReservation'],
 } as const;
+
+export const USER_QUERY_KEYS = {
+  GET_USER: ['getUser'],
+  // GET_USER_LIST: ['getUserList'],
+  POST_USER: ['postUser'],
+  //   DELETE_USER: ['delete]
+} as const;

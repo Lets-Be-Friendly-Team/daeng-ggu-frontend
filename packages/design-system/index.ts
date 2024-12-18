@@ -18,7 +18,6 @@ import ImageSlider from './components/FileUploader/ImageSlider';
 import ImageUploader from './components/FileUploader/ImageUploader';
 import ProfileImgUploader from './components/FileUploader/ProfileImgUploader';
 import Header from './components/Header/Header';
-// icon import
 import ArrowDown from './components/Icons/ArrowDown';
 import ArrowUp from './components/Icons/ArrowUp';
 import BackIcon from './components/Icons/BackIcon';
@@ -40,6 +39,7 @@ import FilledHeartIcon from './components/Icons/FilledHeartIcon';
 import GuardianIcon from './components/Icons/guardianIcon';
 import InfoIcon from './components/Icons/InfoIcon';
 import LockIcon from './components/Icons/LockIcon';
+import LogoutIcon from './components/Icons/LogoutIcon';
 import MapIcon from './components/Icons/MapIcon';
 import MoreIcon from './components/Icons/MoreIcon';
 import MyLocationIcon from './components/Icons/MyLocationIcon';
@@ -60,6 +60,7 @@ import StarEmptyIcon from './components/Icons/StarEmptyIcon';
 import StarFullIcon from './components/Icons/StarFullIcon';
 import StarHalfIcon from './components/Icons/StarHalfIcon';
 import StarIcon from './components/Icons/StarIcon';
+import SwapIcon from './components/Icons/SwapIcon';
 import Input from './components/Input/Input';
 import InputAddress from './components/InputAddress/InputAddress';
 import Layout from './components/Layout/Layout';
@@ -167,4 +168,6 @@ export {
   BottomSheetModal,
   SignupForm,
   DropdownCheckBox,
+  LogoutIcon,
+  SwapIcon,
 };

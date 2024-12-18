@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { CategoryTab, Header, LogoImage, PageContainer } from '@daeng-ggu/design-system';
 
 import useGetProfile from '@/hooks/queries/DesignerProfile/useGetProfile';
+import useDesignerIdStore from '@/stores/useDesignerIdStore';
 
 import Portfolio from './components/Portfolio';
 import Profile from './components/Profile';
@@ -9,7 +10,8 @@ import ReviewList from './components/ReviewList';
 
 const MyPage = () => {
   const navigate = useNavigate();
-  const designerId = 2;
+  // const designerId = 2;
+  const { designerId } = useDesignerIdStore();
   const { data: profileData, isError } = useGetProfile(designerId);
   console.log(profileData);
 

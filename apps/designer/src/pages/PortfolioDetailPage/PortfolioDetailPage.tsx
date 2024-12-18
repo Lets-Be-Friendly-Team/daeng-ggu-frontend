@@ -7,6 +7,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 import useDeletePortfolio from '@/hooks/queries/DesignerProfile/useDeletePortfolio';
 import useGetPortfolioDetail from '@/hooks/queries/DesignerProfile/useGetPortfolioDetail';
+import useDesignerIdStore from '@/stores/useDesignerIdStore';
 
 import './swiperStyle.css';
 
@@ -15,7 +16,8 @@ const PortfolioDetailPage = () => {
   const { portfolioId } = useParams();
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
   const { show } = useModalStore();
-  const designerId = 2;
+  // const designerId = 2;
+  const { designerId } = useDesignerIdStore();
   const { data: portfolioData } = useGetPortfolioDetail(designerId, Number(portfolioId));
   const { showToast } = useToast();
   const { mutate: deletePortfolio } = useDeletePortfolio();

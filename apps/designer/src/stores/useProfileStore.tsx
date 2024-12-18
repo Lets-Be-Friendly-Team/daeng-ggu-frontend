@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 
 import { DesignerData, FileData } from '@/pages/RegisterProfile/RegisterProfileData';
+// import useDesignerIdStore from './useDesignerIdStore';
 
 interface ProfileState {
   profileData: DesignerData;
@@ -8,12 +9,11 @@ interface ProfileState {
   fileData: FileData;
   setFileData: (_newData: Partial<FileData>) => void;
 }
-
+// const { designerId } = useDesignerIdStore();
 const useProfileStore = create<ProfileState>((set) => ({
   profileData: {
-    // designerId: Number(localStorage.getItem('designerId')),
-    designerId: 2,
-    // designerImg: null,
+    designerId: 0,
+    // designerId: 2,
     newImgUrl: '',
     nickname: '',
     address1: '',

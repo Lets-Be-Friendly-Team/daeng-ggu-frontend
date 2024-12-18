@@ -37,8 +37,10 @@ import PublicRoute from './components/RouteGuard/PublicRoute'; //로그인 된 �
 import EditReviewPage from './pages/EditReviewPage/EditReviewPage';
 
 import '@/styles/sequenceAnimation.css';
-// const isAuthenticated = Boolean(localStorage.getItem('ownerIdStorage')); //로그인 상태 확인
-const isAuthenticated = true; //로그인 상태 true로 임시 설정
+
+const isAuthenticated = Boolean(localStorage.getItem('ownerIdStorage')); //로그인 상태 확인
+
+// const isAuthenticated = true; //로그인 상태 true로 임시 설정
 
 export const router = createBrowserRouter([
   {
@@ -63,15 +65,15 @@ export const router = createBrowserRouter([
         path: ROUTES.login,
         children: [
           // { index: true, element: <PublicRoute element={<LoginPage />} isAuthenticated={isAuthenticated} /> },
-          { index: true, element: <PublicRoute element={<LoginPage />} isAuthenticated={false} /> }, //임시
+          { index: true, element: <LoginPage /> }, //임시
           { path: ROUTES.loginCallback, element: <KakaoCallback /> },
         ],
       },
       {
         path: ROUTES.signup,
         children: [
-          // { index: true, element: <PublicRoute element={<SignupPage />} isAuthenticated={isAuthenticated} /> },
-          { index: true, element: <PublicRoute element={<SignupPage />} isAuthenticated={false} /> }, //임시
+          { index: true, element: <PublicRoute element={<SignupPage />} isAuthenticated={isAuthenticated} /> },
+          // { index: true, element: <PublicRoute element={<SignupPage />} isAuthenticated={false} /> }, //임시
           { path: ROUTES.signupSuccess, element: <SignupSuccessPage /> },
         ],
       },

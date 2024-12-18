@@ -36,7 +36,7 @@ const KakaoCallback = () => {
           window.location.href = import.meta.env.VITE_DESIGNER_MAIN_URL;
         } else {
           //아니면 디자이너 회원가입 페이지로 이동
-          window.location.href = `${import.meta.env.VITE_DESIGNER_MAIN_URL}/signup`;
+          window.location.href = `${import.meta.env.VITE_DESIGNER_MAIN_URL}signup`;
         }
       }
     }

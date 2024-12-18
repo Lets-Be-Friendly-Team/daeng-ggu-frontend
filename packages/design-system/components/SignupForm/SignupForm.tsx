@@ -1,7 +1,8 @@
 import { ChangeEvent, Dispatch, FormEvent, SetStateAction, useEffect, useState } from 'react';
 import { Header, Input, InputAddress, PageContainer, TypeOneButton, TypeTwoButton } from '@daeng-ggu/design-system';
 export type SignupFormData = {
-  customerName: string;
+  customerName?: string;
+  designerName?: string;
   birthDate: string;
   gender: string;
   phone: string;
@@ -61,9 +62,18 @@ const SignupForm = ({ formData, setFormData, userType, handleSubmit, handleClose
 
   // 모든 정보 입력되면 버튼 활성화
   useEffect(() => {
-    const isFormComplete = Object.values(formData).every((field) => field.trim() !== '');
+    const requiredFields =
+      userType === 'C'
+        ? ['customerName', 'birthDate', 'gender', 'phone', 'nickname', 'address1', 'address2', 'detailAddress']
+        : ['designerName', 'birthDate', 'gender', 'phone', 'nickname'];
+    const isFormComplete = requiredFields.every((key) => {
+      const value = formData[key as keyof SignupFormData];
+      console.log(`Key: ${key}, Value: ${value}, Valid: ${value && value.trim() !== ''}`);
+      return value && value.trim() !== '';
+    });
+    console.log('Is form complete:', isFormComplete);
     setActiveBtn(isFormComplete);
-  }, [formData]);
+  }, [formData, userType]);
 
   return (
     <div className='bg-white'>
@@ -74,13 +84,24 @@ const SignupForm = ({ formData, setFormData, userType, handleSubmit, handleClose
             <h1 className='text-body1'>
               <strong>회원정보</strong>를 입력 해주세요
             </h1>
-            <Input
-              label='이름'
-              placeholder='이름 입력'
-              name='customerName'
-              value={formData.customerName}
-              onChange={handleChange}
-            />
+            {userType === 'C' ? (
+              <Input
+                label='이름'
+                placeholder='이름 입력'
+                name='customerName'
+                value={formData.customerName}
+                onChange={handleChange}
+              />
+            ) : (
+              <Input
+                label='이름'
+                placeholder='이름 입력'
+                name='designerName'
+                value={formData.designerName}
+                onChange={handleChange}
+              />
+            )}
+
             <Input
               label='생년월일'
               placeholder='YYYYMMDD'
