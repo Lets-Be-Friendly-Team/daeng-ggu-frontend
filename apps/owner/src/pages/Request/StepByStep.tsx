@@ -307,7 +307,7 @@ const StepByStep = ({ stepCount, profileData, onProfileSelect }: StepByStepProps
               color='bg-secondary'
               onClick={() => {
                 if (window.confirm('프로필을 수정하면 견적서를 다시 요청해야 합니다. 진행하시겠습니까?')) {
-                  navigate(`/profile/edit/:${selectedPet}`);
+                  navigate(`/profile/pet/edit/:${selectedPet}`);
 
                   console.log('Profile editing confirmed', selectedPet);
                 } else {

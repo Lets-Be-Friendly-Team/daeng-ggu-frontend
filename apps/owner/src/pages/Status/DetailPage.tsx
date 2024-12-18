@@ -16,71 +16,66 @@ const DetailPage = () => {
   const pageMode: PageMode = location.state?.pageMode || 'user';
   const navigate = useNavigate();
   console.log(pageMode);
-
-  const tempDataUser = {
-    petId: 1,
-    petName: '이전견적맨',
-    petImageUrl: 'https://via.placeholder.com/100',
-    desiredServiceCode: '부분미용',
-    lastGroomingDate: '한달전',
-    desiredDate1: '2023-10-15T10:00:00',
-    desiredDate2: '2023-10-16T14:00:00',
-    desiredDate3: '2023-10-17T09:00:00',
-    desiredRegion: '서울, 강남구',
-    isVisitRequired: true,
-    isMonitoringIncluded: false,
-    additionalRequest: '잘 물어요',
-    createdAt: '2024-11-27T15:30:00',
-    majorBreedCode: 'S',
-    subBreed: 'Podolski',
-    birthDate: '2018-01-15',
-    gender: 'male',
-    isNeutered: true,
-    weight: 68,
-    majorBreed: '대형견',
-    specialNotes: '활발하며 사교성이 좋습니다.',
-    isRequested: true,
-    customerName: '김철수',
-    phone: '010-1234-5678',
-    address: '서울시 강남구 테헤란로 123 포돌빌딩 1304호',
-  };
-
-  const tempDataDesigner = {
-    petId: 1,
-    petName: '견적요청맨',
-    petImageUrl: 'https://via.placeholder.com/100',
-    desiredServiceCode: '부분미용',
-    lastGroomingDate: '한달전',
-    desiredDate1: '2024-12-15T10:00:00',
-    desiredDate2: '2024-12-16T14:00:00',
-    desiredDate3: '2024-12-17T09:00:00',
-    desiredRegion: '서울, 강남구',
-    isVisitRequired: true,
-    isMonitoringIncluded: true,
-    additionalRequest: '잘 물어요',
-    createdAt: '2024-11-27T15:30:00',
-    majorBreedCode: 'S',
-    subBreed: 'Podolski',
-    birthDate: '2018-01-15',
-    gender: 'male',
-    isNeutered: true,
-    weight: 68,
-    majorBreed: '대형견',
-    specialNotes: '활발하며 사교성이 좋습니다.',
-    isRequested: true,
-    customerName: '김철수',
-    phone: '010-1234-5678',
-    address: '서울시 강남구 테헤란로 123 포돌빌딩 1304호',
-  };
+  //
+  // const tempDataUser = {
+  //   petId: 1,
+  //   petName: '이전견적맨',
+  //   petImageUrl: 'https://via.placeholder.com/100',
+  //   desiredServiceCode: '부분미용',
+  //   lastGroomingDate: '한달전',
+  //   desiredDate1: '2023-10-15T10:00:00',
+  //   desiredDate2: '2023-10-16T14:00:00',
+  //   desiredDate3: '2023-10-17T09:00:00',
+  //   desiredRegion: '서울, 강남구',
+  //   isVisitRequired: true,
+  //   isMonitoringIncluded: false,
+  //   additionalRequest: '잘 물어요',
+  //   createdAt: '2024-11-27T15:30:00',
+  //   majorBreedCode: 'S',
+  //   subBreed: 'Podolski',
+  //   birthDate: '2018-01-15',
+  //   gender: 'male',
+  //   isNeutered: true,
+  //   weight: 68,
+  //   majorBreed: '대형견',
+  //   specialNotes: '활발하며 사교성이 좋습니다.',
+  //   isRequested: true,
+  //   customerName: '김철수',
+  //   phone: '010-1234-5678',
+  //   address: '서울시 강남구 테헤란로 123 포돌빌딩 1304호',
+  // };
+  //
+  // const tempDataDesigner = {
+  //   petId: 1,
+  //   petName: '견적요청맨',
+  //   petImageUrl: 'https://via.placeholder.com/100',
+  //   desiredServiceCode: '부분미용',
+  //   lastGroomingDate: '한달전',
+  //   desiredDate1: '2024-12-15T10:00:00',
+  //   desiredDate2: '2024-12-16T14:00:00',
+  //   desiredDate3: '2024-12-17T09:00:00',
+  //   desiredRegion: '서울, 강남구',
+  //   isVisitRequired: true,
+  //   isMonitoringIncluded: true,
+  //   additionalRequest: '잘 물어요',
+  //   createdAt: '2024-11-27T15:30:00',
+  //   majorBreedCode: 'S',
+  //   subBreed: 'Podolski',
+  //   birthDate: '2018-01-15',
+  //   gender: 'male',
+  //   isNeutered: true,
+  //   weight: 68,
+  //   majorBreed: '대형견',
+  //   specialNotes: '활발하며 사교성이 좋습니다.',
+  //   isRequested: true,
+  //   customerName: '김철수',
+  //   phone: '010-1234-5678',
+  //   address: '서울시 강남구 테헤란로 123 포돌빌딩 1304호',
+  // };
 
   const tempDataReservation = {};
 
-  const selectedData =
-    pageMode === 'user'
-      ? data || tempDataUser
-      : pageMode === 'designer'
-        ? tempDataDesigner
-        : data || tempDataReservation;
+  const selectedData = pageMode === 'user' ? data || '' : pageMode === 'designer' ? '' : data || tempDataReservation;
 
   const getSelectedOptions = (): { [key: number]: string } => {
     return {

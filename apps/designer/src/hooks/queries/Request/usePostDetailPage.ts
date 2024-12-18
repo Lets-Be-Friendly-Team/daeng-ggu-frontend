@@ -13,7 +13,6 @@ const usePostDetailPage = (options: UsePostDetailPageOptions) => {
     throw new Error('requestId is required to fetch post detail page data');
   }
 
-  // Now the query returns a single BidRequestResponse, no array
   return useSuspenseQuery<BidRequestResponse, Error>({
     queryKey: ['postDetailPage', requestId] as const,
     queryFn: () => postDetailPage({ requestId }),

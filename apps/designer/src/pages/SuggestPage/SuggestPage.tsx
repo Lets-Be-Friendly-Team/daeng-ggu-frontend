@@ -1,11 +1,13 @@
 // src/pages/SuggestPage/SuggestPage.tsx
 
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
+import { useNavigate } from 'react-router';
 import { useLocation } from 'react-router-dom';
 import { BorderContainer, Calendar, Header, PageContainer, TimeSelect, TypeOneButton } from '@daeng-ggu/design-system';
-import { format } from 'date-fns';
+import { format } from 'date-fns'; // Ensure date-fns v2 or later is installed
 
 import { EstimateRequestPayload } from '@/apis/request/putSuggest';
+import useMultipleImageUpload from '@/hooks/queries/ImageUpload/useMultipleImageUpload';
 import usePutSuggest from '@/hooks/queries/Request/usePutSuggest';
 import TextEditor from '@/pages/SuggestPage/TextEditor';
 
@@ -18,6 +20,7 @@ interface ImageWithId {
 
 const SuggestPage = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const {
     targetRequestId,
     desiredDateOne,
@@ -32,19 +35,23 @@ const SuggestPage = () => {
     isMonitoringIncluded,
   } = location.state || {};
 
+  // State Variables
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedTime, setSelectedTime] = useState<number | null>(null);
   const [showTimeSelect, setShowTimeSelect] = useState(false);
   const [textEditorValue, setTextEditorValue] = useState<string>('');
   const [price, setPrice] = useState<number | ''>('');
-  const [, setImages] = useState<ImageWithId[]>([]);
+  const [imagesWithIds, setImagesWithIds] = useState<ImageWithId[]>([]);
+  const [processedContent, setProcessedContent] = useState<string>('');
 
+  // Prepare Desired Dates
   const desiredDates = [desiredDateOne, desiredDateTwo, desiredDateThree]
     .filter(Boolean)
     .map((dateString) => new Date(dateString));
 
   const desiredDatesSet = new Set(desiredDates.map((date) => format(date, 'yyyy-MM-dd')));
 
+  // Handlers
   const handleDateClick = (date: Date | undefined) => {
     if (!date) return;
     const selectedDateString = format(date, 'yyyy-MM-dd');
@@ -78,7 +85,8 @@ const SuggestPage = () => {
   };
 
   const generateUniqueId = (index: number): string => {
-    return `image-${index + 1}-${targetRequestId}`;
+    return `image-${index + 1}`;
+    // return `image-${index + 1}-${targetRequestId}`;
   };
 
   const base64ToFile = (base64: string, filename: string): File => {
@@ -132,13 +140,13 @@ const SuggestPage = () => {
 
     return {
       movingCost: movingCost.toString(),
-      totalAmount: total.toString(),
+      totalAmount: Math.floor(total).toString(),
     };
   };
 
   const { movingCost, totalAmount } = calculateCosts(majorBreed, price || 0, !!isVisitRequired, !!isMonitoringIncluded);
 
-  // usePutSuggest hook using React Query
+  // React Query Hook for Submitting Estimate
   const { mutate: updateEstimate } = usePutSuggest({
     onSuccess: (data) => {
       console.log('견적 제안 성공:', data);
@@ -148,7 +156,9 @@ const SuggestPage = () => {
       setPrice('');
       setSelectedDate(null);
       setSelectedTime(null);
-      setImages([]);
+      setImagesWithIds([]);
+      setProcessedContent('');
+      navigate('/');
     },
     onError: (error) => {
       console.error('견적 제안 실패:', error);
@@ -156,6 +166,70 @@ const SuggestPage = () => {
     },
   });
 
+  // Function to Submit Estimate
+  const submitEstimate = useCallback(
+    (imageUrls: string[]) => {
+      // Ensure processedContent and imagesWithIds are available
+      if (!processedContent) {
+        console.error('Processed content is missing.');
+        alert('제안서 내용이 누락되었습니다.');
+        return;
+      }
+
+      // **Construct the requestDate in local time format "yyyy-MM-dd'T'HH:mm:ss"**
+      const requestDateObj = new Date(selectedDate as Date);
+      requestDateObj.setHours(selectedTime as number, 0, 0, 0); // Set hours, minutes, seconds, milliseconds
+
+      // Format the date to "yyyy-MM-dd'T'HH:mm:ss"
+      const requestDate = format(requestDateObj, "yyyy-MM-dd'T'HH:mm:ss"); // Example: 2024-12-02T14:00:00
+
+      const estimateRequest: EstimateRequestPayload['estimateRequest'] = {
+        requestId: targetRequestId || 0,
+        requestDetail: processedContent,
+        requestDate: requestDate, // Use the formatted local time date
+        requestPrice: Number(totalAmount),
+      };
+      console.log('Estimate Request Object:', estimateRequest);
+
+      const estimateImgList = imageUrls.map((url) => ({
+        estimateImgUrl: url,
+      }));
+
+      const estimateImgIdList = imagesWithIds.map((image) => ({
+        estimateTagId: image.id,
+      }));
+
+      console.log('Estimate Image List:', estimateImgList);
+      console.log('Estimate Img ID List:', estimateImgIdList);
+
+      const payload: EstimateRequestPayload = {
+        estimateRequest,
+        estimateImgList,
+        estimateImgIdList,
+      };
+
+      // **Log the Entire Payload as JSON**
+      console.log('이걸보시오 이걸보시오! : ', JSON.stringify(payload, null, 2));
+
+      // Call the mutation to submit the data
+      updateEstimate(payload);
+    },
+    [targetRequestId, processedContent, selectedDate, selectedTime, totalAmount, imagesWithIds, updateEstimate],
+  );
+
+  // React Query Hook for Uploading Images
+  const { mutate: uploadImages, isPending: isUploading } = useMultipleImageUpload({
+    onSuccess: (imageUrls: string[]) => {
+      // After successful image upload, proceed to submit the estimate
+      submitEstimate(imageUrls);
+    },
+    onError: (error: Error) => {
+      console.error('Image upload failed:', error);
+      alert('이미지 업로드에 실패했습니다. 다시 시도해주세요.');
+    },
+  });
+
+  // Handler for Form Submission
   const handleSubmit = () => {
     console.log('handleSubmit called');
 
@@ -169,7 +243,7 @@ const SuggestPage = () => {
     const parser = new DOMParser();
     const doc = parser.parseFromString(textEditorValue, 'text/html');
     const imgElements = doc.getElementsByTagName('img');
-    const imagesWithIds: ImageWithId[] = [];
+    const newImagesWithIds: ImageWithId[] = [];
     let imageCounter = 0;
 
     for (let i = 0; i < imgElements.length; i++) {
@@ -180,8 +254,8 @@ const SuggestPage = () => {
         const uniqueId = generateUniqueId(i);
 
         img.setAttribute('src', uniqueId); // Replace base64 with unique ID
-        const file = base64ToFile(src, `image-${imageCounter}.png`);
-        imagesWithIds.push({ id: uniqueId, file });
+        const file = base64ToFile(src, `-image-${imageCounter}.png`);
+        newImagesWithIds.push({ id: uniqueId, file });
         console.log(`Processed Image ${i + 1}:`, {
           id: uniqueId,
           fileName: file.name,
@@ -191,43 +265,27 @@ const SuggestPage = () => {
     }
 
     const serializer = new XMLSerializer();
-    const processedContent = serializer.serializeToString(doc.body);
+    const newProcessedContent = serializer.serializeToString(doc.body);
 
-    setImages(imagesWithIds);
+    setImagesWithIds(newImagesWithIds);
+    setProcessedContent(newProcessedContent);
 
-    const estimateRequest = {
-      requestId: targetRequestId || 0,
-      requestDetail: processedContent,
-      requestDate: `${format(selectedDate, 'yyyy-MM-dd')} ${String(selectedTime).padStart(2, '0')}:00:00`,
-      requestPrice: Number(totalAmount),
-    };
-    console.log('Estimate Request Object:', estimateRequest);
+    // Extract File objects to upload
+    const filesToUpload = newImagesWithIds.map((image) => image.file);
 
-    const estimateImgList = imagesWithIds.map((image) => ({
-      estimateImgUrl: image.file,
-    }));
-
-    const estimateImgIdList = imagesWithIds.map((image) => ({
-      estimateTagId: image.id,
-    }));
-
-    console.log('Estimate Image List:', estimateImgList);
-    console.log('Estimate Img ID List:', estimateImgIdList);
-
-    const payload: EstimateRequestPayload = {
-      estimateRequest,
-      estimateImgList,
-      estimateImgIdList,
-    };
-    console.log('Payload to be sent:', payload);
-
-    // Call the mutation to submit the data
-    updateEstimate(payload);
+    if (filesToUpload.length > 0) {
+      // Start image upload
+      uploadImages(filesToUpload);
+    } else {
+      // If no images to upload, proceed to submit estimate
+      submitEstimate([]);
+    }
   };
 
   return (
     <div>
       <PageContainer>
+        {/* Header Section */}
         <div className='mb-6 w-full'>
           <Header
             mode='customBack'
@@ -237,6 +295,7 @@ const SuggestPage = () => {
             }}
           />
         </div>
+
         <div className='mt-10'>
           <div className='items-start'>
             <h2 className='mb-4 text-h3 font-bold text-gray-800'>제안서 상세</h2>
@@ -281,6 +340,7 @@ const SuggestPage = () => {
                   </div>
                 </div>
               </div>
+
               <div className='mt-6 w-full bg-secondary'>
                 <div className='flex flex-col justify-center rounded-[8px] bg-white py-4 pl-6'>
                   <div className='text-sub_h2 font-bold'>가격입력</div>
@@ -321,6 +381,8 @@ const SuggestPage = () => {
               </div>
             </BorderContainer>
           </div>
+
+          {/* Payment Information */}
           <div className='mb-[160px] w-full'>
             <div className='mt-6 items-start'>
               <h2 className='mb-4 text-h3 font-bold text-gray-800'>결제 정보</h2>
@@ -353,8 +415,15 @@ const SuggestPage = () => {
           </div>
         </div>
       </PageContainer>
+
+      {/* Submit Button */}
       <div className='fixed w-full' style={{ bottom: '7.5rem' }}>
-        <TypeOneButton text='제안하기' color='bg-secondary' onClick={handleSubmit} />
+        <TypeOneButton
+          text={isUploading ? '업로드 중...' : '제안하기'}
+          color='bg-secondary'
+          onClick={handleSubmit}
+          disabled={isUploading}
+        />
       </div>
     </div>
   );

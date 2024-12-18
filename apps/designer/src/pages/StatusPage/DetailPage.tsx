@@ -41,12 +41,11 @@ const DetailPage = () => {
   const navigate = useNavigate();
   const pageMode: PageMode = 'designer';
 
-  const customerId = location.state?.customerId;
   const sendingRequestId = location.state?.suggestRequestId;
   console.log('requestId:', sendingRequestId);
 
   // Using the query hook with suspense
-  const { data: postData } = usePostDetailPage({ requestId: customerId ? Number(customerId) : undefined });
+  const { data: postData } = usePostDetailPage({ requestId: sendingRequestId ? Number(sendingRequestId) : undefined });
 
   console.log('so... what is this?: ', postData);
   const isNeuteredBoolean = postData.isNeutered === 'Y';

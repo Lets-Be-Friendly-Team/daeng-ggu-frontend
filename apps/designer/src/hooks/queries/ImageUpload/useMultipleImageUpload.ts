@@ -1,16 +1,21 @@
-import { useMutation, UseMutationResult } from '@tanstack/react-query';
+// src/hooks/queries/ImageUpload/useMultipleImageUpload.ts
+
+import { useMutation, UseMutationOptions, UseMutationResult } from '@tanstack/react-query';
 
 import postMultipleImageUpload from '@/apis/imageUpload/postMultipleImageUpload';
 
-const useMultipleImageUpload = (): UseMutationResult<string[], Error, File[]> => {
+/**
+ * Custom hook to handle multiple image uploads using React Query.
+ *
+ * @param options - Optional mutation options for handling success and error states.
+ * @returns A mutation object containing the mutate function and mutation state.
+ */
+const useMultipleImageUpload = (
+  options?: UseMutationOptions<string[], Error, File[]>,
+): UseMutationResult<string[], Error, File[]> => {
   return useMutation<string[], Error, File[]>({
     mutationFn: (files: File[]) => postMultipleImageUpload(files),
-    onSuccess: (data: string[]) => {
-      console.log('Upload successful:', data); // `data` is an array of uploaded image URLs
-    },
-    onError: (error: Error) => {
-      console.error('Upload error:', error); // Handle errors
-    },
+    ...options, // Spread to allow overriding or extending defaults
   });
 };
 

@@ -1,8 +1,13 @@
+// src/components/SuggestReview.tsx
+
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Avatar, BorderContainer, PageContainer, TypeOneButton } from '@daeng-ggu/design-system';
 
-import { PostSuggestResponse } from '@/apis/suggest/postSuggestRequest.ts';
+import { PostSuggestResponse } from '@/apis/suggest/postSuggestRequest';
+import useGetPaymentDetails from '@/hooks/queries/Payment/useGetPaymentDetail.ts';
+import useReservationStoreOne from '@/stores/useReservationStoreOne.ts';
+import useReservationStoreTwo from '@/stores/useReservationStoreTwo.ts';
 
 interface SuggestReviewProps {
   data: PostSuggestResponse;
@@ -11,15 +16,31 @@ interface SuggestReviewProps {
 const SuggestReview = ({ data }: SuggestReviewProps) => {
   const navigate = useNavigate();
 
+  const {
+    setOrderId,
+    setCustomerKey,
+    setEstimateId,
+    setTotalPayment,
+    setAmount,
+    setGroomingFee,
+    setMonitoringFee,
+    setDeliveryFee,
+    setReservationDate,
+    setStartTime,
+    setEndTime,
+  } = useReservationStoreOne();
+  const { setReservationOrderId, setReservationCustomerKey, setReservationTotalPayment } = useReservationStoreTwo();
+
+  const { data: paymentDetails } = useGetPaymentDetails();
+
   const replacedHTML = useMemo(() => {
     let html = data.estimateDetail || '';
 
-    // Check if estimateImgList and its first element exists
     if (data.estimateImgList && data.estimateImgList.length > 0) {
-      console.log('this is image: ', data.estimateImgList[0]);
+      console.log('This is image:', data.estimateImgList[0]);
 
       data.estimateImgList.forEach((item) => {
-        const match = item.match(/(image-\d+-\d+)/);
+        const match = item.match(/(image-\d+)/);
         if (match && match[1]) {
           const placeholder = match[1];
           const regex = new RegExp(`src="${placeholder}"`, 'g');
@@ -40,12 +61,60 @@ const SuggestReview = ({ data }: SuggestReviewProps) => {
   };
 
   const handlePaymentExecute = () => {
-    const price = data.estimatePrice;
-    const orderId = data.estimateId;
+    const estimateId = data.estimateId;
+    const totalPrice = data.estimatePrice;
     const customerName = data.customerName;
+    const groomingFee = data.groomingFee;
+    const monitoringFee = data.monitoringFee;
+    const deliveryFee = data.deliveryFee;
 
-    // Pass the orderId and customerName to the payment page via state
-    navigate('/payment', { state: { price, orderId, customerName } });
+    const startTimeMatch = data.startTime.match(/^(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2}:\d{2})$/);
+    const endTimeMatch = data.endTime.match(/^(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2}:\d{2})$/);
+
+    if (!startTimeMatch || !endTimeMatch) {
+      console.error('Invalid date format for startTime or endTime');
+      return;
+    }
+
+    const reservationDate = startTimeMatch[1]; // YYYY-MM-DD
+    const startTime = startTimeMatch[2]; // HH:MM:SS
+    const endTime = endTimeMatch[2]; // HH:MM:SS
+
+    console.log(
+      'before payment page:',
+      estimateId,
+      totalPrice,
+      customerName,
+      groomingFee,
+      monitoringFee,
+      deliveryFee,
+      reservationDate,
+      startTime,
+      endTime,
+    );
+
+    if (paymentDetails) {
+      setOrderId(paymentDetails.orderId);
+      setCustomerKey(paymentDetails.customerKey);
+      setEstimateId(estimateId);
+      setTotalPayment(totalPrice);
+      setAmount(totalPrice);
+      setGroomingFee(groomingFee);
+      setMonitoringFee(monitoringFee);
+      setDeliveryFee(deliveryFee);
+      setReservationDate(reservationDate);
+      setStartTime(startTime);
+      setEndTime(endTime);
+
+      setReservationOrderId(paymentDetails.orderId);
+      setReservationCustomerKey(paymentDetails.customerKey);
+      setReservationTotalPayment(totalPrice);
+    }
+
+    console.log('State after setting in SuggestReviewOne:', useReservationStoreOne.getState());
+    console.log('State after setting in SuggestReviewTwo:', useReservationStoreTwo.getState());
+
+    navigate('/payment');
   };
 
   return (
@@ -140,7 +209,7 @@ const SuggestReview = ({ data }: SuggestReviewProps) => {
         </div>
       </PageContainer>
       <div className='fixed w-full' style={{ bottom: '65px' }}>
-        <TypeOneButton text='예약하기' color='bg-secondary' onClick={() => handlePaymentExecute()} />
+        <TypeOneButton text='예약하기' color='bg-secondary' onClick={handlePaymentExecute} />
       </div>
     </div>
   );
