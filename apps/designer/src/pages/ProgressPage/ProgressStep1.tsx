@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Avatar, LogoImage, TypeTwoButton } from '@daeng-ggu/design-system';
 import { useReservationId } from '@daeng-ggu/shared';
 
@@ -8,14 +8,13 @@ import usePostStartStream from '@/hooks/queries/monitoring/usePostStartStream';
 
 const ProgressStep1 = ({ isDelivery, processStatus }: { processStatus: string; isDelivery: boolean }) => {
   const reservationId = useReservationId();
-
+  const [isDisabled, setIsDisabled] = useState(false);
   const { mutate: createChannalMutate } = usePostCreateChannel(reservationId);
   const { mutate: startStreamMutate } = usePostStartStream(reservationId);
   const { data } = useGetReservationOwnerInfo(reservationId);
 
   const handleButtonDisable = useMemo(() => {
     if (!isDelivery && processStatus === 'PREPAREING') {
-      console.log('ssstrue');
       return false;
     }
     if (isDelivery && processStatus === 'WAITING_FOR_GROOMING') {
@@ -25,6 +24,7 @@ const ProgressStep1 = ({ isDelivery, processStatus }: { processStatus: string; i
   }, [isDelivery, processStatus]);
 
   const handleButtonOnClick = () => {
+    setIsDisabled(true);
     createChannalMutate();
     startStreamMutate();
   };
@@ -37,7 +37,7 @@ const ProgressStep1 = ({ isDelivery, processStatus }: { processStatus: string; i
         <TypeTwoButton className='px-[2rem]' text='댕꾸에게 문의' color='bg-secondary' onClick={() => {}} />
         <TypeTwoButton
           className='px-[2rem]'
-          disabled={handleButtonDisable}
+          disabled={handleButtonDisable || isDisabled}
           text={'미용 시작'}
           color='bg-secondary'
           onClick={handleButtonOnClick}

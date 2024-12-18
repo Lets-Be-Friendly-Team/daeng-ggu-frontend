@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Avatar, TypeTwoButton } from '@daeng-ggu/design-system';
 
@@ -11,20 +12,23 @@ interface ReservationCardProps {
 
 const ReservationCard = ({ reservation }: ReservationCardProps) => {
   const navigate = useNavigate();
-  const { mutate } = usePostCreateReservationProcess(reservation.reservationId);
-
+  const [isDisabled, setIsDisabled] = useState(false);
+  const { mutateAsync } = usePostCreateReservationProcess(reservation.reservationId);
   const handleOnClickProgress = async (reservationId: number) => {
-    mutate();
+    setIsDisabled(true);
+    if (!reservation.isProcess) {
+      await mutateAsync();
+    }
     navigate(ROUTES.progress(reservationId));
   };
   return (
     <div className='font-pretendard justify-between w-full flex items-center gap-4 ' key={reservation.reservationId}>
       <div className='flex gap-4 items-center'>
         <Avatar
-          imageClassName=' w-[8rem] h-[8rem]'
+          imageClassName='w-[8rem] h-[8rem]'
           containerClassName=' w-[9rem] h-[9rem] shrink-0'
           mode='designerCard'
-          imageUrl={'https://picsum.photos/200/300'}
+          imageUrl={reservation.petInfo.petImgUrl}
         />
         <div className='flex flex-col gap-2'>
           <span className='text-gray-800 text-sub_h2 font-semibold'>
@@ -43,6 +47,7 @@ const ReservationCard = ({ reservation }: ReservationCardProps) => {
         className='px-[2rem] w-fit'
         text='진행단계'
         color='bg-secondary'
+        disabled={isDisabled}
         onClick={() => handleOnClickProgress(reservation.reservationId)}
       />
     </div>
