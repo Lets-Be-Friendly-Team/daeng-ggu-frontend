@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { CategoryTab, TypeTwoButton } from '@daeng-ggu/design-system';
 import { IVSBroadCast, useReservationId } from '@daeng-ggu/shared';
 
@@ -10,6 +10,8 @@ import NaverSendLocationMap from '@/pages/ProgressPage/NaverSendLocationMap';
 
 const GuardianProgressStep2and6 = ({ statusNum }: { statusNum: number }) => {
   const reservationId = useReservationId();
+  const [isDisabled, setIsDisabled] = useState(false);
+
   const { data: reservationInfoResponse } = useGetReservationInfo(reservationId);
   const { mutate: arriveAtShopMutate } = usePostArriveAtShop(reservationId);
   const { mutate: arriveAtHomeMutate } = usePostArriveAtHome(reservationId);
@@ -23,13 +25,13 @@ const GuardianProgressStep2and6 = ({ statusNum }: { statusNum: number }) => {
   }, [statusNum]);
 
   const handleButtonOnClick = () => {
+    setIsDisabled(true);
     if (statusNum === 2) {
       return arriveAtShopMutate();
     }
     if (statusNum === 6) {
       return arriveAtHomeMutate();
     }
-    return;
   };
 
   const tabs = [
@@ -49,6 +51,7 @@ const GuardianProgressStep2and6 = ({ statusNum }: { statusNum: number }) => {
           <div className='flex gap-4'>
             <TypeTwoButton className='px-[2rem]' text='댕꾸에게 문의' color='bg-secondary' onClick={() => {}} />
             <TypeTwoButton
+              disabled={isDisabled}
               className='px-[2rem]'
               text={handleButtonText}
               color='bg-primary'
