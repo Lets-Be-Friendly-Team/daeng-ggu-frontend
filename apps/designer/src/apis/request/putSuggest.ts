@@ -15,7 +15,7 @@ export interface EstimateRequestPayload {
 
 export interface BidRequestResponse {
   data?: string;
-  success: boolean;
+  status: string;
   message: string;
 }
 
@@ -25,7 +25,7 @@ export const putSuggest = async (payload: EstimateRequestPayload): Promise<BidRe
 
     console.log('Received response:', response);
 
-    if (!response.success) {
+    if (response.status === 'FAILURE') {
       throw new Error(`Request failed: ${response.message}`);
     }
 

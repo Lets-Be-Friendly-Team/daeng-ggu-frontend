@@ -121,7 +121,7 @@ const PendingRequestUser = ({ data }: PendingRequestUserProps) => {
         {/*</div>*/}
 
         {activePet.estimateList && activePet.estimateList.length > 0 ? (
-          <div className='h-full w-full'>
+          <div className='mb-[100px] h-full w-full'>
             <BorderContainer>
               <ul className='w-full bg-secondary'>
                 {activePet.estimateList.map((estimate, index) => (

@@ -82,7 +82,7 @@ const PaymentSuccessPage = () => {
       if (data.status === 'SUCCESS') {
         console.log('Reservation estimate posted successfully:', data);
         clearAll(); // Clear the store or perform any other necessary actions
-        // Optionally, navigate to a confirmation page or elsewhere
+        navigate(`/reservation`);
       } else {
         console.warn('Failed to post reservation estimate:', data.message);
         // Optionally, display a message to the user or handle the error

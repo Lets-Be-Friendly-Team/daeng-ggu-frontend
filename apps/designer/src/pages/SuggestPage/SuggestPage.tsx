@@ -1,6 +1,7 @@
 // src/pages/SuggestPage/SuggestPage.tsx
 
 import { useCallback, useState } from 'react';
+import { useNavigate } from 'react-router';
 import { useLocation } from 'react-router-dom';
 import { BorderContainer, Calendar, Header, PageContainer, TimeSelect, TypeOneButton } from '@daeng-ggu/design-system';
 import { format } from 'date-fns'; // Ensure date-fns v2 or later is installed
@@ -19,6 +20,7 @@ interface ImageWithId {
 
 const SuggestPage = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const {
     targetRequestId,
     desiredDateOne,
@@ -83,7 +85,7 @@ const SuggestPage = () => {
   };
 
   const generateUniqueId = (index: number): string => {
-    return `-image-${index + 1}`;
+    return `image-${index + 1}`;
     // return `image-${index + 1}-${targetRequestId}`;
   };
 
@@ -138,7 +140,7 @@ const SuggestPage = () => {
 
     return {
       movingCost: movingCost.toString(),
-      totalAmount: total.toString(),
+      totalAmount: Math.floor(total).toString(),
     };
   };
 
@@ -156,6 +158,7 @@ const SuggestPage = () => {
       setSelectedTime(null);
       setImagesWithIds([]);
       setProcessedContent('');
+      navigate('/');
     },
     onError: (error) => {
       console.error('견적 제안 실패:', error);
@@ -251,7 +254,7 @@ const SuggestPage = () => {
         const uniqueId = generateUniqueId(i);
 
         img.setAttribute('src', uniqueId); // Replace base64 with unique ID
-        const file = base64ToFile(src, `image-${imageCounter}.png`);
+        const file = base64ToFile(src, `-image-${imageCounter}.png`);
         newImagesWithIds.push({ id: uniqueId, file });
         console.log(`Processed Image ${i + 1}:`, {
           id: uniqueId,
@@ -293,9 +296,7 @@ const SuggestPage = () => {
           />
         </div>
 
-        {/* Main Content */}
         <div className='mt-10'>
-          {/* Proposal Details */}
           <div className='items-start'>
             <h2 className='mb-4 text-h3 font-bold text-gray-800'>제안서 상세</h2>
           </div>
@@ -305,13 +306,11 @@ const SuggestPage = () => {
             </BorderContainer>
           </div>
 
-          {/* Estimate Settings */}
           <div className='items-start'>
             <h2 className='mb-4 text-h3 font-bold text-gray-800'>견적서 설정</h2>
           </div>
           <div className='mb-14 h-full w-full'>
             <BorderContainer>
-              {/* Calendar Section */}
               <div className='w-full bg-secondary'>
                 <div className='rounded-[8px] bg-white'>
                   <Calendar
@@ -326,7 +325,6 @@ const SuggestPage = () => {
                 </div>
               </div>
 
-              {/* Time Select Section */}
               <div
                 className={`mt-4 overflow-hidden transition-all duration-300 ease-in-out ${
                   showTimeSelect ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'
@@ -343,7 +341,6 @@ const SuggestPage = () => {
                 </div>
               </div>
 
-              {/* Price Input Section */}
               <div className='mt-6 w-full bg-secondary'>
                 <div className='flex flex-col justify-center rounded-[8px] bg-white py-4 pl-6'>
                   <div className='text-sub_h2 font-bold'>가격입력</div>
@@ -372,7 +369,6 @@ const SuggestPage = () => {
             </BorderContainer>
           </div>
 
-          {/* Customer Information */}
           <div className='mb-10 w-full'>
             <div className='mt-6 items-start'>
               <h2 className='mb-4 text-h3 font-bold text-gray-800'>댕송지 정보</h2>
