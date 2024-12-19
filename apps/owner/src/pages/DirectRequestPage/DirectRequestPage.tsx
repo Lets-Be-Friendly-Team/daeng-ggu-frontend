@@ -24,7 +24,7 @@ const DirectRequestPage = () => {
     <div className='h-full w-full'>
       <DirectStepByStep
         stepCount={9}
-        profileData={profileData}
+        profileData={profileData || []}
         onProfileSelect={handleProfileSelect}
         designerId={designerId} // 추가된 부분
         paymentDetails={paymentDetails} // 추가된 부분
