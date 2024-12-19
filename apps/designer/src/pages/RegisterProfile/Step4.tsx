@@ -15,7 +15,7 @@ const Step4 = () => {
       <div className='flex flex-col gap-y-[0.8rem]'>
         <div className='text-body3 font-semibold text-gray-800'>경력</div>
         <Input
-          placeholder='경력 입력 (예: 경력 3년 이상)'
+          placeholder='경력 입력 (예: 3년 이상 / 5년)'
           value={profileData.workExperience}
           onChange={(e) => setProfileData({ workExperience: e.target.value })}
         />

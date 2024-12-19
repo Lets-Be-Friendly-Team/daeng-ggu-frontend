@@ -17,7 +17,7 @@ interface IPortfolioProps {
 
 const Portfolio = ({ portfolioList, certifications, onPortfolioClick }: IPortfolioProps) => {
   return (
-    <div className='flex flex-col gap-[2.4rem] py-5'>
+    <div className='flex flex-col gap-[2.8rem] py-5'>
       {/* 포트폴리오 섹션 */}
       <div className='flex flex-col gap-[1.2rem]'>
         <div className='flex items-center gap-2'>
@@ -39,7 +39,7 @@ const Portfolio = ({ portfolioList, certifications, onPortfolioClick }: IPortfol
                   className='h-[160px] w-full rounded-md object-cover'
                 />
                 {/* 포트폴리오 제목과 배경 */}
-                <div className='absolute bottom-0 left-0 w-full rounded-b-md bg-gradient-to-t from-gray-500 to-transparent py-4 text-center text-caption text-white'>
+                <div className='absolute bottom-0 left-0 w-full rounded-b-md bg-gradient-to-t from-black/60 to-transparent py-4 text-center text-caption text-white'>
                   {portfolio.title}
                 </div>
               </div>
@@ -59,12 +59,13 @@ const Portfolio = ({ portfolioList, certifications, onPortfolioClick }: IPortfol
         <div className='flex gap-4'>
           {certifications.length > 0 ? (
             certifications.map((certUrl, index) => (
-              <img
-                key={index}
-                src={certUrl}
-                alt={`Certification ${index + 1}`}
-                className='h-[100px] w-[100px] rounded-md object-cover'
-              />
+              <div className='h-[20rem] w-[12rem]' key={index}>
+                <img
+                  src={certUrl}
+                  alt={`Certification ${index + 1}`}
+                  className='h-full w-full rounded-md object-cover'
+                />
+              </div>
             ))
           ) : (
             <div className='h-[10rem] text-body3 text-gray-600'>등록된 정보가 없습니다</div>

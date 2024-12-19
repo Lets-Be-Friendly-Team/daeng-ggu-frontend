@@ -90,6 +90,7 @@ const Profile = ({ nickname, customerImgUrl }: IProfileProps) => {
           <MoreIcon className='w-[2.4rem] rotate-90' color='#949CA5' />
         </div>
       </div>
+
       <div className='flex w-full gap-4 pt-[2rem]'>
         <TypeTwoButton
           text='예약 조회'
