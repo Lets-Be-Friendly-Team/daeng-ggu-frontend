@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
-import { EmptyHeartIcon, FilledHeartIcon, FullStarIcon, LogoImage, UserProfileImage } from '@daeng-ggu/design-system';
+import { FullStarIcon, LogoImage, UserProfileImage } from '@daeng-ggu/design-system';
 import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -10,7 +10,6 @@ import './swiperStyle.css';
 
 const FeedPage = () => {
   const [expandedReviews, setExpandedReviews] = useState<{ [key: number]: boolean }>({});
-  const [isLiked, setIsLiked] = useState<boolean>(false);
   const { reviewId } = useParams();
   const navigate = useNavigate();
 
@@ -112,16 +111,6 @@ const FeedPage = () => {
                   <FullStarIcon color='#ffffff' size='w-[2.7rem] h-[2.7rem]' />
                 </button>
                 <div className='font-semibold'>{reviews[activeIndex]?.reviewStar}</div>
-              </div>
-              <div className='flex flex-col items-center gap-[0.4rem]'>
-                <button onClick={() => setIsLiked((prev) => !prev)}>
-                  {isLiked ? (
-                    <FilledHeartIcon className='h-[2.8rem] w-[2.8rem]' color='#FF6842' />
-                  ) : (
-                    <EmptyHeartIcon className='h-[2.8rem] w-[2.8rem]' color='white' />
-                  )}
-                </button>
-                <div className='font-semibold'>{reviews[activeIndex]?.reviewLikeCnt}</div>
               </div>
             </div>
           </div>
