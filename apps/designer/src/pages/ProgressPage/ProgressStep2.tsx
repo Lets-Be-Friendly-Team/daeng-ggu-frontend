@@ -11,9 +11,14 @@ const ProgressStep2 = () => {
   const { mutate: endStreamMutate } = usePostEndStream(reservationId);
   const { data } = useGetBroadcastChannel(reservationId);
 
+  // const data = [];
   const handleEndStream = () => {
     setIsDisabled(true);
-    endStreamMutate();
+    endStreamMutate(undefined, {
+      onError: () => {
+        setIsDisabled(false);
+      },
+    });
   };
   return (
     <>
@@ -26,6 +31,7 @@ const ProgressStep2 = () => {
       <div className='flex w-full gap-[1rem]'>
         <TypeTwoButton
           disabled={isDisabled}
+          isLoading={isDisabled}
           className='mt-[2rem] px-[2rem]'
           text='미용 종료'
           color='bg-primary'

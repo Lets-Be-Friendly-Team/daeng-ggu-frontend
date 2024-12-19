@@ -8,9 +8,6 @@ const usePostStartDeliveryToShop = (reservationId: string) => {
 
   return useMutation({
     mutationFn: async () => {
-      if (!reservationId) {
-        return;
-      }
       return await postStartDeliveryToShop(reservationId);
     },
     onSuccess: () => {

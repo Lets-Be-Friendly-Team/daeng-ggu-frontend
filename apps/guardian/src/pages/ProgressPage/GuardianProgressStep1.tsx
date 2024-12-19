@@ -11,7 +11,11 @@ const GuardianProgressStep1 = () => {
 
   const handleButtonOnClick = async () => {
     setIsDisabled(true);
-    startDeliveryToShopMutate();
+    startDeliveryToShopMutate(undefined, {
+      onError: () => {
+        setIsDisabled(false);
+      },
+    });
   };
   return (
     <section className='mt-[12rem] flex h-[100vh] flex-col items-center'>
@@ -22,6 +26,7 @@ const GuardianProgressStep1 = () => {
         <TypeTwoButton
           className='px-[2rem]'
           disabled={isDisabled}
+          isLoading={isDisabled}
           text='출발'
           color='bg-primary'
           onClick={handleButtonOnClick}

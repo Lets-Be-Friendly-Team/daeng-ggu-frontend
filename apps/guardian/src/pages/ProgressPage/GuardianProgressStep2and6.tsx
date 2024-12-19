@@ -24,13 +24,22 @@ const GuardianProgressStep2and6 = ({ statusNum }: { statusNum: number }) => {
     return '보호자에게 도착';
   }, [statusNum]);
 
-  const handleButtonOnClick = () => {
-    setIsDisabled(true);
+  const handleButtonOnClick = async () => {
     if (statusNum === 2) {
-      return arriveAtShopMutate();
+      setIsDisabled(true);
+      return arriveAtShopMutate(undefined, {
+        onError: () => {
+          setIsDisabled(false);
+        },
+      });
     }
     if (statusNum === 6) {
-      return arriveAtHomeMutate();
+      setIsDisabled(true);
+      return arriveAtHomeMutate(undefined, {
+        onError: () => {
+          setIsDisabled(false);
+        },
+      });
     }
   };
 
@@ -51,6 +60,7 @@ const GuardianProgressStep2and6 = ({ statusNum }: { statusNum: number }) => {
           <div className='flex gap-4'>
             <TypeTwoButton className='px-[2rem]' text='댕꾸에게 문의' color='bg-secondary' onClick={() => {}} />
             <TypeTwoButton
+              isLoading={isDisabled}
               disabled={isDisabled}
               className='px-[2rem]'
               text={handleButtonText}

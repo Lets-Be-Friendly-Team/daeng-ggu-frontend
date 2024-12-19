@@ -1,4 +1,5 @@
 import React, { ButtonHTMLAttributes } from 'react';
+import { Spinner } from '@daeng-ggu/shared';
 
 import { cn } from '../../lib/utils';
 
@@ -10,9 +11,20 @@ interface TypeTwoButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   fontWeight?: string;
   border?: string;
   type?: 'button' | 'submit' | 'reset' | undefined;
+  isLoading?: boolean;
 }
 
-const TypeTwoButton = ({ className, text, color, onClick, fontWeight, border, type, ...props }: TypeTwoButtonProps) => {
+const TypeTwoButton = ({
+  className,
+  text,
+  color,
+  onClick,
+  fontWeight,
+  border,
+  type,
+  isLoading = false,
+  ...props
+}: TypeTwoButtonProps) => {
   const textColor =
     color === 'bg-primary'
       ? 'text-white'
@@ -25,12 +37,13 @@ const TypeTwoButton = ({ className, text, color, onClick, fontWeight, border, ty
     <button
       {...props}
       className={cn(
-        `h-[48px] w-full rounded-md px-4 py-2 ${fontWeightClass} ${borderClass} hover:bg-opacity-80 ${color} ${textColor}`,
+        `flex h-[48px] w-full items-center justify-center gap-[1rem] rounded-md px-4 py-2 ${fontWeightClass} ${borderClass} hover:bg-opacity-80 ${color} ${textColor}`,
         className,
       )}
       onClick={onClick}
       type={type}
     >
+      {isLoading && <Spinner />}
       <div className='text-ellipsis whitespace-nowrap text-body3'>{text ? text : '내용없음'}</div>
     </button>
   );

@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { Avatar, LogoImage, TypeTwoButton } from '@daeng-ggu/design-system';
 import { useReservationId } from '@daeng-ggu/shared';
 
+import { PROGRESS_STATUS } from '@/constants/progress';
 import useGetReservationOwnerInfo from '@/hooks/queries/monitoring/useGetReservationOwnerInfo';
 import usePostCreateChannel from '@/hooks/queries/monitoring/usePostCreateChannel';
 import usePostStartStream from '@/hooks/queries/monitoring/usePostStartStream';
@@ -9,24 +10,32 @@ import usePostStartStream from '@/hooks/queries/monitoring/usePostStartStream';
 const ProgressStep1 = ({ isDelivery, processStatus }: { processStatus: string; isDelivery: boolean }) => {
   const reservationId = useReservationId();
   const [isDisabled, setIsDisabled] = useState(false);
-  const { mutate: createChannalMutate } = usePostCreateChannel(reservationId);
-  const { mutate: startStreamMutate } = usePostStartStream(reservationId);
+  const { mutateAsync: createChannalMutate } = usePostCreateChannel(reservationId);
+  const { mutateAsync: startStreamMutate } = usePostStartStream(reservationId);
   const { data } = useGetReservationOwnerInfo(reservationId);
 
   const handleButtonDisable = useMemo(() => {
-    if (!isDelivery && processStatus === 'PREPAREING') {
+    if (!isDelivery && processStatus === PROGRESS_STATUS.preparing) {
       return false;
     }
-    if (isDelivery && processStatus === 'WAITING_FOR_GROOMING') {
+    if (isDelivery && processStatus === PROGRESS_STATUS.waitingForGrooming) {
       return false;
     }
     return true;
   }, [isDelivery, processStatus]);
 
-  const handleButtonOnClick = () => {
+  const handleButtonOnClick = async () => {
     setIsDisabled(true);
-    createChannalMutate();
-    startStreamMutate();
+    await createChannalMutate(undefined, {
+      onError: () => {
+        setIsDisabled(false);
+      },
+    });
+    await startStreamMutate(undefined, {
+      onError: () => {
+        setIsDisabled(false);
+      },
+    });
   };
   return (
     <section className='mt-[12rem] flex  flex-col items-center'>
@@ -37,6 +46,7 @@ const ProgressStep1 = ({ isDelivery, processStatus }: { processStatus: string; i
         <TypeTwoButton className='px-[2rem]' text='댕꾸에게 문의' color='bg-secondary' onClick={() => {}} />
         <TypeTwoButton
           className='px-[2rem]'
+          isLoading={isDisabled}
           disabled={handleButtonDisable || isDisabled}
           text={'미용 시작'}
           color='bg-secondary'
