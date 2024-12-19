@@ -6,6 +6,7 @@ import useGetPortfolioDetail from '@/hooks/queries/DesignerProfile/useGetPortfol
 import useUpdatePortfolio from '@/hooks/queries/DesignerProfile/useUpdatePortfolio';
 import useMultipleImageUpload from '@/hooks/queries/ImageUpload/useMultipleImageUpload';
 import useSingleImageUpload from '@/hooks/queries/ImageUpload/useSingleImageUpload';
+import useDesignerIdStore from '@/stores/useDesignerIdStore';
 
 interface Portfolio {
   portfolioId: number;
@@ -18,7 +19,7 @@ interface Portfolio {
 const EditPortfolioPage = () => {
   const params = useParams<{ portfolioId: string }>();
   const portfolioId = params.portfolioId ? Number(params.portfolioId) : null;
-  const designerId = 2;
+  const { designerId } = useDesignerIdStore();
 
   const [portfolio, setPortfolio] = useState<Portfolio>({
     portfolioId: 0,

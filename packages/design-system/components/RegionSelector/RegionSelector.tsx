@@ -122,7 +122,7 @@ const RegionSelector = ({ onSelectionChange }: RegionSelectorProps) => {
           </button>
 
           {isSubAreaOpen && (
-            <ul className='rounded-mdpy-2 absolute z-10 mt-6 flex w-full flex-col gap-5 overflow-auto text-sub_h3 text-gray-700 shadow-lg scrollbar-hide'>
+            <ul className='absolute z-10 mt-6 flex max-h-96 w-full flex-col gap-5 overflow-auto rounded-md py-2 text-sub_h3 text-gray-700 shadow-lg scrollbar-hide'>
               {subAreas.map((subArea) => (
                 <li key={subArea}>
                   <button

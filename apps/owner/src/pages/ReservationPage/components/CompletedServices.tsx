@@ -49,7 +49,7 @@ const CompletedServices = ({ completedGroomingList }: ICompletedHistoryProps) =>
     }));
   };
   const navigateToReview = () => {
-    navigate('/review');
+    navigate('/review/');
   };
   return (
     <div className='flex flex-col gap-6 px-5 py-5'>

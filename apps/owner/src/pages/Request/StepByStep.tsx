@@ -100,18 +100,18 @@ const StepByStep = ({ stepCount, profileData, onProfileSelect }: StepByStepProps
     },
     {
       step: 7,
-      title: '반려견 픽업 여부를 확인 해주세요.',
-      options: ['원해요', '괜찮아요'],
+      title: '댕동 서비스 이용 여부를 확인 해주세요.',
+      options: ['댕동 이용하기', '직접 픽업'],
     },
     {
       step: 8,
       title: '모니터링 여부를 확인 해주세요.',
-      options: ['원해요', '괜찮아요'],
+      options: ['예', '아니오'],
     },
     {
       step: 9,
       title: '서비스 관련 문의사항을 남겨주세요.',
-      options: ['따로 논의할께요', '지금 작성할게요.'],
+      options: ['없음', '지금 작성하기'],
     },
   ];
 
@@ -205,25 +205,25 @@ const StepByStep = ({ stepCount, profileData, onProfileSelect }: StepByStepProps
   const renderDateSelector = () => {
     return (
       <div className='m-auto mt-4 flex w-full flex-col gap-2'>
-        <h3 className='mt-6 border-t py-6 text-start text-sub_h3 font-bold'>날짜와 시간을 선택해주세요.</h3>
+        <h3 className='mt-6 py-6 text-start text-sub_h3 text-gray-800'>날짜와 시간을 선택해주세요.</h3>
         <div className='flex w-full flex-col gap-4'>
           {selectedDateTimes.map((item, index) => (
             <TypeTwoButton
               key={index}
               text={
-                <span className='flex gap-2'>
+                <span className='flex gap-4 text-sub_h3 text-gray-700'>
                   {item.dateStr || '일정 정하기'}
                   <img src={editIcon} alt='Edit' className='h-6 w-6' style={{ cursor: 'pointer' }} />
                 </span>
               }
-              color='bg-gray-50 w-full'
+              color='shadow w-full'
               onClick={() => handleDateTimeButtonClick(index)}
             />
           ))}
         </div>
 
         {activeDateIndex !== null && showCalendar && (
-          <div className='mt-4 w-full'>
+          <div className='w-full py-4'>
             <Calendar
               mode='single'
               selected={selectedDateTimes[activeDateIndex].selectedDate || undefined}
@@ -232,7 +232,7 @@ const StepByStep = ({ stepCount, profileData, onProfileSelect }: StepByStepProps
             />
             {showTimeSelect && (
               <>
-                <h3 className='my-4 text-sub_h3 font-bold'>시간을 선택해주세요:</h3>
+                <h3 className='py-8 text-sub_h3 text-gray-800'>시간을 선택해주세요:</h3>
                 <TimeSelect
                   availableTimes={Array.from({ length: 12 }, (_, i) => i + 9)}
                   selectValue={selectedDateTimes[activeDateIndex].selectedTime}
@@ -508,11 +508,11 @@ const StepByStep = ({ stepCount, profileData, onProfileSelect }: StepByStepProps
           maxStep={stepCount}
           text={
             currentStep === 1
-              ? '미용을 받을 반려견을 선택 해주세요.'
+              ? '미용을 받을 반려견을 선택해주세요'
               : currentStep === 2
-                ? '반려견 프로필 확인'
+                ? '반려견 프로필을 확인해주세요'
                 : currentStep === 10
-                  ? '예약 확인 해주세요'
+                  ? '요청 사항을 확인해주세요'
                   : currentStepData?.title || ''
           }
         />
@@ -531,7 +531,7 @@ const StepByStep = ({ stepCount, profileData, onProfileSelect }: StepByStepProps
                     : containerHeight
                       ? `${containerHeight}px`
                       : 'auto'
-                  : '400px',
+                  : '1000px',
             marginBottom: currentStep === 10 ? '60px' : '',
           }}
         >

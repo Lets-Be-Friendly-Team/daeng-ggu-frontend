@@ -8,6 +8,8 @@ import editIcon from '@/assets/edit.svg';
 import ProfileViewer from '@/pages/Request/ProfileViewer';
 import { isDesignerProfileData, RequestReviewProps, StepData } from '@/types/requestAndStatusTypes';
 
+import formatDateTime from './../../../../../node_modules/@daeng-ggu/design-system/utils/fomDateTime';
+
 const defaultStepData: StepData[] = [
   {
     step: 3,
@@ -130,103 +132,96 @@ const RequestReview = ({
 
   return (
     <PageContainer>
-      <div className='m-auto w-full pb-32'>
-        <div className='items-start'>
-          <h2 className='mb-4 text-h3 font-bold text-gray-800'>견적서 요약</h2>
-        </div>
+      <div className='m-auto mt-4 w-full'>
         <div className='flex flex-col items-center'>
           <div className='mb-16 w-full'>
             {selectedProfile ? (
               <div className='mb-6'>
-                <BorderContainer>
-                  <ProfileViewer profile={selectedProfile} />
-                </BorderContainer>
+                <ProfileViewer profile={selectedProfile} />
               </div>
             ) : (
               <p className='text-red-500'>선택된 반려견이 없습니다.</p>
             )}
 
-            <div className='mb-6'>
+            <div className='mb-4 rounded-md px-6 py-10 shadow'>
               <div className='items-start'>
-                <h2 className='mb-4 text-h3 font-bold text-gray-800'>요청 상세</h2>
+                <h2 className='py-6 text-center text-sub_h1 text-gray-700'>요청 상세</h2>
               </div>
-              <BorderContainer innerPadding='py-6 pl-2'>
-                <ul className='ml-5 mt-4'>
-                  {stepData.map(({ step, title, options }) => (
-                    <li key={step} className='flex flex-col gap-2 pb-5'>
-                      <div>
-                        <p className='text-caption font-bold text-gray-700'>{title}</p>
-                        {editingStep === step ? (
-                          <div className='mt-1'>
-                            <RadioGroup
-                              value={selectedOptions[step] || ''}
-                              onValueChange={(value: string) => {
-                                if (onOptionChange) {
-                                  onOptionChange(step, value);
-                                }
-                                setEditingStep(null);
-                                if (onDisableDynamicHeight) {
-                                  onDisableDynamicHeight();
-                                }
-                              }}
-                              className='flex flex-col gap-2'
-                            >
-                              {options.map((option) => (
-                                <label key={option} className='flex cursor-pointer items-center gap-2'>
-                                  <RadioGroupItem value={option} size={0.5} />
-                                  <span className='text-sub_h3 font-bold text-gray-800'>{option}</span>
-                                </label>
-                              ))}
-                            </RadioGroup>
-                            <button className='mt-2 text-sm text-gray-500 underline' onClick={handleCancelEdit}>
-                              취소
-                            </button>
-                          </div>
-                        ) : (
-                          <span
-                            className={`flex items-center gap-2`} // Maintain consistent spacing
-                            style={{
-                              minHeight: '40px', // Adjust this height as needed to match the button's height
+              <ul className=''>
+                {stepData.map(({ step, title, options }) => (
+                  <li key={step} className='flex flex-col gap-2 pb-5'>
+                    <div>
+                      <p className='text-caption font-bold text-gray-700'>{title}</p>
+                      {editingStep === step ? (
+                        <div className='mt-1'>
+                          <RadioGroup
+                            value={selectedOptions[step] || ''}
+                            onValueChange={(value: string) => {
+                              if (onOptionChange) {
+                                onOptionChange(step, value);
+                              }
+                              setEditingStep(null);
+                              if (onDisableDynamicHeight) {
+                                onDisableDynamicHeight();
+                              }
                             }}
+                            className='flex flex-col gap-2'
                           >
-                            <p className='text-sub_h3 font-bold text-gray-800'>{getDisplayValue(step)}</p>
-                            {![5, 6, 9].includes(step) &&
-                              (mode !== 'detail' ? (
-                                <button className='p-2' onClick={() => handleEdit(step)}>
-                                  <img src={editIcon} alt='Edit' className='h-6 w-6' style={{ cursor: 'pointer' }} />
-                                </button>
-                              ) : (
-                                <div
-                                  className='h-6 w-6'
-                                  style={{
-                                    visibility: 'hidden', // Ensures an invisible placeholder
-                                  }}
-                                />
-                              ))}
-                          </span>
-                        )}
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </BorderContainer>
+                            {options.map((option) => (
+                              <label key={option} className='flex cursor-pointer items-center gap-2'>
+                                <RadioGroupItem value={option} size={0.5} />
+                                <span className='text-sub_h3 font-bold text-gray-800'>{option}</span>
+                              </label>
+                            ))}
+                          </RadioGroup>
+                          <button className='mt-2 text-sm text-gray-500 underline' onClick={handleCancelEdit}>
+                            취소
+                          </button>
+                        </div>
+                      ) : (
+                        <span
+                          className={`flex items-center gap-2`}
+                          style={{
+                            minHeight: '40px',
+                          }}
+                        >
+                          {/* 날짜 포맷 변경 */}
+                          <p className='text-sub_h3 text-gray-700'>
+                            {step === 6 ? formatDateTime(getDisplayValue(step)) : getDisplayValue(step)}
+                          </p>
+                          {![5, 6, 9].includes(step) &&
+                            (mode !== 'detail' ? (
+                              <button className='p-2' onClick={() => handleEdit(step)}>
+                                <img src={editIcon} alt='Edit' className='h-6 w-6' style={{ cursor: 'pointer' }} />
+                              </button>
+                            ) : (
+                              <div
+                                className='h-6 w-6'
+                                style={{
+                                  visibility: 'hidden',
+                                }}
+                              />
+                            ))}
+                        </span>
+                      )}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+
               {pageMode === 'user' && (
                 <>
-                  <div className='mb-16'>
+                  <div className='rounded-md px-6 py-10 shadow'>
                     <div className='mt-6 items-start'>
-                      <h2 className='mb-4 text-h3 font-bold text-gray-800'>댕송지 정보</h2>
+                      <h2 className='py-6 text-center text-sub_h1 text-gray-700'>댕송지 정보</h2>
                     </div>
-                    <BorderContainer innerPadding='p-3'>
-                      <div className='flex-col items-start p-2 text-gray-800'>
-                        <p className='text-sub_h2 font-bold'>
-                          {selectedProfile ? selectedProfile.customerName : '정보 없음'}
-                        </p>
-                        <p className='text-body3 font-bold text-gray-800'>
-                          {selectedProfile ? selectedProfile.phone : '정보 없음'}
-                        </p>
-                        <p className='pt-1 text-caption'>{selectedProfile ? selectedProfile.address : '정보 없음'}</p>
-                      </div>
-                    </BorderContainer>
+                    <div className='flex-col p-2 text-gray-800'>
+                      <p className='text-sub_h3'>{selectedProfile ? selectedProfile.customerName : '정보 없음'}</p>
+                      <p className='text-body3 font-bold text-gray-800'>
+                        {selectedProfile ? selectedProfile.phone : '정보 없음'}
+                      </p>
+                      <p className='pt-1 text-caption'>{selectedProfile ? selectedProfile.address : '정보 없음'}</p>
+                    </div>
                   </div>
 
                   {/*{mode == 'detail' && (*/}
@@ -250,37 +245,32 @@ const RequestReview = ({
                   {/*)}*/}
                 </>
               )}
-
-              {pageMode === 'designer' && selectedProfile && (
-                <>
-                  <div className='mt-6 items-start'>
-                    <h2 className='mb-4 text-h3 font-bold text-gray-800'>댕송지 정보</h2>
-                  </div>
-                  <div className='mb-28'>
-                    <BorderContainer innerPadding='p-3'>
-                      <div className='flex-col items-start p-2 text-gray-800'>
-                        <p className='text-sub_h2 font-bold'>{selectedProfile.customerName || '정보 없음'}</p>
-                        <p className='text-body3 font-bold text-gray-800'>{selectedProfile.phone || '정보 없음'}</p>
-                        <p className='pt-1 text-caption'>{selectedProfile.address || '정보 없음'}</p>
-                      </div>
-                    </BorderContainer>
-                  </div>
-                </>
-              )}
-
-              {pageMode === 'reservation' && (
-                <>
-                  <div className='mt-6 items-start'>
-                    <h2 className='mb-4 text-h3 font-bold text-gray-800'>예약 정보</h2>
-                  </div>
-                  <BorderContainer innerPadding='p-3'>
-                    <div className='flex-col items-start p-2 text-gray-800'>
-                      <p className='text-sub_h2 font-bold'>예약 상세 정보가 아직 없습니다.</p>
-                    </div>
-                  </BorderContainer>
-                </>
-              )}
             </div>
+            {pageMode === 'designer' && selectedProfile && (
+              <>
+                <div className='rounded-md px-6 py-10 shadow'>
+                  <h2 className='py-6 text-center text-sub_h1 text-gray-700'>댕송지 정보</h2>
+                  <div className='flex flex-col items-start gap-3 text-gray-800'>
+                    <p className='text-sub_h2 font-bold'>{selectedProfile.customerName || '정보 없음'}</p>
+                    <p className='text-body3 font-bold text-gray-800'>{selectedProfile.phone || '정보 없음'}</p>
+                    <p className='pt-1 text-caption'>{selectedProfile.address || '정보 없음'}</p>
+                  </div>
+                </div>
+              </>
+            )}
+
+            {pageMode === 'reservation' && (
+              <>
+                <div className='mt-6 items-start'>
+                  <h2 className='mb-4 text-h3 font-bold text-gray-800'>예약 정보</h2>
+                </div>
+                <BorderContainer innerPadding='p-3'>
+                  <div className='flex-col items-start p-2 text-gray-800'>
+                    <p className='text-sub_h2 font-bold'>예약 상세 정보가 아직 없습니다.</p>
+                  </div>
+                </BorderContainer>
+              </>
+            )}
           </div>
         </div>
       </div>
