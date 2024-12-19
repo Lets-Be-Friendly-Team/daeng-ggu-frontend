@@ -24,6 +24,7 @@ import DirectRequestReview from '@/pages/DirectRequestPage/DirectRequestReview.t
 import ProfileButton from '@/pages/Request/ProfileButton';
 import ProfileViewer from '@/pages/Request/ProfileViewer';
 import useReservationStoreOne from '@/stores/useReservationStoreOne.ts';
+import useReservationStoreTwo from '@/stores/useReservationStoreTwo.ts';
 import { useStepStore } from '@/stores/useStepStore';
 
 import '@/styles/sequenceAnimation.css';
@@ -76,23 +77,33 @@ const DirectStepByStep = ({ stepCount, profileData, onProfileSelect, designerId,
     setAdditionalRequest,
     setStartTime,
   } = useReservationStoreOne();
+  const { setReservationOrderId, setReservationCustomerKey, setReservationTotalPayment } = useReservationStoreTwo();
 
   // Subscribe to fee values from the store to trigger re-renders on change
   const groomingFee = useReservationStoreOne((state) => state.groomingFee) || 0;
   const deliveryFee = useReservationStoreOne((state) => state.deliveryFee) || 0;
   const monitoringFee = useReservationStoreOne((state) => state.monitoringFee) || 0;
 
-  const { currentStep, nextStep, prevStep, setDirection, direction } = useStepStore();
+  const { currentStep, nextStep, prevStep, setDirection, direction, resetStep } = useStepStore();
   const [selectedPet, setSelectedPet] = useState<number>(0);
   const [selectedOptions, setSelectedOptions] = useState<{ [key: number]: string }>({});
   const [containerHeight, setContainerHeight] = useState<number | null>(null);
   const [isDynamicHeight, setIsDynamicHeight] = useState<boolean>(false);
   const navigate = useNavigate();
   const [showRegionSelector] = useState<boolean>(false);
+  const { clearAll: clearReservationStoreOne } = useReservationStoreOne();
+  const { clearAll: clearReservationStoreTwo } = useReservationStoreTwo();
   const [regionSelection] = useState<{ area: string; subArea: string }>({
     area: '',
     subArea: '',
   });
+  useEffect(() => {
+    return () => {
+      resetStep(); // Reset step store
+      clearReservationStoreOne(); // Reset reservation store one
+      clearReservationStoreTwo(); // Reset reservation store two
+    };
+  }, [resetStep, clearReservationStoreOne, clearReservationStoreTwo]);
 
   // Step 8
   const [userInput, setUserInput] = useState<string>('');
@@ -366,6 +377,12 @@ const DirectStepByStep = ({ stepCount, profileData, onProfileSelect, designerId,
       setDesignerId(designerId);
     }
   }, [designerId, setDesignerId]);
+
+  useEffect(() => {
+    return () => {
+      resetStep(); // Reset step store when component unmounts
+    };
+  }, [resetStep]);
 
   // Function to render the date selector
   const renderDateSelector = () => {
@@ -717,7 +734,12 @@ const DirectStepByStep = ({ stepCount, profileData, onProfileSelect, designerId,
     //     alert('예약에 실패했습니다. 다시 시도해주세요.');
     //   },
     // });
+
+    setReservationOrderId(paymentDetails.orderId);
+    setReservationCustomerKey(paymentDetails.customerKey);
+    setReservationTotalPayment(useReservationStoreOne.getState().totalPayment);
     console.log('Reservation Data:', JSON.stringify(data));
+    navigate('/payment');
   };
 
   // Watch for changes in paymentDetails and log them

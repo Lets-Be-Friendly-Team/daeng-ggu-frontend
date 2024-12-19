@@ -41,7 +41,7 @@ const Profile = ({
   onBookmarkToggle,
 }: IProfileProps) => {
   const navigate = useNavigate();
-  const goToReservations = () => navigate('/profile/reservation');
+  const goToReservations = () => navigate('/bid/direct', { state: { targetDesignerId: designerId } });
   const extractBracketContent = (text: string) => {
     const match = text.match(/\(([^)]+)\)/);
     return match ? match[1].replace(/,/g, ' | ') : text;
