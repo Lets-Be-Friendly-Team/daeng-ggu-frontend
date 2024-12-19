@@ -65,8 +65,8 @@ const RegionSelector = ({ onSelectionChange }: RegionSelectorProps) => {
         <button
           type='button'
           onClick={() => setIsAreaOpen((prev) => !prev)}
-          className={`flex h-[48px] w-full items-center justify-between rounded-md border border-primary px-4 py-2 text-left text-sub_h2 shadow-sm focus:outline-none focus:ring-1 focus:ring-primary ${
-            isAreaOpen ? 'bg-secondary text-primary' : 'bg-white text-black'
+          className={`flex h-[48px] w-full items-center justify-between rounded-md px-8 py-2 text-left text-sub_h3 text-gray-600 shadow ${
+            isAreaOpen ? 'border-primary text-primary' : 'bg-white text-black'
           }`}
         >
           <span className={`${selectedArea ? 'text-primary' : ''}`}>{selectedArea || '지역을 선택해주세요'}</span>
@@ -82,21 +82,16 @@ const RegionSelector = ({ onSelectionChange }: RegionSelectorProps) => {
         </button>
 
         {isAreaOpen && (
-          <ul className='absolute z-10 mt-2 max-h-60 w-full max-w-[440px] overflow-auto rounded-md border border-gray-300 bg-white text-sub_h2 shadow-lg scrollbar-hide'>
+          <ul className='absolute z-10 mt-6 flex max-h-96 w-full max-w-[440px] flex-col gap-5 overflow-auto rounded-md text-sub_h3 text-gray-600 shadow scrollbar-hide'>
             {areas.map((area) => (
               <li key={area.name}>
                 <button
                   type='button'
                   onClick={() => handleAreaChange(area.name)}
-                  className={`flex w-full items-center px-4 py-2 text-left hover:bg-secondary ${
-                    selectedArea === area.name ? 'bg-secondary' : ''
+                  className={`flex w-full items-center px-8 py-4 text-gray-700 hover:text-primary ${
+                    selectedArea === area.name ? 'text-primary' : ''
                   }`}
                 >
-                  <span className='relative mr-3 inline-block h-5 w-5 rounded-full border-2 border-primary'>
-                    {selectedArea === area.name && (
-                      <span className='absolute inset-0 m-auto h-2 w-2 rounded-full bg-primary'></span>
-                    )}
-                  </span>
                   {area.name}
                 </button>
               </li>
@@ -110,8 +105,8 @@ const RegionSelector = ({ onSelectionChange }: RegionSelectorProps) => {
           <button
             type='button'
             onClick={() => setIsSubAreaOpen((prev) => !prev)}
-            className={`flex h-[48px] w-full items-center justify-between rounded-md border border-primary px-4 py-2 text-left text-sub_h2 shadow-sm focus:outline-none focus:ring-1 focus:ring-primary ${
-              isSubAreaOpen ? 'bg-secondary text-primary' : 'bg-white text-black'
+            className={`flex h-[48px] w-full items-center justify-between rounded-md px-8 py-2 text-left text-sub_h3 text-gray-700 shadow scrollbar-hide focus:outline-none focus:ring-1 focus:ring-primary ${
+              isSubAreaOpen ? 'text-primary' : 'bg-white text-black'
             }`}
           >
             <span>{selectedSubArea || '시,군,구를 선택해주세요'}</span>
@@ -127,21 +122,16 @@ const RegionSelector = ({ onSelectionChange }: RegionSelectorProps) => {
           </button>
 
           {isSubAreaOpen && (
-            <ul className='absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md border border-primary bg-white text-sub_h2 shadow-lg scrollbar-hide'>
+            <ul className='rounded-mdpy-2 absolute z-10 mt-6 flex w-full flex-col gap-5 overflow-auto text-sub_h3 text-gray-700 shadow-lg scrollbar-hide'>
               {subAreas.map((subArea) => (
                 <li key={subArea}>
                   <button
                     type='button'
                     onClick={() => handleSubAreaChange(subArea)}
-                    className={`flex w-full items-center px-4 py-2 text-left hover:bg-secondary ${
-                      selectedSubArea === subArea ? 'bg-secondary' : ''
+                    className={`flex w-full items-center px-8 py-4 hover:text-primary ${
+                      selectedSubArea === subArea ? 'text-primary' : ''
                     }`}
                   >
-                    <span
-                      className={`mr-3 inline-block h-4 w-4 rounded-full border-2 ${
-                        selectedSubArea === subArea ? 'border-secondary bg-secondary' : 'border-gray-400'
-                      }`}
-                    ></span>
                     {subArea}
                   </button>
                 </li>

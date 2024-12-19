@@ -121,7 +121,7 @@ const RequestReview = ({
       }
     }
 
-    if (step === 9 && selectedOptions[step] === '지금 작성할게요.') {
+    if (step === 9 && selectedOptions[step] === '지금 작성하기') {
       return userInput || '작성된 내용이 없습니다.';
     }
 

@@ -86,7 +86,7 @@ const StepByStep = ({ stepCount, profileData, onProfileSelect }: StepByStepProps
     {
       step: 4,
       title: '마지막 미용시기를 알려주세요.',
-      options: ['첫 미용', '1달 내외', '2달 내외', '3달 내외', '잘 모르겠어요.'],
+      options: ['첫 미용', '1달 내외', '2달 내외', '3달 내외', '잘 모르겠어요'],
     },
     {
       step: 5,
@@ -258,28 +258,30 @@ const StepByStep = ({ stepCount, profileData, onProfileSelect }: StepByStepProps
   };
 
   const renderStepOne = () => (
-    <div className='flex flex-col items-center pt-10'>
-      <div className='grid grid-cols-2 gap-4'>
-        {profileData.map((profile) => (
-          <ProfileButton
-            key={profile.petId}
-            petName={profile.petName}
-            petImageUrl={profile.petImageUrl}
-            isRequested={profile.isRequested}
-            onClick={() => handleProfileClick(profile.petId)}
-          />
-        ))}
+    <PageContainer>
+      <div className='flex w-full flex-col items-center pt-10'>
+        <div className='w-full'>
+          {profileData.map((profile) => (
+            <ProfileButton
+              key={profile.petId}
+              petName={profile.petName}
+              petImageUrl={profile.petImageUrl}
+              isRequested={profile.isRequested}
+              onClick={() => handleProfileClick(profile.petId)}
+            />
+          ))}
+        </div>
       </div>
-    </div>
+    </PageContainer>
   );
 
   const renderStepTwo = () => {
     const petProfile = profileData.find((profile) => profile.petId === selectedPet);
 
     return (
-      <div className='flex flex-col items-center pt-10'>
-        <div className='relative'>
-          <div className='rounded-[8px] border border-primary'>
+      <PageContainer>
+        <div className='flex w-full flex-col pt-10'>
+          <div className='rounded-[8px]'>
             <ProfileViewer
               profile={
                 petProfile || {
@@ -307,7 +309,7 @@ const StepByStep = ({ stepCount, profileData, onProfileSelect }: StepByStepProps
               text='프로필 수정하기'
               color='bg-secondary'
               onClick={() => {
-                if (window.confirm('프로필을 수정하면 견적서를 다시 요청해야 합니다. 진행하시겠습니까?')) {
+                if (window.confirm('프로필 수정 시 견적서를 다시 요청해야 합니다. 진행하시겠습니까?')) {
                   navigate(`/profile/pet/edit/:${selectedPet}`);
 
                   console.log('Profile editing confirmed', selectedPet);
@@ -321,7 +323,7 @@ const StepByStep = ({ stepCount, profileData, onProfileSelect }: StepByStepProps
             </div>
           </div>
         </div>
-      </div>
+      </PageContainer>
     );
   };
 
@@ -369,7 +371,7 @@ const StepByStep = ({ stepCount, profileData, onProfileSelect }: StepByStepProps
             value={selectedOptions[currentStep] || ''}
             onValueChange={(value: string) => {
               setSelectedOptions((prev) => ({ ...prev, [currentStep]: value }));
-              if (currentStep === 9 && value !== '지금 작성할게요.') {
+              if (currentStep === 9 && value !== '지금 작성하기.') {
                 setUserInput('');
               }
               if (
@@ -383,8 +385,8 @@ const StepByStep = ({ stepCount, profileData, onProfileSelect }: StepByStepProps
               <div
                 key={option}
                 ref={option === '무관' && currentStep === 5 ? neutralButtonRef : undefined}
-                className={`flex h-auto w-full cursor-pointer flex-col items-start gap-2 rounded-md border p-6 font-bold transition-all duration-300 ease-in-out ${
-                  selectedOptions[currentStep] === option ? 'border-primary bg-secondary' : 'border-gray-400'
+                className={`flex h-auto w-full cursor-pointer flex-col items-start gap-2 rounded-md p-6 shadow transition-all duration-300 ease-in-out ${
+                  selectedOptions[currentStep] === option ? 'bg-secondary' : ''
                 } ${
                   option === '무관' &&
                   ((showRegionSelector && currentStep === 5) || (showDateSelector && currentStep === 6))
@@ -404,14 +406,14 @@ const StepByStep = ({ stepCount, profileData, onProfileSelect }: StepByStepProps
                     setShowRegionSelector(true);
                   } else if (currentStep === 6 && option === '날짜 선택하기') {
                     setShowDateSelector(true);
-                  } else if (currentStep === 9 && option === '지금 작성할게요.') {
+                  } else if (currentStep === 9 && option === '지금 작성하기') {
                     // do nothing here; handled below
                   } else {
                     handleNextStep();
                   }
                 }}
               >
-                <div className='flex items-center gap-2'>
+                <div className='flex items-center gap-6'>
                   <RadioGroupItem
                     value={option}
                     size={0.8}
@@ -429,8 +431,8 @@ const StepByStep = ({ stepCount, profileData, onProfileSelect }: StepByStepProps
                 </div>
 
                 {currentStep === 9 &&
-                  selectedOptions[currentStep] === '지금 작성할게요.' &&
-                  option === '지금 작성할게요.' && (
+                  selectedOptions[currentStep] === '지금 작성하기' &&
+                  option === '지금 작성하기' && (
                     <div
                       className='w-full overflow-hidden transition-all duration-300 ease-in-out'
                       style={{ height: 'auto' }}
