@@ -30,3 +30,8 @@ export const BUSINESS_QUERY_KEYS = {
     startDate,
   ],
 } as const;
+
+export const REVIEW_QUERY_KEYS = {
+  GET_FEED: (page: number) => ['getFeed', page],
+  //   GET_REVIEW_LIST: ['getReviewList'],
+} as const;
