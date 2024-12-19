@@ -23,6 +23,7 @@ export interface IReservation {
   amPm: string;
   startTime: number;
   isProcess: boolean;
+  designerId: number;
   groomingFee: number;
   deliveryFee: number;
   monitoringFee: number;

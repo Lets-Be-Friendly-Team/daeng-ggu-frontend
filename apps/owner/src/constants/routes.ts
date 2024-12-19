@@ -14,7 +14,7 @@ const ROUTES = {
   portfolioDetail: 'portfolio/:designerId/:portfolioId',
   reservation: 'reservation',
   designerProfile: 'designer/:designerId',
-  review: 'review',
+  review: 'review/:designerId',
   reviewEdit: 'review/edit/:reviewId',
   login: 'login',
   signup: 'signup',

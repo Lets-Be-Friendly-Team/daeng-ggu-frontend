@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { ArrowDown, ArrowUp } from '@daeng-ggu/design-system';
 import MiniButton from '@daeng-ggu/design-system/components/Buttons/MiniButton';
 import BulbIcon from '@daeng-ggu/design-system/components/Icons/BulbIcon';
@@ -42,6 +42,8 @@ interface ICompletedHistoryProps {
 }
 
 const CompletedServices = ({ completedGroomingList }: ICompletedHistoryProps) => {
+  const params = useParams();
+  const designerId = params.designerId;
   const [expandedReservations, setExpandedReservations] = useState<{ [key: number]: boolean }>({});
   const navigate = useNavigate();
   const toggleDetails = (id: number) => {
@@ -51,7 +53,7 @@ const CompletedServices = ({ completedGroomingList }: ICompletedHistoryProps) =>
     }));
   };
   const navigateToReview = () => {
-    navigate('/review/');
+    navigate(`/review/${designerId}`);
   };
 
   const { title, buttonText, onClick } = {
