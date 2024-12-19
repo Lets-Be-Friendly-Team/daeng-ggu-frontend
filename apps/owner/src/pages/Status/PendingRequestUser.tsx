@@ -64,7 +64,7 @@ const PendingRequestUser = ({ data }: PendingRequestUserProps) => {
     <div className='mx-auto flex flex-col items-center'>
       <div className='mx-[10px] mb-6 w-full'>
         <div>
-          <div className='flex h-[80px] space-x-4 overflow-x-auto'>
+          <div className='flex space-x-4 py-4'>
             {data.map((pet, index) => (
               <Avatar
                 key={pet.petId}
@@ -73,6 +73,7 @@ const PendingRequestUser = ({ data }: PendingRequestUserProps) => {
                 mode='avatar'
                 isActive={activePetIndex === index}
                 onClick={() => handlePetClick(index)}
+                containerClassName='h-[70px] w-[70px] rounded-full'
               />
             ))}
             <Avatar
@@ -92,7 +93,7 @@ const PendingRequestUser = ({ data }: PendingRequestUserProps) => {
             mode='request'
             imageUrl={activePet.petImageUrl}
           >
-            <p className='pb-2 text-gray-800'>{formatDate(activePet.createdAt)} 견적요청</p>
+            <p className='pb-2 text-caption text-gray-700'>{formatDate(activePet.createdAt)} 견적요청</p>
             <h3 className='pb-2 text-sub_h3 font-semibold'>{activePet.petName || '이름 없음'}</h3>
             <div className='text-iconCaption'>
               <div className='flex'>
@@ -106,7 +107,7 @@ const PendingRequestUser = ({ data }: PendingRequestUserProps) => {
                     <DetailButton text='상세보기' onClick={() => handleDetailPage(activePet)} />
                   </div>
                 </div>
-                <div>
+                <div className='text-gray-800'>
                   <p>
                     {activePet.desiredServiceCode || '알 수 없음'}/{getDeliveryStatus(activePet.majorBreedCode)}
                   </p>
@@ -131,17 +132,15 @@ const PendingRequestUser = ({ data }: PendingRequestUserProps) => {
                         index !== activePet.estimateList.length - 1 ? 'mb-4' : ''
                       }`}
                     >
-                      <div className='ml-6 pt-4'>
-                        <p className='text-sub_h2 font-bold'>견적 제안</p>
-                      </div>
+                      <div className='ml-6 pt-4'>{/* <p className='text-sub_h2 font-bold'>견적 제안</p> */}</div>
                       <div className='flex items-center rounded-[8px] bg-white px-[15px] pb-4'>
                         <Avatar
                           mode='designerCard'
                           imageUrl={estimate.designerImageUrl}
                           name={estimate.designerName}
-                          containerClassName='mr-8 h-[70px] w-[70px]'
+                          containerClassName='mr-8 h-[70px] w-[70px] rounded-full'
                         />
-                        <div>
+                        <div className='flex flex-col gap-2'>
                           <p className='text-gray-800'>{formatDate(estimate.createdAt)} 견적요청</p>
                           <p className='text-sub_h3 font-semibold'>{estimate.designerName || '이름 없는 디자이너'}</p>
                           <p className='text-sub_h2 font-bold'>{estimate.estimatePrice.toLocaleString()}원</p>
