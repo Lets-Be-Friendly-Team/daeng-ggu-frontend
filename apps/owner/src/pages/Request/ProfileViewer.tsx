@@ -39,39 +39,35 @@ const ProfileViewer = ({
   console.log("what's inside: ", profile.subBreed);
   return (
     <div className='mx-auto flex w-full max-w-screen-lg flex-col gap-8 rounded-md px-6 py-10 shadow'>
-      <div className='flex flex-wrap items-center justify-between'>
+      <div className='flex flex-wrap items-center gap-[2rem] text-body2 text-gray-800'>
         <img
           src={petImageUrl || 'https://via.placeholder.com/100'}
           alt={petName || 'Unknown Pet'}
-          className='h-28 w-28 rounded-full object-cover'
+          className='h-[9rem] w-[9rem] rounded-full object-cover'
         />
-        <div className='flex flex-col gap-4 text-base text-gray-600'>
-          <div className='flex items-center gap-4'>
-            <div className='font-semibold text-gray-500'>이름</div>
-            <div className='text-gray-800'>{petName}</div>
+        <div className='flex flex-col gap-[0.4rem]'>
+          <div className='flex gap-[0.4rem]'>
+            <div className='text-body1 font-semibold'>{petName}</div>
+            <div className='font-bold'>
+              {gender === 'W' ? <div className='text-pink-500'>♀︎</div> : <div className='text-blue-700'>♂︎</div>}
+            </div>
           </div>
-          <div className='flex items-center gap-4'>
-            <div className='font-semibold text-gray-500'>생년월일</div>
-            <div className='text-gray-800'>{birthDate}</div>
-          </div>
-          <div className='flex items-center gap-4'>
-            <div className='font-semibold text-gray-500'>성별</div>
-            <div className='text-gray-800'>{gender === 'W' ? '암컷' : '수컷'}</div>
-          </div>
-        </div>
-      </div>
-      <div className='flex flex-col gap-4 text-base text-gray-600'>
-        <div className='flex items-center gap-4'>
-          <div className='font-semibold text-gray-500'>견종</div>
           <div className='text-gray-800'>{extractKorean(subBreed)}</div>
-        </div>
-        <div className='flex items-center gap-4'>
-          <div className='font-semibold text-gray-500'>몸무게</div>
-          <div className='text-gray-800'>{weight}kg</div>
-        </div>
-        <div className='flex items-center gap-4'>
-          <div className='font-semibold text-gray-500'>중성화 여부</div>
-          <div className='text-gray-800'>{isNeutered ? '예' : '아니오'}</div>
+
+          <div className='flex gap-6 text-body3'>
+            <div className='flex items-center gap-2'>
+              <div className='text-iconCaption font-semibold text-gray-500'>체중</div>
+              <div className='text-gray-800'>{weight}kg</div>
+            </div>
+            <div className='flex items-center gap-2'>
+              <div className='text-iconCaption font-semibold text-gray-500'>중성화 여부</div>
+              <div className='text-gray-800'>{isNeutered ? 'O' : 'X'}</div>
+            </div>
+            <div className='flex items-center gap-2'>
+              <div className='text-iconCaption font-semibold text-gray-500'>생년월일</div>
+              <div className='text-gray-800'>{birthDate}</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

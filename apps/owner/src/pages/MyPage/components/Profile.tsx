@@ -93,7 +93,7 @@ const Profile = ({ nickname, customerImgUrl }: IProfileProps) => {
 
       <div className='flex w-full gap-4 pt-[2rem]'>
         <TypeTwoButton
-          text='예약 조회'
+          text='예약 현황'
           onClick={goToReservations}
           className='bg-gray-50 text-gray-800 hover:bg-secondary hover:text-primary'
           // fontWeight='font-normal'

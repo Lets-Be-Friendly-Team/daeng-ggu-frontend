@@ -23,6 +23,7 @@ const MyPage = () => {
     if (designerProfileData) {
       setIsBookmarked(designerProfileData.isBookmarked);
     }
+    console.log(designerProfileData);
   }, [designerProfileData]);
 
   const toggleBookmark = async (designerId: number, updatedStatus: boolean) => {
@@ -96,7 +97,7 @@ const MyPage = () => {
           possibleBreeds={designerProfileData.possibleBreeds}
           reviewStarAvg={designerProfileData.reviewStarAvg}
           reviewLikeCntAll={designerProfileData.reviewLikeCntAll}
-          address={designerProfileData.address1}
+          address={`${designerProfileData.address2} ${designerProfileData.detailAddress}`}
           introduction={designerProfileData.introduction}
           workExperience={designerProfileData.workExperience}
           onBookmarkToggle={toggleBookmark}

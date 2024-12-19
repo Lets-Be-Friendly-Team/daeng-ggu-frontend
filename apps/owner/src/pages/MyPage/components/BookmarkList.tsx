@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { LogoImage } from '@daeng-ggu/design-system';
 
@@ -24,7 +25,9 @@ const BookmarkList = ({ bookmarkList = [] }: IDesignerListProps) => {
   const navigateDesignerProfile = (designerId: number) => {
     navigate(`/profile/designer/${designerId}`);
   };
-
+  useEffect(() => {
+    console.log(bookmarkList);
+  }, []);
   return (
     <>
       {bookmarkList.length > 0 ? (

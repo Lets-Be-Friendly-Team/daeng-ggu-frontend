@@ -6,6 +6,7 @@ import {
   DeleteIcon,
   FilledHeartIcon,
   FullStarIcon,
+  LocationIcon,
   LogoutIcon,
   Modal,
   MoreIcon,
@@ -111,7 +112,7 @@ const Profile = ({
       label: '프로필 삭제하기',
       onClick: handleDelete,
       color: 'text-primary',
-      icon: <DeleteIcon className='h-[15px] w-[15px]' color='#FF6842' />,
+      icon: <DeleteIcon className='h-[1.6rem] w-[1.6rem] mr-[0.4rem]' color='#FF6842' />,
     },
   ];
 
@@ -144,27 +145,32 @@ const Profile = ({
     <div>
       <div className='w-full flex flex-col gap-2'>
         <div className='flex items-center justify-between'>
-          <div className='flex gap-6 py-2'>
+          <div className='flex gap-6 py-[1rem]'>
             <UserProfileImage size='large' imageUrl={designerImgUrl} />
-            <div className='flex flex-col px-3'>
-              <div className='flex gap-3'>
-                <div className='flex text-sub_h2 text-black'>{nickname}</div>
-                <div className='flex gap-[10px] items-center'>
-                  <div className='flex items-center w-auto h-[15px] gap-1'>
-                    <FullStarIcon size='w-[15px] h-[15px]' color='#AAB1B9' />
+            <div className='flex flex-col gap-[0.8rem] px-3'>
+              <div className='flex items-center gap-3'>
+                <div className='text-sub_h2 font-semibold text-black'>{nickname}</div>
+                <div className='flex h-[2rem] items-center gap-[1rem]'>
+                  <div className='l flex w-auto items-center gap-1 text-iconCaption'>
+                    <FullStarIcon size='w-[1.3rem] h-[1.3rem]' color='#FFC90A' />
                     {reviewStarAvg || 0}
                   </div>
-                  <div className='flex items-center w-auto h-[15px] gap-1'>
-                    <FilledHeartIcon className='w-[15px] h-[15px]' color='#AAB1B9' />
+                  <div className='flex w-auto items-center gap-1 text-iconCaption'>
+                    <button>
+                      <FilledHeartIcon className='h-[1.5rem] w-[1.5rem]' color='#ff6842' />
+                    </button>
                     {reviewLikeCntAll}
                   </div>
                 </div>
               </div>
-              <div className='text-caption text-gray-700'>
-                <div className='py-2'>{address}</div>
-                <div className='flex flex-col gap-1'>
+              <div className='flex flex-col gap-[1rem] text-caption text-gray-700'>
+                <div className='flex items-center'>
+                  <LocationIcon size='w-[1.5rem]' />
+                  <div className='pt-1'>{address}</div>
+                </div>
+                <div className='flex flex-col gap-[0.8rem]'>
                   <div className='text-gray-500'>{services}</div>
-                  <div className='text-gray-500'>{breeds}</div>
+                  <div className='text-gray-500'>{breeds} 전문</div>
                 </div>
               </div>
             </div>
@@ -173,20 +179,27 @@ const Profile = ({
             <MoreIcon className='w-[2.4rem] rotate-90' color='#949CA5' />
           </div>
         </div>
-        <div className='flex flex-col gap-3 text-gray-900'>
-          <div className='h-[22px] w-full bg-secondary text-caption rounded-[8px] flex items-center px-2'>
-            {introduction}
+        <div className='flex flex-col gap-[1rem] px-[0.5rem] py-[1.2rem] text-gray-900'>
+          <div className='flex w-full items-center gap-2 text-caption'>
+            <BulbIcon className='h-[15px] w-[15px]' />
+            <div>총 경력 {workExperience}</div>
           </div>
-          <div className='h-[22px] w-full bg-secondary text-caption rounded-[8px] flex items-center px-2 gap-1'>
-            <div>
-              <BulbIcon className='w-[15px] h-[15px]' />
-            </div>
-            {workExperience}
+          <div className='flex w-full items-center gap-2 rounded-[8px] text-caption'>
+            <BulbIcon className='h-[15px] w-[15px]' />
+            <div>{introduction}</div>
           </div>
         </div>
         <div className='flex w-full gap-4'>
-          <TypeTwoButton text='예약 조회' color='bg-secondary' onClick={goToReservations} />
-          <TypeTwoButton text='프로필 수정' onClick={goToEditProfile} className='bg-gray-50' />
+          <TypeTwoButton
+            text='예약 조회'
+            className='bg-gray-50 text-gray-800 hover:bg-secondary hover:text-primary'
+            onClick={goToReservations}
+          />
+          <TypeTwoButton
+            text='프로필 수정'
+            onClick={goToEditProfile}
+            className='bg-gray-50 text-gray-800 hover:bg-secondary hover:text-primary'
+          />
         </div>
       </div>
       <div className='ml-[-2rem]'>

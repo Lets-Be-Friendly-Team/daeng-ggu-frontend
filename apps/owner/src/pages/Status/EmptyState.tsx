@@ -16,12 +16,12 @@ const EmptyState = ({
 }: EmptyStateProps) => {
   return (
     <div className='flex justify-center'>
-      <div className='mt-10 flex flex-col items-center px-6'>
+      <div className='mt-10 flex flex-col items-center gap-[1.2rem] px-6'>
         <ReportDangIcon />
-        <div className='mt-3 text-sub_h3 font-bold'>
+        <div className='text-sub_h3 font-bold'>
           <p>{title}</p>
         </div>
-        <div className='mt-3 text-sub_h3'>
+        <div className='text-sub_h3'>
           <MiniButton text={buttonText} onClick={onClick} />
         </div>
       </div>

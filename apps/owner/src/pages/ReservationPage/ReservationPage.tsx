@@ -29,8 +29,8 @@ const ReservationPage = () => {
   return (
     <div className='pb-[65px]'>
       <PageContainer>
-        <Header mode='back' title='예약 조회' />
-        <CategoryTab tabs={tabs} />
+        <Header mode='back' title='예약 현황' />
+        <CategoryTab tabs={tabs} padding='px-[6rem]' />
       </PageContainer>
     </div>
   );

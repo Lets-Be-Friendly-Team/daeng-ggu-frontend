@@ -14,11 +14,16 @@ const PendingRequest = ({ data }: PendingRequestProps) => {
   const showEmptyState = data.length === 0;
   if (showEmptyState) {
     const { title, buttonText, onClick } = {
-      title: '아직 견적 요청 보낸것이 없어요!',
-      buttonText: '견적요청하러 가기',
+      // title: '아직 견적 요청 보낸것이 없어요!',
+      title: '보낸 요청이 없어요!',
+      buttonText: '견적 요청하러 가기',
       onClick: () => navigate('/bid/request', { state: { from: '/bid' } }),
     };
-    return <EmptyState title={title} buttonText={buttonText} onClick={onClick} />;
+    return (
+      <div className='mx-auto flex w-full flex-col items-center pt-10'>
+        <EmptyState title={title} buttonText={buttonText} onClick={onClick} />
+      </div>
+    );
   }
   return <PendingRequestUser data={data as PendingPet[]} />;
 };

@@ -61,7 +61,8 @@ const PendingRequestUser = ({ data }: PendingRequestUserProps) => {
   const estimateEmptyStateOnClick = () => window.location.reload();
 
   return (
-    <div className='mx-auto flex flex-col items-center'>
+    <div className='mx-auto flex w-full flex-col items-center pt-10'>
+      {/* <div className='mx-auto flex flex-col items-center'> */}
       <div className='mx-[10px] mb-6 w-full'>
         <div>
           <div className='flex space-x-4 py-4'>
