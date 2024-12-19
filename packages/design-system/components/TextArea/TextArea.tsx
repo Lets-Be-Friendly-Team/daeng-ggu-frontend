@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useState } from 'react';
+import { ChangeEvent, FC, useEffect, useState } from 'react';
 
 import { cn } from '../../lib/utils';
 
@@ -18,6 +18,7 @@ interface Props {
   borderWidth?: string; // 테두리 굵기
   borderColor?: string; // 테두리 색상
   className?: string;
+  initialLength?: number;
 }
 
 /* 컴포넌트 사용예시
@@ -55,8 +56,13 @@ const TextArea: FC<Props> = ({
   borderWidth = '',
   borderColor = '',
   className,
+  initialLength = 0,
 }) => {
-  const [inputCount, setInputCount] = useState(0);
+  const [inputCount, setInputCount] = useState(initialLength);
+  useEffect(() => {
+    setInputCount(initialLength || value.length);
+  }, [initialLength, value]);
+
   const changeHandler = (_ev: TextChangeEvent) => {
     if (onChange) {
       onChange(_ev);

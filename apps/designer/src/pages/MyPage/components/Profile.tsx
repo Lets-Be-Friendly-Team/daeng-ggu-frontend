@@ -1,7 +1,22 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BulbIcon, FilledHeartIcon, FullStarIcon, TypeTwoButton, UserProfileImage } from '@daeng-ggu/design-system';
+import {
+  BottomSheetModal,
+  BulbIcon,
+  FilledHeartIcon,
+  FullStarIcon,
+  LogoutIcon,
+  Modal,
+  MoreIcon,
+  SwapIcon,
+  TypeTwoButton,
+  UserProfileImage,
+} from '@daeng-ggu/design-system';
+import { useModalStore } from '@daeng-ggu/shared';
 
+import getLogin from '@/apis/Login/getLogin';
 import ROUTES from '@/constants/routes';
+import useDesignerIdStore from '@/stores/useDesignerIdStore';
 
 interface IProfileProps {
   designerName?: string; // 디자이너 이름
@@ -27,6 +42,10 @@ const Profile = ({
   introduction,
   workExperience,
 }: IProfileProps) => {
+  const [isModalOpen, setModalOpen] = useState<boolean>(false);
+  const { show } = useModalStore();
+  const { setDesignerId } = useDesignerIdStore();
+  const clearDesignerIdStorage = useDesignerIdStore.persist.clearStorage;
   const navigate = useNavigate();
   const goToReservations = () => navigate(`/`);
   const goToEditProfile = () => navigate(`/profile/${ROUTES.profileEdit}`);
@@ -44,32 +63,78 @@ const Profile = ({
   };
 
   const breeds = possibleBreeds?.map((breed) => breedMapping[breed.breedCode] || '특수 견종').join(' | ');
+
+  const toggleModal = () => {
+    setModalOpen((prev) => !prev);
+  };
+  //로그아웃 api 연동
+  const handleLogout = () => {
+    show(Modal, {
+      title: '로그아웃 하시겠습니까?',
+      onConfirm: () => {
+        setDesignerId(-1);
+        clearDesignerIdStorage();
+        // navigate(ROUTES.main);
+        window.location.href = `${import.meta.env.VITE_OWNER_MAIN_URL}/login`;
+      },
+      onClose: () => close(),
+      confirmText: '로그아웃',
+      cancelText: '취소',
+    });
+    //localStorage에서 ownerId 삭제
+  };
+  //보호자로 전환
+  const handleTypeChange = async () => {
+    //개발 url -> 배포 url로 바꾸기
+    // window.location.href = `${import.meta.env.VITE_DESIGNER_MAIN_URL}`;
+    const data = await getLogin({ userType: 'C' });
+    window.location.href = data.data;
+  };
+
+  const modalOptions = [
+    {
+      label: '로그아웃',
+      onClick: handleLogout,
+      icon: <LogoutIcon size='h-[1.6rem] w-[1.6rem] mr-[0.4rem]' color='fill-gray-800' />,
+    },
+    {
+      label: '보호자로 전환',
+      onClick: handleTypeChange,
+      icon: <SwapIcon size='h-[1.6rem] w-[1.6rem] mr-[0.4rem]' color='fill-gray-800' />,
+    },
+  ];
+
   return (
     <div>
       <div className='w-full flex flex-col gap-2'>
-        <div className='flex gap-6 py-2'>
-          <UserProfileImage size='large' imageUrl={designerImgUrl} />
-          <div className='flex flex-col px-3'>
-            <div className='flex gap-3'>
-              <div className='flex text-sub_h2 text-black'>{nickname}</div>
-              <div className='flex gap-[10px] items-center'>
-                <div className='flex items-center w-auto h-[15px] gap-1'>
-                  <FullStarIcon size='w-[15px] h-[15px]' color='#AAB1B9' />
-                  {reviewStarAvg}
+        <div className='flex items-center justify-between'>
+          <div className='flex gap-6 py-2'>
+            <UserProfileImage size='large' imageUrl={designerImgUrl} />
+            <div className='flex flex-col px-3'>
+              <div className='flex gap-3'>
+                <div className='flex text-sub_h2 text-black'>{nickname}</div>
+                <div className='flex gap-[10px] items-center'>
+                  <div className='flex items-center w-auto h-[15px] gap-1'>
+                    <FullStarIcon size='w-[15px] h-[15px]' color='#AAB1B9' />
+                    {reviewStarAvg || 0}
+                  </div>
+                  <div className='flex items-center w-auto h-[15px] gap-1'>
+                    <FilledHeartIcon className='w-[15px] h-[15px]' color='#AAB1B9' />
+                    {reviewLikeCntAll}
+                  </div>
                 </div>
-                <div className='flex items-center w-auto h-[15px] gap-1'>
-                  <FilledHeartIcon className='w-[15px] h-[15px]' color='#AAB1B9' />
-                  {reviewLikeCntAll}
+              </div>
+              <div className='text-caption text-gray-700'>
+                <div className='py-2'>{address}</div>
+                <div className='flex flex-col gap-1'>
+                  <div className='text-gray-500'>{services}</div>
+                  <div className='text-gray-500'>{breeds}</div>
                 </div>
               </div>
             </div>
-            <div className='text-caption text-gray-700'>
-              <div className='py-2'>{address}</div>
-              <div className='flex flex-col gap-1'>
-                <div className='text-gray-500'>{services}</div>
-                <div className='text-gray-500'>{breeds}</div>
-              </div>
-            </div>
+          </div>
+          <div className='cursor-pointer' onClick={toggleModal}>
+            <MoreIcon className='w-[2.4rem] rotate-90' color='#949CA5' />
           </div>
         </div>
         <div className='flex flex-col gap-3 text-gray-900'>
@@ -87,6 +152,9 @@ const Profile = ({
           <TypeTwoButton text='예약 조회' color='bg-secondary' onClick={goToReservations} />
           <TypeTwoButton text='프로필 수정' onClick={goToEditProfile} className='bg-gray-50' />
         </div>
+      </div>
+      <div className='ml-[-2rem]'>
+        <BottomSheetModal isOpen={isModalOpen} onClose={() => setModalOpen(false)} options={modalOptions} />
       </div>
     </div>
   );

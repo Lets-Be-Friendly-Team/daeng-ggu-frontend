@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 
+import { cn } from '../../lib/utils';
+
 interface ITab {
   label: string;
   content: React.ReactNode;
@@ -8,6 +10,7 @@ interface ITab {
 interface CategoryTabProps {
   tabs: ITab[];
   fontSize?: string;
+  padding?: string;
 }
 
 /*
@@ -44,7 +47,7 @@ const Status = () => {
 };
 **/
 
-const CategoryTab = ({ tabs, fontSize }: CategoryTabProps) => {
+const CategoryTab = ({ tabs, fontSize, padding }: CategoryTabProps) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [indicatorStyles, setIndicatorStyles] = useState({ left: 0, width: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
@@ -67,7 +70,7 @@ const CategoryTab = ({ tabs, fontSize }: CategoryTabProps) => {
   return (
     <div>
       <div className='flex h-[60px] flex-col justify-center'>
-        <div ref={containerRef} className='relative flex justify-between px-[40px] align-middle'>
+        <div ref={containerRef} className={cn('relative flex justify-between px-[40px] align-middle', padding)}>
           {tabs.map((tab, index) => (
             <div
               key={index}

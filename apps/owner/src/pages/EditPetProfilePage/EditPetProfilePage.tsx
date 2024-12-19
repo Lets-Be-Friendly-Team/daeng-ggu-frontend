@@ -82,7 +82,7 @@ const EditPetProfilePage = () => {
   const showDeleteConfirmationModal = () => {
     show(Modal, {
       // title: '반려견 프로필 삭제',
-      title: `${formData.petName} 프로필을 삭제하시겠습니까?`,
+      title: `${initialPetName} 프로필을 삭제하시겠습니까?`,
       // description: '반려견 프로필을 삭제하시겠습니까?',
       description: '프로필을 삭제하면 되돌릴 수 없습니다.',
       onConfirm: () => {
@@ -208,7 +208,7 @@ const EditPetProfilePage = () => {
   }, [formData]);
 
   return (
-    <div>
+    <div className='pb-[10rem]'>
       <PageContainer>
         <Header mode='back' title={`${initialPetName} 프로필 수정`} />
 
@@ -285,6 +285,8 @@ const EditPetProfilePage = () => {
             placeholder='특이사항을 입력해주세요'
             value={formData.specialNotes}
             onChange={(e) => handleChange('specialNotes', e.target.value)}
+            maxLength={200}
+            initialLength={formData?.specialNotes.length}
           />
           <div className='mb-[10rem] block text-body3 font-semibold text-gray-800'>
             <TypeTwoButton text='삭제하기' color='bg-secondary' onClick={handleDelete} />

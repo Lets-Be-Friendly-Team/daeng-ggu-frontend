@@ -17,7 +17,7 @@ const PremiumList = () => {
   ];
   return (
     <div className='mb-[2rem] mt-[-2rem]'>
-      <CategoryTab tabs={tabs} fontSize='text-sub_h3' />
+      <CategoryTab tabs={tabs} fontSize='text-sub_h3' padding='px-[6rem]' />
     </div>
   );
 };

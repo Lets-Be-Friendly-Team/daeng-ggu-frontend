@@ -45,14 +45,15 @@ const MyPage = () => {
       content: <BookmarkList bookmarkList={profileData.bookmarkList} />,
     },
   ];
-  const handleNavigateMain = () => {
-    navigate('/');
-  };
+  // const handleNavigateMain = () => {
+  //   navigate('/');
+  // };
 
   return (
     <div className='pb-[64px]'>
       <PageContainer>
-        <Header mode='back' title='마이페이지' onClick={handleNavigateMain} />
+        {/* <Header mode='back' title='마이페이지' onClick={handleNavigateMain} /> */}
+        <Header mode='main' />
         <Profile
           nickname={profileData.nickname}
           customerImgUrl={profileData.customerImgUrl}
@@ -61,7 +62,7 @@ const MyPage = () => {
         <div className='px-[0.4rem]'>
           <AvartarList pets={profileData.petList} />
         </div>
-        <CategoryTab tabs={tabs} />
+        <CategoryTab tabs={tabs} padding='px-[8rem]' />
       </PageContainer>
     </div>
   );
