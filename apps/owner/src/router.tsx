@@ -7,6 +7,7 @@ import ROUTES from '@/constants/routes';
 import AddPetProfilePage from '@/pages/AddPetProfilePage/AddPetProfilePage';
 import CreateReviewPage from '@/pages/CreateReviewPage/CreateReviewPage';
 import DesignerProfilePage from '@/pages/DesignerProfilePage/DesignerProfilePage';
+import DirectRequestPage from '@/pages/DirectRequestPage/DirectRequestPage.tsx';
 import EditPetProfilePage from '@/pages/EditPetProfilePage/EditPetProfilePage';
 import EditUserProfilePage from '@/pages/EditUserProfilePage/EditUserProfilePage';
 import FeedPage from '@/pages/FeedPage/FeedPage';
@@ -133,6 +134,10 @@ export const router = createBrowserRouter([
           {
             path: ROUTES.bidDetailDesigner,
             element: <DetailDesigner />,
+          },
+          {
+            path: ROUTES.bidDirect,
+            element: <DirectRequestPage />,
           },
         ],
       },

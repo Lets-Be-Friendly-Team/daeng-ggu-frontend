@@ -120,7 +120,7 @@ const NaverSearchDesignerMap = ({ className }: NaverMapContentProps) => {
           const reservationButton = document.getElementById(`reservation-btn-${designerId}`);
           if (reservationButton) {
             reservationButton.addEventListener('click', () => {
-              navigate(`/reservation/${designerId}`);
+              navigate(`/bid/direct`, { state: { targetDesignerId: designerId } });
             });
           }
         };

@@ -1,14 +1,34 @@
-import { ComponentProps } from 'react';
+// Calendar.tsx
+import { ComponentProps, useEffect } from 'react';
 import { DayContentProps, DayPicker } from 'react-day-picker';
+import { useCalendarStore } from '@daeng-ggu/shared/src/stores/useCalenderStore.ts';
+import { useQueryClient } from '@tanstack/react-query';
 import { isToday } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 import { cn } from '../../lib/utils';
 
-export type CalendarProps = ComponentProps<typeof DayPicker>;
+export type CalendarProps = ComponentProps<typeof DayPicker> & {
+  designerId?: number; // Made optional by adding ?
+};
 
-function Calendar({ className, classNames, showOutsideDays = true, ...props }: CalendarProps) {
+export async function fetchAvailability(designerId: number, year: number, month: number) {
+  const response = await fetch(
+    `https://www.daeng-ggu-backend.com/daengggu/reservation/designer/${designerId}/availability?year=${year}&month=${month}`,
+  );
+  if (!response.ok) {
+    throw new Error('Failed to fetch availability');
+  }
+  const data = await response.json();
+  console.log(data);
+  return data;
+}
+
+function Calendar({ className, classNames, showOutsideDays = true, designerId, ...props }: CalendarProps) {
+  const queryClient = useQueryClient();
+  const { year, month, setYearMonth } = useCalendarStore((state) => state);
+
   function CustomDayContent(dayContentProps: DayContentProps) {
     const { date } = dayContentProps;
     const dayNumber = date.getDate();
@@ -22,10 +42,55 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
     );
   }
 
+  useEffect(() => {
+    if (designerId !== undefined) {
+      queryClient.prefetchQuery({
+        queryKey: ['availability', designerId, year, month],
+        queryFn: () => fetchAvailability(designerId, year, month),
+      });
+
+      // Prefetch previous and next months' availability
+      const prevMonthDate = new Date(year, month - 2, 1);
+      const nextMonthDate = new Date(year, month, 1);
+
+      queryClient.prefetchQuery({
+        queryKey: ['availability', designerId, prevMonthDate.getFullYear(), prevMonthDate.getMonth() + 1],
+        queryFn: () => fetchAvailability(designerId, prevMonthDate.getFullYear(), prevMonthDate.getMonth() + 1),
+      });
+      queryClient.prefetchQuery({
+        queryKey: ['availability', designerId, nextMonthDate.getFullYear(), nextMonthDate.getMonth() + 1],
+        queryFn: () => fetchAvailability(designerId, nextMonthDate.getFullYear(), nextMonthDate.getMonth() + 1),
+      });
+    }
+  }, [designerId, year, month, queryClient]);
+
+  const handleMonthChange = (selectedMonth: Date) => {
+    const newYear = selectedMonth.getFullYear();
+    const newMonth = selectedMonth.getMonth() + 1;
+    setYearMonth(newYear, newMonth);
+
+    if (designerId !== undefined) {
+      // Prefetch previous and next months' availability
+      const prevMonthDate = new Date(newYear, newMonth - 2, 1);
+      const nextMonthDate = new Date(newYear, newMonth, 1);
+
+      queryClient.prefetchQuery({
+        queryKey: ['availability', designerId, prevMonthDate.getFullYear(), prevMonthDate.getMonth() + 1],
+        queryFn: () => fetchAvailability(designerId, prevMonthDate.getFullYear(), prevMonthDate.getMonth() + 1),
+      });
+      queryClient.prefetchQuery({
+        queryKey: ['availability', designerId, nextMonthDate.getFullYear(), nextMonthDate.getMonth() + 1],
+        queryFn: () => fetchAvailability(designerId, nextMonthDate.getFullYear(), nextMonthDate.getMonth() + 1),
+      });
+    }
+  };
+
   return (
     <DayPicker
       locale={ko}
       showOutsideDays={showOutsideDays}
+      month={new Date(year, month - 1, 1)}
+      onMonthChange={handleMonthChange}
       className={cn('p-3 font-pretendard', className)}
       classNames={{
         months: 'flex flex-row h-full',
