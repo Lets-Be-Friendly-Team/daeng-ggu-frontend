@@ -11,10 +11,9 @@ import ReviewList from './components/ReviewList';
 
 const MyPage = () => {
   const navigate = useNavigate();
-  // const customerId = 2;
   const { ownerId } = useOwnerIdStore();
   const { data: profileData, isError } = useGetProfile(ownerId);
-  console.log(profileData);
+
   if (isError || !profileData) {
     return (
       <PageContainer>

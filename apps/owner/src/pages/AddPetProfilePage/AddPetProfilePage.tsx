@@ -10,6 +10,7 @@ import {
   TypeOneButton,
   TypeTwoButton,
 } from '@daeng-ggu/design-system';
+import { useToast } from '@daeng-ggu/shared';
 
 import SubBreedSelector from '@/components/SubBreedSelector/SubBreedSelector';
 import { breedList } from '@/constants/breedList';
@@ -57,7 +58,7 @@ const AddPetProfilePage = () => {
   const [selectedBreed, setSelectedBreed] = useState<string[]>([]);
   const [activeBtn, setActiveBtn] = useState(false);
   const { ownerId } = useOwnerIdStore();
-  // const [subArray, setSubArray] = useState([]);
+  const { showToast } = useToast();
 
   // 견종 대분류 업데이트
   const handleChangeMajorBreed = (values: string[]) => {
@@ -105,28 +106,17 @@ const AddPetProfilePage = () => {
     }));
   };
 
-  // // 필수 정보 입력되면 버튼 활성화
-  // useEffect(() => {
-  //   console.log(formData);
-  //   const nonRequiredFileds = ['newPetImgUrl', 'specialNotes']; //프로필 사진과 특이사항은 필수 입력사항이 아님
-  //   const fieldsToValidate = Object.keys(formData).filter(
-  //     (field) => !nonRequiredFileds.includes(field),
-  //   ) as (keyof PetFormData)[];
-  //   const isFormComplete = fieldsToValidate.every((field) => formData[field]?.toString().trim() !== '');
-  //   setActiveBtn(isFormComplete);
-  // }, [formData]);
-
   // 이미지 전송
   const { mutate: imgUpload } = useSingleImageUpload();
   // 데이터 전송
   const { mutate: registerPet } = useRegisterPetProfile({
-    onSuccess: (data) => {
-      // 반려견 등록 성공시
-      console.log('반려견 등록 성공', data);
+    onSuccess: () => {
+      showToast({ message: '반려견 프로필이 성공적으로 등록 되었습니다!', type: 'confirm' });
       navigate('/' + ROUTES.profile);
     },
     onError: (error) => {
       // 반려견 등록 실패시
+      showToast({ message: '프로필이 등록되지 않았습니다. 다시 시도해주세요!', type: 'error' });
       console.log('반려견 등록 실패', error);
     },
   });
@@ -136,18 +126,17 @@ const AddPetProfilePage = () => {
     if (profileImage) {
       imgUpload(profileImage, {
         onSuccess: (url) => {
-          // alert(`이미지 업로드 성공! URL: ${url}`);
           const payload = {
             ...formData,
             customerId: ownerId,
             newPetImgUrl: url || '',
             weight: Number(formData.weight),
           };
-          console.log(payload);
           registerPet(payload);
         },
         onError: (error) => {
-          alert(`이미지 업로드 실패: ${error.message}`);
+          console.log(error);
+          showToast({ message: '이미지가 등록되지 않았습니다!', type: 'error' });
         },
       });
     } else {
@@ -161,7 +150,6 @@ const AddPetProfilePage = () => {
   };
   const handleImageDelete = () => {
     setProfileImage(undefined);
-    // setFormData((prev) => ({ ...prev, prePetImgUrl: '' }));
   };
 
   // 필수 정보 입력되면 버튼 활성화

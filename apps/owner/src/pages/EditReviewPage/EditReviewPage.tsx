@@ -1,6 +1,7 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { Header, ImageUploader, PageContainer, StarRating, TextArea, TypeOneButton } from '@daeng-ggu/design-system';
+import { useToast } from '@daeng-ggu/shared';
 
 import useMultipleImageUpload from '@/hooks/queries/ImageUpload/useMultipleImageUpload';
 import useGetReviewDetail from '@/hooks/queries/Review/useGetReviewDetail';
@@ -11,6 +12,7 @@ const EditReviewPage = () => {
   const reviewIdStr = params.reviewId;
   const reviewId = reviewIdStr ? Number(reviewIdStr) : null;
   const navigate = useNavigate();
+  const { showToast } = useToast();
 
   const [imgList, setImgList] = useState<string[]>([]);
   const [newNewImgList, setNewImgList] = useState<File[]>([]);
@@ -40,7 +42,7 @@ const EditReviewPage = () => {
   const handleSaveClick = async () => {
     try {
       const imageUrls = newNewImgList.length > 0 ? await uploadImage(newNewImgList) : [];
-      console.log('이미지 url>>', imageUrls);
+
       const reviewData = {
         reviewId: reviewId || 0,
         reviewContents: reviewContent,
@@ -51,11 +53,11 @@ const EditReviewPage = () => {
       };
 
       await patchReview(reviewData);
-      alert('리뷰가 성공적으로 수정되었습니다.');
+      showToast({ message: '리뷰가 수정 되었습니다!', type: 'confirm' });
       navigate('/profile');
     } catch (error) {
+      showToast({ message: '리뷰가 수정되지 않았습니다. 다시 시도해주세요!', type: 'error' });
       console.error(error);
-      alert('리뷰 수정에 실패했습니다. 다시 시도해주세요.');
     }
   };
 

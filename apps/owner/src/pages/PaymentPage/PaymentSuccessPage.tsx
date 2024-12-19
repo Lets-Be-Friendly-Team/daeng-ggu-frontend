@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useToast } from '@daeng-ggu/shared';
 
 import { PaymentDetails } from '@/apis/payment/postReservationEstimate.ts';
 import useGetPaymentProcess from '@/hooks/queries/Payment/useGetPaymentProcess';
@@ -27,7 +28,7 @@ const PaymentSuccessPage = () => {
   } = useReservationStoreOne();
 
   const { paymentKey, orderId } = usePaymentStore();
-
+  const { showToast } = useToast();
   const navigate = useNavigate();
 
   const isReservationDataLoaded =
@@ -80,7 +81,7 @@ const PaymentSuccessPage = () => {
   } = usePostReservationEstimate({
     onSuccess: (data) => {
       if (data.status === 'SUCCESS') {
-        console.log('Reservation estimate posted successfully:', data);
+        showToast({ message: '결제가 완료 되었습니다!', type: 'confirm' });
         clearAll(); // Clear the store or perform any other necessary actions
         navigate(`/reservation`);
       } else {
@@ -89,6 +90,7 @@ const PaymentSuccessPage = () => {
       }
     },
     onError: (error) => {
+      showToast({ message: '다시 시도해주세요!', type: 'error' });
       console.error('Error posting reservation estimate:', error);
       // Optionally, display a message to the user or handle the error
     },
