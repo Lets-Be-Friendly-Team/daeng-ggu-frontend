@@ -1,10 +1,12 @@
 import { useEffect } from 'react';
-import { useLocation } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { BottomTabBar, FeedIcon, MyPageIcon, RequestListIcon, ReservationIcon } from '@daeng-ggu/design-system';
 
 import ROUTES from '@/constants/routes';
+import useGetProfile from '@/hooks/queries/DesignerProfile/useGetProfile';
 import { cn } from '@/lib/utils';
 import { useDesignerBottomTabStore } from '@/stores/bottomTabStore';
+import useDesignerIdStore from '@/stores/useDesignerIdStore';
 
 // 로그인 상태에 따라 마이페이지/로그인 label 변경
 const designerTabs = [
@@ -30,9 +32,11 @@ const designerHideTabbarRoutes = [
 const DesignerBottomTabBar = () => {
   const { activePath, setActivePath } = useDesignerBottomTabStore();
   const location = useLocation();
-
+  const { designerId } = useDesignerIdStore();
+  const navigate = useNavigate();
   const shouldHideTabbar = designerHideTabbarRoutes.some((route) => location.pathname.startsWith(route));
-
+  const { data: profileData } = useGetProfile(designerId);
+  console.log(profileData);
   // url 바뀔때마다 activePath update
   useEffect(() => {
     const path = `${location.pathname.split('/', 2)[1]}`;
@@ -43,6 +47,12 @@ const DesignerBottomTabBar = () => {
     // }
     console.log(path);
   }, [location.pathname, setActivePath]);
+
+  useEffect(() => {
+    if (profileData && profileData.nickname === null) {
+      navigate('/signup/success');
+    }
+  }, [profileData, navigate]);
 
   return (
     !shouldHideTabbar && (
