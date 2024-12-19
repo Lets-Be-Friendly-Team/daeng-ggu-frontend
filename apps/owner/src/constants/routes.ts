@@ -30,6 +30,8 @@ const ROUTES = {
   payment: 'payment',
   paymentSuccess: 'success',
   paymentFailure: 'failure',
+  paymentDirect: 'paymentDirect',
+  paymentDirectSuccess: 'paymentDirectSuccess',
 } as const;
 
 export default ROUTES;

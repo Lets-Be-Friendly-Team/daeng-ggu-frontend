@@ -134,36 +134,36 @@ const DetailPage = () => {
         </div>
       </PageContainer>
       <RequestReview {...processedData} pageMode={pageMode} />
-      <div className='fixed w-full' style={{ bottom: '64px' }}>
-        <TypeOneButton
-          text={buttonText}
-          onClick={() => {
-            if (pageMode === 'user') {
-              // navigate('/booking', { state: { petId: selectedData.petId } });
-              console.log('예약하기 버튼 클릭');
-            } else if (pageMode === 'designer') {
-              navigate('/bid/suggest', {
-                state: {
-                  petId: selectedData.petId,
-                  customerName: selectedData.customerName,
-                  desiredDateOne: selectedData.desiredDate1,
-                  desiredDateTwo: selectedData.desiredDate2,
-                  desiredDateThree: selectedData.desiredDate3,
-                  address: selectedData.address,
-                  phone: selectedData.phone,
-                  majorBreed: selectedData.majorBreed,
-                  desiredServiceCode: selectedData.desiredServiceCode,
-                  isVisitRequired: selectedData.isVisitRequired,
-                  isMonitoringIncluded: selectedData.isMonitoringIncluded,
-                },
-              });
-            } else if (pageMode === 'reservation') {
-              console.log('예약 취소 버튼 클릭');
-            }
-          }}
-          color='bg-secondary'
-        />
-      </div>
+      {pageMode !== 'user' && (
+        <div className='fixed w-full' style={{ bottom: '64px' }}>
+          <TypeOneButton
+            text={buttonText}
+            onClick={() => {
+              if (pageMode === 'designer') {
+                navigate('/bid/suggest', {
+                  state: {
+                    petId: selectedData.petId,
+                    customerName: selectedData.customerName,
+                    desiredDateOne: selectedData.desiredDate1,
+                    desiredDateTwo: selectedData.desiredDate2,
+                    desiredDateThree: selectedData.desiredDate3,
+                    address: selectedData.address,
+                    phone: selectedData.phone,
+                    majorBreed: selectedData.majorBreed,
+                    desiredServiceCode: selectedData.desiredServiceCode,
+                    isVisitRequired: selectedData.isVisitRequired,
+                    isMonitoringIncluded: selectedData.isMonitoringIncluded,
+                  },
+                });
+              } else if (pageMode === 'reservation') {
+                console.log('예약 취소 버튼 클릭');
+                // Add reservation cancellation logic here
+              }
+            }}
+            color='bg-secondary'
+          />
+        </div>
+      )}
     </div>
   );
 };

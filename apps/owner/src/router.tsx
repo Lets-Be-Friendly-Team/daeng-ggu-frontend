@@ -19,6 +19,7 @@ import MapPage from '@/pages/Map/MapPage';
 import MyPage from '@/pages/MyPage/MyPage';
 import PaymentPage from '@/pages/PaymentPage/PaymentPage.tsx';
 import PaymentSuccessPage from '@/pages/PaymentPage/PaymentSuccessPage.tsx';
+import PaymentSuccessPageForDirect from '@/pages/PaymentPage/PaymentSuccessPageForDirect.tsx';
 import PortfolioDetailPage from '@/pages/PortfolioDetailPage/PortfolioDetailPage';
 import ProgressPage from '@/pages/ProgressPage/ProgressPage';
 import Request from '@/pages/Request/Request';
@@ -221,6 +222,19 @@ export const router = createBrowserRouter([
           {
             path: ROUTES.paymentSuccess,
             element: <PaymentSuccessPage />,
+          },
+        ],
+      },
+      {
+        path: ROUTES.paymentDirect,
+        children: [
+          {
+            index: true,
+            element: <PaymentPage />,
+          },
+          {
+            path: ROUTES.paymentDirectSuccess,
+            element: <PaymentSuccessPageForDirect />,
           },
         ],
       },

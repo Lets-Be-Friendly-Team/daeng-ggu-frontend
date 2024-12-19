@@ -91,8 +91,6 @@ const DirectStepByStep = ({ stepCount, profileData, onProfileSelect, designerId,
   const [isDynamicHeight, setIsDynamicHeight] = useState<boolean>(false);
   const navigate = useNavigate();
   const [showRegionSelector] = useState<boolean>(false);
-  const { clearAll: clearReservationStoreOne } = useReservationStoreOne();
-  const { clearAll: clearReservationStoreTwo } = useReservationStoreTwo();
   const [regionSelection] = useState<{ area: string; subArea: string }>({
     area: '',
     subArea: '',
@@ -100,10 +98,8 @@ const DirectStepByStep = ({ stepCount, profileData, onProfileSelect, designerId,
   useEffect(() => {
     return () => {
       resetStep(); // Reset step store
-      clearReservationStoreOne(); // Reset reservation store one
-      clearReservationStoreTwo(); // Reset reservation store two
     };
-  }, [resetStep, clearReservationStoreOne, clearReservationStoreTwo]);
+  }, [resetStep]);
 
   // Step 8
   const [userInput, setUserInput] = useState<string>('');
@@ -739,7 +735,7 @@ const DirectStepByStep = ({ stepCount, profileData, onProfileSelect, designerId,
     setReservationCustomerKey(paymentDetails.customerKey);
     setReservationTotalPayment(useReservationStoreOne.getState().totalPayment);
     console.log('Reservation Data:', JSON.stringify(data));
-    navigate('/payment');
+    navigate('/paymentDirect');
   };
 
   // Watch for changes in paymentDetails and log them
@@ -767,39 +763,39 @@ const DirectStepByStep = ({ stepCount, profileData, onProfileSelect, designerId,
                   : currentStepData?.title || ''
           }
         />
-      </PageContainer>
 
-      <div className='flex h-full w-full flex-col items-center justify-center'>
-        <div
-          className='relative mt-6 w-full overflow-hidden transition-all duration-300'
-          style={{
-            height:
-              currentStep === 5
-                ? '1000px'
-                : currentStep === 9
-                  ? isDynamicHeight
-                    ? 'auto'
-                    : containerHeight
-                      ? `${containerHeight}px`
-                      : 'auto'
-                  : '400px',
-            marginBottom: currentStep === 9 ? '60px' : '',
-          }}
-        >
-          <TransitionGroup component={null}>
-            <CSSTransition
-              key={currentStep}
-              nodeRef={getNodeRef(currentStep)}
-              timeout={500}
-              classNames={direction === 'forward' ? 'slide-forward' : 'slide-backward'}
-            >
-              <div ref={getNodeRef(currentStep)}>
-                {currentStep === 1 ? renderStepOne() : currentStep === 2 ? renderStepTwo() : renderOtherSteps()}
-              </div>
-            </CSSTransition>
-          </TransitionGroup>
+        <div className='flex h-full w-full flex-col items-center justify-center'>
+          <div
+            className='relative mt-6 w-full overflow-hidden transition-all duration-300'
+            style={{
+              height:
+                currentStep === 5
+                  ? '1000px'
+                  : currentStep === 9
+                    ? isDynamicHeight
+                      ? 'auto'
+                      : containerHeight
+                        ? `${containerHeight}px`
+                        : 'auto'
+                    : '400px',
+              marginBottom: currentStep === 9 ? '60px' : '',
+            }}
+          >
+            <TransitionGroup component={null}>
+              <CSSTransition
+                key={currentStep}
+                nodeRef={getNodeRef(currentStep)}
+                timeout={500}
+                classNames={direction === 'forward' ? 'slide-forward' : 'slide-backward'}
+              >
+                <div ref={getNodeRef(currentStep)}>
+                  {currentStep === 1 ? renderStepOne() : currentStep === 2 ? renderStepTwo() : renderOtherSteps()}
+                </div>
+              </CSSTransition>
+            </TransitionGroup>
+          </div>
         </div>
-      </div>
+      </PageContainer>
       <div className='button-container fixed w-full' style={{ bottom: '0rem' }}>
         <CSSTransition in={currentStep === 9} timeout={500} classNames='slide-up' unmountOnExit nodeRef={buttonRef}>
           <div ref={buttonRef} className='relative'>

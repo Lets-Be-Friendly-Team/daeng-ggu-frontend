@@ -2,21 +2,17 @@
 
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useToast } from '@daeng-ggu/shared';
 
-import { PaymentDetails } from '@/apis/payment/postReservationEstimate.ts';
+import { DirectPaymentDetails } from '@/apis/payment/postDirectReservation.ts';
 import useGetPaymentProcess from '@/hooks/queries/Payment/useGetPaymentProcess';
-import usePostReservationEstimate from '@/hooks/queries/Payment/usePostReservationEstimate';
+import usePostDirectReservationEstimate from '@/hooks/queries/Payment/usePostDirectReservationEstimate.ts';
 import usePaymentStore from '@/stores/usePaymentStore';
 import useReservationStoreOne from '@/stores/useReservationStoreOne';
-/*
- * 1. zustand store 선언 및 데이터 유효성 확인
- * 2.**/
-const PaymentSuccessPage = () => {
+
+const PaymentSuccessPageForDirect = () => {
   const {
     customerKey,
     amount,
-    estimateId,
     reservationDate,
     startTime,
     endTime,
@@ -24,26 +20,38 @@ const PaymentSuccessPage = () => {
     deliveryFee,
     monitoringFee,
     totalPayment,
+    petId,
+    designerId,
+    desiredService, // Make sure this is available in your store or define it here.
+    lastGroomingDate,
+    isDelivery,
+    isMonitoring,
+    additionalRequest,
     clearAll,
   } = useReservationStoreOne();
 
   const { paymentKey, orderId } = usePaymentStore();
-  const { showToast } = useToast();
+
   const navigate = useNavigate();
 
   const isReservationDataLoaded =
     typeof customerKey === 'string' &&
     typeof amount === 'number' &&
-    (typeof estimateId === 'number' || estimateId === undefined) &&
     typeof reservationDate === 'string' &&
     typeof startTime === 'string' &&
     typeof endTime === 'string' &&
     typeof groomingFee === 'number' &&
     typeof deliveryFee === 'number' &&
     typeof monitoringFee === 'number' &&
-    typeof totalPayment === 'number';
+    typeof totalPayment === 'number' &&
+    typeof petId === 'string' &&
+    typeof designerId === 'string' &&
+    typeof desiredService === 'string' &&
+    typeof lastGroomingDate === 'string' &&
+    typeof isDelivery === 'boolean' &&
+    typeof isMonitoring === 'boolean' &&
+    typeof additionalRequest === 'string';
 
-  // **Step 2: Initialize the useGetPaymentProcess hook unconditionally**
   const {
     data: paymentProcessData,
     isLoading: isPaymentProcessLoading,
@@ -57,7 +65,6 @@ const PaymentSuccessPage = () => {
     enabled: isReservationDataLoaded && !!paymentKey && !!orderId,
   });
 
-  // **Step 3: Redirect to home if essential data is missing**
   useEffect(() => {
     if (!paymentKey || !orderId) {
       console.warn('PaymentSuccessPage - No paymentKey or orderId found in store.');
@@ -65,77 +72,73 @@ const PaymentSuccessPage = () => {
     }
   }, [paymentKey, orderId, navigate]);
 
-  // **Step 4: Log data before making the API call**
   useEffect(() => {
     if (isReservationDataLoaded && paymentKey && orderId) {
       console.log('Posting payment data:', { customerKey, orderId, amount });
     }
   }, [isReservationDataLoaded, paymentKey, orderId, customerKey, amount]);
 
-  // **Step 5: Initialize the mutation hook**
   const {
-    mutate: postReservationEstimateMutation,
-    isPending: isPostingEstimate,
+    mutate: postDirectReservationEstimateMutation,
+    isPending: isPostingEstimate, // useMutation's isLoading is typically used instead of isPending
     isError: isPostEstimateError,
     isSuccess: isPostEstimateSuccess,
-  } = usePostReservationEstimate({
+  } = usePostDirectReservationEstimate({
     onSuccess: (data) => {
       if (data.status === 'SUCCESS') {
-        showToast({ message: '결제가 완료 되었습니다!', type: 'confirm' });
-        clearAll(); // Clear the store or perform any other necessary actions
+        console.log('Reservation estimate posted successfully:', data);
+        clearAll();
         navigate(`/reservation`);
       } else {
         console.warn('Failed to post reservation estimate:', data.message);
-        // Optionally, display a message to the user or handle the error
       }
     },
     onError: (error) => {
-      showToast({ message: '다시 시도해주세요!', type: 'error' });
       console.error('Error posting reservation estimate:', error);
-      // Optionally, display a message to the user or handle the error
     },
   });
 
-  // **Step 6: Handle the payment process's success and trigger the reservation estimate post**
   useEffect(() => {
     if (isPaymentProcessSuccess && paymentProcessData?.status === 'SUCCESS') {
       console.log('Payment process succeeded:', paymentProcessData);
-      // Prepare the PaymentDetails object with non-null assertions
-      const paymentDetails: PaymentDetails = {
-        paymentKey: paymentKey!, // Asserting non-null
-        orderId: orderId!, // Asserting non-null
+
+      const paymentDetails: DirectPaymentDetails = {
+        paymentKey: paymentKey!,
+        orderId: orderId!,
         amount,
-        estimateId: estimateId || 0, // Assuming 0 or a default value if undefined
         reservationDate: reservationDate!,
         startTime: startTime!,
         endTime: endTime!,
-        groomingFee: groomingFee!, // Asserting non-null
-        deliveryFee: deliveryFee!, // Asserting non-null
-        monitoringFee: monitoringFee!, // Asserting non-null
+        groomingFee: groomingFee!,
+        deliveryFee: deliveryFee!,
+        monitoringFee: monitoringFee!,
         totalPayment,
+        petId: petId!,
+        designerId: designerId!,
+        desiredService: desiredService!, // Ensure this is coming from the store.
+        lastGroomingDate: lastGroomingDate!,
+        isDelivery: isDelivery!,
+        isMonitoring: isMonitoring!,
+        additionalRequest: additionalRequest!,
       };
 
-      // Trigger the mutation to post the reservation estimate
-      postReservationEstimateMutation(paymentDetails);
+      postDirectReservationEstimateMutation(paymentDetails);
     } else if (isPaymentProcessSuccess && paymentProcessData?.status !== 'SUCCESS') {
       console.warn('Payment process did not succeed:', paymentProcessData?.message || 'Unknown error');
-      // Optionally, navigate to an error page or display a message to the user
     }
 
     if (isPaymentProcessError) {
       console.error('Error during payment process:', paymentProcessError);
-      // Optionally, navigate to an error page or display a message to the user
     }
   }, [
     isPaymentProcessSuccess,
     paymentProcessData,
     isPaymentProcessError,
     paymentProcessError,
-    postReservationEstimateMutation,
+    postDirectReservationEstimateMutation,
     paymentKey,
     orderId,
     amount,
-    estimateId,
     reservationDate,
     startTime,
     endTime,
@@ -143,9 +146,15 @@ const PaymentSuccessPage = () => {
     deliveryFee,
     monitoringFee,
     totalPayment,
+    petId,
+    designerId,
+    desiredService,
+    lastGroomingDate,
+    isDelivery,
+    isMonitoring,
+    additionalRequest,
   ]);
 
-  // **Step 7: Show loading state if data is not yet loaded**
   if (!isReservationDataLoaded) {
     return (
       <section className='flex min-h-screen items-center justify-center bg-gray-100 p-4'>
@@ -173,9 +182,6 @@ const PaymentSuccessPage = () => {
             <strong>Amount:</strong> {amount.toLocaleString()}원
           </li>
           <li>
-            <strong>Estimate ID:</strong> {estimateId !== undefined ? estimateId : 'N/A'}
-          </li>
-          <li>
             <strong>Reservation Date:</strong> {reservationDate || 'N/A'}
           </li>
           <li>
@@ -193,11 +199,31 @@ const PaymentSuccessPage = () => {
           <li>
             <strong>Monitoring Fee:</strong> {monitoringFee.toLocaleString()}원
           </li>
+          <li>
+            <strong>Pet ID:</strong> {petId || 'N/A'}
+          </li>
+          <li>
+            <strong>Designer ID:</strong> {designerId || 'N/A'}
+          </li>
+          <li>
+            <strong>Desired Service:</strong> {desiredService || 'N/A'}
+          </li>
+          <li>
+            <strong>Last Grooming Date:</strong> {lastGroomingDate || 'N/A'}
+          </li>
+          <li>
+            <strong>Is Delivery:</strong> {isDelivery ? 'Yes' : 'No'}
+          </li>
+          <li>
+            <strong>Is Monitoring:</strong> {isMonitoring ? 'Yes' : 'No'}
+          </li>
+          <li>
+            <strong>Additional Request:</strong> {additionalRequest || 'N/A'}
+          </li>
           <li className='mt-4 border-t pt-4 font-bold'>
             <strong>Total Payment:</strong> {totalPayment.toLocaleString()}원
           </li>
         </ul>
-        {/* **Optional: Show loading or error states related to the POST request** */}
         {(isPaymentProcessLoading || isPostingEstimate) && (
           <p className='mt-4 text-blue-500'>Processing your payment details...</p>
         )}
@@ -220,4 +246,4 @@ const PaymentSuccessPage = () => {
   );
 };
 
-export default PaymentSuccessPage;
+export default PaymentSuccessPageForDirect;
