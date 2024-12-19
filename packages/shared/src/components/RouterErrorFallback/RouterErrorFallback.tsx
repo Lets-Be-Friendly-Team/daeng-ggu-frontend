@@ -1,5 +1,8 @@
-import { useNavigate } from 'react-router';
+import { useEffect } from 'react';
+import { useNavigate, useRouteError } from 'react-router';
 import { LogoImage, TypeTwoButton } from '@daeng-ggu/design-system';
+
+import HTTPError from '../../apis/HTTPError';
 
 interface RouterErrorFallbackProps {
   href?: string;
@@ -7,6 +10,24 @@ interface RouterErrorFallbackProps {
 
 const RouterErrorFallback = ({ href }: RouterErrorFallbackProps) => {
   const navigate = useNavigate();
+  const error = useRouteError(); // 라우트에서 발생한 에러를 가져옴
+
+  useEffect(() => {
+    console.log('error', error);
+    if (error instanceof HTTPError && error.statusCode === 401 && href === 'designer/') {
+      window.location.href = import.meta.env.VITE_OWNER_MAIN_URL + '/login';
+      return;
+    }
+    if (error instanceof HTTPError && error.statusCode === 401) {
+      navigate('/login');
+      return;
+    }
+  }, [error, navigate]);
+
+  if (error instanceof HTTPError && error.statusCode === 401) {
+    return null;
+  }
+
   const goMain = () => {
     window.location.href = `/${href || ''}`;
   };
