@@ -17,10 +17,14 @@ const GuardianProgressStep3and4and5 = ({ statusNum }: { statusNum: number }) => 
     return '홈으로 가기';
   }, [statusNum]);
 
-  const handleButtonOnClick = () => {
-    setIsDisabled(true);
+  const handleButtonOnClick = async () => {
     if (statusNum === 5) {
-      startDeliveryMutate();
+      setIsDisabled(true);
+      return startDeliveryMutate(undefined, {
+        onError: () => {
+          setIsDisabled(false);
+        },
+      });
     }
     navigate('/', { replace: true });
   };
@@ -32,6 +36,7 @@ const GuardianProgressStep3and4and5 = ({ statusNum }: { statusNum: number }) => 
         <TypeTwoButton className='px-[2rem]' text='댕꾸에게 문의' color='bg-secondary' onClick={() => {}} />
         <TypeTwoButton
           disabled={isDisabled}
+          isLoading={isDisabled}
           className='px-[2rem]'
           text={handleButtonText}
           color='bg-primary'

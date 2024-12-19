@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { PageContainer, Progress } from '@daeng-ggu/design-system';
 import { useReservationId } from '@daeng-ggu/shared';
 
+import { PROGRESS_STATUS } from '@/constants/progress';
 import useGetMonitoringStatus from '@/hooks/queries/monitoring/useGetMonitoringStatus';
 import ProgressStep1 from '@/pages/ProgressPage/ProgressStep1';
 import ProgressStep2 from '@/pages/ProgressPage/ProgressStep2';
@@ -21,11 +22,12 @@ const ProgressPage = () => {
   console.log(response);
   const StepComponents = useMemo(() => {
     switch (response?.data.processStatus) {
-      case 'PREPAREING':
+      case PROGRESS_STATUS.preparing:
+      case PROGRESS_STATUS.waitingForGrooming:
         return <ProgressStep1 isDelivery={response?.data.isDelivery} processStatus={response.data.processStatus} />;
-      case 'GROOMING':
+      case PROGRESS_STATUS.grooming:
         return <ProgressStep2 />;
-      case 'COMPLETE':
+      case PROGRESS_STATUS.complete:
         return <ProgressStep3 />;
       default:
         return;
