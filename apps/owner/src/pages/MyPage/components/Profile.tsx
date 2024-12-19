@@ -9,9 +9,10 @@ import {
   TypeTwoButton,
   UserProfileImage,
 } from '@daeng-ggu/design-system';
-import { useModalStore } from '@daeng-ggu/shared';
+import { useModalStore, useToast } from '@daeng-ggu/shared';
 
 import getLogin from '@/apis/login/getLogin';
+import getLogout from '@/apis/login/getLogout';
 import ROUTES from '@/constants/routes';
 import useOwnerIdStore from '@/stores/useOwnerIdStore';
 
@@ -28,6 +29,7 @@ const Profile = ({ nickname, customerImgUrl }: IProfileProps) => {
   const goToEditProfile = () => navigate(`/profile/${ROUTES.profileEdit}`);
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
   const { show } = useModalStore();
+  const { showToast } = useToast();
   const { setOwnerId } = useOwnerIdStore();
   const clearOwnerIdStorage = useOwnerIdStore.persist.clearStorage;
 
@@ -39,10 +41,15 @@ const Profile = ({ nickname, customerImgUrl }: IProfileProps) => {
   const handleLogout = () => {
     show(Modal, {
       title: '로그아웃 하시겠습니까?',
-      onConfirm: () => {
-        setOwnerId(-1);
-        clearOwnerIdStorage(); //localStorage에서 ownerId 삭제
-        navigate(ROUTES.main);
+      onConfirm: async () => {
+        const response = await getLogout();
+        if (response.status === 'SUCCESS') {
+          setOwnerId(-1);
+          clearOwnerIdStorage(); //localStorage에서 ownerId 삭제
+          navigate(ROUTES.main);
+        } else {
+          showToast({ message: '로그아웃에 실패했습니다', type: 'error' });
+        }
       },
       onClose: () => close(),
       confirmText: '로그아웃',

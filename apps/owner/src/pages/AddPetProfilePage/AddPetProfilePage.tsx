@@ -13,6 +13,7 @@ import {
 
 import SubBreedSelector from '@/components/SubBreedSelector/SubBreedSelector';
 import { breedList } from '@/constants/breedList';
+import ROUTES from '@/constants/routes';
 import useSingleImageUpload from '@/hooks/queries/ImageUpload/useSingleImageUpload';
 import useRegisterPetProfile from '@/hooks/queries/PetProfile/useRegisterPetProfile';
 import useOwnerIdStore from '@/stores/useOwnerIdStore';
@@ -122,7 +123,7 @@ const AddPetProfilePage = () => {
     onSuccess: (data) => {
       // 반려견 등록 성공시
       console.log('반려견 등록 성공', data);
-      navigate(-1);
+      navigate(ROUTES.profile);
     },
     onError: (error) => {
       // 반려견 등록 실패시

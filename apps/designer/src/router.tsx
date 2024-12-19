@@ -50,7 +50,15 @@ export const router = createBrowserRouter(
           index: true,
           element: <ReservationPage />,
         },
-        { path: ROUTES.progress(), element: <ProgressPage /> },
+
+        {
+          path: ROUTES.progress(),
+          element: (
+            <PrivateWrapper mode='designer'>
+              <ProgressPage />
+            </PrivateWrapper>
+          ),
+        },
         // {
         //   path: ROUTES.login,
         //   children: [
@@ -73,7 +81,16 @@ export const router = createBrowserRouter(
         // },
         {
           path: ROUTES.registerProfile,
-          children: [{ index: true, element: <RegisterStep /> }],
+          children: [
+            {
+              index: true,
+              element: (
+                <PrivateWrapper mode='designer'>
+                  <RegisterStep />
+                </PrivateWrapper>
+              ),
+            },
+          ],
         },
         {
           path: ROUTES.portfolioRegister,
@@ -85,6 +102,11 @@ export const router = createBrowserRouter(
         },
         {
           path: ROUTES.profile,
+          element: (
+            <PrivateWrapper mode='desinger'>
+              <Outlet />
+            </PrivateWrapper>
+          ),
           children: [
             {
               index: true,
@@ -111,16 +133,28 @@ export const router = createBrowserRouter(
         },
         {
           path: ROUTES.notification,
-          element: <Outlet />,
+          element: (
+            <PrivateWrapper mode='desinger'>
+              <Outlet />
+            </PrivateWrapper>
+          ),
           children: [{ index: true, element: <Notification /> }],
         },
         {
           path: ROUTES.profileEditPortfolio,
-          element: <EditPortfolioPage />,
+          element: (
+            <PrivateWrapper mode='desinger'>
+              <EditPortfolioPage />
+            </PrivateWrapper>
+          ),
         },
         {
           path: ROUTES.reservation,
-          element: <ReservationPage />,
+          element: (
+            <PrivateWrapper mode='designer'>
+              <ReservationPage />
+            </PrivateWrapper>
+          ),
         },
         {
           path: ROUTES.bid,
