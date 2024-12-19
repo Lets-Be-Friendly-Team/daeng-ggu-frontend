@@ -17,12 +17,12 @@ const StatusPage = () => {
 
   const tabs = [
     {
-      label: '견적서받는 중',
+      label: '견적서 받는 중',
       // content: <PendingRequest data={dummyDataForDesigner} />,
       content: <PendingRequest data={pendingData || []} />,
     },
     {
-      label: '이전견적 조회',
+      label: '이전 견적 조회',
       content: <CompletedRequestDesigner data={completedData || []} />,
     },
   ];
@@ -32,7 +32,7 @@ const StatusPage = () => {
       <PageContainer>
         <div className='w-full'>
           <Header mode='main' title='견적 조회하기' />
-          <CategoryTab tabs={tabs} />
+          <CategoryTab tabs={tabs} padding='px-[6rem]' />
         </div>
       </PageContainer>
     </div>

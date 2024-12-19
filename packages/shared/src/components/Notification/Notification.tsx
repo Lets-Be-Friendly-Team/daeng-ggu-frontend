@@ -6,7 +6,7 @@ import UnreadNotification from './UnreadNotification';
 const Notification = () => {
   const tabs = [
     {
-      label: '읽지않은 알림',
+      label: '읽지 않은 알림',
       content: <UnreadNotification />,
     },
     {
@@ -21,7 +21,7 @@ const Notification = () => {
         <PageContainer>
           <Header mode='back' title='알림목록' />
         </PageContainer>
-        <CategoryTab tabs={tabs} />
+        <CategoryTab tabs={tabs} padding='px-[8rem]' />
       </div>
     </div>
   );

@@ -50,7 +50,7 @@ const Profile = ({
   const { setDesignerId } = useDesignerIdStore();
   const clearDesignerIdStorage = useDesignerIdStore.persist.clearStorage;
   const navigate = useNavigate();
-  const goToReservations = () => navigate(`${ROUTES.reservation}`);
+  const goToReservations = () => navigate(`/`);
   const goToEditProfile = () => navigate(`/profile/${ROUTES.profileEdit}`);
   const { mutate: deleteProfile } = useDeleteProfile();
   const { designerId } = useDesignerIdStore();
@@ -61,7 +61,14 @@ const Profile = ({
     return match ? match[1].replace(/,/g, ' | ') : text;
   };
 
-  const services = providedServices?.map((service) => extractBracketContent(service.codeDesc)).join(' | ');
+  const excludedServices = '목욕 | 전체미용 | 부분미용 | 위생미용';
+  const services =
+    '기본 | ' +
+    providedServices
+      ?.map((service) => extractBracketContent(service.codeDesc)) // 서비스 이름 추출
+      .filter((service) => !excludedServices.split(' | ').includes(service)) // 제외할 서비스 필터링
+      .join(' | ');
+
   const breedMapping: { [key: string]: string } = {
     P1: '소형견',
     P2: '중형견',
@@ -140,7 +147,6 @@ const Profile = ({
       cancelText: '아니오',
     });
   };
-
   return (
     <div>
       <div className='w-full flex flex-col gap-2'>
