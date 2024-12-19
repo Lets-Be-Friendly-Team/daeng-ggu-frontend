@@ -71,7 +71,7 @@ const MyPage = () => {
           introduction={profileData.introduction}
           workExperience={profileData.workExperience}
         />
-        <CategoryTab tabs={tabs} />
+        <CategoryTab tabs={tabs} padding='px-[8rem]' />
       </PageContainer>
     </div>
   );

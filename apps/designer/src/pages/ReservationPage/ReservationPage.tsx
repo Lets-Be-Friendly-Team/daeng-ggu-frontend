@@ -22,6 +22,8 @@ const ReservationPage = () => {
       const userInfo = userData.data;
       // console.log(data);
       setDesignerId(userInfo.id);
+    } else {
+      return;
     }
   }, [userData, setDesignerId]);
 

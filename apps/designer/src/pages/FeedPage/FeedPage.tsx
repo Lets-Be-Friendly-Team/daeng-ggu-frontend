@@ -102,7 +102,7 @@ const FeedPage = () => {
 
   return (
     <div className='relative flex h-[calc(100vh-65px)] w-full flex-col bg-gray-900'>
-      <div className='absolute left-0 right-0 top-0 z-10 flex h-[100px] items-center gap-[10px] bg-gradient-to-b from-black px-5'>
+      <div className='absolute left-0 right-0 top-0 z-10 flex h-[100px] items-center gap-[10px] bg-gradient-to-b from-[rgb(21 29 36 / 51%)] px-5'>
         <div className='flex-shrink-0'>
           <UserProfileImage imageUrl={reviews[activeIndex]?.designerImgUrl} />
         </div>

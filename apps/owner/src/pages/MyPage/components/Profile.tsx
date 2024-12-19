@@ -73,11 +73,11 @@ const Profile = ({ nickname, customerImgUrl }: IProfileProps) => {
     },
   ];
   return (
-    <div className='w-full'>
+    <div className='mt-[1rem] w-full'>
       <div className='flex items-center justify-between'>
         <div className='flex gap-6'>
           <UserProfileImage size='large' imageUrl={customerImgUrl} />
-          <div className='flex h-auto items-center px-3 text-sub_h2 text-black'>{nickname}</div>
+          <div className='flex h-auto items-center px-3 text-sub_h2 font-semibold text-black'>{nickname}</div>
         </div>
         <div className='cursor-pointer' onClick={toggleModal}>
           <MoreIcon className='w-[2.4rem] rotate-90' color='#949CA5' />

@@ -62,7 +62,7 @@ const MyPage = () => {
         <div className='px-[0.4rem]'>
           <AvartarList pets={profileData.petList} />
         </div>
-        <CategoryTab tabs={tabs} />
+        <CategoryTab tabs={tabs} padding='px-[8rem]' />
       </PageContainer>
     </div>
   );
