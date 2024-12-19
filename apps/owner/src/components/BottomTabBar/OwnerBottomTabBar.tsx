@@ -43,11 +43,18 @@ const OwnerBottomTabBar = () => {
 
   // url 바뀔때마다 activePath update
   useEffect(() => {
+    const fullPath = location.pathname;
     const path = `${location.pathname.split('/', 2)[1]}`;
+
     if (path === 'map' || path === 'search') {
       setActivePath('');
     } else {
       setActivePath(path);
+    }
+
+    if (fullPath.includes('profile/designer/')) {
+      // 디자이너 프로필 조회
+      setActivePath('1'); // 아무런 값이나 넣기(비활성화)
     }
     console.log(path);
   }, [location.pathname, setActivePath]);

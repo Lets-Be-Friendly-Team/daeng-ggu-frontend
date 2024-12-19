@@ -167,13 +167,14 @@ const AddPetProfilePage = () => {
   // 필수 정보 입력되면 버튼 활성화
   useEffect(() => {
     console.log(formData);
-    const nonRequiredFileds = ['prePetImgUrl', 'newPetImgUrl', 'specialNotes']; //프로필 사진과 특이사항은 필수 입력사항이 아님
+    const nonRequiredFileds = ['prePetImgUrl', 'newPetImgUrl', 'specialNotes']; //특이사항은 필수 입력사항이 아님 프로필 사진 url은 전송시 생성됨
     const fieldsToValidate = Object.keys(formData).filter(
       (field) => !nonRequiredFileds.includes(field),
     ) as (keyof PetFormData)[];
-    const isFormComplete = fieldsToValidate.every((field) => formData[field]?.toString().trim() !== '');
+    const isFormComplete =
+      fieldsToValidate.every((field) => formData[field]?.toString().trim() !== '') && profileImage !== undefined;
     setActiveBtn(isFormComplete);
-  }, [formData]);
+  }, [formData, profileImage]);
 
   return (
     <div className='pb-[10rem]'>
@@ -182,7 +183,7 @@ const AddPetProfilePage = () => {
           <Header mode='back' title={`반려견 프로필 등록`} />
           <div className='flex h-[180px] w-full flex-col items-center justify-center gap-[1.5rem]'>
             <ProfileImgUploader image={profileImage} setImage={setProfileImage} />
-            <button className='block text-caption text-gray-400' onClick={handleImageDelete}>
+            <button type='button' className='block text-caption text-gray-400' onClick={handleImageDelete}>
               프로필 사진 삭제
             </button>
           </div>
