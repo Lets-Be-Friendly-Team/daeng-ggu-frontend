@@ -15,12 +15,13 @@ import useGetProfileDetail from '@/hooks/queries/DesignerProfile/useGetProfileDe
 import useUpdateProfile from '@/hooks/queries/DesignerProfile/useUpdateProfile';
 import useMultipleImageUpload from '@/hooks/queries/ImageUpload/useMultipleImageUpload';
 import useSingleImageUpload from '@/hooks/queries/ImageUpload/useSingleImageUpload';
+import useDesignerIdStore from '@/stores/useDesignerIdStore';
 
 import CertificationUploader from './components/CertificationUploader';
 
 const EditDesignerProfilePage = () => {
   const navigate = useNavigate();
-  const designerId = 4;
+  const { designerId } = useDesignerIdStore();
   const [formData, setFormData] = useState({
     designerId: designerId,
     designerName: '',

@@ -9,15 +9,13 @@ const ProfileButton = ({ petName, petImageUrl, isRequested, onClick }: ProfileBu
   return (
     <button
       onClick={onClick}
-      className='relative flex h-32 w-32 flex-col items-center justify-center rounded-lg border bg-gray-100 p-2 shadow-md hover:bg-secondary'
+      className='relative mb-4 flex w-full items-center rounded-lg p-4 shadow hover:bg-secondary'
     >
-      {isRequested && (
-        <div className='absolute left-0 top-0 flex h-full w-full items-center justify-center bg-opacity-50 font-bold text-white'>
-          요청 완료
-        </div>
-      )}
-      <img src={petImageUrl} alt={petName} className={`h-20 w-20 rounded-full ${isRequested ? 'opacity-50' : ''}`} />
-      <span className='mt-2 text-sm font-semibold'>{petName}</span>
+      <img src={petImageUrl} alt={petName} className={`h-12 w-12 rounded-full ${isRequested ? 'opacity-50' : ''}`} />
+      <div className='ml-4'>
+        <span className='block text-body3 text-gray-900'>{petName}</span>
+        {isRequested && <span className='block text-xs text-gray-500'>요청 완료</span>}
+      </div>
     </button>
   );
 };

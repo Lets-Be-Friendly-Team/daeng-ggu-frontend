@@ -14,16 +14,18 @@ import {
 import useGetProfileDetail from '@/hooks/queries/CustomerProfile/useGetProfileDetail';
 import useUpdateProfile from '@/hooks/queries/CustomerProfile/useUpdateProfile';
 import useSingleImageUpload from '@/hooks/queries/ImageUpload/useSingleImageUpload';
+import useOwnerIdStore from '@/stores/useOwnerIdStore';
 
 const EditUserProfilePage = () => {
   const navigate = useNavigate();
-  const customerId = 2;
-  const { data: profileData } = useGetProfileDetail(customerId);
+  // const customerId = 2;
+  const { ownerId } = useOwnerIdStore();
+  const { data: profileData } = useGetProfileDetail(ownerId);
   const { mutateAsync: updateProfile } = useUpdateProfile();
   const { mutateAsync: uploadImage } = useSingleImageUpload();
 
   const [formData, setFormData] = useState({
-    customerId: customerId,
+    customerId: ownerId,
     customerName: '',
     customerImgUrl: '',
     birthDate: '',
@@ -51,7 +53,7 @@ const EditUserProfilePage = () => {
     try {
       const uploadedImageUrl = profileImage ? await uploadImage(profileImage) : '';
       const updatedFormData = {
-        customerId: customerId,
+        customerId: ownerId,
         customerName: formData.customerName,
         preCustomerImgUrl: formData.customerImgUrl,
         newCustomerImgUrl: uploadedImageUrl,
