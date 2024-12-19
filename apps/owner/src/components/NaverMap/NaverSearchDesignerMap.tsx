@@ -112,7 +112,7 @@ const NaverSearchDesignerMap = ({ className }: NaverMapContentProps) => {
           if (profileButton) {
             console.log('efw');
             profileButton.addEventListener('click', () => {
-              navigate(`/profile/${designerId}`);
+              navigate(`/profile/designer/${designerId}`);
             });
           }
 
