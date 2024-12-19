@@ -1,7 +1,7 @@
 // router.jsx
 import { Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
-import { LogContainer, RouterErrorFallback } from '@daeng-ggu/shared';
+import { LogContainer, NotFound, RouterErrorFallback } from '@daeng-ggu/shared';
 
 // import '@/styles/sequenceAnimation.css';
 import ROUTES from '@/constants/routes';
@@ -16,7 +16,7 @@ export const router = createBrowserRouter(
       path: ROUTES.main,
       errorElement: (
         <LogContainer log='guardian app'>
-          <RouterErrorFallback />
+          <RouterErrorFallback href='guardian/' />
         </LogContainer>
       ),
       element: (
@@ -29,8 +29,11 @@ export const router = createBrowserRouter(
           index: true,
           element: <MainPage />,
         },
-        { path: ROUTES.test, element: <div>ddddd</div> },
         { path: ROUTES.progress(), element: <ProgressPage /> },
+        {
+          path: '*',
+          element: <NotFound />,
+        },
       ],
     },
   ],

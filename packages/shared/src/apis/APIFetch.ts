@@ -111,16 +111,17 @@ class APIFetch implements APIFetchType {
   }
 
   private async handleError(response: Response): Promise<void> {
-    if (response.status === 401) {
+    const responseJson = await response.clone().json();
+    console.log(responseJson);
+    if (responseJson.status === 401) {
       try {
-        throw new HTTPError(401, response.statusText);
+        throw new HTTPError(401, responseJson.message);
       } catch (error) {
         console.error(error); // 에러를 로그로 출력
-        window.location.href = '/';
+        window.location.href = import.meta.env.VITE_OWNER_MAIN_URL + '/login';
       }
     }
-
-    const apiError = new HTTPError(response.status, response.statusText);
+    const apiError = new HTTPError(responseJson.status, responseJson.message);
     throw apiError;
   }
 

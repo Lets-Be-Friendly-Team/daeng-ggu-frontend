@@ -2,7 +2,7 @@
 import { Suspense } from 'react';
 import { createBrowserRouter, Outlet } from 'react-router-dom';
 import StatusPage from '@daeng-ggu/designer/src/pages/StatusPage/StatusPage';
-import { LogContainer, Notification, RouterErrorFallback } from '@daeng-ggu/shared';
+import { LogContainer, NotFound, Notification, PrivateWrapper, RouterErrorFallback } from '@daeng-ggu/shared';
 
 import App from '@/App';
 import ROUTES from '@/constants/routes';
@@ -24,7 +24,6 @@ import SuggestPage from '@/pages/SuggestPage/SuggestPage.tsx';
 
 // import AddPortfolioPage from './pages/AddPortfolioPage/AddPortfolioPage';
 // import AddPortfolioPage from './pages/AddPortfolioPage/AddPortfolioPage';
-import PrivateWrapper from './components/RouteGuard/PrivateWrapper'; //로그인 안된 상태면 접근 제한
 import PublicRoute from './components/RouteGuard/PublicRoute'; //로그인 된 상태면 접근 제한
 import AddPortfolioInProfile from './pages/AddPortfolioPage/AddPortfolioInProfile';
 import EditPortfolioPage from './pages/EditPortfolioPage/EditPortfolioPage';
@@ -38,7 +37,7 @@ export const router = createBrowserRouter(
       path: ROUTES.main,
       errorElement: (
         <LogContainer log='designer app'>
-          <RouterErrorFallback />
+          <RouterErrorFallback href='designer/' />
         </LogContainer>
       ),
       element: (
@@ -126,7 +125,7 @@ export const router = createBrowserRouter(
         {
           path: ROUTES.bid,
           element: (
-            <PrivateWrapper isAuthenticated={isAuthenticated}>
+            <PrivateWrapper mode='designer'>
               <Outlet />
             </PrivateWrapper>
           ),
@@ -152,6 +151,10 @@ export const router = createBrowserRouter(
             //   element: <DetailDesigner />,
             // },
           ],
+        },
+        {
+          path: '*',
+          element: <NotFound />,
         },
       ],
     },
