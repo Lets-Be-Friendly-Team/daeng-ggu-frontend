@@ -51,13 +51,14 @@ const MyPage = () => {
       ),
     },
   ];
-  const handleNavigateMain = () => {
-    navigate('/');
-  };
+  // const handleNavigateMain = () => {
+  //   navigate('/');
+  // };
   return (
     <div className='pb-[185px]'>
       <PageContainer>
-        <Header mode='back' title='마이페이지' onClick={handleNavigateMain} />
+        {/* <Header mode='back' title='마이페이지' onClick={handleNavigateMain} /> */}
+        <Header mode='main' />
         <Profile
           nickname={profileData.nickname}
           designerImgUrl={profileData.designerImgUrl}
@@ -66,11 +67,13 @@ const MyPage = () => {
           possibleBreeds={profileData.possibleBreeds}
           reviewStarAvg={profileData.reviewStarAvg}
           reviewLikeCntAll={profileData.reviewLikeCntAll}
-          address={profileData.address1}
+          address={`${profileData.address2} ${profileData.detailAddress}`}
           introduction={profileData.introduction}
           workExperience={profileData.workExperience}
         />
-        <CategoryTab tabs={tabs} padding='px-[8rem]' />
+        <div className='mt-[2rem]'>
+          <CategoryTab tabs={tabs} padding='px-[8rem]' />
+        </div>
       </PageContainer>
     </div>
   );

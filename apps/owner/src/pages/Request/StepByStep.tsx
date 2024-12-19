@@ -4,15 +4,18 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import {
   Calendar,
   Header,
+  Modal,
   PageContainer,
   Progress,
   RadioGroup,
   RadioGroupItem,
   RegionSelector,
+  TextArea,
   TimeSelect,
   TypeOneButton,
   TypeTwoButton,
 } from '@daeng-ggu/design-system';
+import { useModalStore } from '@daeng-ggu/shared';
 import { format } from 'date-fns';
 
 import { GetOwnerPetProfileResponse } from '@/apis/request/getOwnerPetProfile';
@@ -46,6 +49,13 @@ interface StepByStepProps {
 }
 
 const StepByStep = ({ stepCount, profileData, onProfileSelect }: StepByStepProps) => {
+  const { resetStep } = useStepStore();
+  useEffect(() => {
+    return () => {
+      resetStep(); // Reset step store
+    };
+  }, [resetStep]);
+  const { show } = useModalStore();
   const { currentStep, nextStep, prevStep, setDirection, direction } = useStepStore();
   const [selectedPet, setSelectedPet] = useState<number>(0);
   const [selectedOptions, setSelectedOptions] = useState<{ [key: number]: string }>({});
@@ -80,37 +90,37 @@ const StepByStep = ({ stepCount, profileData, onProfileSelect }: StepByStepProps
   const stepData: StepData[] = [
     {
       step: 3,
-      title: '원하시는 서비스를 선택 해주세요.',
+      title: '원하시는 서비스를 선택 해주세요',
       options: ['목욕', '풀케어 서비스', '전체미용', '부분미용', '위생미용', '스파'],
     },
     {
       step: 4,
-      title: '마지막 미용시기를 알려주세요.',
+      title: '마지막 미용시기를 알려주세요',
       options: ['첫 미용', '1달 내외', '2달 내외', '3달 내외', '잘 모르겠어요'],
     },
     {
       step: 5,
-      title: '지역을 선택 해주세요.',
+      title: '지역을 선택 해주세요',
       options: ['지역 선택하기', '무관'],
     },
     {
       step: 6,
-      title: '날짜를 선택 해주세요.',
+      title: '날짜를 선택 해주세요',
       options: ['날짜 선택하기', '무관'],
     },
     {
       step: 7,
-      title: '댕동 서비스 이용 여부를 확인 해주세요.',
+      title: '댕동 서비스 이용 여부를 확인 해주세요',
       options: ['댕동 이용하기', '직접 픽업'],
     },
     {
       step: 8,
-      title: '모니터링 여부를 확인 해주세요.',
+      title: '모니터링 여부를 확인 해주세요',
       options: ['예', '아니오'],
     },
     {
       step: 9,
-      title: '서비스 관련 문의사항을 남겨주세요.',
+      title: '서비스 관련 문의사항을 남겨주세요',
       options: ['없음', '지금 작성하기'],
     },
   ];
@@ -132,7 +142,7 @@ const StepByStep = ({ stepCount, profileData, onProfileSelect }: StepByStepProps
   };
 
   const handleNextStep = () => {
-    if (currentStep === 9 && selectedOptions[currentStep] === '지금 작성할게요.' && !userInput.trim()) {
+    if (currentStep === 9 && selectedOptions[currentStep] === '지금 작성하기' && !userInput.trim()) {
       return;
     }
     setDirection('forward');
@@ -309,13 +319,23 @@ const StepByStep = ({ stepCount, profileData, onProfileSelect }: StepByStepProps
               text='프로필 수정하기'
               color='bg-secondary'
               onClick={() => {
-                if (window.confirm('프로필 수정 시 견적서를 다시 요청해야 합니다. 진행하시겠습니까?')) {
-                  navigate(`/profile/pet/edit/:${selectedPet}`);
+                // if (window.confirm('프로필 수정 시 견적서를 다시 요청해야 합니다. 진행하시겠습니까?')) {
+                //   navigate(`/profile/pet/edit/${selectedPet}`);
 
-                  console.log('Profile editing confirmed', selectedPet);
-                } else {
-                  console.log('Profile editing canceled');
-                }
+                //   console.log('Profile editing confirmed', selectedPet);
+                // } else {
+                //   console.log('Profile editing canceled');
+                // }
+                show(Modal, {
+                  title: '반려견 프로필 수정',
+                  description: '프로필 수정 시 견적서를 다시 요청해야 합니다. 진행하시겠습니까?',
+                  onConfirm: () => {
+                    navigate(`/profile/pet/edit/${selectedPet}`);
+                  },
+                  onClose: () => close(),
+                  confirmText: '수정하기',
+                  cancelText: '취소',
+                });
               }}
             />
             <div className='mt-4 flex w-full flex-col items-center'>
@@ -371,7 +391,7 @@ const StepByStep = ({ stepCount, profileData, onProfileSelect }: StepByStepProps
             value={selectedOptions[currentStep] || ''}
             onValueChange={(value: string) => {
               setSelectedOptions((prev) => ({ ...prev, [currentStep]: value }));
-              if (currentStep === 9 && value !== '지금 작성하기.') {
+              if (currentStep === 9 && value !== '지금 작성하기') {
                 setUserInput('');
               }
               if (
@@ -437,14 +457,23 @@ const StepByStep = ({ stepCount, profileData, onProfileSelect }: StepByStepProps
                       className='w-full overflow-hidden transition-all duration-300 ease-in-out'
                       style={{ height: 'auto' }}
                     >
-                      <textarea
+                      <div className='py-[0.8rem]'>
+                        <TextArea
+                          value={userInput}
+                          onChange={(e) => setUserInput(e.target.value)}
+                          placeholder='문의하실 내용을 작성해주세요'
+                          maxLength={200}
+                          bgColor='bg-white'
+                        />
+                      </div>
+                      {/* <textarea
                         rows={6}
                         className='mt-2 max-h-[160px] min-h-[40px] w-full rounded-md border border-primary p-2 text-gray-700 scrollbar-hide focus:border-primary focus:outline-none'
                         placeholder='내용을 작성해주세요.'
                         value={userInput}
                         onChange={(e) => setUserInput(e.target.value)}
-                      />
-                      <TypeTwoButton text='다음 단계로 가기' color='bg-secondary' onClick={handleNextStep} />
+                      /> */}
+                      <TypeTwoButton text='다음 단계로 가기' color='bg-primary' onClick={handleNextStep} />
                     </div>
                   )}
               </div>

@@ -123,7 +123,7 @@ const EditPetProfilePage = () => {
     onSuccess: (data) => {
       // 반려견 등록 성공시
       console.log('반려견 프로필 수정 성공', data);
-      navigate(-1);
+      navigateBack();
     },
     onError: (error) => {
       // 반려견 등록 실패시

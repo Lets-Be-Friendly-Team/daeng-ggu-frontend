@@ -38,7 +38,7 @@ const CompletedRequestUser = ({ data }: CompletedRequestUserProps) => {
   };
 
   return (
-    <div className='mx-auto mb-[100px] flex w-full flex-col items-center pt-10'>
+    <div className='mx-auto flex w-full flex-col items-center pt-10'>
       {data.length > 0 ? (
         <div className='w-full'>
           <BorderContainer>

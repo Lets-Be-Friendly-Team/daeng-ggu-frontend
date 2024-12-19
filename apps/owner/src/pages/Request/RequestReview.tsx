@@ -1,7 +1,7 @@
 // src/components/RequestReview.tsx
 
 import { useState } from 'react';
-import { BorderContainer, PageContainer } from '@daeng-ggu/design-system';
+import { BorderContainer, BulbIcon, PageContainer } from '@daeng-ggu/design-system';
 import { RadioGroup, RadioGroupItem } from '@daeng-ggu/design-system';
 
 import editIcon from '@/assets/edit.svg';
@@ -13,38 +13,38 @@ import formatDateTime from './../../../../../node_modules/@daeng-ggu/design-syst
 const defaultStepData: StepData[] = [
   {
     step: 3,
-    title: '원하시는 서비스를 선택 해주세요.',
+    title: '원하시는 서비스를 선택 해주세요',
     options: ['목욕', '풀케어 서비스', '전체미용', '부분미용', '위생미용', '스파'],
   },
   {
     step: 4,
-    title: '마지막 미용시기를 알려주세요.',
-    options: ['첫 미용', '1달 내외', '2달 내외', '3달 내외', '잘 모르겠어요.'],
+    title: '마지막 미용시기를 알려주세요',
+    options: ['첫 미용', '1달 내외', '2달 내외', '3달 내외', '잘 모르겠어요'],
   },
   {
     step: 5,
-    title: '지역을 선택 해주세요.',
+    title: '지역을 선택 해주세요',
     options: ['지역 선택하기', '무관'],
   },
   {
     step: 6,
-    title: '날짜를 선택 해주세요.',
+    title: '날짜를 선택 해주세요',
     options: ['날짜 선택하기', '무관'],
   },
   {
     step: 7,
-    title: '반려견 픽업 여부를 확인 해주세요.',
+    title: '반려견 픽업 여부를 확인 해주세요',
     options: ['네', '아니오'],
   },
   {
     step: 8,
-    title: '모니터링 여부를 확인 해주세요.',
+    title: '모니터링 여부를 확인 해주세요',
     options: ['네', '아니오'],
   },
   {
     step: 9,
-    title: '서비스 관련 문의사항을 남겨주세요.',
-    options: ['따로 논의할께요', '지금 작성할게요.'],
+    title: '서비스 관련 문의사항을 남겨주세요',
+    options: ['따로 논의할게요', '지금 작성할게요'],
   },
 ];
 
@@ -144,8 +144,9 @@ const RequestReview = ({
             )}
 
             <div className='mb-4 rounded-md px-6 py-10 shadow'>
-              <div className='items-start'>
-                <h2 className='py-6 text-center text-sub_h1 text-gray-700'>요청 상세</h2>
+              <div className='mb-10 flex items-start gap-2'>
+                <BulbIcon className='w-[2rem]' color='fill-gray-800' />
+                <h2 className='text-center text-sub_h1 font-semibold text-gray-700'>요청 상세</h2>
               </div>
               <ul className=''>
                 {stepData.map(({ step, title, options }) => (
@@ -249,7 +250,11 @@ const RequestReview = ({
             {pageMode === 'designer' && selectedProfile && (
               <>
                 <div className='rounded-md px-6 py-10 shadow'>
-                  <h2 className='py-6 text-center text-sub_h1 text-gray-700'>댕송지 정보</h2>
+                  {/* <h2 className='py-6 text-center text-sub_h1 text-gray-700'>댕송지 정보</h2> */}
+                  <div className='mb-10 flex items-start gap-2'>
+                    <BulbIcon className='w-[2rem]' color='fill-gray-800' />
+                    <h2 className='text-center text-sub_h1 font-semibold text-gray-700'>댕송지 정보</h2>
+                  </div>
                   <div className='flex flex-col items-start gap-3 text-gray-800'>
                     <p className='text-sub_h2 font-bold'>{selectedProfile.customerName || '정보 없음'}</p>
                     <p className='text-body3 font-bold text-gray-800'>{selectedProfile.phone || '정보 없음'}</p>
