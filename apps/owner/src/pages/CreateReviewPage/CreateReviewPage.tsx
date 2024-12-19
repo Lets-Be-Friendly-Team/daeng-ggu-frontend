@@ -1,6 +1,7 @@
 import { ChangeEvent, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Header, ImageUploader, PageContainer, StarRating, TextArea, TypeOneButton } from '@daeng-ggu/design-system';
+import { useToast } from '@daeng-ggu/shared';
 
 import useMultipleImageUpload from '@/hooks/queries/ImageUpload/useMultipleImageUpload';
 import usePostReview from '@/hooks/queries/Review/usePostReview';
@@ -10,6 +11,7 @@ const CreateReviewPage = () => {
   const [ratingState, setRatingState] = useState(0);
   const [reviewContent, setReviewContent] = useState('');
   const navigate = useNavigate();
+  const { showToast } = useToast();
 
   const { mutateAsync: postReview } = usePostReview();
   const { mutateAsync: uploadImage } = useMultipleImageUpload();
@@ -40,11 +42,11 @@ const CreateReviewPage = () => {
       };
 
       await postReview(reviewData);
-      alert('리뷰가 성공적으로 등록되었습니다.');
+      showToast({ message: '리뷰가 등록 되었습니다!', type: 'confirm' });
       navigate('/profile');
     } catch (error) {
       console.error(error);
-      alert('리뷰 등록에 실패했습니다. 다시 시도해주세요.');
+      showToast({ message: '리뷰가 등록되지 않았습니다. 다시 시도해주세요!', type: 'error' });
     }
   };
 

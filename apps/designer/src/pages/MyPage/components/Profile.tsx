@@ -13,10 +13,11 @@ import {
   TypeTwoButton,
   UserProfileImage,
 } from '@daeng-ggu/design-system';
-import { useModalStore } from '@daeng-ggu/shared';
+import { useModalStore, useToast } from '@daeng-ggu/shared';
 
 import getLogin from '@/apis/Login/getLogin';
 import ROUTES from '@/constants/routes';
+import useDeleteProfile from '@/hooks/queries/Profile/useDeleteProfile';
 import useDesignerIdStore from '@/stores/useDesignerIdStore';
 
 interface IProfileProps {
@@ -50,6 +51,9 @@ const Profile = ({
   const navigate = useNavigate();
   const goToReservations = () => navigate(`${ROUTES.reservation}`);
   const goToEditProfile = () => navigate(`/profile/${ROUTES.profileEdit}`);
+  const { mutate: deleteProfile } = useDeleteProfile();
+  const { designerId } = useDesignerIdStore();
+  const { showToast } = useToast();
 
   const extractBracketContent = (text: string) => {
     const match = text.match(/\(([^)]+)\)/);
@@ -115,7 +119,21 @@ const Profile = ({
     show(Modal, {
       title: '내 프로필 삭제',
       description: '삭제 시 보호자와의 매칭이 불가합니다. 프로필을 삭제하시겠습니까?',
-      onConfirm: () => {},
+      onConfirm: () => {
+        deleteProfile(
+          { designerId: Number(designerId) },
+          {
+            onSuccess: () => {
+              console.log('리뷰 삭제 성공');
+              showToast({ message: '프로필이 삭제 되었습니다!', type: 'confirm' });
+              navigate('/signup/success');
+            },
+            onError: (error) => {
+              console.error('프로필 삭제 실패', error);
+            },
+          },
+        );
+      },
       onClose: () => close(),
       confirmText: '네',
       cancelText: '아니오',

@@ -13,7 +13,6 @@ const MyPage = () => {
   // const designerId = 2;
   const { designerId } = useDesignerIdStore();
   const { data: profileData, isError } = useGetProfile(designerId);
-  console.log(profileData);
 
   if (isError || !profileData) {
     return (

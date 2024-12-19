@@ -9,6 +9,7 @@ import {
   TypeOneButton,
   TypeTwoButton,
 } from '@daeng-ggu/design-system';
+import { useToast } from '@daeng-ggu/shared';
 
 // 실제 컴포넌트 경로는 프로젝트 구조에 맞게 변경
 import useGetProfileDetail from '@/hooks/queries/CustomerProfile/useGetProfileDetail';
@@ -18,12 +19,11 @@ import useOwnerIdStore from '@/stores/useOwnerIdStore';
 
 const EditUserProfilePage = () => {
   const navigate = useNavigate();
-  // const customerId = 2;
   const { ownerId } = useOwnerIdStore();
   const { data: profileData } = useGetProfileDetail(ownerId);
   const { mutateAsync: updateProfile } = useUpdateProfile();
   const { mutateAsync: uploadImage } = useSingleImageUpload();
-
+  const { showToast } = useToast();
   const [formData, setFormData] = useState({
     customerId: ownerId,
     customerName: '',
@@ -67,10 +67,10 @@ const EditUserProfilePage = () => {
       };
 
       await updateProfile(updatedFormData);
-
-      navigate('/profile'); // 수정 완료 후 이동할 경로에 맞춰 변경
+      showToast({ message: '프로필이 수정 되었습니다!', type: 'confirm' });
+      navigate('/profile');
     } catch (error) {
-      alert('프로필 저장에 실패했습니다.');
+      showToast({ message: '프로필이 수정되지 않았습니다. 다시 시도해주세요!', type: 'error' });
       console.error(error);
     }
   };

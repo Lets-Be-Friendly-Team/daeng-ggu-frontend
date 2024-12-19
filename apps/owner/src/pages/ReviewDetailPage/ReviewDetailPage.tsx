@@ -89,12 +89,11 @@ const ReviewDetail = () => {
           { reviewId: Number(reviewId) },
           {
             onSuccess: () => {
-              console.log('리뷰 삭제 성공');
               showToast({ message: '리뷰가 삭제 되었습니다!', type: 'confirm' });
               navigateBack();
             },
-            onError: (error) => {
-              console.error('리뷰 삭제 실패', error);
+            onError: () => {
+              showToast({ message: '리뷰가 삭제되지 않았습니다. 다시 시도해주세요!', type: 'error' });
             },
           },
         );

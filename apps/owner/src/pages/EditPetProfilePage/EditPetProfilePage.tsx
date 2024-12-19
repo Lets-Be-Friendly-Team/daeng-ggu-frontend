@@ -87,14 +87,14 @@ const EditPetProfilePage = () => {
       description: '프로필을 삭제하면 되돌릴 수 없습니다.',
       onConfirm: () => {
         deletePetProfile(
-          { customerId: ownerId, petId: Number(petId) },
+          { customerId: Number(ownerId), petId: Number(petId) },
           {
             onSuccess: () => {
-              console.log('반려동물 프로필 삭제 성공');
               showToast({ message: '반려견 프로필이 삭제 되었습니다!', type: 'confirm' });
               navigateBack();
             },
             onError: (error) => {
+              showToast({ message: '반려견 프로필이 삭제되지 않았습니다. 다시 시도해주세요!', type: 'error' });
               console.error('반려동물 프로필 삭제 실패', error);
             },
           },
