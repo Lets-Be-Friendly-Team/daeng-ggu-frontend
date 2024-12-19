@@ -40,45 +40,48 @@ const DetailPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const pageMode: PageMode = 'designer';
-
   const sendingRequestId = location.state?.suggestRequestId;
   console.log('requestId:', sendingRequestId);
 
   // Using the query hook with suspense
   const { data: postData } = usePostDetailPage({ requestId: sendingRequestId ? Number(sendingRequestId) : undefined });
 
+  if (!postData) {
+    return null;
+  }
+
   console.log('so... what is this?: ', postData);
-  const isNeuteredBoolean = postData.isNeutered === 'Y';
+  const isNeuteredBoolean = postData?.isNeutered === 'Y';
 
   const profile: ProfileData = {
-    petId: postData.petId,
-    petName: postData.petName,
-    petImageUrl: postData.petImageUrl,
-    petImgName: postData.petImageName,
-    birthDate: postData.birthDate,
-    gender: postData.gender,
+    petId: postData?.petId,
+    petName: postData?.petName,
+    petImageUrl: postData?.petImageUrl,
+    petImgName: postData?.petImageName,
+    birthDate: postData?.birthDate,
+    gender: postData?.gender,
     isNeutered: isNeuteredBoolean,
-    weight: postData.weight,
-    majorBreedCode: postData.majorBreedCode,
-    majorBreed: postData.majorBreed,
-    subBreedCode: postData.subBreedCode,
-    subBreed: postData.subBreed,
-    specialNotes: postData.specialNotes,
-    isRequested: postData.isRequested,
-    customerName: postData.customerName,
-    phone: postData.phone,
-    address: postData.address,
-    desiredServiceCode: postData.desiredServiceCode,
+    weight: postData?.weight,
+    majorBreedCode: postData?.majorBreedCode,
+    majorBreed: postData?.majorBreed,
+    subBreedCode: postData?.subBreedCode,
+    subBreed: postData?.subBreed,
+    specialNotes: postData?.specialNotes,
+    isRequested: postData?.isRequested,
+    customerName: postData?.customerName,
+    phone: postData?.phone,
+    address: postData?.address,
+    desiredServiceCode: postData?.desiredServiceCode,
   };
 
-  const lastGroomingDate = postData.lastGroomingDate || '정보 없음';
-  const desiredDate1 = postData.desiredDate1 || '';
-  const desiredDate2 = postData.desiredDate2 || '';
-  const desiredDate3 = postData.desiredDate2 || '';
-  const desiredRegion = postData.desiredRegion || '정보 없음';
-  const additionalRequest = postData.additionalRequest || '정보 없음';
-  const isVisitRequired = postData.isVisitRequired ?? false;
-  const isMonitoringIncluded = postData.isMonitoringIncluded ?? false;
+  const lastGroomingDate = postData?.lastGroomingDate || '정보 없음';
+  const desiredDate1 = postData?.desiredDate1 || '';
+  const desiredDate2 = postData?.desiredDate2 || '';
+  const desiredDate3 = postData?.desiredDate2 || '';
+  const desiredRegion = postData?.desiredRegion || '정보 없음';
+  const additionalRequest = postData?.additionalRequest || '정보 없음';
+  const isVisitRequired = postData?.isVisitRequired ?? false;
+  const isMonitoringIncluded = postData?.isMonitoringIncluded ?? false;
 
   const getSelectedOptions = (): { [key: number]: string } => {
     return {

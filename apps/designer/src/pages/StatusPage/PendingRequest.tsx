@@ -28,7 +28,7 @@ const PendingRequest = ({ data }: PendingRequestProps) => {
   }
   console.log('checking post request id: ', data[0].requestId);
 
-  return <PendingRequestDesigner data={data as DesignerRequest[]} />;
+  return <PendingRequestDesigner data={data} />;
 };
 
 export default PendingRequest;

@@ -17,6 +17,7 @@ import { format } from 'date-fns';
 
 import { GetOwnerPetProfileResponse } from '@/apis/request/getOwnerPetProfile';
 import editIcon from '@/assets/edit.svg';
+import ROUTES from '@/constants/routes';
 import useCreateBidRequest from '@/hooks/queries/Request/useCreateBidRequest.ts';
 import ProfileButton from '@/pages/Request/ProfileButton';
 import ProfileViewer from '@/pages/Request/ProfileViewer';
@@ -489,6 +490,8 @@ const StepByStep = ({ stepCount, profileData, onProfileSelect }: StepByStepProps
       additionalRequest: userInput,
     };
     createBidRequestMutation.mutate(data);
+    navigate('/' + ROUTES.bid);
+
     console.log(JSON.stringify(data));
   };
 
