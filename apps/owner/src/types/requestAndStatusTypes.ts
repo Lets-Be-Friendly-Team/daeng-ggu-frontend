@@ -100,6 +100,7 @@ export interface Estimate {
 
 export interface PendingPet {
   petId: number;
+  requestId: number;
   petName: string;
   petImageUrl: string;
   desiredServiceCode?: string;
