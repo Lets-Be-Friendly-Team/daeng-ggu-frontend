@@ -14,15 +14,17 @@ import {
   TypeOneButton,
   TypeTwoButton,
 } from '@daeng-ggu/design-system';
-import { useQueryClient } from '@tanstack/react-query'; // 추가
+import { useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
 
+import { PaymentDetailsResponse } from '@/apis/payment/getPaymentOrderId.ts';
 import { GetOwnerPetProfileResponse } from '@/apis/request/getOwnerPetProfile';
 import editIcon from '@/assets/edit.svg';
 import useCreateBidRequest from '@/hooks/queries/Request/useCreateBidRequest.ts';
+import DirectRequestReview from '@/pages/DirectRequestPage/DirectRequestReview.tsx';
 import ProfileButton from '@/pages/Request/ProfileButton';
 import ProfileViewer from '@/pages/Request/ProfileViewer';
-import RequestReview from '@/pages/Request/RequestReview';
+import useReservationStoreOne from '@/stores/useReservationStoreOne.ts';
 import { useStepStore } from '@/stores/useStepStore';
 
 import '@/styles/sequenceAnimation.css';
@@ -53,10 +55,30 @@ interface StepByStepProps {
   profileData: GetOwnerPetProfileResponse[];
   onProfileSelect: (_petId: number) => void;
   designerId: number | undefined;
-  paymentDetails: string;
+  paymentDetails?: PaymentDetailsResponse;
 }
 
 const DirectStepByStep = ({ stepCount, profileData, onProfileSelect, designerId, paymentDetails }: StepByStepProps) => {
+  // Destructure setters from the Zustand store
+  const {
+    setOrderId,
+    setCustomerKey,
+    setAmount,
+    setGroomingFee,
+    setDeliveryFee,
+    setMonitoringFee,
+    setTotalPayment,
+    setPetId,
+    // setReservationDate,
+    // setStartTime,
+    // setEndTime,
+  } = useReservationStoreOne();
+
+  // Subscribe to fee values from the store to trigger re-renders on change
+  const groomingFee = useReservationStoreOne((state) => state.groomingFee) || 0;
+  const deliveryFee = useReservationStoreOne((state) => state.deliveryFee) || 0;
+  const monitoringFee = useReservationStoreOne((state) => state.monitoringFee) || 0;
+
   const { currentStep, nextStep, prevStep, setDirection, direction } = useStepStore();
   const [selectedPet, setSelectedPet] = useState<number>(0);
   const [selectedOptions, setSelectedOptions] = useState<{ [key: number]: string }>({});
@@ -83,17 +105,21 @@ const DirectStepByStep = ({ stepCount, profileData, onProfileSelect, designerId,
   const [activeDateIndex, setActiveDateIndex] = useState<number | null>(null);
   const [showCalendar, setShowCalendar] = useState<boolean>(false);
 
-  // 선택한 날짜에 따른 availableTimes를 관리하는 state
+  // Selected date's available times
   const [currentAvailableTimes, setCurrentAvailableTimes] = useState<number[]>([]);
 
-  // TimeSelect 표시 여부 (날짜를 선택한 뒤 시간선택 가능 상태일 때 true)
+  // TimeSelect visibility
   const [showTimeSelect, setShowTimeSelect] = useState<boolean>(false);
 
   const nodeRefs = useRef<Record<number, React.RefObject<HTMLDivElement>>>({});
   const neutralButtonRef = useRef<HTMLDivElement | null>(null);
   const buttonRef = useRef<HTMLDivElement>(null);
 
-  const queryClient = useQueryClient(); // 추가
+  const queryClient = useQueryClient();
+
+  // Define default fees
+  const DELIVERY_FEE_DEFAULT = 30000; // Example value
+  const MONITORING_FEE_DEFAULT = 20000; // Example value
 
   const stepData: StepData[] = [
     {
@@ -114,12 +140,12 @@ const DirectStepByStep = ({ stepCount, profileData, onProfileSelect, designerId,
     {
       step: 6,
       title: '반려견 픽업 여부를 확인 해주세요.',
-      options: ['원해요', '괜찮아요'],
+      options: ['네', '아니오'],
     },
     {
       step: 7,
       title: '모니터링 여부를 확인 해주세요.',
-      options: ['원해요', '괜찮아요'],
+      options: ['네', '아니오'],
     },
     {
       step: 8,
@@ -137,13 +163,16 @@ const DirectStepByStep = ({ stepCount, profileData, onProfileSelect, designerId,
     return nodeRefs.current[key];
   };
 
+  // Handle profile selection
   const handleProfileClick = (petId: number) => {
     onProfileSelect(petId);
     setSelectedPet(petId);
+    setPetId(petId);
     setDirection('forward');
     setTimeout(() => nextStep(), 0);
   };
 
+  // Handle moving to the next step
   const handleNextStep = () => {
     if (currentStep === 8 && selectedOptions[currentStep] === '지금 작성할게요.' && !userInput.trim()) {
       return;
@@ -152,6 +181,7 @@ const DirectStepByStep = ({ stepCount, profileData, onProfileSelect, designerId,
     setTimeout(() => nextStep(), 0);
   };
 
+  // Handle moving to the previous step
   const handlePrevStep = () => {
     if (currentStep === 5 && showDateSelector) {
       setShowDateSelector(false);
@@ -163,6 +193,7 @@ const DirectStepByStep = ({ stepCount, profileData, onProfileSelect, designerId,
     }
   };
 
+  // Update container height based on the current step
   useEffect(() => {
     const activeRef = nodeRefs.current[currentStep];
     if (activeRef && activeRef.current) {
@@ -191,13 +222,13 @@ const DirectStepByStep = ({ stepCount, profileData, onProfileSelect, designerId,
       newDateTimes[activeDateIndex].selectedDate = date;
       setSelectedDateTimes(newDateTimes);
 
-      // 날짜 선택 시 해당 month의 availability data에서 해당 날짜의 availableTimes를 추출
+      // Fetch availability data for the selected date
       if (designerId) {
         const year = date.getFullYear();
         const month = date.getMonth() + 1;
         const dateStr = format(date, 'yyyy-MM-dd');
 
-        // prefetchQuery로 캐싱한 데이터를 가져옴
+        // Retrieve cached availability data
         const availabilityData = queryClient.getQueryData<AvailabilityData>(['availability', designerId, year, month]);
 
         if (availabilityData && availabilityData.data) {
@@ -231,6 +262,78 @@ const DirectStepByStep = ({ stepCount, profileData, onProfileSelect, designerId,
     setActiveDateIndex(null);
   };
 
+  // Function to set grooming fee based on selected service
+  const setGroomingFeeBasedOnService = (service: string) => {
+    let fee = 0;
+    switch (service) {
+      case '목욕':
+        fee = 50000;
+        break;
+      case '풀케어 서비스':
+        fee = 300000;
+        break;
+      case '전체미용':
+        fee = 200000;
+        break;
+      case '부분미용':
+        fee = 100000;
+        break;
+      case '위생미용':
+        fee = 80000;
+        break;
+      case '스파':
+        fee = 100000;
+        break;
+      default:
+        fee = 0;
+    }
+    setGroomingFee(fee);
+  };
+
+  // Watch for changes in selected service to set grooming fee
+  useEffect(() => {
+    const selectedService = selectedOptions[3];
+    if (selectedService) {
+      setGroomingFeeBasedOnService(selectedService);
+    }
+  }, [selectedOptions[3], setGroomingFee]);
+
+  // Watch for changes in delivery selection to set delivery fee
+  useEffect(() => {
+    const deliveryOption = selectedOptions[6];
+    if (deliveryOption === '네') {
+      setDeliveryFee(DELIVERY_FEE_DEFAULT);
+    } else if (deliveryOption === '아니오') {
+      setDeliveryFee(0);
+    }
+  }, [selectedOptions[6], setDeliveryFee]);
+
+  // Watch for changes in monitoring selection to set monitoring fee
+  useEffect(() => {
+    const monitoringOption = selectedOptions[7];
+    if (monitoringOption === '네') {
+      setMonitoringFee(MONITORING_FEE_DEFAULT);
+    } else if (monitoringOption === '아니오') {
+      setMonitoringFee(0);
+    }
+  }, [selectedOptions[7], setMonitoringFee]);
+
+  // Recalculate total whenever fees change
+  useEffect(() => {
+    const total = groomingFee + deliveryFee + monitoringFee;
+    setAmount(total);
+    setTotalPayment(total);
+  }, [groomingFee, deliveryFee, monitoringFee, setAmount, setTotalPayment]);
+
+  // Handle storing paymentDetails into the store
+  useEffect(() => {
+    if (paymentDetails) {
+      setOrderId(paymentDetails.orderId);
+      setCustomerKey(paymentDetails.customerKey);
+    }
+  }, [paymentDetails, setOrderId, setCustomerKey]);
+
+  // Function to render the date selector
   const renderDateSelector = () => {
     return (
       <div className='m-auto mt-4 flex w-full flex-col gap-2'>
@@ -263,7 +366,6 @@ const DirectStepByStep = ({ stepCount, profileData, onProfileSelect, designerId,
             {showTimeSelect && (
               <>
                 <h3 className='my-4 text-sub_h3 font-bold'>시간을 선택해주세요:</h3>
-                {/* 여기서 currentAvailableTimes를 TimeSelect에 전달하여 불가능한 시간을 비활성화 */}
                 <TimeSelect
                   availableTimes={currentAvailableTimes}
                   selectValue={selectedDateTimes[activeDateIndex].selectedTime}
@@ -339,7 +441,7 @@ const DirectStepByStep = ({ stepCount, profileData, onProfileSelect, designerId,
               color='bg-secondary'
               onClick={() => {
                 if (window.confirm('프로필을 수정하면 견적서를 다시 요청해야 합니다. 진행하시겠습니까?')) {
-                  navigate(`/profile/pet/edit/:${selectedPet}`);
+                  navigate(`/profile/pet/edit/${selectedPet}`);
                 }
               }}
             />
@@ -354,8 +456,9 @@ const DirectStepByStep = ({ stepCount, profileData, onProfileSelect, designerId,
 
   const renderOtherSteps = () => {
     if (currentStep === 9) {
+      console.log('State after setting in RequestReview:', useReservationStoreOne.getState());
       return (
-        <RequestReview
+        <DirectRequestReview
           selectedPet={selectedPet}
           selectedOptions={{
             ...selectedOptions,
@@ -415,7 +518,7 @@ const DirectStepByStep = ({ stepCount, profileData, onProfileSelect, designerId,
                   if (currentStep === 5 && option === '날짜 선택하기') {
                     setShowDateSelector(true);
                   } else if (currentStep === 8 && option === '지금 작성할게요.') {
-                    // textarea 표시
+                    // Show textarea
                   } else {
                     handleNextStep();
                   }
@@ -480,7 +583,15 @@ const DirectStepByStep = ({ stepCount, profileData, onProfileSelect, designerId,
   };
 
   const createBidRequestMutation = useCreateBidRequest();
+
   const handleReservation = () => {
+    if (!paymentDetails) {
+      // Handle the case when paymentDetails is not provided
+      console.error('Payment details are missing.');
+      alert('결제 정보가 누락되었습니다. 다시 시도해주세요.');
+      return;
+    }
+
     const toISODateTime = (dateStr: string) => {
       if (!dateStr) return '';
       return dateStr.replace(' ', 'T');
@@ -494,14 +605,21 @@ const DirectStepByStep = ({ stepCount, profileData, onProfileSelect, designerId,
       desiredDate1: toISODateTime(selectedDateTimes[0].dateStr || ''),
       desiredDate2: toISODateTime(selectedDateTimes[1].dateStr || ''),
       desiredDate3: toISODateTime(selectedDateTimes[2].dateStr || ''),
-      isVisitRequired: selectedOptions[7] === '원해요',
-      isMonitoringIncluded: selectedOptions[8] === '원해요',
+      isVisitRequired: selectedOptions[6] === '네',
+      isMonitoringIncluded: selectedOptions[7] === '네',
       additionalRequest: userInput,
+      paymentDetails: {
+        orderId: useReservationStoreOne.getState().orderId,
+        customerKey: useReservationStoreOne.getState().customerKey,
+      },
+      amount: useReservationStoreOne.getState().amount,
+      totalPayment: useReservationStoreOne.getState().totalPayment,
     };
     createBidRequestMutation.mutate(data);
     console.log(JSON.stringify(data));
   };
 
+  // Watch for changes in paymentDetails and log them
   useEffect(() => {
     console.log('DesignerId:', designerId);
     console.log('PaymentDetails:', paymentDetails);
