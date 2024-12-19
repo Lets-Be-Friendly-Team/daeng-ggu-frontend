@@ -27,7 +27,7 @@ const GoLocationButton = ({ map, location }: { map: naver.maps.Map | undefined; 
 
   return (
     <button
-      className='absolute bottom-10 left-5 z-10 rounded-full bg-primary p-3 font-semibold text-white shadow-md'
+      className='absolute left-5 top-[6rem] z-10 rounded-full bg-primary p-3 font-semibold text-white shadow-md'
       onClick={handleMoveToUserLocation}
     >
       내 위치로 이동

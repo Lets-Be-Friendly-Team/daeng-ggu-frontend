@@ -59,6 +59,7 @@ const PendingRequestUser = ({ data }: PendingRequestUserProps) => {
   const estimateEmptyStateTitle = '견적서 제안이 아직 없네요!';
   const estimateEmptyStateButtonText = '새로고침하기';
   const estimateEmptyStateOnClick = () => window.location.reload();
+  console.log(data);
 
   return (
     <div className='mx-auto flex w-full flex-col items-center pt-10'>
@@ -77,11 +78,6 @@ const PendingRequestUser = ({ data }: PendingRequestUserProps) => {
                 containerClassName='h-[70px] w-[70px] rounded-full'
               />
             ))}
-            <Avatar
-              key='request-avatar'
-              mode='request'
-              onClick={() => navigate('/bid/request', { state: { from: '/bid' } })}
-            />
           </div>
         </div>
       </div>

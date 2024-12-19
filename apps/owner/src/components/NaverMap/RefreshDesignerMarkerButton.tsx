@@ -9,8 +9,8 @@ interface RefreshDesignerMarkerButtonProps extends ButtonHTMLAttributes<HTMLButt
 const RefreshDesignerMarkerButton = ({ map, handleDesignerMap, ...props }: RefreshDesignerMarkerButtonProps) => {
   const [isSpinning, setIsSpinning] = useState(false);
 
-  if (!map) return;
   const handleClick = () => {
+    if (!map) return;
     setIsSpinning(true);
     const mapBounds = map.getBounds();
 
@@ -26,7 +26,7 @@ const RefreshDesignerMarkerButton = ({ map, handleDesignerMap, ...props }: Refre
     <button
       {...props}
       onClick={handleClick}
-      className='absolute bottom-10 right-5 z-10 rounded-full bg-primary p-3 text-white shadow-md'
+      className='absolute right-5 top-[6rem] z-10 rounded-full bg-primary p-3 text-white shadow-md'
     >
       <RefreshIcon className={isSpinning ? 'animate-rotate' : ''} />
     </button>
