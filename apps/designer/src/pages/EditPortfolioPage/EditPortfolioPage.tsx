@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { Header, ImageUploader, Input, PageContainer, TextArea, TypeOneButton } from '@daeng-ggu/design-system';
+import { useToast } from '@daeng-ggu/shared';
 
 import useGetPortfolioDetail from '@/hooks/queries/DesignerProfile/useGetPortfolioDetail';
 import useUpdatePortfolio from '@/hooks/queries/DesignerProfile/useUpdatePortfolio';
@@ -20,7 +21,7 @@ const EditPortfolioPage = () => {
   const params = useParams<{ portfolioId: string }>();
   const portfolioId = params.portfolioId ? Number(params.portfolioId) : null;
   const { designerId } = useDesignerIdStore();
-
+  const { showToast } = useToast();
   const [portfolio, setPortfolio] = useState<Portfolio>({
     portfolioId: 0,
     title: '',
@@ -31,7 +32,6 @@ const EditPortfolioPage = () => {
 
   const [preImgUrlList, setPreImgUrlList] = useState<string[]>([]);
   const [preVideoUrl, setPreVideoUrl] = useState<string>('');
-  // const [deletedImgUrls, setDeletedImgUrls] = useState<string[]>([]); // New state
 
   const navigate = useNavigate();
   const { data: fetchedPortfolio } = useGetPortfolioDetail(designerId, portfolioId!);
@@ -51,7 +51,6 @@ const EditPortfolioPage = () => {
       });
       setPreImgUrlList(fetchedPortfolio.imgUrlList || []);
       setPreVideoUrl(fetchedPortfolio.videoUrl || '');
-      // setDeletedImgUrls([]); // Reset deletions on new fetch
     }
   }, [fetchedPortfolio]);
 
@@ -98,15 +97,13 @@ const EditPortfolioPage = () => {
         newImgUrlList: newImageUrls || null, // 새 이미지 URL 리스트
       };
 
-      console.log('최종 전송 데이터:', portfolioData);
-
       await updatePortfolio(portfolioData);
 
-      alert('포트폴리오가 성공적으로 수정되었습니다.');
+      showToast({ message: '포트폴리오가 수정 되었습니다!', type: 'confirm' });
       navigate('/profile');
     } catch (error) {
+      showToast({ message: '포트폴리오가 수정되지 않았습니다. 다시 시도해주세요!', type: 'error' });
       console.error('포트폴리오 수정 실패:', error);
-      alert('포트폴리오 수정에 실패했습니다.');
     }
   };
 

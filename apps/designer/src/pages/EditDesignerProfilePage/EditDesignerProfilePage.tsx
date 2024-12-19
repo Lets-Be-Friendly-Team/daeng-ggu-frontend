@@ -10,6 +10,7 @@ import {
   ServiceCheckBox,
   TypeOneButton,
 } from '@daeng-ggu/design-system';
+import { useToast } from '@daeng-ggu/shared';
 
 import useGetProfileDetail from '@/hooks/queries/DesignerProfile/useGetProfileDetail';
 import useUpdateProfile from '@/hooks/queries/DesignerProfile/useUpdateProfile';
@@ -44,6 +45,7 @@ const EditDesignerProfilePage = () => {
   const { mutateAsync: uploadImages } = useMultipleImageUpload();
   const [selectedBreeds, setSelectedBreeds] = useState<string[]>([]);
   const [newCertifications, setNewCertifications] = useState<File[]>([]);
+  const { showToast } = useToast();
 
   useEffect(() => {
     if (profileData) {
@@ -106,12 +108,11 @@ const EditDesignerProfilePage = () => {
         workExperience: formData.workExperience,
       };
 
-      console.log('전송 데이터', updatedFormData);
       await updateProfile(updatedFormData);
-
+      showToast({ message: '프로필이 수정 되었습니다!', type: 'confirm' });
       navigate('/profile');
     } catch (error) {
-      alert('프로필 저장에 실패했습니다.');
+      showToast({ message: '프로필이 수정되지 않았습니다. 다시 시도해주세요!', type: 'error' });
       console.error(error);
     }
   };

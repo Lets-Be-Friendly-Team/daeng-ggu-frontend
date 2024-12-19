@@ -53,7 +53,6 @@ const AddPortfolioInProfile = () => {
     try {
       // imgList가 항상 File[] 타입임을 보장
       const imageUrls = portfolio.imgList ? await uploadImages(portfolio.imgList) : [];
-      console.log(imageUrls);
 
       // 비디오 업로드
       let newVideoUrl: string | null = null;
@@ -75,7 +74,7 @@ const AddPortfolioInProfile = () => {
 
       await updatePortfolio(portfolioData);
 
-      showToast({ message: '포트폴리오가 성공적으로 등록되었습니다.', type: 'confirm' });
+      showToast({ message: '포트폴리오가 성공적으로 등록되었습니다!', type: 'confirm' });
       navigate('/profile');
       setPortfolio({
         title: '',
@@ -86,8 +85,8 @@ const AddPortfolioInProfile = () => {
         video: null,
       });
     } catch (error) {
+      showToast({ message: '포트폴리오가 등록되지 않았습니다. 다시 시도해주세요!', type: 'error' });
       console.log(error);
-      showToast({ message: '포트폴리오 저장을 실패했습니다', type: 'error' });
     }
   };
 
