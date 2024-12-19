@@ -25,6 +25,7 @@ const ROUTES = {
   bidDesigner: 'designer',
   bidSuggest: 'suggest',
   bidDetailDesigner: 'detailDesigner',
+  bidDirect: 'direct',
   notification: 'notification',
   payment: 'payment',
   paymentSuccess: 'success',

@@ -1,4 +1,4 @@
-// src/components/RequestReview.tsx
+// src/components/DirectRequestReview.tsx
 
 import { useState } from 'react';
 import { BorderContainer, PageContainer } from '@daeng-ggu/design-system';
@@ -6,6 +6,7 @@ import { RadioGroup, RadioGroupItem } from '@daeng-ggu/design-system';
 
 import editIcon from '@/assets/edit.svg';
 import ProfileViewer from '@/pages/Request/ProfileViewer';
+import useDirectReservationStoreOne from '@/stores/useReservationStoreOne'; // Corrected import path
 import { isDesignerProfileData, RequestReviewProps, StepData } from '@/types/requestAndStatusTypes';
 
 const defaultStepData: StepData[] = [
@@ -20,67 +21,28 @@ const defaultStepData: StepData[] = [
     options: ['첫 미용', '1달 내외', '2달 내외', '3달 내외', '잘 모르겠어요.'],
   },
   {
-    step: 5,
-    title: '지역을 선택 해주세요.',
-    options: ['지역 선택하기', '무관'],
-  },
-  {
     step: 6,
-    title: '날짜를 선택 해주세요.',
-    options: ['날짜 선택하기', '무관'],
-  },
-  {
-    step: 7,
     title: '반려견 픽업 여부를 확인 해주세요.',
     options: ['네', '아니오'],
   },
   {
-    step: 8,
+    step: 7,
     title: '모니터링 여부를 확인 해주세요.',
     options: ['네', '아니오'],
   },
   {
-    step: 9,
+    step: 8,
     title: '서비스 관련 문의사항을 남겨주세요.',
     options: ['따로 논의할께요', '지금 작성할게요.'],
   },
+  {
+    step: 9,
+    title: '날짜를 선택 해주세요.',
+    options: ['날짜 선택하기', '무관'],
+  },
 ];
 
-/**
- * 비용계산 함수는 그대로 유지
- */
-// const calculateCosts = (
-//   majorBreed: string | undefined,
-//   baseAmount: number,
-// ): { movingCost: string; totalAmount: string } => {
-//   let movingCost = 0;
-//
-//   switch (majorBreed) {
-//     case '특수견':
-//       movingCost = 70000;
-//       break;
-//     case '대형견':
-//       movingCost = 50000;
-//       break;
-//     case '중형견':
-//       movingCost = 40000;
-//       break;
-//     case '소형견':
-//       movingCost = 20000;
-//       break;
-//     default:
-//       movingCost = 0;
-//   }
-//
-//   const totalAmount = baseAmount + movingCost;
-//
-//   return {
-//     movingCost: movingCost.toLocaleString() + '원',
-//     totalAmount: totalAmount.toLocaleString() + '원',
-//   };
-// };
-
-const RequestReview = ({
+const DirectRequestReview = ({
   selectedPet,
   selectedOptions,
   profileData,
@@ -127,6 +89,18 @@ const RequestReview = ({
 
     return selectedOptions[step] || '선택되지 않음';
   };
+
+  // Extract fees from the Zustand store
+  const deliveryFee = useDirectReservationStoreOne((state) => state.deliveryFee) || 0;
+  const groomingFee = useDirectReservationStoreOne((state) => state.groomingFee) || 0;
+  const monitoringFee = useDirectReservationStoreOne((state) => state.monitoringFee) || 0;
+  const totalPayment = useDirectReservationStoreOne((state) => state.totalPayment) || 0;
+
+  // Format the fees for display
+  const formattedDeliveryFee = deliveryFee.toLocaleString() + '원';
+  const formattedGroomingFee = groomingFee.toLocaleString() + '원';
+  const formattedMonitoringFee = monitoringFee.toLocaleString() + '원';
+  const formattedTotalPayment = totalPayment.toLocaleString() + '원';
 
   return (
     <PageContainer>
@@ -184,13 +158,13 @@ const RequestReview = ({
                           </div>
                         ) : (
                           <span
-                            className={`flex items-center gap-2`} // Maintain consistent spacing
+                            className='flex items-center gap-2' // Maintain consistent spacing
                             style={{
                               minHeight: '40px', // Adjust this height as needed to match the button's height
                             }}
                           >
                             <p className='text-sub_h3 font-bold text-gray-800'>{getDisplayValue(step)}</p>
-                            {![5, 6, 9].includes(step) &&
+                            {![5, 8].includes(step) &&
                               (mode !== 'detail' ? (
                                 <button className='p-2' onClick={() => handleEdit(step)}>
                                   <img src={editIcon} alt='Edit' className='h-6 w-6' style={{ cursor: 'pointer' }} />
@@ -210,6 +184,7 @@ const RequestReview = ({
                   ))}
                 </ul>
               </BorderContainer>
+
               {pageMode === 'user' && (
                 <>
                   <div className='mb-16'>
@@ -229,25 +204,26 @@ const RequestReview = ({
                     </BorderContainer>
                   </div>
 
-                  {/*{mode == 'detail' && (*/}
-                  {/*  <>*/}
-                  {/*    <div className='mt-6 items-start'>*/}
-                  {/*      <h2 className='mb-4 text-h3 font-bold text-gray-800'>결제 정보</h2>*/}
-                  {/*    </div>*/}
-                  {/*    <BorderContainer innerPadding='p-3'>*/}
-                  {/*      <div className='flex-col items-start p-2 text-gray-800'>*/}
-                  {/*        <div className='mb-2 flex justify-between'>*/}
-                  {/*          <span>댕동비({selectedProfile ? selectedProfile.majorBreed : '정보 없음'})</span>*/}
-                  {/*          <span>{movingCost}</span>*/}
-                  {/*        </div>*/}
-                  {/*        <div className='mt-2 flex justify-between border-t pt-2 text-lg font-bold'>*/}
-                  {/*          <span>결제 금액</span>*/}
-                  {/*          <span>{totalAmount}</span>*/}
-                  {/*        </div>*/}
-                  {/*      </div>*/}
-                  {/*    </BorderContainer>*/}
-                  {/*  </>*/}
-                  {/*)}*/}
+                  {/* Uncomment and adjust as needed */}
+                  {/*{mode == 'detail' && (
+                    <>
+                      <div className='mt-6 items-start'>
+                        <h2 className='mb-4 text-h3 font-bold text-gray-800'>결제 정보</h2>
+                      </div>
+                      <BorderContainer innerPadding='p-3'>
+                        <div className='flex-col items-start p-2 text-gray-800'>
+                          <div className='mb-2 flex justify-between'>
+                            <span>댕동비({selectedProfile ? selectedProfile.majorBreed : '정보 없음'})</span>
+                            <span>{formattedDeliveryFee}</span>
+                          </div>
+                          <div className='mt-2 flex justify-between border-t pt-2 text-lg font-bold'>
+                            <span>결제 금액</span>
+                            <span>{formattedTotalPayment}</span>
+                          </div>
+                        </div>
+                      </BorderContainer>
+                    </>
+                  )}*/}
                 </>
               )}
 
@@ -265,6 +241,36 @@ const RequestReview = ({
                       </div>
                     </BorderContainer>
                   </div>
+                  <div className='mt-6 items-start'>
+                    <h2 className='mb-4 text-h3 font-bold text-gray-800'>결제 정보</h2>
+                  </div>
+                  <BorderContainer innerPadding='p-3'>
+                    <div className='flex-col items-start p-2 text-gray-800'>
+                      {/* Delivery Fee */}
+                      <div className='mb-2 flex justify-between'>
+                        <span>
+                          댕동비
+                          {selectedProfile ? `(${selectedProfile.majorBreed})` : '(정보 없음)'}
+                        </span>
+                        <span>{formattedDeliveryFee}</span>
+                      </div>
+                      {/* Grooming Fee */}
+                      <div className='mb-2 flex justify-between'>
+                        <span>미용비</span>
+                        <span>{formattedGroomingFee}</span>
+                      </div>
+                      {/* Monitoring Fee */}
+                      <div className='mb-2 flex justify-between'>
+                        <span>모니터링비</span>
+                        <span>{formattedMonitoringFee}</span>
+                      </div>
+                      {/* Total Payment */}
+                      <div className='mt-2 flex justify-between border-t pt-2 text-lg font-bold'>
+                        <span>결제 금액</span>
+                        <span>{formattedTotalPayment}</span>
+                      </div>
+                    </div>
+                  </BorderContainer>
                 </>
               )}
 
@@ -288,4 +294,4 @@ const RequestReview = ({
   );
 };
 
-export default RequestReview;
+export default DirectRequestReview;

@@ -6,7 +6,7 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 
 // Define the interface for the reservation state
 interface ReservationState {
-  // Fields
+  // Existing Fields
   orderId?: string;
   customerKey?: string;
   amount: number;
@@ -19,7 +19,16 @@ interface ReservationState {
   monitoringFee?: number;
   totalPayment: number;
 
-  // Setters
+  // New Fields
+  petId?: number;
+  designerId?: number;
+  desiredService?: string;
+  lastGroomingDate?: string; // e.g., '2023-10-10' or '잘 모르겠어요.'
+  isDelivery?: boolean;
+  isMonitoring?: boolean;
+  additionalRequest?: string;
+
+  // Setters for Existing Fields
   setOrderId: (orderId: string) => void;
   setCustomerKey: (customerKey: string) => void;
   setAmount: (amount: number) => void;
@@ -32,6 +41,15 @@ interface ReservationState {
   setMonitoringFee: (monitoringFee: number) => void;
   setTotalPayment: (totalPayment: number) => void;
 
+  // Setters for New Fields
+  setPetId: (petId: number) => void;
+  setDesignerId: (designerId: number) => void;
+  setDesiredService: (desiredService: string) => void;
+  setLastGroomingDate: (lastGroomingDate: string) => void;
+  setIsDelivery: (isDelivery: boolean) => void;
+  setIsMonitoring: (isMonitoring: boolean) => void;
+  setAdditionalRequest: (additionalRequest: string) => void;
+
   // Clear Functions
   clearAll: () => void;
 
@@ -43,7 +61,7 @@ interface ReservationState {
 const useReservationStoreOne = create<ReservationState>()(
   persist(
     (set, get) => ({
-      // Initialize all fields
+      // Initialize all existing fields
       orderId: undefined,
       customerKey: undefined,
       amount: 0,
@@ -56,7 +74,16 @@ const useReservationStoreOne = create<ReservationState>()(
       monitoringFee: undefined,
       totalPayment: 0,
 
-      // Setters
+      // Initialize new fields
+      petId: undefined,
+      designerId: undefined,
+      desiredService: undefined,
+      lastGroomingDate: undefined,
+      isDelivery: false,
+      isMonitoring: false,
+      additionalRequest: undefined,
+
+      // Setters for Existing Fields
       setOrderId: (orderId) => set({ orderId }),
       setCustomerKey: (customerKey) => set({ customerKey }),
       setAmount: (amount) => set({ amount }),
@@ -69,9 +96,19 @@ const useReservationStoreOne = create<ReservationState>()(
       setMonitoringFee: (monitoringFee) => set({ monitoringFee }),
       setTotalPayment: (totalPayment) => set({ totalPayment }),
 
+      // Setters for New Fields
+      setPetId: (petId) => set({ petId }),
+      setDesignerId: (designerId) => set({ designerId }),
+      setDesiredService: (desiredService) => set({ desiredService }),
+      setLastGroomingDate: (lastGroomingDate) => set({ lastGroomingDate }),
+      setIsDelivery: (isDelivery) => set({ isDelivery }),
+      setIsMonitoring: (isMonitoring) => set({ isMonitoring }),
+      setAdditionalRequest: (additionalRequest) => set({ additionalRequest }),
+
       // Clear All Fields
       clearAll: () =>
         set({
+          // Clear existing fields
           orderId: undefined,
           customerKey: undefined,
           amount: 0,
@@ -83,6 +120,15 @@ const useReservationStoreOne = create<ReservationState>()(
           deliveryFee: undefined,
           monitoringFee: undefined,
           totalPayment: 0,
+
+          // Clear new fields
+          petId: undefined,
+          designerId: undefined,
+          desiredService: undefined,
+          lastGroomingDate: undefined,
+          isDelivery: false,
+          isMonitoring: false,
+          additionalRequest: undefined,
         }),
 
       // Toggle persistence
@@ -119,6 +165,13 @@ const useReservationStoreOne = create<ReservationState>()(
         deliveryFee: state.deliveryFee,
         monitoringFee: state.monitoringFee,
         totalPayment: state.totalPayment,
+        petId: state.petId,
+        designerId: state.designerId,
+        desiredService: state.desiredService,
+        lastGroomingDate: state.lastGroomingDate,
+        isDelivery: state.isDelivery,
+        isMonitoring: state.isMonitoring,
+        additionalRequest: state.additionalRequest,
       }),
       */
     },

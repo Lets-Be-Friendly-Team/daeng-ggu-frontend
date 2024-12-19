@@ -1,21 +1,20 @@
-import { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+// DirectRequestPage.tsx
+import { useLocation } from 'react-router-dom';
 
+import useGetPaymentDetails from '@/hooks/queries/Payment/useGetPaymentDetail.ts';
 import useGetOwnerPetProfile from '@/hooks/queries/Request/useGetOwnerPetProfile';
-import StepByStep from '@/pages/Request/StepByStep';
+import DirectStepByStep from '@/pages/DirectRequestPage/DirectStepByStep.tsx';
 
 const DirectRequestPage = () => {
-  const navigate = useNavigate();
   const location = useLocation();
+  const designerId = location.state?.targetDesignerId;
+  console.log('this is designer Id: ', designerId);
 
+  // Data is fetched using suspense.
   const { data: profileData } = useGetOwnerPetProfile();
-  useEffect(() => {
-    const previousPath = location.state?.from || '';
-    if (previousPath !== '/bid') {
-      alert(`ㄴㄴ ${previousPath || 'unknown'}`);
-      setTimeout(() => navigate('/', { replace: true }), 0);
-    }
-  }, [location, navigate]);
+  const { data: paymentDetails } = useGetPaymentDetails();
+
+  console.log('this is paymentDetails : ', paymentDetails);
 
   const handleProfileSelect = (petId: number) => {
     console.log(petId);
@@ -23,7 +22,13 @@ const DirectRequestPage = () => {
 
   return (
     <div className='h-full w-full'>
-      {profileData && <StepByStep stepCount={10} profileData={profileData} onProfileSelect={handleProfileSelect} />}
+      <DirectStepByStep
+        stepCount={9}
+        profileData={profileData || []}
+        onProfileSelect={handleProfileSelect}
+        designerId={designerId} // 추가된 부분
+        paymentDetails={paymentDetails} // 추가된 부분
+      />
     </div>
   );
 };

@@ -35,7 +35,6 @@ const ProfileViewer = ({
 }: ProfileViewerProps) => {
   const { petImageUrl, petName, subBreed, weight, gender, isNeutered, birthDate } = profile;
   console.log("what's inside: ", profile.subBreed);
-
   return (
     <div className='flex w-full justify-center rounded-[8px] border-primary bg-white p-6'>
       <div className='flex items-center'>

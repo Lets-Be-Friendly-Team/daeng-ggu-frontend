@@ -274,7 +274,6 @@ const SuggestPage = () => {
     const filesToUpload = newImagesWithIds.map((image) => image.file);
 
     if (filesToUpload.length > 0) {
-      // Start image upload
       uploadImages(filesToUpload);
     } else {
       // If no images to upload, proceed to submit estimate
