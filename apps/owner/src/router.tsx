@@ -1,7 +1,6 @@
 import { Suspense } from 'react';
 import { createBrowserRouter, Outlet } from 'react-router-dom';
-import { LogContainer, RouterErrorFallback } from '@daeng-ggu/shared';
-import { Notification } from '@daeng-ggu/shared';
+import { LogContainer, NotFound, Notification, PrivateWrapper, RouterErrorFallback } from '@daeng-ggu/shared';
 
 import App from '@/App';
 import ROUTES from '@/constants/routes';
@@ -32,7 +31,6 @@ import DetailPage from '@/pages/Status/DetailPage';
 import Status from '@/pages/Status/Status.tsx';
 import Suggest from '@/pages/Suggest/Suggest.tsx';
 
-import PrivateWrapper from './components/RouteGuard/PrivateWrapper'; //로그인 안된 상태면 접근 제한
 import PublicRoute from './components/RouteGuard/PublicRoute'; //로그인 된 상태면 접근 제한
 import EditReviewPage from './pages/EditReviewPage/EditReviewPage';
 
@@ -93,7 +91,7 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.notification,
         element: (
-          <PrivateWrapper isAuthenticated={isAuthenticated}>
+          <PrivateWrapper mode='owner'>
             <Outlet />
           </PrivateWrapper>
         ),
@@ -102,7 +100,7 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.bid,
         element: (
-          <PrivateWrapper isAuthenticated={isAuthenticated}>
+          <PrivateWrapper mode='owner'>
             <Outlet />
           </PrivateWrapper>
         ),
@@ -141,7 +139,7 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.progress(),
         element: (
-          <PrivateWrapper isAuthenticated={isAuthenticated}>
+          <PrivateWrapper mode='owner'>
             <Outlet />
           </PrivateWrapper>
         ),
@@ -163,7 +161,7 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.reservation,
         element: (
-          <PrivateWrapper isAuthenticated={isAuthenticated}>
+          <PrivateWrapper mode='owner'>
             <Outlet />
           </PrivateWrapper>
         ),
@@ -172,7 +170,7 @@ export const router = createBrowserRouter([
       {
         path: ROUTES.profile,
         element: (
-          <PrivateWrapper isAuthenticated={isAuthenticated}>
+          <PrivateWrapper mode='owner'>
             <Outlet />
           </PrivateWrapper>
         ),
@@ -220,6 +218,10 @@ export const router = createBrowserRouter([
             element: <PaymentSuccessPage />,
           },
         ],
+      },
+      {
+        path: '*',
+        element: <NotFound />,
       },
     ],
   },

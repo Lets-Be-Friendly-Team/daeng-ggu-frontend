@@ -30,3 +30,5 @@ export type { DefaultResponse } from './types/api';
 export type { SecondDefaultResponse } from './types/api';
 export type { AlarmType } from './types/alarm';
 export { default as useGetAlarms } from './hooks/queries/useGetAlarms';
+export { default as NotFound } from './components/NotFound/NotFound';
+export { default as PrivateWrapper } from './components/PrivateWrapper/PrivateWrapper';
