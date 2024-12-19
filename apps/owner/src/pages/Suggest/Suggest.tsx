@@ -245,139 +245,141 @@ const Suggest = () => {
   };
 
   return (
-    <div>
-      <PageContainer>
-        <div className='mb-6 w-full'>
-          <Header
-            mode='customBack'
-            title='견적 제안하기'
-            onClick={() => {
-              window.history.back();
-            }}
-          />
-        </div>
-        <div className='mt-10'>
-          <div className='items-start'>
-            <h2 className='mb-4 text-h3 font-bold text-gray-800'>제안서 상세</h2>
+    <>
+      <div>
+        <PageContainer>
+          <div className='mb-6 w-full'>
+            <Header
+              mode='customBack'
+              title='견적 제안하기'
+              onClick={() => {
+                window.history.back();
+              }}
+            />
           </div>
-          <div className='mb-16 w-full'>
-            <BorderContainer innerPadding='p-3'>
-              <TextEditor onChange={handleTextEditorChange} />
-            </BorderContainer>
-          </div>
+          <div className='mt-10'>
+            <div className='items-start'>
+              <h2 className='mb-4 text-h3 font-bold text-gray-800'>제안서 상세</h2>
+            </div>
+            <div className='mb-16 w-full'>
+              <BorderContainer innerPadding='p-3'>
+                <TextEditor onChange={handleTextEditorChange} />
+              </BorderContainer>
+            </div>
 
-          <div className='items-start'>
-            <h2 className='mb-4 text-h3 font-bold text-gray-800'>견적서 설정</h2>
-          </div>
-          <div className='mb-14 h-full w-full'>
-            <BorderContainer>
-              <div className='w-full bg-secondary'>
-                <div>
-                  <div className='rounded-[8px] bg-white'>
-                    <Calendar
-                      mode='single'
-                      selected={selectedDate || undefined}
-                      onSelect={handleDateClick}
-                      disabled={(date) => {
-                        const dateString = format(date, 'yyyy-MM-dd');
-                        return !desiredDatesSet.has(dateString);
-                      }}
-                    />
-                  </div>
-                </div>
-
-                <div
-                  className={`mt-4 overflow-hidden transition-all duration-300 ease-in-out ${
-                    showTimeSelect ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'
-                  }`}
-                >
-                  <div className='w-full bg-secondary'>
-                    <div className='flex justify-center rounded-[8px] bg-white py-4'>
-                      <TimeSelect
-                        availableTimes={getAvailableTimes()}
-                        selectValue={selectedTime}
-                        onSelectChange={handleTimeSelectChange}
+            <div className='items-start'>
+              <h2 className='mb-4 text-h3 font-bold text-gray-800'>견적서 설정</h2>
+            </div>
+            <div className='mb-14 h-full w-full'>
+              <BorderContainer>
+                <div className='w-full bg-secondary'>
+                  <div>
+                    <div className='rounded-[8px] bg-white'>
+                      <Calendar
+                        mode='single'
+                        selected={selectedDate || undefined}
+                        onSelect={handleDateClick}
+                        disabled={(date) => {
+                          const dateString = format(date, 'yyyy-MM-dd');
+                          return !desiredDatesSet.has(dateString);
+                        }}
                       />
                     </div>
                   </div>
-                </div>
-                <div className='mt-6 w-full bg-secondary'>
-                  <div>
-                    <div className='flex flex-col justify-center rounded-[8px] bg-white py-4 pl-6'>
-                      <div className='text-sub_h2 font-bold'>가격입력</div>
-                      <div className='mt-3 flex items-center text-sub_h1'>
-                        <div>
-                          <input
-                            className={`w-full border-b focus:outline-none ${price !== '' ? 'text-right' : ''}`}
-                            placeholder='₩ 가격'
-                            type='text'
-                            value={price !== '' ? Number(price).toLocaleString() : ''}
-                            onChange={(e) => {
-                              const rawValue = e.target.value.replace(/,/g, '');
-                              const numericValue = Number(rawValue);
-                              // Ensure valid number and prevent NaN
-                              if (!isNaN(numericValue)) {
-                                setPrice(rawValue ? numericValue : '');
-                              } else {
-                                setPrice('');
-                              }
-                            }}
-                          />
+
+                  <div
+                    className={`mt-4 overflow-hidden transition-all duration-300 ease-in-out ${
+                      showTimeSelect ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'
+                    }`}
+                  >
+                    <div className='w-full bg-secondary'>
+                      <div className='flex justify-center rounded-[8px] bg-white py-4'>
+                        <TimeSelect
+                          availableTimes={getAvailableTimes()}
+                          selectValue={selectedTime}
+                          onSelectChange={handleTimeSelectChange}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className='mt-6 w-full bg-secondary'>
+                    <div>
+                      <div className='flex flex-col justify-center rounded-[8px] bg-white py-4 pl-6'>
+                        <div className='text-sub_h2 font-bold'>가격입력</div>
+                        <div className='mt-3 flex items-center text-sub_h1'>
+                          <div>
+                            <input
+                              className={`w-full border-b focus:outline-none ${price !== '' ? 'text-right' : ''}`}
+                              placeholder='₩ 가격'
+                              type='text'
+                              value={price !== '' ? Number(price).toLocaleString() : ''}
+                              onChange={(e) => {
+                                const rawValue = e.target.value.replace(/,/g, '');
+                                const numericValue = Number(rawValue);
+                                // Ensure valid number and prevent NaN
+                                if (!isNaN(numericValue)) {
+                                  setPrice(rawValue ? numericValue : '');
+                                } else {
+                                  setPrice('');
+                                }
+                              }}
+                            />
+                          </div>
+                          <span className='ml-2'>원</span>
                         </div>
-                        <span className='ml-2'>원</span>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </BorderContainer>
-          </div>
-
-          <div className='mb-10 w-full'>
-            <div className='mt-6 items-start'>
-              <h2 className='mb-4 text-h3 font-bold text-gray-800'>댕송지 정보</h2>
+              </BorderContainer>
             </div>
-            <BorderContainer innerPadding='p-3'>
-              <div className='flex-col items-start p-2 text-gray-800'>
-                <p className='text-sub_h2 font-bold'>{customerName || '정보 없음'}</p>
-                <p className='text-body3 font-bold text-gray-800'>{phone || '정보 없음'}</p>
-                <p className='pt-1 text-caption'>{address || '정보 없음'}</p>
-              </div>
-            </BorderContainer>
-          </div>
-          <div className='mb-[160px] w-full'>
-            <div className='mt-6 items-start'>
-              <h2 className='mb-4 text-h3 font-bold text-gray-800'>결제 정보</h2>
-            </div>
-            <BorderContainer innerPadding='p-3'>
-              <div className='flex-col items-start p-2 text-gray-800'>
-                {isVisitRequired && (
-                  <div className='mb-2 flex justify-between'>
-                    <span>댕동비({location.state ? majorBreed : '정보 없음'})</span>
-                    <span>{Math.round(Number(movingCost)).toLocaleString()}원</span>
-                  </div>
-                )}
-                {isMonitoringIncluded && (
-                  <div className='mb-2 flex justify-between'>
-                    <span>모니터링 비용</span>
-                    <span>{(20000).toLocaleString()}원</span>
-                  </div>
-                )}
-                <div className='mb-2 flex justify-between'>
-                  <span>미용비({desiredServiceCode})</span>
-                  <span>{Math.round(Number(price)).toLocaleString()}원</span>
-                </div>
 
-                <div className='mt-2 flex justify-between border-t pt-2 text-lg font-bold'>
-                  <span>결제금액(수수료 포함)</span>
-                  <span>{Math.round(Number(totalAmount)).toLocaleString()}원</span>
-                </div>
+            <div className='mb-10 w-full'>
+              <div className='mt-6 items-start'>
+                <h2 className='mb-4 text-h3 font-bold text-gray-800'>댕송지 정보</h2>
               </div>
-            </BorderContainer>
+              <BorderContainer innerPadding='p-3'>
+                <div className='flex-col items-start p-2 text-gray-800'>
+                  <p className='text-sub_h2 font-bold'>{customerName || '정보 없음'}</p>
+                  <p className='text-body3 font-bold text-gray-800'>{phone || '정보 없음'}</p>
+                  <p className='pt-1 text-caption'>{address || '정보 없음'}</p>
+                </div>
+              </BorderContainer>
+            </div>
+            <div className='mb-[160px] w-full'>
+              <div className='mt-6 items-start'>
+                <h2 className='mb-4 text-h3 font-bold text-gray-800'>결제 정보</h2>
+              </div>
+              <BorderContainer innerPadding='p-3'>
+                <div className='flex-col items-start p-2 text-gray-800'>
+                  {isVisitRequired && (
+                    <div className='mb-2 flex justify-between'>
+                      <span>댕동비({location.state ? majorBreed : '정보 없음'})</span>
+                      <span>{Math.round(Number(movingCost)).toLocaleString()}원</span>
+                    </div>
+                  )}
+                  {isMonitoringIncluded && (
+                    <div className='mb-2 flex justify-between'>
+                      <span>모니터링 비용</span>
+                      <span>{(20000).toLocaleString()}원</span>
+                    </div>
+                  )}
+                  <div className='mb-2 flex justify-between'>
+                    <span>미용비({desiredServiceCode})</span>
+                    <span>{Math.round(Number(price)).toLocaleString()}원</span>
+                  </div>
+
+                  <div className='mt-2 flex justify-between border-t pt-2 text-lg font-bold'>
+                    <span>결제금액(수수료 포함)</span>
+                    <span>{Math.round(Number(totalAmount)).toLocaleString()}원</span>
+                  </div>
+                </div>
+              </BorderContainer>
+            </div>
           </div>
-        </div>
-      </PageContainer>
-      <div className='fixed w-full' style={{ bottom: '7.5rem' }}>
+        </PageContainer>
+      </div>
+      <div className='fixed bottom-0 w-full'>
         <TypeOneButton
           text='제안하기'
           color='bg-secondary'
@@ -386,7 +388,7 @@ const Suggest = () => {
           }}
         />
       </div>
-    </div>
+    </>
   );
 };
 

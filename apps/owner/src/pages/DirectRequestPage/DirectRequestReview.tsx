@@ -1,7 +1,7 @@
 // src/components/DirectRequestReview.tsx
 
 import { useState } from 'react';
-import { BorderContainer, PageContainer } from '@daeng-ggu/design-system';
+import { BorderContainer, BulbIcon, PageContainer } from '@daeng-ggu/design-system';
 import { RadioGroup, RadioGroupItem } from '@daeng-ggu/design-system';
 
 import editIcon from '@/assets/edit.svg';
@@ -229,8 +229,9 @@ const DirectRequestReview = ({
 
               {pageMode === 'designer' && selectedProfile && (
                 <>
-                  <div className='mt-6 items-start'>
-                    <h2 className='mb-4 text-h3 font-bold text-gray-800'>댕송지 정보</h2>
+                  <div className='mb-10 flex items-start gap-2'>
+                    <BulbIcon className='w-[2rem]' color='fill-gray-800' />
+                    <h2 className='text-center text-sub_h1 font-semibold text-gray-700'>댕송지 정보</h2>
                   </div>
                   <div className='mb-28'>
                     <BorderContainer innerPadding='p-3'>

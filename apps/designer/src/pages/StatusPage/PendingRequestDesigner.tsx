@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Avatar, BorderContainer, DetailButton } from '@daeng-ggu/design-system';
+import { Avatar, BorderContainer, DetailButton, LogoImage } from '@daeng-ggu/design-system';
 
 export interface DesignerRequest {
   requestId: number;
@@ -68,9 +68,9 @@ const PendingRequestDesigner = ({ data }: PendingRequestDesignerProps) => {
                 <div className='flex items-center pl-2'>
                   <Avatar
                     mode='designerCard'
-                    imageUrl={request.petImageUrl}
+                    imageUrl={request.petImageUrl || LogoImage}
                     name={request.petName}
-                    containerClassName='mr-4 max-h-[70px] max-w-[70px]'
+                    containerClassName='mr-4 max-h-[70px] max-w-[70px] '
                   />
                   <div className='flex flex-col'>
                     <p className='pb-2 text-gray-800'>{request.createdAt} 견적요청</p>

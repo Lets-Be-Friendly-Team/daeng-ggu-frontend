@@ -105,7 +105,7 @@ const DetailPage = () => {
     mode: 'detail',
   };
 
-  const headerTitle = '견적요청서 상세보기 (디자이너)';
+  const headerTitle = '견적요청서 상세보기';
   const buttonText = '견적 제안하기';
 
   console.log('lets check this: ', profile);
@@ -124,7 +124,7 @@ const DetailPage = () => {
         </div>
       </PageContainer>
       <RequestReview {...processedData} pageMode={pageMode} />
-      <div className='fixed w-full' style={{ bottom: '64px' }}>
+      <div className='fixed w-full bottom-0'>
         <TypeOneButton
           text={buttonText}
           onClick={() => {

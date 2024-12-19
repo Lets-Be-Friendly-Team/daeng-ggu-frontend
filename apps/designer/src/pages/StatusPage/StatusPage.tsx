@@ -31,8 +31,8 @@ const StatusPage = () => {
     <div className='h-full w-full'>
       <PageContainer>
         <div className='w-full'>
-          <Header mode='main' title='견적 조회하기' />
-          <CategoryTab tabs={tabs} padding='px-[6rem]' />
+          <Header mode='main' />
+          <CategoryTab tabs={tabs} />
         </div>
       </PageContainer>
     </div>

@@ -26,6 +26,8 @@ const designerHideTabbarRoutes = [
   '/profile/add/portfolio',
   '/edit/portfolio',
   '/profile/edit',
+  '/bid/detail',
+  '/bid/suggest',
   // 숨기고 싶은 tabbar route 추가
 ];
 

@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { BorderContainer, EditIcon, PageContainer } from '@daeng-ggu/design-system';
+import { BorderContainer, BulbIcon, EditIcon, PageContainer } from '@daeng-ggu/design-system';
 import { RadioGroup, RadioGroupItem } from '@daeng-ggu/design-system';
 
 import ProfileViewer from '@/pages/RequestPage/ProfileViewer';
 import { isDesignerProfileData, RequestReviewProps, StepData } from '@/types/designerRequestAndStatusTypes';
+// import formatDateTime from './../../../../../node_modules/@daeng-ggu/design-system/utils/fomDateTime';
 
 const defaultStepData: StepData[] = [
   {
@@ -127,26 +128,26 @@ const RequestReview = ({
   return (
     <PageContainer>
       <div className='m-auto w-full pb-32'>
-        <div className='items-start'>
-          <h2 className='mb-4 text-h3 font-bold text-gray-800'>견적서 요약</h2>
+        <div className='mt-10  mb-5 flex items-start gap-2'>
+          <BulbIcon className='w-[2rem]' color='fill-gray-800' />
+          <h2 className='text-sub_h1 font-semibold text-gray-700'>견적서 요약</h2>
         </div>
         <div className='flex flex-col items-center'>
           <div className='mb-16 w-full'>
             {selectedProfile ? (
               <div className='mb-6'>
-                <BorderContainer>
-                  <ProfileViewer profile={selectedProfile} />
-                </BorderContainer>
+                <ProfileViewer profile={selectedProfile} />
               </div>
             ) : (
               <p className='text-red-500'>선택된 반려견이 없습니다.</p>
             )}
 
             <div className='mb-6'>
-              <div className='items-start'>
-                <h2 className='mb-4 text-h3 font-bold text-gray-800'>요청 상세</h2>
+              <div className='mt-10  mb-5 flex items-start gap-2'>
+                <BulbIcon className='w-[2rem]' color='fill-gray-800' />
+                <h2 className='text-sub_h1 font-semibold text-gray-700'>요청 상세</h2>
               </div>
-              <BorderContainer innerPadding='py-6 pl-2'>
+              <BorderContainer innerPadding='py-3 pl-2'>
                 <ul className='ml-5 mt-4'>
                   {stepData.map(({ step, title, options }) => (
                     <li key={step} className='flex flex-col gap-2 pb-5'>
@@ -206,11 +207,13 @@ const RequestReview = ({
                   ))}
                 </ul>
               </BorderContainer>
+
               {pageMode === 'user' && (
                 <>
                   <div className='mb-16'>
-                    <div className='mt-6 items-start'>
-                      <h2 className='mb-4 text-h3 font-bold text-gray-800'>댕송지 정보</h2>
+                    <div className='mt-10 mb-5 flex items-start gap-2'>
+                      <BulbIcon className='w-[2rem]' color='fill-gray-800' />
+                      <h2 className='text-sub_h1 font-semibold text-gray-700'>댕송지 정보</h2>
                     </div>
                     <BorderContainer innerPadding='p-3'>
                       <div className='flex-col items-start p-2 text-gray-800'>
@@ -249,8 +252,9 @@ const RequestReview = ({
 
               {pageMode === 'designer' && selectedProfile && (
                 <>
-                  <div className='mt-6 items-start'>
-                    <h2 className='mb-4 text-h3 font-bold text-gray-800'>댕송지 정보</h2>
+                  <div className='mt-10 mb-5 flex items-start gap-2'>
+                    <BulbIcon className='w-[2rem]' color='fill-gray-800' />
+                    <h2 className='text-center text-sub_h1 font-semibold text-gray-700'>댕송지 정보</h2>
                   </div>
                   <div className='mb-28'>
                     <BorderContainer innerPadding='p-3'>
