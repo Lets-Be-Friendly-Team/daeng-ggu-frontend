@@ -43,7 +43,7 @@ const ProfileViewer = ({
         <img
           src={petImageUrl || 'https://via.placeholder.com/100'}
           alt={petName || 'Unknown Pet'}
-          className='h-[9rem] w-[9rem] rounded-full object-cover'
+          className='h-[8rem] w-[8rem] rounded-full object-cover'
         />
         <div className='flex flex-col gap-[0.4rem]'>
           <div className='flex gap-[0.4rem]'>

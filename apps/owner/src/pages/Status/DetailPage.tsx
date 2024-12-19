@@ -117,11 +117,7 @@ const DetailPage = () => {
           } as ReservationProcessedData);
 
   const headerTitle =
-    pageMode === 'user'
-      ? '견적요청서 상세보기'
-      : pageMode === 'designer'
-        ? '견적요청서 상세보기 (디자이너)'
-        : '예약 상세보기';
+    pageMode === 'user' ? '견적요청서 상세보기' : pageMode === 'designer' ? '견적요청서 상세보기' : '예약 상세보기';
 
   const buttonText = pageMode === 'user' ? '예약하기' : pageMode === 'designer' ? '견적 제안하기' : '예약 취소';
   return (

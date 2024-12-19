@@ -387,7 +387,7 @@ const SuggestPage = () => {
               <h2 className='mb-4 text-h3 font-bold text-gray-800'>결제 정보</h2>
             </div>
             <BorderContainer innerPadding='p-3'>
-              <div className='flex-col items-start p-2 text-gray-800'>
+              <div className='flex-col items-start p-2 text-gray-800 text-body3 gap-[0.4rem]'>
                 {isVisitRequired && (
                   <div className='mb-2 flex justify-between'>
                     <span>댕동비({majorBreed || '정보 없음'})</span>
@@ -405,7 +405,7 @@ const SuggestPage = () => {
                   <span>{Math.round(Number(price)).toLocaleString()}원</span>
                 </div>
 
-                <div className='mt-2 flex justify-between border-t pt-2 text-lg font-bold'>
+                <div className='mt-2 flex justify-between border-t pt-2 text-body2 font-bold'>
                   <span>결제금액(수수료 포함)</span>
                   <span>{Math.round(Number(totalAmount)).toLocaleString()}원</span>
                 </div>
@@ -416,7 +416,7 @@ const SuggestPage = () => {
       </PageContainer>
 
       {/* Submit Button */}
-      <div className='fixed w-full' style={{ bottom: '7.5rem' }}>
+      <div className='fixed w-full bottom-0'>
         <TypeOneButton
           text={isUploading ? '업로드 중...' : '제안하기'}
           color='bg-secondary'

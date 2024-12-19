@@ -1,4 +1,5 @@
-import { PageContainer } from '@daeng-ggu/design-system';
+import { LogoImage } from '@daeng-ggu/design-system';
+import { extractKorean } from '@daeng-ggu/shared';
 
 interface ProfileData {
   petId: number;
@@ -38,37 +39,37 @@ const ProfileViewer = ({
   const { petImageUrl, petName, subBreed, weight, gender, isNeutered, birthDate } = profile;
 
   return (
-    <PageContainer>
-      <div className='flex w-full justify-center rounded-[8px]'>
-        <div className='flex items-center'>
-          <img
-            src={petImageUrl || 'https://via.placeholder.com/100'}
-            alt={petName || 'Unknown Pet'}
-            className='h-28 w-28 rounded-full'
-          />
-          <div className='ml-4 grid grid-cols-2 gap-x-4 gap-y-2'>
-            <p className='text-iconCaption text-gray-600'>
-              이름: <span>{petName}</span>
-            </p>
-            <p className='text-iconCaption text-gray-600'>
-              견종: <span>{subBreed}</span>
-            </p>
-            <p className='text-iconCaption text-gray-600'>
-              몸무게: <span>{weight}kg</span>
-            </p>
-            <p className='text-iconCaption text-gray-600'>
-              성별: <span>{gender === 'male' ? '수컷' : '암컷'}</span>
-            </p>
-            <p className='text-iconCaption text-gray-600'>
-              중성화 여부: <span>{isNeutered ? '예' : '아니오'}</span>
-            </p>
-            <p className='text-iconCaption text-gray-600'>
-              출생일: <span>{birthDate}</span>
-            </p>
+    <div className='mx-auto flex w-full max-w-screen-lg flex-col gap-8 rounded-md px-6 py-10 shadow'>
+      <div className='flex flex-wrap items-center gap-[2rem] text-body2 text-gray-800 '>
+        <div className='h-[8rem] w-[8rem] rounded-full overflow-hidden bg-secondary'>
+          <img src={petImageUrl || LogoImage} alt={petName || 'Unknown Pet'} className='h-full w-full object-cover ' />
+        </div>
+        <div className='flex flex-col gap-[0.4rem]'>
+          <div className='flex gap-[0.4rem]'>
+            <div className='text-body1 font-semibold'>{petName}</div>
+            <div className='font-bold'>
+              {gender === 'W' ? <div className='text-pink-500'>♀︎</div> : <div className='text-blue-700'>♂︎</div>}
+            </div>
+          </div>
+          <div className='text-gray-800'>{extractKorean(subBreed || '')}</div>
+
+          <div className='flex gap-6 text-body3'>
+            <div className='flex items-center gap-2'>
+              <div className='text-iconCaption font-semibold text-gray-500'>체중</div>
+              <div className='text-gray-800'>{weight}kg</div>
+            </div>
+            <div className='flex items-center gap-2'>
+              <div className='text-iconCaption font-semibold text-gray-500'>중성화 여부</div>
+              <div className='text-gray-800'>{isNeutered ? 'O' : 'X'}</div>
+            </div>
+            <div className='flex items-center gap-2'>
+              <div className='text-iconCaption font-semibold text-gray-500'>생년월일</div>
+              <div className='text-gray-800'>{birthDate}</div>
+            </div>
           </div>
         </div>
       </div>
-    </PageContainer>
+    </div>
   );
 };
 
