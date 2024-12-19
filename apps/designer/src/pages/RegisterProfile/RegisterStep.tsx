@@ -46,7 +46,7 @@ const RegisterStep = () => {
     {
       step: 3,
       title: `신뢰를 높이기 위한 인증 단계에요!`,
-      contents: <Step3 />,
+      contents: <Step3 setActiveBtn={setActiveBtn} />,
       // contents: <Step1 formData={profileFormData} setFormData={setProfileFormData} />,
     },
     {

@@ -1,13 +1,17 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Header, ImageUploader, Input, PageContainer, TextArea, TypeOneButton } from '@daeng-ggu/design-system';
+import { useToast } from '@daeng-ggu/shared';
 
 import useUpdatePortfolio from '@/hooks/queries/DesignerProfile/useUpdatePortfolio';
 import useMultipleImageUpload from '@/hooks/queries/ImageUpload/useMultipleImageUpload';
 import useSingleImageUpload from '@/hooks/queries/ImageUpload/useSingleImageUpload';
 import { Portfolio } from '@/pages/RegisterProfile/RegisterProfileData';
+import useDesignerIdStore from '@/stores/useDesignerIdStore';
 
 const AddPortfolioInProfile = () => {
+  const { designerId } = useDesignerIdStore();
+  const { showToast } = useToast();
   const [portfolio, setPortfolio] = useState<Portfolio>({
     portfolioId: 0,
     title: '',
@@ -59,7 +63,7 @@ const AddPortfolioInProfile = () => {
       }
 
       const portfolioData = {
-        designerId: 2,
+        designerId,
         portfolioId: portfolio.portfolioId ?? 0,
         title: portfolio.title,
         contents: portfolio.contents,
@@ -71,7 +75,7 @@ const AddPortfolioInProfile = () => {
 
       await updatePortfolio(portfolioData);
 
-      alert('포트폴리오가 성공적으로 등록되었습니다.');
+      showToast({ message: '포트폴리오가 성공적으로 등록되었습니다.', type: 'confirm' });
       navigate('/profile');
       setPortfolio({
         title: '',
@@ -82,8 +86,8 @@ const AddPortfolioInProfile = () => {
         video: null,
       });
     } catch (error) {
-      console.error('포트폴리오 저장 실패:' + error);
-      alert('포트폴리오 저장 실패');
+      console.log(error);
+      showToast({ message: '포트폴리오 저장을 실패했습니다', type: 'error' });
     }
   };
 

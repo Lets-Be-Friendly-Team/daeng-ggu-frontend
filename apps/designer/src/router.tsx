@@ -103,7 +103,7 @@ export const router = createBrowserRouter(
         {
           path: ROUTES.profile,
           element: (
-            <PrivateWrapper mode='desinger'>
+            <PrivateWrapper mode='designer'>
               <Outlet />
             </PrivateWrapper>
           ),
@@ -134,7 +134,7 @@ export const router = createBrowserRouter(
         {
           path: ROUTES.notification,
           element: (
-            <PrivateWrapper mode='desinger'>
+            <PrivateWrapper mode='designer'>
               <Outlet />
             </PrivateWrapper>
           ),
@@ -143,7 +143,7 @@ export const router = createBrowserRouter(
         {
           path: ROUTES.profileEditPortfolio,
           element: (
-            <PrivateWrapper mode='desinger'>
+            <PrivateWrapper mode='designer'>
               <EditPortfolioPage />
             </PrivateWrapper>
           ),

@@ -5,19 +5,24 @@ import { Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import useGetFeed from '@/hooks/queries/Review/useGetFeed';
+import usePostReviewLike from '@/hooks/queries/Review/usePostReviewLike';
 
 import './swiperStyle.css';
 
 const FeedPage = () => {
   const [expandedReviews, setExpandedReviews] = useState<{ [key: number]: boolean }>({});
-  const [isLiked, setIsLiked] = useState<boolean>(false);
+  // const [isLiked, setIsLiked] = useState<boolean>(false);
   const { reviewId } = useParams();
   const navigate = useNavigate();
 
   // 페이지 번호 초기화
   const page = 0;
   const { data: feedData, isLoading, error } = useGetFeed(page);
+  const { mutate } = usePostReviewLike();
 
+  const handleLike = (reviewId: number) => {
+    mutate(reviewId);
+  };
   // API에서 받아온 리뷰 리스트
   const reviews = feedData?.reviewList || [];
 
@@ -112,8 +117,8 @@ const FeedPage = () => {
             <div className='font-semibold'>{reviews[activeIndex]?.reviewStar}</div>
           </div>
           <div className='flex flex-col items-center gap-[0.4rem]'>
-            <button onClick={() => setIsLiked((prev) => !prev)}>
-              {isLiked ? (
+            <button onClick={() => handleLike(reviews[activeIndex].reviewId)}>
+              {reviews[activeIndex]?.isReviewLike ? (
                 <FilledHeartIcon className='h-[2.8rem] w-[2.8rem]' color='#FF6842' />
               ) : (
                 <EmptyHeartIcon className='h-[2.8rem] w-[2.8rem]' color='white' />
