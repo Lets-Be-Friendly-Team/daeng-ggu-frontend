@@ -6,6 +6,7 @@ import { DefaultResponse } from '@/types/api.ts';
 
 export interface PetProfile {
   petId: number;
+  requestId: number;
   petName: string;
   petImageUrl: string;
   desiredServiceCode?: string;
@@ -44,6 +45,7 @@ export interface Estimate {
   designerAddress?: string; // Optional based on the dummy data
 }
 const getPendingRequests = async (): Promise<PetProfile[]> => {
+  console.log('eee');
   const response = await APIClient.get<DefaultResponse<PetProfile>>('/daengggu/bid/estimate/customer');
   console.log('Fetched Pending Requests:', response);
   return response.data;

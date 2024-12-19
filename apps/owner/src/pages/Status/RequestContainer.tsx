@@ -1,27 +1,43 @@
 // RequestContainer.tsx
 import React from 'react';
-import { Avatar, BorderContainer } from '@daeng-ggu/design-system';
+import { Avatar, BorderContainer, Modal } from '@daeng-ggu/design-system';
 import CloseIcon from '@daeng-ggu/design-system/components/Icons/CloseIcon.tsx';
+import { useModalStore } from '@daeng-ggu/shared';
+
+import useDeleteRequest from '@/hooks/queries/Request/useDeleteRequest';
 
 interface RequestContainerProps {
-  handleRequestDelete: () => void;
   imageUrl: string;
   titleText?: string;
   mode?: string;
   children: React.ReactNode;
   onClick?: () => void;
+  requestId: number;
 }
 /**
  * 프리티어 이슈로 프롬스 이상하게 보이니 걍 이해 빔
  * */
 const RequestContainer = ({
-  handleRequestDelete,
   titleText = '',
   imageUrl,
   mode = '',
   children,
   onClick,
+  requestId,
 }: RequestContainerProps) => {
+  const { mutate } = useDeleteRequest();
+  const { show } = useModalStore();
+  const handleDeleteRequest = (requestId: number) => {
+    show(Modal, {
+      title: '요청 삭제',
+      description: '요청을 삭제하시겠습니까?',
+      confirmText: '삭제',
+      cancelText: '취소',
+      onConfirm: () => {
+        mutate(requestId);
+      },
+    });
+  };
   return (
     <BorderContainer innerPadding='py-2'>
       <div className='relative'>
@@ -32,7 +48,7 @@ const RequestContainer = ({
           <button
             onClick={(e) => {
               e.stopPropagation();
-              handleRequestDelete();
+              handleDeleteRequest(requestId);
             }}
             className='absolute right-4 top-4'
           >

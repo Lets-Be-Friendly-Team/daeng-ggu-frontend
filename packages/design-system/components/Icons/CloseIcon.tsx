@@ -1,6 +1,8 @@
+import { SVGProps } from 'react';
+
 import { cn } from '../../lib/utils';
 
-interface ICloseIconProps {
+interface ICloseIconProps extends SVGProps<SVGSVGElement> {
   className?: string;
 }
 const CloseIcon = ({ className }: ICloseIconProps) => {

@@ -34,10 +34,6 @@ const PendingRequestUser = ({ data }: PendingRequestUserProps) => {
     setActivePetIndex(index);
   };
 
-  const handleRequestDelete = (): void => {
-    console.log('closed');
-  };
-
   console.log('hi hello and goodbye', data);
 
   const getDeliveryStatus = (majorBreedCode: string) => {
@@ -59,6 +55,7 @@ const PendingRequestUser = ({ data }: PendingRequestUserProps) => {
   const estimateEmptyStateTitle = '견적서 제안이 아직 없네요!';
   const estimateEmptyStateButtonText = '새로고침하기';
   const estimateEmptyStateOnClick = () => window.location.reload();
+  console.log(data);
 
   return (
     <div className='mx-auto flex w-full flex-col items-center pt-10'>
@@ -77,11 +74,15 @@ const PendingRequestUser = ({ data }: PendingRequestUserProps) => {
                 containerClassName='h-[70px] w-[70px] rounded-full'
               />
             ))}
-            <Avatar
-              key='request-avatar'
-              mode='request'
-              onClick={() => navigate('/bid/request', { state: { from: '/bid' } })}
-            />
+            {
+              <Avatar
+                mode='request'
+                onClick={() => {
+                  navigate('/bid/request');
+                }}
+                containerClassName='h-[70px] w-[70px] rounded-full'
+              />
+            }
           </div>
         </div>
       </div>
@@ -89,7 +90,7 @@ const PendingRequestUser = ({ data }: PendingRequestUserProps) => {
       <div className='w-full'>
         <div className='mb-6'>
           <RequestContainer
-            handleRequestDelete={handleRequestDelete}
+            requestId={activePet.requestId}
             titleText='견적 요청중'
             mode='request'
             imageUrl={activePet.petImageUrl}

@@ -3,7 +3,6 @@ import { Navigate } from 'react-router';
 
 const PrivateWrapper = ({ children, mode }: { children: ReactNode; mode: 'designer' | 'owner' }) => {
   const isAuthenticated = !!localStorage.getItem(mode === 'designer' ? 'designerIdStorage' : 'ownerIdStorage'); // 로그인 상태 확인
-
   if (!isAuthenticated) {
     if (mode === 'designer') {
       window.location.href = import.meta.env.VITE_OWNER_MAIN_URL + '/login'; // '/'로 이동
