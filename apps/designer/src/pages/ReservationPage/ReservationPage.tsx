@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { CategoryTab, Header, PageContainer } from '@daeng-ggu/design-system';
 
 import useReservation from '@/hooks/queries/Reservation/useGetReservation';
@@ -9,7 +10,8 @@ import CompletedServices from './components/CompletedServices';
 import ReservationHistory from './components/ReservationHistory';
 
 const ReservationPage = () => {
-  // const designerId = 4;
+  const { pathname } = useLocation();
+
   const { data: reservationData, isError } = useReservation();
   const unfiinishedReservations = reservationData?.filter((item) => !item.isFinished);
   const completedReservations = reservationData?.filter((item) => item.isFinished);
@@ -45,10 +47,13 @@ const ReservationPage = () => {
     },
   ];
 
+  // 현재 URL에 따라 헤더 모드 설정
+  const headerMode = pathname === '/' ? 'main' : 'back';
+
   return (
     <div className='pb-[65px]'>
       <PageContainer>
-        <Header mode='main' />
+        <Header mode={headerMode} title='예약 조회' />
         <CategoryTab tabs={tabs} />
       </PageContainer>
     </div>

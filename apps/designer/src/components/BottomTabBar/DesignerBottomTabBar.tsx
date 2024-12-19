@@ -23,6 +23,7 @@ const designerHideTabbarRoutes = [
   '/register/portfolio',
   '/profile/add/portfolio',
   '/edit/portfolio',
+  '/profile/edit',
   // 숨기고 싶은 tabbar route 추가
 ];
 
