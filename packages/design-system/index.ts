@@ -21,6 +21,7 @@ import Header from './components/Header/Header';
 import ArrowDown from './components/Icons/ArrowDown';
 import ArrowUp from './components/Icons/ArrowUp';
 import BackIcon from './components/Icons/BackIcon';
+import BadgeCheckIcon from './components/Icons/BadgeCheckIcon';
 import BellAlertIcon from './components/Icons/BellAlertIcon';
 import BellIcon from './components/Icons/BellIcon';
 import EmptyBookMarkIcon from './components/Icons/BookMark/EmptyBookMarkIcon';
@@ -38,6 +39,7 @@ import FeedIcon from './components/Icons/FeedIcon';
 import FilledHeartIcon from './components/Icons/FilledHeartIcon';
 import GuardianIcon from './components/Icons/guardianIcon';
 import InfoIcon from './components/Icons/InfoIcon';
+import LocationIcon from './components/Icons/Location';
 import LockIcon from './components/Icons/LockIcon';
 import LogoutIcon from './components/Icons/LogoutIcon';
 import MapIcon from './components/Icons/MapIcon';
@@ -170,4 +172,6 @@ export {
   DropdownCheckBox,
   LogoutIcon,
   SwapIcon,
+  LocationIcon,
+  BadgeCheckIcon,
 };

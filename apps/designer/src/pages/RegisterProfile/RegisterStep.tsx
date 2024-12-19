@@ -204,7 +204,7 @@ const RegisterStep = () => {
           onClick={handleNextStep}
           text='다음 단계로'
           color={activeBtn ? 'bg-primary' : 'bg-gray-50'}
-          disabled={!activeBtn}
+          // disabled={!activeBtn}
         />
       )}
       {/* </div> */}

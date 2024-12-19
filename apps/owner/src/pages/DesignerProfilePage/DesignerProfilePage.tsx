@@ -85,7 +85,7 @@ const MyPage = () => {
   return (
     <div className='pb-[185px]'>
       <PageContainer>
-        <Header mode='back' title='디자이너 페이지' onClick={handleNavigateMain} />
+        <Header mode='back' title='' onClick={handleNavigateMain} />
         <Profile
           isBookmarked={isBookmarked}
           designerId={designerProfileData.designerId}
@@ -101,7 +101,7 @@ const MyPage = () => {
           workExperience={designerProfileData.workExperience}
           onBookmarkToggle={toggleBookmark}
         />
-        <CategoryTab tabs={tabs} />
+        <CategoryTab tabs={tabs} padding='px-[8rem]' />
       </PageContainer>
     </div>
   );
