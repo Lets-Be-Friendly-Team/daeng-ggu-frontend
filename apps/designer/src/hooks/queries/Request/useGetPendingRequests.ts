@@ -1,13 +1,13 @@
 // src/hooks/useGetPendingRequests.ts
 
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 
 import getPendingRequests, { DesignerRequest } from '@/apis/request/getPendingRequest';
 
 export const PENDING_REQUESTS_QUERY_KEY = ['pendingRequests'];
 
 const useGetPendingRequests = () => {
-  return useSuspenseQuery<DesignerRequest[]>({
+  return useQuery<DesignerRequest[]>({
     queryKey: PENDING_REQUESTS_QUERY_KEY,
     queryFn: getPendingRequests,
   });

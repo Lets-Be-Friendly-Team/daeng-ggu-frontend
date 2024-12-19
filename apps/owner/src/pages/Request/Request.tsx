@@ -84,7 +84,7 @@ const Request = () => {
 
   return (
     <div className='h-full w-full'>
-      <StepByStep stepCount={10} profileData={profileData} onProfileSelect={handleProfileSelect} />
+      {profileData && <StepByStep stepCount={10} profileData={profileData} onProfileSelect={handleProfileSelect} />}
     </div>
   );
 };

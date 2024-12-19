@@ -19,11 +19,11 @@ const StatusPage = () => {
     {
       label: '견적서받는 중',
       // content: <PendingRequest data={dummyDataForDesigner} />,
-      content: <PendingRequest data={pendingData} />,
+      content: <PendingRequest data={pendingData || []} />,
     },
     {
       label: '이전견적 조회',
-      content: <CompletedRequestDesigner data={completedData} />,
+      content: <CompletedRequestDesigner data={completedData || []} />,
     },
   ];
 

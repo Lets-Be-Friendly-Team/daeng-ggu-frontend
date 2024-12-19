@@ -1,4 +1,4 @@
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 
 import { BidRequestResponse, postDetailPage } from '@/apis/request/postDetailPage';
 
@@ -13,7 +13,7 @@ const usePostDetailPage = (options: UsePostDetailPageOptions) => {
     throw new Error('requestId is required to fetch post detail page data');
   }
 
-  return useSuspenseQuery<BidRequestResponse, Error>({
+  return useQuery<BidRequestResponse, Error>({
     queryKey: ['postDetailPage', requestId] as const,
     queryFn: () => postDetailPage({ requestId }),
   });
