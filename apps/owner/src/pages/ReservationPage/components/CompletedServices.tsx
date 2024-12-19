@@ -71,7 +71,7 @@ const CompletedServices = ({ completedGroomingList }: ICompletedHistoryProps) =>
       ) : (
         <div className='flex flex-col gap-6 px-5 py-5'>
           {completedGroomingList?.map((reservation) => (
-            <>
+            <div key={reservation.reservationId}>
               <div className='flex items-center justify-between'>
                 <div className='text-sub_h3 font-bold text-gray-800'>
                   {reservation.reservationDate.slice(2)} {reservation.dayOfWeek[0]} | {reservation.amPm}{' '}
@@ -168,7 +168,7 @@ const CompletedServices = ({ completedGroomingList }: ICompletedHistoryProps) =>
                   </div>
                 </div>
               </div>
-            </>
+            </div>
           ))}
         </div>
       )}
