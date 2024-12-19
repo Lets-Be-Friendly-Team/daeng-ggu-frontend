@@ -41,7 +41,7 @@ const Step2 = ({ setActiveBtn }: { setActiveBtn: Dispatch<SetStateAction<boolean
     );
     const isFormComplete = dayOff.length > 0 && isPriceAndTimeComplete;
     setActiveBtn(isFormComplete);
-  }, [profileData, setActiveBtn]);
+  }, [dayOff.length, profileData, providedServiceList, setActiveBtn]);
 
   return (
     <div className='flex flex-col gap-y-[2.4rem]'>

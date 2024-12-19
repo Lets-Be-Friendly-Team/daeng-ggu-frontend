@@ -10,7 +10,6 @@ const DirectRequestPage = () => {
   const designerId = location.state?.targetDesignerId;
   console.log('this is designer Id: ', designerId);
 
-  // Data is fetched using suspense.
   const { data: profileData } = useGetOwnerPetProfile();
   const { data: paymentDetails } = useGetPaymentDetails();
 

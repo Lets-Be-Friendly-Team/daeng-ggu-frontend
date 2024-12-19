@@ -69,8 +69,8 @@ const AddPortfolioPage = ({ handleSubmit }: PortfolioProps) => {
             video={fileData.video}
             setVideo={handleSetVideo}
             mode='both'
-            label='사진 및 동영상'
-            subLabel='사진 업로드는 필수이며 동영상은 1개만 업로드 가능합니다'
+            label='사진'
+            subLabel='사진 업로드는 필수입니다'
           />
           <TextArea
             label='내용'

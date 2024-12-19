@@ -123,7 +123,7 @@ const AddPetProfilePage = () => {
     onSuccess: (data) => {
       // 반려견 등록 성공시
       console.log('반려견 등록 성공', data);
-      navigate(ROUTES.profile);
+      navigate('/' + ROUTES.profile);
     },
     onError: (error) => {
       // 반려견 등록 실패시

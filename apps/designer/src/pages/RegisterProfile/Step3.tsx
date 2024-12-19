@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { CloseIcon, Input } from '@daeng-ggu/design-system';
 import CameraIcon from '@daeng-ggu/design-system/components/Icons/CameraIcon';
 import { useToast } from '@daeng-ggu/shared';
@@ -13,7 +13,7 @@ export interface BusinessForm {
   startDate: string;
 }
 
-const Step3 = () => {
+const Step3 = ({ setActiveBtn }: { setActiveBtn: Dispatch<SetStateAction<boolean>> }) => {
   const { showToast } = useToast();
   const { profileData, setProfileData, fileData, setFileData } = useProfileStore();
   const { businessNumber } = profileData;
@@ -37,6 +37,10 @@ const Step3 = () => {
     }
     setBusinessData((prev) => ({ ...prev, [field]: value }));
   };
+
+  useEffect(() => {
+    setActiveBtn(true);
+  }, [setActiveBtn]);
 
   /**to do
    * 사업자 인증 버튼 클릭시 핸들러
